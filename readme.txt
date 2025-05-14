@@ -1,5 +1,4 @@
 Welcome to Teethnology!
 
-Author: Eddielyn Bautista
-
+Author: Eddielyn Claudius Bautista
 Teethnology Portal
