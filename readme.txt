@@ -1,5 +1,5 @@
 Welcome to Teethnology!
 
-Author: Eddielyn Joy C. Bautista
+Author: Eddielyn
 
 Teethnology Portal
