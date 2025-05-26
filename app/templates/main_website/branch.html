@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teethnology Patient Portal</title>
+    <link rel="stylesheet" href="Global_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h2>Teethnology</h2>
+        <nav>
+            <ul>
+                <li><a class="nav-link" href="Home.html">HOME</a></li>
+                <li><a class="nav-link active" href="#branch">BRANCH</a></li>
+                <li><a class="nav-link" href="#services">SERVICES</a></li>
+                <li><a class="nav-link" href="contact.html">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <div class="button">
+            <a href="login.html" class="login">LOGIN</a>
+            <a href="form.html" class="book">BOOK NOW</a>
+        </div>
+    </header>
+    <main>
+        <!-- Branch Image Carousel -->
+        <section id="branch-carousel">
+            <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\quezon clinic example.jpg" alt="Dental Clinic" class="branch-img-carousel">
+            <!-- Optional: Carousel dots/arrows can be added here -->
+        </section>
+
+        <!-- Branch Details -->
+        <section id="branch">
+            <div class="branch-header">
+                <h2>Lorem Ipsum</h2>
+                <span>QUEZON CITY</span>
+                <p>Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend dictum sapien ut tincidunt. Suspendisse potenti. Etiam euismod, sapien nec laoreet dictum, enim erat dictum erat, nec dictum erat enim nec erat. Mauris eleifend dictum sapien ut tincidunt.</p>
+            </div>
+            <div class="branch-content">
+                <div class="branch-details-card">
+                    <div class="branch-info">
+                        <h4>LOCATION</h4>
+                        <p>123 dolor sit amet, consectetur adipiscing elit, Aenean mattis.</p>
+                    </div>
+                    <div class="branch-info">
+                        <h4>SERVICE LIST</h4>
+                        <ul>
+                            <li>Lorem ipsum</li>
+                            <li>Maecen dictum</li>
+                            <li>Vivamus dignissim</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointment Section -->
+        <section id="appointment">
+            <div class="services-header">
+                <h2>BOOK AN APPOINTMENT</h2>
+            </div>
+            <div class="appointment-container" style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;">
+                <!-- Calendar -->
+                <div class="appointment-calendar">
+                    <h4>APPOINTMENT CALENDAR</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+                            <tr><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td></tr>
+                            <tr><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td></tr>
+                            <tr><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td></tr>
+                            <tr><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Appointment Info -->
+                <div class="appointment-info">
+                    <h4>INFORMATION</h4>
+                    <p>List of Available Time:</p>
+                    <ul>
+                        <li>8:00am-9:00am</li>
+                        <li>10:00am-11:00am</li>
+                        <li>1:00pm-2:00pm</li>
+                    </ul>
+                    <p>List of Available Doctors:</p>
+                    <ul>
+                        <li>Adipiscing elit</li>
+                        <li>Lorem ipsum dolor</li>
+                        <li>Cras rutrum posuere</li>
+                    </ul>
+                    <button class="book" onclick="window.location.href='form.html'">Book Now</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Clinic Name</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. 
+                    In id cursus in pretium tellus odio convallis. Tempus leo eu aenean sed diam urna tempor.
+                </p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook-messenger"></i></a>
+                    <a href="#"><i class="fab fa-telegram-plane"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Features</h4>
+                <ul>
+                    <li><a href="#">AI Voice Assistant</a></li>
+                    <li><a href="#">Patient Booking</a></li>
+                    <li><a href="#">Clinic Info</a></li>
+                    <li><a href="#">Branches</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Lorem ipsum</a></li>
+                    <li><a href="#">Lorem ipsum</a></li>
+                    <li><a href="#">Lorem ipsum</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
