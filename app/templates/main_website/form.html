@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+    <link rel="stylesheet" href="Global_style.css">
+</head>
+<body>
+    <header>
+        <h2>Teethnology</h2>
+        <nav>
+            <ul>
+                <li><a class="nav-link" href="Home.html">HOME</a></li>
+                <li><a class="nav-link" href="#branch">BRANCH</a></li>
+                <li><a class="nav-link" href="#services">SERVICES</a></li>
+                <li><a class="nav-link" href="contact.html">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <div class="button">
+            <a href="login.html" class="login">LOGIN</a>
+            <a href="book.html" class="book">BOOK NOW</a>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2>Book an Appointment</h2>
+            <hr>
+                
+                <legend>Patient Information</legend>
+                    <div>
+                        <label for="fullname">Full Name:</label>
+                        <input type="text" id="fullname" name="fullname" required>
+                        <label for="gender">Gender:</label>
+                        <input type="text" id="gender" name="gender" required>
+                    </div>
+                    <div>
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" id="dob" name="dob" required>
+                        <label for="contact">Contact Number:</label>
+                        <input type="text" id="contact" name="contact" required>
+                    </div>
+                    <div>
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address" required>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                
+                <hr>
+                
+                <legend>Appointment Details</legend>
+                    <div>
+                        <label for="preferred">Preferred Date and Time:</label>
+                        <input type="datetime-local" id="preferred" name="preferred" required>
+                    </div>
+                    <div>
+                        <label for="alternative">Alternative Date / Time (Optional):</label>
+                        <input type="datetime-local" id="alternative" name="alternative">
+                    </div>
+                    <div>
+                        <label for="type">Type of appointment/ Reason for Visit:</label>
+                        <select id="type" name="type" required>
+                            <option value="">Select</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="cleaning">Cleaning</option>
+                            <option value="extraction">Extraction</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span>Is this your first visit?</span>
+                        <input type="radio" id="first-yes" name="first_visit" value="yes" required>
+                        <label for="first-yes">Yes</label>
+                        <input type="radio" id="first-no" name="first_visit" value="no">
+                        <label for="first-no">No</label>
+                    </div>
+
+                <hr>
+            
+                <div>
+                    <small>
+                        By submitting this form and the information provided is true and correct, and I give my consent for [Clinic Name] to collect and use your information for appointment and clinic administration purposes.
+                    </small>
+                </div>
+                <div>
+                    <input type="checkbox" id="agree" name="agree" required>
+                    <label for="agree">I agree</label>
+                </div>
+                <button type="submit" class="book">Submit</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Clinic Name</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. 
+                    In id cursus in pretium tellus odio convallis. Tempus leo eu aenean sed diam urna tempor.
+                </p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook-messenger"></i></a>
+                    <a href="#"><i class="fab fa-telegram-plane"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Features</h4>
+                <ul>
+                    <li><a href="#">AI Voice Assistant</a></li>
+                    <li><a href="#">Patient Booking</a></li>
+                    <li><a href="#">Clinic Info</a></li>
+                    <li><a href="#">Branches</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Lorem ipsum</a></li>
+                    <li><a href="#">Lorem ipsum</a></li>
+                    <li><a href="#">Lorem ipsum</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
