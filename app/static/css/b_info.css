@@ -1,0 +1,575 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+}
+
+/* Header */
+header {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 56px;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    z-index: 1000;
+}
+
+header h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 0 40px 0 0;
+    line-height: 56px;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+nav ul li {
+    display: flex;
+    align-items: center;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.97em;
+    font-weight: 400;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+    color: #1ba6ab;
+    font-weight: 600;
+}
+
+.button {
+    display: flex;
+    margin-right: 20px;
+}
+
+.button a {
+    background: #1ba6ab;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 0.97em;
+    font-weight: 500;
+    text-decoration: none;
+    margin-right: 25px;
+    transition: background 0.2s;
+}
+
+.button a.login {
+    background: #009ca6;
+}
+
+.button a.book {
+    background: #1ba6ab;
+}
+
+.button a:hover {
+    background: #007c85;
+}
+
+/* Branch Carousel */
+#branch-carousel {
+    width: 100%;
+    height: 260px;
+    background: #e6e6e6;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    margin-top: 56px;
+    overflow: hidden;
+}
+
+.branch-img-carousel {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Branch Details Section */
+#branch {
+    background: #fff;
+    padding: 32px 0 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.branch-header {
+    text-align: left;
+    margin-right: 90vh;
+    margin-bottom: 18px;
+}
+
+.branch-header h2 {
+    color: #009ca6;
+    font-size: 4em;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    letter-spacing: 1px;
+}
+
+.branch-header span {
+    color: #009ca6;
+    font-weight: 700;
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.branch-header p {
+    color: #222;
+    font-size: 1em;
+    margin: 0 auto 8px auto;
+    max-width: 700px;
+}
+
+.branch-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.branch-details-card {
+    padding: 24px 38px;
+    display: flex;
+    gap: 70px;
+    align-items: flex-start;
+    justify-content: center;
+    background: transparent;
+    min-width: 500px;
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+}
+
+.branch-details-card::after {
+    content: "";
+    position: absolute;
+    top: 16px;
+    bottom: 16px;
+    left: 50%;
+    width: 2px;
+    background: #bcbcbc;
+    transform: translateX(-50%);
+    opacity: 0.7;
+}
+
+.branch-info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* LOCATION and SERVICE LIST headings */
+.branch-info h4 {
+    color: #009ca6;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    padding: 4px 16px;
+    display: inline-block;
+    margin-top: 0;
+    margin-left: 140px;
+}
+
+.branch-info:last-child h4 {
+    background: none;
+    padding: 0;
+}
+
+/* SERVICE LIST heading style */
+.branch-info:last-child h4 {
+    color: #009ca6;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    background: none;
+    padding: 0;
+    display: inline-block;
+}
+
+/* Service List Bullets */
+.branch-info ul {
+    list-style: none;
+    padding-left: 10px;
+    margin: 0 0 8px 0;
+}
+
+.branch-info ul li {
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: #222;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+.branch-info ul li::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #616161;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+@media (max-width: 700px) {
+    .branch-details-card {
+        flex-direction: column;
+        gap: 18px;
+    }
+    .branch-details-card::after {
+        display: none;
+    }
+    .branch-info {
+        width: 100%;
+    }
+}
+
+/* Appointment Section */
+#appointment {
+    width: 100%;
+    background: url('../../static/images/BG\ IN\ CALENDAR.jpg') center/cover no-repeat;
+    min-height: 380px;
+    padding: 48px 0 56px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+#appointment::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(247, 247, 247, 0.651);
+    z-index: 1;
+}
+
+.services-header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.services-header h2 {
+    color: #009ca6;
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.appointment-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px;
+    flex-wrap: wrap;
+}
+
+.appointment-calendar {
+    background: rgba(255,255,255,0.10);
+    box-shadow: none;
+    border-radius: 16px;
+    padding: 24px 32px 18px 32px;
+    min-width: 350px;
+    max-width: 420px;
+    margin-right: 0;
+    margin-left: 0;
+    position: relative;
+}
+
+.appointment-calendar h4 {
+    color: #009ca6;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.appointment-calendar table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    background: transparent;
+}
+
+
+.appointment-calendar th,
+.appointment-calendar td {
+    text-align: center;
+    padding: 9px 5px;
+    font-size: 1.15em;
+    color: #222;
+    background: transparent;
+    border: none;
+    font-weight: 500;
+}
+
+.appointment-calendar th {
+    color: #222;
+    font-weight: 500;
+    font-size: 1em;
+    letter-spacing: 1px;
+    background: transparent;
+    padding-bottom: 6px;
+}
+
+.appointment-calendar td.selected,
+.appointment-calendar td.today {
+    background: #009ca6;
+    color: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    font-weight: 700;
+}
+
+.appointment-calendar td {
+    transition: background 0.2s, color 0.2s;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+}
+
+.appointment-calendar td:hover {
+    background: #e0f7fa;
+    color: #009ca6;
+}
+
+/*information card*/
+.appointment-info {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    padding: 24px 32px;
+    min-width: 300px;
+    max-width: 320px;
+    margin-left: 0;
+    position: relative;
+}
+
+.appointment-info h4,
+.appointment-info .info-title {
+    color: #009ca6;
+    font-size: 1.05em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.appointment-info .info-title {
+    border-bottom: 1px solid #bcbcbc;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.appointment-info ul {
+    padding-left: 0;
+    margin: 0 0 12px 0;
+    color: #222;
+    font-size: 1em;
+    list-style: none;
+}
+
+.appointment-info li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 0.98em;
+}
+
+.appointment-info li .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    background: #1ba6ab;
+}
+
+.appointment-info li .dot.gray {
+    background: #bcbcbc;
+}
+
+.appointment-info button.book,
+.appointment-info .book-btn {
+    margin-top: 18px;
+    background: #1ba6ab;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: block;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.appointment-info button.book:hover,
+.appointment-info .book-btn:hover {
+    background: #007c85;
+}
+
+@media (max-width: 900px) {
+    .appointment-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+    .appointment-calendar, .appointment-info {
+        min-width: 220px;
+        max-width: 100%;
+    }
+}
+/* Footer */
+footer {
+    background: #009ca6;
+    color: #fff;
+    padding: 32px 0 24px 0;
+    margin-top: 0;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.footer-column {
+    flex: 1 1 180px;
+    min-width: 180px;
+    margin-right: 24px;
+}
+
+.footer-column h3,
+.footer-column h4 {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.footer-column p {
+    font-size: 0.95em;
+    color: #e0e0e0;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 6px;
+}
+
+.footer-column ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.97em;
+    transition: text-decoration 0.2s;
+}
+
+.footer-column ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-social {
+    margin-top: 10px;
+}
+
+.footer-social a {
+    color: #fff;
+    font-size: 1.2em;
+    margin-right: 12px;
+    transition: color 0.2s;
+    display: inline-block;
+}
+
+.footer-social a:hover {
+    color: #e0e0e0;
+}
+/* Responsive Design */
+@media (max-width: 1100px) {
+    .branch-details-card, .appointment-container, .footer-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 8px;
+        gap: 18px;
+        min-width: 0;
+        max-width: 100%;
+    }
+    .branch-details-card {
+        gap: 18px;
+    }
+}
+
+@media (max-width: 700px) {
+    #branch, #appointment {
+        padding: 18px 2vw;
+    }
+    #branch-carousel {
+        height: 140px;
+    }
+    .footer-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .branch-details-card, .appointment-container {
+        padding: 12px 4px;
+    }
+}

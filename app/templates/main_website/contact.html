@@ -4,66 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
-    <link rel="stylesheet" href="Global_style.css">
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="../../static/css/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h2>Teethnology</h2>
+        <h2>Logo Clinic Name</h2>
         <nav>
             <ul>
                 <li><a href="Home.html">HOME</a></li>
                 <li><a href="#branch">BRANCH</a></li>
                 <li><a href="#services">SERVICES</a></li>
-                <li><a href="contact.html" class="active">CONTACT US</a></li>
+                <li><a class="nav-link active" href="contact.html">CONTACT US</a></li>
+                <li><a href="#about-us">ABOUT US</a></li>
             </ul>
         </nav>
-        <div>
-            <a href="login.html">LOGIN</a>
-            <a href="form.html">BOOK NOW</a>
+        <div class="button">
+            <a href="login.html" class="login">LOGIN</a>
+            <a href="form.html" class="book">BOOK NOW</a>
         </div>
     </header>
-    <div>
-        <img src="Images for teethnology/pic in contact.jpg" alt="Clinic Interior" width="100%">
+    <div class="contact-header">
+        <img src="../../static/images/pic in contact.jpg" alt="Clinic Interior">
         <h1>CONTACT US</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada, purus eget accumsan aliquam, est enim aliquet, sapien.</p>
     </div>
     <main>
-        <section>
+        <section class="contact-info">
             <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
                 <h3>Email Address</h3>
                 <p>example@gmail.com</p>
             </div>
-            <div>
+            <div class="contact-icon">
+                <i class="fas fa-phone"></i>
                 <h3>Phone Number</h3>
                 <p>(123) 456-7890</p>
             </div>
-            <div>
+            <div class="contact-icon">  
+                <i class="fas fa-map-marker-alt"></i> 
                 <h3>Office Location</h3>
                 <p>Ad Hiora torquent</p>
                 <p>Ad Hiora torquent</p>
             </div>
-            <div>
+            <div class="contact-icon">
+                <i class="fas fa-clock"></i>
                 <h3>Working Day</h3>
                 <p>Mon - Fri: 9:00 - 17:00</p>
                 <p>Sun - Fri: 9:00 - 17:00</p>
             </div>
         </section>
-        <section>
-            <h4>Contact</h4>
-            <h2>Get in touch with us</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque tristique.</p>
-            <form>
-                <input type="text" name="name" placeholder="Name">
-                <input type="email" name="email" placeholder="Email">
-                <input type="text" name="phone" placeholder="Phone Number">
-                <input type="text" name="subject" placeholder="Subject">
-                <textarea name="message" placeholder="Message"></textarea>
-                <button type="submit">SEND MESSAGE</button>
-            </form>
+        <section class="contact-form-row">
+            <div class="contact-form">
+                <h3>Contact Us</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque tristique.</p>
+                <form>
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="phone" placeholder="Phone Number" required>
+                    <input type="text" name="subject" placeholder="Subject" required>
+                    <textarea name="message" placeholder="Message" required></textarea>
+                    <button type="submit">SEND MESSAGE</button>
+                </form>
+            </div>
+            <aside class="contact-image">
+            <img src="../../static/images/contact.jpg" alt="Dentist Team" width="100%">
+            </aside>
         </section>
-        <aside>
-            <img src="Images for teethnology/contact.jpg" alt="Dentist Team" width="100%">
-        </aside>
     </main>
     <footer>
         <div class="footer-container">

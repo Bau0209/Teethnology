@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teethnology Patient Portal</title>
-    <link rel="stylesheet" href="Global_style.css">
+    <link rel="stylesheet" href="../../static/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h2>Teethnology</h2>
+        <h2>Logo Clinic Name</h2>
         <nav>
             <ul>
                 <li><a class="nav-link active" href="Home.html">HOME</a></li>
                 <li><a href="#branch">BRANCH</a></li>
                 <li><a href="#services">SERVICES</a></li>
                 <li><a href="contact.html">CONTACT US</a></li>
+                <li><a href="#about-us">ABOUT US</a></li>
             </ul>
         </nav>
         <div class="button">
@@ -24,10 +25,10 @@
         </div>
     </header>
     <main>
-        <section id="welcome" style="background-image: url('C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\bg landing page.jpeg'); background-size: cover; background-position: center; min-height: 350px; display: flex; align-items: center; position: relative;">
-            <img src="../Images for teethnology/download (2).png" alt="Dentist">
-            <div>
-                <h2 style="margin: 0 0 12px 0; font-size: 1.7em;">Ask me a Question</h2>
+        <section id="welcome">
+            <img src="../../static/images/download (2).png" alt="Doctor Avatar" class="doctor-avatar">
+            <div class="chat-input-row">
+                <h2>Ask me a Question</h2>
                 <div >
                     <input type="text" placeholder="Type Something..." >
                     <button>
@@ -38,30 +39,16 @@
         </section>
         <section id="branch">
             <div class="branch-header">
-                <h2>BRANCHES</h2>
-                <p>Visit Any of Our Branches</p>
+                <h2>OUR CLINIC</h2>
+                <p>Visit us on our Clinic</p>
             </div>
             <div class="branch-content">
                 <div class="branch-list">
-                    <button class="branch-btn active" onclick="showBranch('quezon')">QUEZON CITY</button>
-                    <button class="branch-btn" onclick="showBranch('manila')">MANILA CITY</button>
+                    <button class="branch-btn active" onclick="showBranch('manila')">MANILA CITY</button>
                 </div>
                 <div class="branch-details-wrapper">
-                    <div id="quezon" class="branch-details-card">
-                        <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\quezon clinic example.jpg" alt="Quezon City Clinic" class="branch-img">
-                        <div class="branch-info">
-                            <p><strong>Name of the Clinic:</strong><br>Lorem ipsum</p>
-                            <p><strong>Address:</strong><br>Lorem ipsum dolor sit amet, consectetur</p>
-                            <p><strong>Description:</strong><br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eleifend tincidunt sapien ut tincidunt. 
-                                Donec egestas eget dolor ac eleifend. In viverra lectus fringilla, commodo urna sed, luctus eros. 
-                                Pellentesque bibendum dolor et tempor tempus.
-                            </p>
-                            <a class="view-more-btn" href="branch.html">View More</a>
-                        </div>
-                    </div>
-                    <div id="manila" class="branch-details-card" style="display:none;">
-                        <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\manila clinic.jpg" alt="Manila City Clinic" class="branch-img">
+                    <div id="manila" class="branch-details-card">
+                        <img src="../../static/images/quezon clinic example.jpg" alt="Manila City Clinic" class="branch-img">
                         <div class="branch-info">
                             <p><strong>Name of the Clinic:</strong><br>Lorem ipsum</p>
                             <p><strong>Address:</strong><br>Lorem ipsum dolor sit amet, consectetur</p>
@@ -86,9 +73,9 @@
             <div class="services-cards">
                 <!-- Service Card 1 -->
                 <div class="service-card">
-                    <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\Dental Examination(BG).png" alt="Dental Examination" class="service-img">
+                    <img src="../../static/images/Dental Examination(BG).png" alt="Dental Examination" class="service-img">
                     <div class="service-icon">
-                        <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\Dental Examination.png" alt="Exam Icon">
+                        <img src="../../static/images/Dental Examination.png" alt="Exam Icon">
                     </div>
                     <h3>Dental Examination</h3>
                     <p>
@@ -97,9 +84,9 @@
                 </div>
                 <!-- Service Card 2 -->
                 <div class="service-card">
-                    <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\Root canal treatment(BG).png" alt="Root Canal Treatment" class="service-img">
+                    <img src="../../static/images/Root canal treatment(BG).png" alt="Root Canal Treatment" class="service-img">
                     <div class="service-icon">
-                        <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\Root canal treatment.png" alt="Root Canal Icon">
+                        <img src="../../static/images/Root canal treatment.png" alt="Root Canal Icon">
                     </div>
                     <h3>Root Canal Treatment</h3>
                     <p>
@@ -108,9 +95,9 @@
                 </div>
                 <!-- Service Card 3 -->
                 <div class="service-card">
-                    <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\dentures(bg).jpg" alt="Dentures" class="service-img">
+                    <img src="../../static/images/dentures(bg).jpg" alt="Dentures" class="service-img">
                     <div class="service-icon">
-                        <img src="C:\Users\admin\OneDrive\Desktop\IT Files\2nd year\VS code File\HTML AND CSS\Teethnology\Images for teethnology\Dentures.png" alt="Dentures Icon">
+                        <img src="../../static/images/Dentures.png" alt="Dentures Icon">
                     </div>
                     <h3>Dentures</h3>
                     <p>
@@ -118,6 +105,22 @@
                     </p>
                 </div>
             </div>
+        </section>
+        <section id="about-us">
+            <div class="about-header">
+                <h2>ABOUT US</h2>
+                <p>We are a team of dedicated professionals committed to providing the best dental care.</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Quisque faucibus ex sapien vitae pellentesque sem placerat. 
+                        In id cursus in pretium tellus odio convallis. Tempus leo eu aenean sed diam urna tempor.
+                    </p>
+                    <p>
+                        Nullam sagittis hendrerit elit vitae faucibus. <br>In augue urna, consequat quis accumsan non, vestibulum id dui. 
+                        Curabitur suscipit rutrum tellus.
+                    </p>
         </section>
     </main>
     <footer>
