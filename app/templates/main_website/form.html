@@ -4,80 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book an Appointment</title>
-    <link rel="stylesheet" href="Global_style.css">
+    <link rel="stylesheet" href="../../static/css/main.css">
+    <link rel="stylesheet" href="../../static/css/form.css">
 </head>
 <body>
     <header>
-        <h2>Teethnology</h2>
+        <h2>Logo Clinic Name</h2>
         <nav>
             <ul>
-                <li><a class="nav-link" href="Home.html">HOME</a></li>
-                <li><a class="nav-link" href="#branch">BRANCH</a></li>
-                <li><a class="nav-link" href="#services">SERVICES</a></li>
-                <li><a class="nav-link" href="contact.html">CONTACT US</a></li>
+                <li><a href="Home.html">HOME</a></li>
+                <li><a href="#branch">BRANCH</a></li>
+                <li><a href="#services">SERVICES</a></li>
+                <li><a href="contact.html">CONTACT US</a></li>
+                <li><a href="#about-us">ABOUT US</a></li>
             </ul>
         </nav>
         <div class="button">
             <a href="login.html" class="login">LOGIN</a>
-            <a href="book.html" class="book">BOOK NOW</a>
+            <a href="form.html" class="book">BOOK NOW</a>
         </div>
     </header>
     <main>
-        <section>
-            <h2>Book an Appointment</h2>
-            <hr>
-                
+        <section class="appointment-form">
+            <form action="#" method="post" class="appointment-form-container">
+                <h2>Book an Appointment</h2>
+                <hr>
                 <legend>Patient Information</legend>
-                    <div>
-                        <label for="fullname">Full Name:</label>
-                        <input type="text" id="fullname" name="fullname" required>
-                        <label for="gender">Gender:</label>
-                        <input type="text" id="gender" name="gender" required>
+                <!-- Name fields in one row -->
+                <div class="form-row">
+                    <div class="form-third">
+                        <label for="lastname">Last Name:</label>
+                        <input type="text" id="lastname" name="lastname" required>
                     </div>
-                    <div>
+                    <div class="form-third">
+                        <label for="firstname">First Name:</label>
+                        <input type="text" id="firstname" name="firstname" required>
+                    </div>
+                    <div class="form-third">
+                        <label for="middlename">Middle Name:</label>
+                        <input type="text" id="middlename" name="middlename">
+                    </div>
+                </div>
+                <!-- Date of Birth and Gender in one row -->
+                <div class="form-row">
+                    <div class="form-half">
                         <label for="dob">Date of Birth:</label>
                         <input type="date" id="dob" name="dob" required>
+                    </div>  
+                </di>
+                <div class="form-row">
+                        <label>Sex:</label>
+                        <div class="radio-group">
+                            <label class="radio-inline">
+                                <input type="radio" id="gender-male" name="gender" value="male" required>
+                                Male
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" id="gender-female" name="gender" value="female">
+                                Female
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" id="gender-other" name="gender" value="other">
+                                Other
+                            </label>
+                        </div>
+                <!-- Contact and Email in one row -->
+                <div class="form-row">
+                    <div class="form-half">
                         <label for="contact">Contact Number:</label>
                         <input type="text" id="contact" name="contact" required>
                     </div>
-                    <div>
-                        <label for="address">Address:</label>
-                        <input type="text" id="address" name="address" required>
+                    <div class="form-half">
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                
+                </div>
+                <div class="form-row">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
                 <hr>
                 
                 <legend>Appointment Details</legend>
-                    <div>
-                        <label for="preferred">Preferred Date and Time:</label>
-                        <input type="datetime-local" id="preferred" name="preferred" required>
-                    </div>
-                    <div>
-                        <label for="alternative">Alternative Date / Time (Optional):</label>
-                        <input type="datetime-local" id="alternative" name="alternative">
-                    </div>
-                    <div>
-                        <label for="type">Type of appointment/ Reason for Visit:</label>
-                        <select id="type" name="type" required>
-                            <option value="">Select</option>
-                            <option value="consultation">Consultation</option>
-                            <option value="cleaning">Cleaning</option>
-                            <option value="extraction">Extraction</option>
-                            <option value="others">Others</option>
-                        </select>
-                    </div>
-                    <div>
-                        <span>Is this your first visit?</span>
-                        <input type="radio" id="first-yes" name="first_visit" value="yes" required>
-                        <label for="first-yes">Yes</label>
-                        <input type="radio" id="first-no" name="first_visit" value="no">
-                        <label for="first-no">No</label>
-                    </div>
-
+                <div class="form-row">
+                    <label for="preferred">Preferred Date and Time:</label>
+                    <input type="datetime-local" id="preferred" name="preferred" required>
+                </div>
+                <div class="form-row">
+                    <label for="alternative">Alternative Date / Time (Optional):</label>
+                    <input type="datetime-local" id="alternative" name="alternative">
+                </div>
+                <div class="form-row">
+                    <span>Walk In Patients?</span> 
+                    <input type="radio" id="first-yes" name="first_visit" value="yes" required>
+                    <label for="first-yes">Yes</label>
+                    <input type="radio" id="first-no" name="first_visit" value="no">
+                    <label for="first-no">No</label>
+                </div>
+                <div class="form-row">
+                    <span>Is this your first visit?</span>
+                    <input type="radio" id="first-yes" name="first_visit" value="yes" required>
+                    <label for="first-yes">Yes</label>
+                    <input type="radio" id="first-no" name="first_visit" value="no">
+                    <label for="first-no">No</label>
+                </div>
                 <hr>
-            
                 <div>
                     <small>
                         By submitting this form and the information provided is true and correct, and I give my consent for [Clinic Name] to collect and use your information for appointment and clinic administration purposes.
