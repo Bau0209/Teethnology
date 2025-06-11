@@ -289,11 +289,12 @@
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-    padding: 24px 32px;
-    min-width: 300px;
-    max-width: 320px;
+    padding: 28px 32px 24px 32px;
+    min-width: 280px;
+    max-width: 340px;
     margin-left: 0;
     position: relative;
+    
 }
 
 .appointment-info h4,
@@ -301,9 +302,10 @@
     color: #009ca6;
     font-size: 1.05em;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
     letter-spacing: 1px;
     text-align: center;
+    padding-bottom: 0;
 }
 
 .appointment-info .info-title {
@@ -311,16 +313,20 @@
     padding-bottom: 8px;
     margin-bottom: 16px;
     font-size: 1em;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 1px;
+}
+.appointment-info p {
+    color: #222;
+    font-size: 0.95em;
+    margin-bottom: 12px;
+    font-weight: 600;
 }
 
 .appointment-info ul {
-    padding-left: 0;
-    margin: 0 0 12px 0;
-    color: #222;
-    font-size: 1em;
     list-style: none;
+    padding-left: 0;
+    margin-bottom: 16px;
 }
 
 .appointment-info li {
@@ -331,11 +337,11 @@
 }
 
 .appointment-info li .dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     display: inline-block;
-    margin-right: 8px;
+    margin-right: 10px;
     background: #1ba6ab;
 }
 
