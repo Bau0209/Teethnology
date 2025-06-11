@@ -11,11 +11,11 @@
 
 .appointment-form::before {
     content: "";
-    position: fixed;
+    position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(255,255,255,0.6);
     width: 100vw;
-    height: 100vh;
+    height: 227.5vh;
     z-index: 0;
 }
 .appointment-form-container {
@@ -205,6 +205,7 @@ legend {
     margin-right: 8px;
 }
 
+
 /* --- Responsive adjustments --- */
 @media (max-width: 900px) {
     .form-row {
@@ -281,5 +282,4 @@ legend {
 nav ul li a.active {
     color: #007bff;
     font-weight: bold;
-    border-bottom: 2px solid #007bff;
 }
