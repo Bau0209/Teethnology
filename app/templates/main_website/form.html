@@ -13,10 +13,10 @@
         <nav>
             <ul>
                 <li><a href="Home.html">HOME</a></li>
-                <li><a href="#branch">BRANCH</a></li>
-                <li><a href="#services">SERVICES</a></li>
+                <li><a href="Home.html#branch">BRANCH</a></li>
+                <li><a href="Home.html#services">SERVICES</a></li>
                 <li><a href="contact.html">CONTACT US</a></li>
-                <li><a href="#about-us">ABOUT US</a></li>
+                <li><a href="Home.html#about-us">ABOUT US</a></li>
             </ul>
         </nav>
         <div class="button">
@@ -95,18 +95,27 @@
                     <input type="datetime-local" id="alternative" name="alternative">
                 </div>
                 <div class="form-row">
-                    <span>Walk In Patients?</span> 
-                    <input type="radio" id="first-yes" name="first_visit" value="yes" required>
-                    <label for="first-yes">Yes</label>
-                    <input type="radio" id="first-no" name="first_visit" value="no">
-                    <label for="first-no">No</label>
+                    <label>Walk In Patients?</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="walkin" value="yes" required> Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="walkin" value="no"> No
+                        </label>
+                    </div>
                 </div>
+
                 <div class="form-row">
-                    <span>Is this your first visit?</span>
-                    <input type="radio" id="first-yes" name="first_visit" value="yes" required>
-                    <label for="first-yes">Yes</label>
-                    <input type="radio" id="first-no" name="first_visit" value="no">
-                    <label for="first-no">No</label>
+                    <label>Is this your first visit?</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="firstvisit" value="yes" required> Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="firstvisit" value="no"> No
+                        </label>
+                    </div>
                 </div>
                 <hr>
                 <div>
@@ -162,5 +171,6 @@
             </div>
         </div>
     </footer>
+    <script src="../../static/js/main.js"></script>
 </body>
 </html>
