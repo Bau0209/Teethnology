@@ -11,18 +11,10 @@
 <body>
     <header>
         <h2>Logo Clinic Name</h2>
-        <nav>
-            <ul>
-                <li><a href="Home.html">HOME</a></li>
-                <li><a class="nav-link active" href="Home.html#branch">BRANCH</a></li>
-                <li><a href="Home.html#services">SERVICES</a></li>
-                <li><a href="contact.html">CONTACT US</a></li>
-                <li><a href="Home.html#about-us">ABOUT US</a></li>
-            </ul>
-        </nav>
+        {% include 'main_website/nav.html' %}
         <div class="button">
             <a href="login.html" class="login">LOGIN</a>
-            <a href="form.html" class="book">BOOK NOW</a>
+            <a href="{{ url_for('main.form') }}" class="book">BOOK NOW</a>
         </div>
     </header>
     <main>
@@ -96,7 +88,7 @@
                         <li>Lorem ipsum dolor</li>
                         <li>Cras rutrum posuere</li>
                     </ul>
-                    <button class="book" onclick="window.location.href='form.html'">Book Now</button>
+                    <button class="book" onclick="window.location.href='/form'">Book Now</button>
                 </div>
             </div>
         </section>

@@ -13,3 +13,7 @@ def contact():
 @main.route('/form')
 def form():
     return render_template('/main_website/form.html')
+
+@main.route('/branch')
+def branch():
+    return render_template('/main_website/branch.html')

@@ -251,35 +251,3 @@ legend {
         flex: 1 1 100%;
     }
 }
-/* Responsive Navigation */
-.hamburger {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    margin-right: 1rem;
-}
-@media (max-width: 900px) {
-    nav ul {
-        display: none;
-        flex-direction: column;
-        background: #fff;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 200px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        z-index: 100;
-    }
-    nav ul.nav-open {
-        display: flex;
-    }
-    .hamburger {
-        display: inline-block;
-    }
-}
-nav ul li a.active {
-    color: #007bff;
-    font-weight: bold;
-}
