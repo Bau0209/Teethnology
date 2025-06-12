@@ -12,16 +12,16 @@
         <h2>Logo Clinic Name</h2>
         <nav>
             <ul>
-                <li><a class="nav-link active" href="Home.html">HOME</a></li>
-                <li><a href="Home.html#branch">BRANCH</a></li>
-                <li><a href="Home.html#services">SERVICES</a></li>
-                <li><a href="Home.html#about-us">ABOUT US</a></li>
-                <li><a href="contact.html">CONTACT US</a></li>
+                <li><a class="nav-link active" href="{{ url_for('main.homepage') }}">HOME</a></li>
+                <li><a href="{{ url_for('main.homepage') }}#branch">BRANCH</a></li>
+                <li><a href="{{ url_for('main.homepage') }}#services">SERVICES</a></li>
+                <li><a href="{{ url_for('main.homepage') }}#about-us">ABOUT US</a></li>
+                <li><a href="{{ url_for('main.contact') }}">CONTACT US</a></li>
             </ul>
         </nav>
         <div class="button">
             <a href="login.html" class="login">LOGIN</a>
-            <a href="form.html" class="book">BOOK NOW</a>
+            <a href="{{ url_for('main.form') }}" class="book">BOOK NOW</a>
         </div>
     </header>
     <main>
