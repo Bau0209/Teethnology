@@ -3,3 +3,5 @@ compiledOutput.txt
 .env
 __pycache__/
 *.pyc
+"venv/" 
+".env" 
