@@ -1,14 +1,19 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
 from dotenv import load_dotenv
-import os
+
+db = SQLAlchemy()
 
 def create_app():
     # Load environment variables from .env
     load_dotenv()
     
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config.from_object(Config)
 
+    db.init_app(app)
+    
     # Import blueprints from views
     from app.views import main, owner, staff, login
 
