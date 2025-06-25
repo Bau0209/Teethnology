@@ -110,22 +110,6 @@
     margin-left: 18px;
 }
 
-/* Save button */
-.btn-save {
-    background: #0097a7;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.btn-save:hover {
-    background: #007c91;
-    color: white;
-}
-
 /* Medical history list */
 .medical-history-list {
     list-style-type: decimal;
@@ -142,7 +126,21 @@
     color: #555;
      margin-top: 0.3rem;
 }
+/* Save button */
+.btn-save {
+    background: #0097a7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
 
+.btn-save:hover {
+    background: #007c91;
+    color: white;
+}
 /*procedure style*/
 .summary-container {
     padding: 20px;
