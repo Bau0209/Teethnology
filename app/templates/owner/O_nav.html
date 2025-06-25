@@ -1,12 +1,10 @@
-<nav>
-    <ul>
-        <li><a class="nav-link" href="{{ url_for('owner.homepage') }}">Dashboard</a></li>
-        <li>Branches</li>
-        <li>Appointments</li>
-        <li>Patients</li>
-        <li>Employees</li>
-        <li>Inventory</li>
-        <li>Finance</li>
-        <li>Reports</li>
-    </ul>
-</nav>
+<ul>
+    <li><a href="{{ url_for('dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+    <li><a href="{{ url_for('branches') }}"><i class="fa fa-code-branch"></i> Branches</a></li>
+    <li><a href="{{ url_for('appointments') }}"><i class="fa fa-calendar"></i> Appointments</a></li>
+    <li><a href="{{ url_for('patients') }}"><i class="fa fa-users"></i> Patients</a></li>
+    <li><a href="{{ url_for('employees') }}"><i class="fa fa-user-md"></i> Employees</a></li>
+    <li><a href="{{ url_for('inventory') }}"><i class="fa fa-box"></i> Inventory</a></li>
+    <li><a href="{{ url_for('transactions') }}"><i class="fa fa-credit-card"></i> Transaction</a></li>
+    <li><a href="{{ url_for('reports') }}"><i class="fa fa-file-alt"></i> Reports</a></li>
+</ul>

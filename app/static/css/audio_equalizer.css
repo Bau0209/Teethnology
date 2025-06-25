@@ -1,0 +1,36 @@
+.audio-equalizer-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(120,120,120,0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equalizer-container {
+  display: flex;
+  gap: 12px;
+}
+
+.bar {
+  width: 18px;
+  height: 60px;
+  background: #fff;
+  border-radius: 8px;
+  animation: equalize 1s infinite;
+}
+
+.bar1 { animation-delay: 0s; }
+.bar2 { animation-delay: 0.2s; }
+.bar3 { animation-delay: 0.4s; }
+.bar4 { animation-delay: 0.2s; }
+.bar5 { animation-delay: 0s; }
+
+@keyframes equalize {
+  0%, 100% { height: 30px; }
+  20% { height: 60px; }
+  40% { height: 40px; }
+  60% { height: 55px; }
+  80% { height: 35px; }
+}

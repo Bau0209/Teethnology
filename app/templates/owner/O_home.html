@@ -1,110 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Teethnology Dashboard</title>
-  <link rel="stylesheet" href="../../static/css/owner.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <title>Teethnology Dashboard</title>
+    <link rel="stylesheet" href="../../static/css/owner.css">
+    <link rel="stylesheet" href="../../static/css/audio_equalizer.css">
+    <link rel="stylesheet" href="../../static/css/confirmation_modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <div class="logo">🦷 TEETHNOLOGY</div>
-      {% include 'owner_website/nav.html' %}
-      <hr>
-      <div class="voice">
-        <p>TALK TO OUR<br/>VOICE ASSISTANT</p>
-        <i class="fas fa-microphone"></i>
-        <small>Say “Hi Jaye”</small>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="header">
-        <div class="user">👤 USERNAME</div>
-         <div class="account-container">
-        <div class="username" onclick="toggleDropdown()">Username</div>
-        
-        <div class="dropdown-menu" id="dropdownMenu">
-            <div class="dropdown-header">ACCOUNT</div>
-            <div class="dropdown-item">Profile</div>
-            <div class="dropdown-item">Settings</div>
-            
-            <div class="dropdown-header"></div>
-            <button class="dropdown-item" onclick="window.location.href='../../owner/login'">Logout</button>
+<div class="dashboard-container">
+   <header class="topbar">
+        <div class="topbar-left">
+            <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
+            <span class="topbar-title">TEETHNOLOGY</span>
         </div>
-    </div>
-      </header>
-
-      <section class="welcome">
-        <h2>Welcome Back,<br/><span>Marielle</span></h2>
-        <div class="stats">
-          <div class="card">
-            <p>Appointments Today</p>
-            <h3>12</h3>
-          </div>
-          <div class="card">
-            <p>Revenue Today</p>
-            <h3>₱10,500</h3>
-          </div>
+        <div class="topbar-right">
+            <span class="topbar-icon"><i class="fa fa-bell"></i></span>
+            <span class="topbar-icon"><i class="fa fa-user"></i></span>
+            </span><span class="topbar-username" id="userDropdownBtn">USERNAME
+              <div class="user-dropdown" id="userDropdownMenu">
+                <div class="user-dropdown-links">
+                  <a href="#">ACCOUNT</a>
+                  <a href="#">SECURITY</a>
+                </div>
+                <button class="logout-btn">Logout</button>
+              </div>
+            </span>
         </div>
-      </section>
+    </header>
+       <div class="dashboard-constainer">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+              {% include 'owner/O_nav.html' %}
+            </nav>
+            <hr>
+            <div class="voice-assistant">
+                <button title="Talk to our voice assistant">
+                    <i class="fa fa-microphone"></i>
+                </button>
+                <span>Say hi to our<br>voice assistant</span>
+            </div>
+            {% include 'owner/audio_euqalizer.html' %}
+        </aside>
 
-      <section class="middle">
-        <div class="appointments-tomorrow">
-          <h3>Patients Tomorrow<br/><span>Manila Branch</span></h3>
-          <div class="patient-info">
-            <p><strong>PATIENT NAME</strong><br/>Purpose of Appointment<br/>Contact Number<br/>Email</p>
-            <p><strong>PATIENT NAME</strong><br/>Purpose of Appointment<br/>Contact Number<br/>Email</p>
-          </div>
-          <button class="reminder-btn">Send Reminders</button>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Row -->
+        <div class="dashboard-top">
+            <!-- Left Column -->
+            <div class="dashboard-left">
+                <div class="card welcome-card">
+                    <h2>WELCOME BACK,<br>EDDIELYN</h2>
+                </div>
+                <div class="card info-card">
+                    <h2>Appointments Today</h2>
+                    <div class="number">12</div>
+                </div>
+                <div class="card info-card">
+                    <h2>Birthdays Today</h2>
+                    <div class="number">0</div>
+                </div>
+            </div>
+            <!-- Center Column -->
+            <div class="dashboard-center card">
+                <h3>PATIENTS TOMORROW</h3>
+                <select name="branch" class="branch-select">
+                      <option value="manila">Manila Branch</option>
+                      <option value="quezon">Quezon Branch</option>
+                    </select>
+                <hr>
+                <div class="patient-info">
+                    <strong>PATIENT NAME</strong><br>
+                    PURPOSE OF APPOINTMENT<br>
+                    CONTACT NUMBER<br>
+                    EMAIL<br><br>
+                    <strong>PATIENT NAME</strong><br>
+                    PURPOSE OF APPOINTMENT<br>
+                    CONTACT NUMBER<br>
+                    EMAIL<br><br>
+                    <strong>PATIENT NAME</strong><br>
+                    PURPOSE OF APPOINTMENT<br>
+                    CONTACT NUMBER<br>
+                    EMAIL<br>
+                </div>
+                <button class="send-reminders">Send Reminders</button>
+            </div>
+            <!-- Right Column -->
+            <div class="dashboard-right card appointment-requests">
+                <div class="appointement-requests-header">
+                    <span class="calendar-title">APPOINTMENTS</span>
+                    <div class="appointment-requests-controls">
+                      <select name="branch" class="branch-select">
+                        <option value="manila">Manila Branch</option>
+                        <option value="quezon">Quezon Branch</option>
+                      </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="request">
+                  <a href="#">View All</a>
+                    <div class="request-info">
+                        <strong>MM-DD-YYYY</strong><br>
+                        PATIENT NAME<br>
+                        PURPOSE OF APPOINTMENT
+                    </div>
+                    <div class="actions">
+                        <button class="accept">Accept</button>
+                        <button class="reject">Reject</button>
+                    </div>
+                </div>
+                <div class="request-info">
+                    <div>
+                        <strong>MM-DD-YYYY</strong><br>
+                        PATIENT NAME<br>
+                        PURPOSE OF APPOINTMENT
+                    </div>
+                    <div class="actions">
+                        <button class="accept">Accept</button>
+                        <button class="reject">Reject</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="requests">
-          <h3>Appointment Requests<br/><span>Manila Branch</span></h3>
-          <div class="request">
-            <p><strong>MM-DD-YYYY</strong><br/>Patient Name<br/>Purpose of Appointment</p>
-            <button class="accept">Accept</button>
-            <button class="contact">Contact</button>
-          </div>
-          <div class="request">
-            <p><strong>MM-DD-YYYY</strong><br/>Patient Name<br/>Purpose of Appointment</p>
-            <button class="accept">Accept</button>
-            <button class="contact">Contact</button>
-          </div>
+      <section class="calendar-card">
+        <div class="calendar-panel">
+          <div class="calendar-header">
+              <span class="calendar-title">APPOINTMENTS</span>
+              <div class="calendar-controls">
+                <button id="prev-month" class="calendar-nav">&lt;</button>
+                <span id="calendar-month"></span>
+                <select id="calendar-year" class="calendar-year-select"></select>
+                <button id="next-month" class="calendar-nav">&gt;</button>
+              </div>
+            </div>
+          <div id="calendar"></div>
         </div>
-      </section>
-
-      <section class="calendar-section">
-        <div class="calendar">
-          <h3>Appointments</h3>
-          <div class="month">Jan</div>
-          <table>
-            <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
-            <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td class="highlight">6</td><td>7</td></tr>
-            <tr><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td class="highlight today">15</td><td>14</td></tr>
-          </table>
-        </div>
-        <div class="details">
-          <h3>Manila Branch</h3>
-          <ul>
-            <li>
-              <strong>10:30am - 11:30am</strong><br/>
-              Patient Checkup — <a href="#">View Details</a>
+        <div class="calendar-details-panel">
+          <div class="calendar-details-header">
+            <select name="branch" class="branch-select">
+              <option value="manila">Manila Branch</option>
+              <option value="quezon">Quezon Branch</option>
+            </select>
+          </div>
+          <hr>
+          <ul class="calendar-details-list">
+            <li class="calendar-appointment">
+              <div class="appt-info">
+                <span class="appt-time">10:30am - 11:30am</span>
+                <div>
+                  <span class="appt-dot"></span>
+                  <span class="appt-type"><b>Patient Checkup</b></span>
+                </div>
+              </div>
+              <a href="#" class="appt-link">View Details</a>
             </li>
-            <li>
-              <strong>12:00pm - 1:00pm</strong><br/>
-              Bleaching — <a href="#">View Details</a>
+            <li class="calendar-appointment">
+              <div class="appt-info">
+                <span class="appt-time">11:30am - 12:30pm</span>
+                <div>
+                  <span class="appt-dot"></span>
+                  <span class="appt-type"><b>Bleaching</b></span>
+                </div>
+              </div>
+              <a href="#" class="appt-link">View Details</a>
             </li>
-            <li>
-              <strong>1:00pm - 3:00pm</strong><br/>
-              Patient Checkup — <a href="#">View Details</a>
+            <li class="calendar-appointment">
+              <div class="appt-info">
+                <span class="appt-time">1:00pm - 2:30pm</span>
+                <div>
+                  <span class="appt-dot"></span>
+                  <span class="appt-type"><b>Patient Checkup</b></span>
+                </div>
+              </div>
+              <a href="#" class="appt-link">View Details</a>
             </li>
           </ul>
         </div>
-      </section>
+      </section> 
     </main>
   </div>
+  <!-- ito yung functions for audio and modal kaso ayaw gumana sa akin
+  {% include 'owner/confirmation_modal.html' %}
+  {% include 'components/audio_equalizer.html' %}-->
+  <script src="../../static/js/owner.js"></script>
+  <script src="../../static/js/o_appoinment.js"></script>
 </body>
 </html>
