@@ -36,22 +36,25 @@
             </div>
             <div class="branch-content">
                 <div class="branch-list">
-                    <button class="branch-btn active" onclick="showBranch('manila')">MANILA CITY</button>
+                    {% for branch in branches %}
+                        <button class="branch-btn" onclick="showBranch('branch{{ loop.index }}')">
+                            {{ branch.branch_name.upper() }}
+                        </button>
+                    {% endfor %}
+                    <!-- <button class="branch-btn active" onclick="showBranch('manila')">MANILA CITY</button> -->
                 </div>
                 <div class="branch-details-wrapper">
-                    <div id="manila" class="branch-details-card">
-                        <img src="../../static/images/quezon clinic example.jpg" alt="Manila City Clinic" class="branch-img">
-                        <div class="branch-info">
-                            <p><strong>Name of the Clinic:</strong><br>Lorem ipsum</p>
-                            <p><strong>Address:</strong><br>Lorem ipsum dolor sit amet, consectetur</p>
-                            <p><strong>Description:</strong><br>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eleifend tincidunt sapien ut tincidunt. 
-                                Donec egestas eget dolor ac eleifend. In viverra lectus fringilla, commodo urna sed, luctus eros. 
-                                Pellentesque bibendum dolor et tempor tempus.
-                            </p>
-                            <a class="view-more-btn" href="{{ url_for('main.branch') }}">View More</a>
+                    {% for branch in branches %}
+                        <div id="branch{{ loop.index }}" class="branch-details-card" style="{% if loop.first %}display:block{% else %}display:none{% endif %}">
+                            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" alt="{{ branch.branch_name }}" class="branch-img">
+                            <div class="branch-info">
+                                <p><strong>Name of the Clinic:</strong><br>JCS Dental Clinic {{ branch.branch_name }}</p>
+                                <p><strong>Address:</strong><br>{{ branch.full_address }}</p>
+                                <p><strong>Description:</strong><br>{{ branch.clinic_description }}</p>
+                                <a class="view-more-btn" href="{{ url_for('main.branch') }}">View More</a>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
