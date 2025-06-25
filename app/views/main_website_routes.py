@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template
+from app.models.branches import Branch
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def homepage():
-    return render_template('/main_website/Home.html')
+    branches = Branch.query.all()
+    return render_template('/main_website/Home.html', branches=branches)
 
 @main.route('/contact')
 def contact():
