@@ -239,6 +239,7 @@
         
 .form-control[readonly] {
   background-color: #fffffff1;
+  border: none;
   cursor: not-allowed;
   border-color: none;
 }    
@@ -248,6 +249,46 @@
     font-weight: 500;
     color: #495057;
     margin: 0;
+}
+
+.form-info {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-info-row {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.form-info-item {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 5px;
+  flex: 1;
+}
+
+.form-info label {
+  font-weight: 500;
+  color: #495057;
+  white-space: nowrap;
+}
+
+.form-info-control {
+  padding: 6px 8px;
+  border-radius: 5px;
+  border: none;
+  background-color: #fffffff1;
+  cursor: not-allowed;
+  min-width: 150px;
+  flex: 1;
+  max-width: 100%;
 }
 
 .form-group {
