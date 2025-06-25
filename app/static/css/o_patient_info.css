@@ -268,7 +268,7 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    padding-right: 450px;
+    padding-right: 350px;
 }
 
 .dental-record-content {
@@ -311,7 +311,8 @@
 .form-control[readonly] {
   background-color: #f8f9fa;
   cursor: not-allowed;
-  border-color: #e9ecef;
+  border-color: none;
+
 }    
 
 .form-group label {
@@ -339,21 +340,21 @@
 }
 
 .checkbox-group {
-    grid-column: 3;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 3fr);
+    gap: 40px 8px;
     flex-wrap: wrap;
     justify-content: left;
-    gap: 10px;
     align-items: center;
-    text-align: center;
-    margin-right: 30px;
+    margin-right: 20px;
 }
+
 .form-subgroup label {
     grid-column: 1;
 }
 .form-check-inline {
     display: inline-flex;
-    align-items: left;
+    align-items: center;
     margin-right: 0;
 }
 
@@ -363,9 +364,10 @@
 }
 
 .form-control {
+
     grid-column: 3;
     width: 100%;
-    max-width: 250px;
+    max-width: 350px;
 }
 
 .form-check-input:disabled {
@@ -380,7 +382,7 @@
 
 .form-subgroup .checkbox-group,
 .form-subgroup .form-control {
-    grid-column: 3;
+    grid-column: 2;
 }
 
 .dental-record-section > .form-group:last-child {
