@@ -3,29 +3,6 @@
     const nav = document.querySelector('nav ul');
     if (!nav) return;
 
-    // Create hamburger button if not present
-    let hamburger = document.querySelector('.hamburger');
-    if (!hamburger) {
-        hamburger = document.createElement('button');
-        hamburger.className = 'hamburger';
-        hamburger.setAttribute('aria-label', 'Toggle navigation');
-        hamburger.innerHTML = '<i class="fa fa-bars"></i>';
-        nav.parentElement.insertBefore(hamburger, nav);
-    }
-
-    // Toggle nav menu on hamburger click
-    hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        nav.classList.toggle('nav-open');
-    });
-
-    // Close nav when clicking outside (for mobile)
-    document.addEventListener('click', function(e) {
-        if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-            nav.classList.remove('nav-open');
-        }
-    });
-
     // Close nav when a link is clicked (for mobile UX)
     nav.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {

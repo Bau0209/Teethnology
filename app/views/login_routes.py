@@ -2,11 +2,8 @@ from flask import Blueprint, render_template
 
 login = Blueprint('login', __name__)
 
-@login.route('/')
-def gateway():
-    return render_template('/login_page/portal_gateway.html')
 
-@login.route('/login')
+@login.route('/')
 def login_page():
     return render_template('/login_page/login.html')
 

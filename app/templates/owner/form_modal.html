@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/o_appointment_req.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <title>Book an Appointment</title>
+    </head>
+    <body>
+        <div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
+                <div class="modal-content" style="padding: 2rem;">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title w-100 text-center" style="color:#0097a7;font-weight:700;">Book an Appointment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="appointmentForm">
+                        <div class="mb-3"><b>Patient Information</b></div>
+                            <div class="row mb-2">
+                                <div class="col"><label>Full Name:</label><input type="text" class="form-control" name="name"></div>
+                                    <div class="col"><label>Gender:</label><input type="text" class="form-control" name="gender"></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                    <div class="col"><label>Date of Birth:</label><input type="date" class="form-control" name="dob"></div>
+                                    <div class="col"><label>Contact Number:</label><input type="text" class="form-control" name="contact"></div>
+                                    </div>
+                                    <div class="mb-2"><label>Address:</label><input type="text" class="form-control" name="address"></div>
+                                    <div class="mb-2"><label>Email:</label><input type="email" class="form-control" name="email"></div>
+                                    <hr>
+                                    <div class="mb-3"><b>Appointment Details</b></div>
+                                    <div class="mb-2">
+                                    <label>Preferred Date / Time:</label>
+                                    <input type="datetime-local" class="form-control" name="preferred_datetime">
+                                    </div>
+                                    <div class="mb-2">
+                                    <label>Alternative Date / Time (Optional):</label>
+                                    <input type="datetime-local" class="form-control" name="alternative_datetime">
+                                    </div>
+                                    <div class="mb-2">
+                                    <label>Type of appointment/Reason for Visit:</label>
+                                    <input type="text" class="form-control" name="reason">
+                                    </div>
+                                    <div class="mb-2">
+                                    <label>Is this your first visit?</label>
+                                    <div>
+                                        <input type="radio" name="first_visit" value="Yes"> Yes
+                                        <input type="radio" name="first_visit" value="No"> No
+                                    </div>
+                                    </div>
+                                    <hr>
+                                    <div class="mb-2">
+                                    <label>Terms and Conditions</label>
+                                    <input type="checkbox" name="agree" required> I agree
+                                    </div>
+                                    <div class="text-center">
+                                    <button type="submit" class="btn-submit" >Submit</button>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>   
+    </body> 
+</html>

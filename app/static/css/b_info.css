@@ -1,4 +1,3 @@
-
 /* Branch Carousel */
 #branch-carousel {
     width: 100%;
@@ -28,33 +27,98 @@
     align-items: center;
 }
 
+/* Responsive branch-header with scalable margin and font sizes */
 .branch-header {
     text-align: left;
-    margin-right: 90vh;
+    margin-right: 0; 
     margin-bottom: 18px;
+    padding-left: px; /* Optional left spacing on small screens */
+}
+.branch-details-card {
+    background: #ffffff; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    margin: 20px;
+    font-family: 'Arial', sans-serif; 
+    display: flex; 
+    flex-direction: column; 
+}
+.branch-details-card h2 {
+    color: #009688; 
+    margin-bottom: 10px; 
+    font-size: 24px; 
+}
+.branch-details-card .location,
+.branch-details-card .service-list {
+    flex: 1; 
+    margin-right: 20px; 
+}
+.branch-details-card .location {
+    font-size: 18px; 
+}
+/* Large desktop: keep margin-right for layout */
+@media (min-width: 1200px) {
+    .branch-header {
+        margin-right: 90vh; /* original large margin for desktop */
+        padding-left: 0;
+    }
 }
 
 .branch-header h2 {
     color: #009ca6;
-    font-size: 4em;
+    font-size: 2.5rem; /* mobile-friendly base size */
     font-weight: 700;
     margin: 0 0 4px 0;
     letter-spacing: 1px;
 }
 
+/* Increase font-size for larger screens */
+@media (min-width: 900px) {
+    .branch-header h2 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .branch-header h2 {
+        font-size: 4em; /* original size for desktop */
+        margin-left: 2px;
+    }
+}
+
 .branch-header span {
     color: #009ca6;
     font-weight: 700;
-    font-size: 1.1em;
+    font-size: 1em; /* smaller base size */
     display: block;
     margin-bottom: 8px;
 }
 
+/* Slightly larger span text on larger screens */
+@media (min-width: 900px) {
+    .branch-header span {
+        font-size: 1.1em;
+    }
+}
+
 .branch-header p {
     color: #222;
-    font-size: 1em;
+    font-size: 0.9rem; /* smaller base font on mobile */
     margin: 0 auto 8px auto;
-    max-width: 700px;
+    max-width: 100%; /* full width on small */
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* Adjust max-width and font-size for larger screens */
+@media (min-width: 700px) {
+    .branch-header p {
+        max-width: 700px;
+        font-size: 1rem;
+        margin: 0 auto 8px auto;
+        padding: 0;
+    }
 }
 
 .branch-content {
@@ -151,18 +215,6 @@
     margin-right: 10px;
     vertical-align: middle;
 }
-@media (max-width: 700px) {
-    .branch-details-card {
-        flex-direction: column;
-        gap: 18px;
-    }
-    .branch-details-card::after {
-        display: none;
-    }
-    .branch-info {
-        width: 100%;
-    }
-}
 
 /* Appointment Section */
 #appointment {
@@ -239,7 +291,6 @@
     background: transparent;
 }
 
-
 .appointment-calendar th,
 .appointment-calendar td {
     text-align: center;
@@ -294,7 +345,6 @@
     max-width: 340px;
     margin-left: 0;
     position: relative;
-    
 }
 
 .appointment-info h4,
@@ -372,18 +422,6 @@
     background: #007c85;
 }
 
-@media (max-width: 900px) {
-    .appointment-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-    }
-    .appointment-calendar, .appointment-info {
-        min-width: 220px;
-        max-width: 100%;
-    }
-}
-
 /* Responsive Design */
 @media (max-width: 1100px) {
     .branch-details-card, .appointment-container, .footer-container {
@@ -399,9 +437,21 @@
     }
 }
 
+@media (max-width: 900px) {
+    .appointment-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+    .appointment-calendar, .appointment-info {
+        min-width: 220px;
+        max-width: 100%;
+    }
+}
+
 @media (max-width: 700px) {
     #branch, #appointment {
-        padding: 18px 2vw;
+        padding: 18px 5%;
     }
     #branch-carousel {
         height: 140px;
@@ -411,6 +461,29 @@
         gap: 12px;
     }
     .branch-details-card, .appointment-container {
-        padding: 12px 4px;
+        padding: 12px 8px;
     }
 }
+
+@media (max-width: 600px) {
+    .branch-details-card {
+        flex-direction: column;
+        padding: 16px 8px;
+    }
+    .branch-info {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .branch-header h2 {
+        font-size: 2em;
+    }
+    .branch-header p {
+        font-size: 0.85em;
+    }
+    .appointment-calendar, .appointment-info {
+        padding: 16px 8px;
+    }
+}
+
