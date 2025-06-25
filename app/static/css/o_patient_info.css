@@ -61,16 +61,33 @@
     margin-top: 20px;
 }
 
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0097a7;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+.section-subtitle {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #00898E;
+    margin-top: 20px;
+}
+
 /* Form styling */
 .form-label {
     font-weight: 500;
-     margin-bottom: 0.3rem;
+    margin-bottom: 0.3rem;
 }
 
 .form-control, .form-select {
     border-radius: 0;
     border: 1px solid #ced4da;
-    padding: 0.375rem 0.75rem;
+    padding: 0.305rem 0.75rem;
     font-size: 0.95rem;
 }
 

@@ -1,0 +1,82 @@
+/* Employee Table */
+.employee-table-container { 
+    border-radius: 10px;
+    margin-left: 45vh;
+    margin-top: 10vh;
+    margin-bottom: 20px;
+    background: #ffffff;
+    overflow-y: auto;     
+    max-height: 300px; 
+    width: 100%;
+    max-width: 150vh;
+    min-width: 165vh;
+    padding: 15px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 1px;
+    font-size: 1rem;
+    border: none;
+}
+
+/* Employee Info Container */
+ .Employee-info-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 20px;
+    margin-left: 45vh;
+    margin-bottom: 20vh;
+    width: 100%;
+    max-width: 200vh;
+    min-width: 165vh;
+    height: auto;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.employee-table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.employee-info-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.info-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.form-label {
+    font-weight: 500;
+    color: #555;
+}
+.save-btn {
+     background-color: #28a745;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    float: right;
+}
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 20px;
+}
+.nav-tabs .nav-link {
+    border: none;
+    color: #495057;
+    font-weight: 500;
+}
+.nav-tabs .nav-link.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    background-color: transparent;
+}
