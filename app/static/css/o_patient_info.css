@@ -30,6 +30,7 @@
     padding: 30px;
     margin-top: 20px;
     margin-left: 45vh;
+    margin-bottom: 20vh;
     width: 100%;
     max-width: 200vh;
     min-width: 165vh;
@@ -44,17 +45,16 @@
 
 }
 
-.section-title {
+.nav-tabs{
     font-size: 1.5rem;
     font-weight: bold;
     color: #0097a7;
-    margin-top: 10px;
     margin-bottom: 20px;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 5px;
 }
 
-.section-subtitle {
+.nav-item {
     font-weight: 600;
     font-size: 1.15rem;
     color: #00898E;
@@ -147,9 +147,14 @@
     border-radius: none;
     margin-left: 10px;
     margin-top: 20px; 
+    margin-bottom: auto;
 }
 
-
+.summary-container h2{
+    font-size: 1.5rem;
+    color: #00898E;
+    font-weight: 700;
+}
 .summary-table {
     width: 100%;
     height: inherit;
@@ -165,22 +170,22 @@
 .summary-table th {
     background-color: transparent;
     color: rgba(134, 134, 134, 0.753); 
-    padding: 15px 10px;
+    padding: 20px 10px;
     text-align: center;
     align-items: center; 
     font-weight: 500;
-    border-bottom: 2px solid #e0e0e075;
+    border-bottom: 1px solid #e0e0e075;
 }
 
 
 .summary-table td {
-    padding: 15px 8px;
+    padding: 15px 10px;
     border-bottom: 1px solid #e0e0e075;
     vertical-align: top;
 }
 
 .summary-table tr {
-    padding: 10px; 
+    padding: 15px; 
 }
 
 .summary-table tr:not(:first-child):hover {
@@ -261,6 +266,7 @@
     gap: 10px;
     align-items: center;
 }
+
 
 .checkbox-group {
     display: grid;

@@ -67,3 +67,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// js for save type  button
+document.getElementById('editBtn').addEventListener('click', function() {
+  // Get all input elements in the form
+  const inputs = document.querySelectorAll('#patientForm input');
+  
+  // Make each input editable
+  inputs.forEach(input => {
+    input.readOnly = false;
+  });
+  
+  // Enable the save button and disable the edit button
+  document.getElementById('saveBtn').disabled = false;
+  this.disabled = true;
+});
+
+// Optional: Handle form submission
+document.getElementById('patientForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  // Your save logic here
+  
+  // After saving, make fields read-only again
+  const inputs = document.querySelectorAll('#patientForm input');
+  inputs.forEach(input => {
+    input.readOnly = true;
+  });
+  
+  // Reset buttons
+  document.getElementById('editBtn').disabled = false;
+  document.getElementById('saveBtn').disabled = true;
+  
+  alert('Changes saved!');
+});
+$('#editBtn').click(function() {
+  $('#patientForm input').prop('readonly', false);
+  $(this).prop('disabled', true);
+  $('#saveBtn').prop('disabled', false);
+});
+
+$('#patientForm').submit(function(e) {
+  e.preventDefault();
+  // Save logic here
+  
+  $('#patientForm input').prop('readonly', true);
+  $('#editBtn').prop('disabled', false);
+  $('#saveBtn').prop('disabled', true);
+  alert('Changes saved!');
+});
