@@ -1,483 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Teethnology Patient Record</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Patient Information</title>
     <link rel="stylesheet" href="../../static/css/owner.css">
+    <link rel="stylesheet" href="../../static/css/o_patient_info.css">
     <link rel="stylesheet" href="../../static/css/audio_equalizer.css">
-    <link rel="stylesheet" href="../../static/css/o_patients_info.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/confirmation_modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-<div class="dashboard-container">
-   <header class="topbar">
-        <div class="topbar-left">
-            <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
-            <span class="topbar-title">TEETHNOLOGY</span>
-        </div>
-        <div class="topbar-right">
-            <span class="topbar-icon"><i class="fa fa-bell"></i></span>
-            <span class="topbar-icon"><i class="fa fa-user"></i></span>
-            </span><span class="topbar-username" id="userDropdownBtn">USERNAME
-              <div class="user-dropdown" id="userDropdownMenu">
-                <div class="user-dropdown-links">
-                  <a href="#">ACCOUNT</a>
-                  <a href="#">SECURITY</a>
+    <div class="dashboard-container">
+       <header class="topbar">
+                <div class="topbar-left">
+                    <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
+                    <span class="topbar-title">TEETHNOLOGY</span>
                 </div>
-                <button class="logout-btn">Logout</button>
-              </div>
-            </span>
-        </div>
-    </header>
-     <div class="dashboard-constainer">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <nav>
-              {% include 'owner/O_nav.html' %}
-            </nav>
-            <hr>
-            <div class="voice-assistant">
-                <button title="Talk to our voice assistant">
-                    <i class="fa fa-microphone"></i>
-                </button>
-                <span>Say hi to our<br>voice assistant</span>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
+                <div class="topbar-right">
+                    <span class="topbar-icon"><i class="fa fa-bell"></i></span>
+                    <span class="topbar-icon"><i class="fa fa-user"></i></span>
+                    </span><span class="topbar-username" id="userDropdownBtn">USERNAME
+                    <div class="user-dropdown" id="userDropdownMenu">
+                        <div class="user-dropdown-links">
+                        <a href="#">ACCOUNT</a>
+                        <a href="#">SECURITY</a>
+                        </div>
+                        <button class="logout-btn">Logout</button>
+                    </div>
+                    </span>
+                </div>
+            </header>
+            <div class="dashboard-constainer">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <nav>
+                    {% include 'owner/O_nav.html' %}
+                    </nav>
+                    <hr>
+                    <div class="voice-assistant">
+                        <button title="Talk to our voice assistant">
+                            <i class="fa fa-microphone"></i>
+                        </button>
+                        <span>Say hi to our<br>voice assistant</span>
+                    </div>
+                    {% include 'owner/audio_euqalizer.html' %}
+            </aside>
+        
+        <main class="container">
+            <!-- Patients table code remains the same -->
+            
             <div class="patients-table-container">
-                <table class="patients-table">
-                    <tbody>
-                        <tr>
-                            <td><a href="#"><i class="fa fa-chevron-left"></i></a></td>
-                            <td>1</td>
-                            <td>011</td>
-                            <td>Patient name</td>
-                            <td>25</td>
-                            <td>F</td>
-                            <td>(633) 8xx-xxxx-xxx</td>
-                            <td>example@email.com</td>
-                            <td>Branch 1</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="patient-info-container">
-                <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
+                    <table class="patients-table">
+                        <tbody>
+                            <tr>
+                                <td><a href="#"><i class="fa fa-chevron-left"></i></a></td>
+                                <td>1</td>
+                                <td>011</td>
+                                <td>Patient name</td>
+                                <td>25</td>
+                                <td>F</td>
+                                <td>(633) 8xx-xxxx-xxx</td>
+                                <td>example@email.com</td>
+                                <td>Branch 1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="patient-info-container">
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#" data-branch="patient_rec">Patient Info</a>
+                            <a class="nav-link" href="#" data-branch="patient_rec">Patient Info</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-branch="procedure">Procedure History</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-branch="dental_record">Dental Record</a>
+                            <a class="nav-link active" href="#" data-branch="dental_record">Dental Record</a>
                         </li>
-                </ul>
-                <section class="tab-content" id="history"></section>
-                    <h2 class="section-title text-center">Patient Information Record</h2>
-                    <form class="patient-info-section" method="post" autocomplete="off">
-                        <div class="row mb-3">
+                    </ul>
+                <!-- Patient Info Tab Content -->
+                <div class="tab-content pt-4" id="patientInfoContent">
+                    <div class="patient-info-section">
+                        <h2 class="section-title">Patient Information Record</h2>
+                        
+                        <div class="row mb-4">
                             <div class="col-md-6">
-                                <label>Surname Name:</label>
-                                <input type="text" name="surname" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label>First Name:</label>
-                                <input type="text" name="firstname" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Middle Initial:</label>
-                                <input type="text" name="middle_initial" class="form-control" maxlength="1">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Age:</label>
-                                <input type="number" name="age" class="form-control" min="0">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Date:</label>
-                                <input type="date" name="date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Birthdate:</label>
-                                <input type="date" name="birthdate" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Sex:</label>
-                                <div>
-                                    <label class="radio-inline me-2"><input type="radio" name="sex" value="Female"> Female</label>
-                                    <label class="radio-inline"><input type="radio" name="sex" value="Male"> Male</label>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Surname Name:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">First Name:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Middle Initial:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Birthdate:</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-12">
-                                <label>Patient Address Line 1:</label>
-                                <input type="text" name="address1" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Barangay:</label>
-                                <input type="text" name="barangay" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label>City:</label>
-                                <input type="text" name="city" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Province:</label>
-                                <input type="text" name="province" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Country:</label>
-                                <input type="text" name="country" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Occupation:</label>
-                                <input type="text" name="occupation" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Office No:</label>
-                                <input type="text" name="office_no" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Contact No:</label>
-                                <input type="text" name="contact_no" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Email:</label>
-                                <input type="email" name="email" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label>Who may we thank for referring you?</label>
-                                <input type="text" name="referrer" class="form-control">
-                            </div>
-                        </div>
-                        <h4 class="section-subtitle">Dental History</h4>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Previous Dentist:</label>
-                                <input type="text" name="prev_dentist" class="form-control">
-                            </div>
-                            <div class="col-md-8">
-                                <label>Last Detail Visit:</label>
-                                <input type="date" name="last_visit" class="form-control">
+                            
+                            <div class="col-md-6">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Date:</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Age:</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Sex:</label>
+                                    <div class="col-sm-8">
+                                        <div class="radio-group">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="sex" id="female" value="female">
+                                                <label class="form-check-label" for="female">Female</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="sex" id="male" value="male">
+                                                <label class="form-check-label" for="male">Male</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <h4 class="section-subtitle">Medical History</h4>
-                        <div class="row mb-3">
+                        <div class="row mb-4">
                             <div class="col-md-6">
-                                <label>Physician's Name:</label>
-                                <input type="text" name="physician" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Date of Last Physical Exam:</label>
-                                <input type="date" name="last_exam" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label>Age:</label>
-                                <input type="number" name="physician_age" class="form-control" min="0">
-                            </div>
-                        </div>
-                        <div class="medical-questions">
-                            <div class="question">
-                                <label>1. Are you in good health?</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>2. Are you under medical treatment now?</label>
-                                <input type="text" class="form-control">
-                                <label>If so, what is the condition being treated?</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>3. Have you ever had serious illness or surgical operation?</label>
-                                <input type="text" class="form-control">
-                                <label>If so, what illness or operation?</label>
-                                <input type="text" class="form-control">
-                                <label>When was it?</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>4. Have you ever been hospitalized?</label>
-                                <input type="text" class="form-control">
-                                <label>If so, when and why?</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>5. Are you taking any prescription/non-prescription Medication?</label>
-                                <input type="text" class="form-control">
-                                <label>If so, please specify</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>6. Do you use tobacco products?</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>7. Do you use alcohol, cocaine or other dangerous drugs?</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>8. Are you allergic to any of the following:</label>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="anesthetic">
-                                    <label class="form-check-label" for="anesthetic">Local Anesthetic (ex. Lidocaine)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="penicillin">
-                                    <label class="form-check-label" for="penicillin">Penicillin Antibiotics</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="latex">
-                                    <label class="form-check-label" for="latex">Latex</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="sulfa">
-                                    <label class="form-check-label" for="sulfa">Sulfa Drugs</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="aspirin">
-                                    <label class="form-check-label" for="aspirin">Aspirin</label>
-                                </div>
-                                <div class="form-check mb-3">
-                                    <input type="checkbox" class="form-check-input" id="other-allergy">
-                                    <label class="form-check-label" for="other-allergy">Other:</label>
-                                    <input type="text" class="form-control inline-input">
-                                </div>
-                            </div>
-                            <div class="question">
-                                <label>9. Bleeding Time:</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="question">
-                                <label>10. For Women only</label>
-                                <div class="form-check">
-                                    <input type="checkbox" name="pregnant" class="form-check-input" id="pregnant">
-                                    <label for="pregnant" class="form-check-label">Are you pregnant?</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" name="nursing" class="form-check-input" id="nursing">
-                                    <label for="nursing" class="form-check-label">Are you nursing?</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" name="birth_control" class="form-check-input" id="birth_control">
-                                    <label for="birth_control" class="form-check-label">Are you taking birth control pills?</label>
-                                </div>
-                            </div>
-                            <div class="question">
                                 <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label>11. Blood Type:</label>
+                                    <label class="col-sm-4 col-form-label">Patient Address Line 1:</label>
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control">
                                     </div>
-                                    <div class="col-md-6">
-                                        <label>12. Blood Pressure:</label>
+                                </div>
+                                <div class="row mb-3 address-indent">
+                                    <label class="col-sm-4 col-form-label">barangay:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 address-indent">
+                                    <label class="col-sm-4 col-form-label">city:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 address-indent">
+                                    <label class="col-sm-4 col-form-label">province:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 address-indent">
+                                    <label class="col-sm-4 col-form-label">country:</label>
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
-                            <div class="question">
-                                <label>13. Do you have or have any of the following? Check which apply:</label>
-                                <div class="conditions-grid">
-                                    <div class="form-check">
-                                        <input type="checkbox" id="aids" class="form-check-input">
-                                        <label for="aids" class="form-check-label">AIDS</label>
+                            
+                            <div class="col-md-6">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Occupation:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="alergy" class="form-check-input">
-                                        <label for="alergy" class="form-check-label">Alergy</label>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Office No:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="blood-diseases" class="form-check-input">
-                                        <label for="blood-diseases" class="form-check-label">Blood Diseases</label>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Contact No:</label>
+                                    <div class="col-sm-8">
+                                        <input type="tel" class="form-control">
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="blood-pressure" class="form-check-input">
-                                        <label for="blood-pressure" class="form-check-label">Blood Pressure</label>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Email:</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control">
                                     </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="diabetes" class="form-check-input">
-                                        <label for="diabetes" class="form-check-label">Diabetes</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="digestive" class="form-check-input">
-                                        <label for="digestive" class="form-check-label">Digestive</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="headaches" class="form-check-input">
-                                        <label for="headaches" class="form-check-label">Headaches</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="heart-trouble" class="form-check-input">
-                                        <label for="heart-trouble" class="form-check-label">Heart Trouble</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="lung-trouble" class="form-check-input">
-                                        <label for="lung-trouble" class="form-check-label">Lung Trouble</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="nervousness" class="form-check-input">
-                                        <label for="nervousness" class="form-check-label">Nervousness</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="scarlet-fever" class="form-check-input">
-                                        <label for="scarlet-fever" class="form-check-label">Scarlet Fever</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="std" class="form-check-input">
-                                        <label for="std" class="form-check-label">Sexually Transmitted Diseases</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="swollen-ankles" class="form-check-input">
-                                        <label for="swollen-ankles" class="form-check-label">Swollen Ankles</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="thyroid" class="form-check-input">
-                                        <label for="thyroid" class="form-check-label">Thyroid Problem</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="anemia" class="form-check-input">
-                                        <label for="anemia" class="form-check-label">Anemia</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="angina" class="form-check-input">
-                                        <label for="angina" class="form-check-label">Angina Pectoris</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="brushes" class="form-check-input">
-                                        <label for="brushes" class="form-check-label">Brushes</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="cancer" class="form-check-input">
-                                        <label for="cancer" class="form-check-label">Cancer</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="drug-addiction" class="form-check-input">
-                                        <label for="drug-addiction" class="form-check-label">Drug Addiction</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="epilepsy" class="form-check-input">
-                                        <label for="epilepsy" class="form-check-label">Epilepsy</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="hepatitis" class="form-check-input">
-                                        <label for="hepatitis" class="form-check-label">Hepatitis</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="hives" class="form-check-input">
-                                        <label for="hives" class="form-check-label">Hives</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="operation" class="form-check-input">
-                                        <label for="operation" class="form-check-label">Operation</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="pains" class="form-check-input">
-                                        <label for="pains" class="form-check-label">Pains</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="stroke-cell" class="form-check-input">
-                                        <label for="stroke-cell" class="form-check-label">Stoke Cell</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="sinus-trouble" class="form-check-input">
-                                        <label for="sinus-trouble" class="form-check-label">Sinus Trouble</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="tumor" class="form-check-input">
-                                        <label for="tumor" class="form-check-label">Tumor</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="ulcer" class="form-check-input">
-                                        <label for="ulcer" class="form-check-label">Ulcer</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="arthritis" class="form-check-input">
-                                        <label for="arthritis" class="form-check-label">Arthritis</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="asthma" class="form-check-input">
-                                        <label for="asthma" class="form-check-label">Asthma</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="chest-pain" class="form-check-input">
-                                        <label for="chest-pain" class="form-check-label">Chest Pain</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="circulatory" class="form-check-input">
-                                        <label for="circulatory" class="form-check-label">Circulatory Disturbances</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="fainting" class="form-check-input">
-                                        <label for="fainting" class="form-check-label">Fainting</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="glaucoma" class="form-check-input">
-                                        <label for="glaucoma" class="form-check-label">Glaucoma</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="kidney" class="form-check-input">
-                                        <label for="kidney" class="form-check-label">Kidney</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="liver" class="form-check-input">
-                                        <label for="liver" class="form-check-label">Liver</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="radiation" class="form-check-input">
-                                        <label for="radiation" class="form-check-label">Radiation Therapy</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="rheumatic" class="form-check-input">
-                                        <label for="rheumatic" class="form-check-label">Rheumatic Fever</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="stomach" class="form-check-input">
-                                        <label for="stomach" class="form-check-label">Stomach Trouble</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="stroke" class="form-check-input">
-                                        <label for="stroke" class="form-check-label">Stroke</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="venereal" class="form-check-input">
-                                        <label for="venereal" class="form-check-label">Venereal Disease</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" id="other-condition" class="form-check-input">
-                                        <label for="other-condition" class="form-check-label">Other:</label>
-                                        <input type="text" class="form-control inline-input">
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Who may we thank for referring you?</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="save-btn-row text-end">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">For Minors:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder="Parent/Guardian Name">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Occupation:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">What is your reason for Dental Consultation?</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                </section>
+                        <hr>
+                        <h3 class="section-subtitle">Dental History</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Previous Dentist:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 col-form-label">Last Dental Visit:</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h3 class="section-subtitle">Medical History</h3>
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="row mb-3">
+                                    <label class="col-sm-5 col-form-label">Physician's Name:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row mb-3">
+                                    <label class="col-sm-5 col-form-label">Date of Last Physical Exam:</label>
+                                    <div class="col-sm-7">
+                                        <input type="date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row mb-3">
+                                    <label class="col-sm-5 col-form-label">Age:</label>
+                                    <div class="col-sm-7">
+                                        <input type="number" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <ol class="medical-history-list">
+                            <li>
+                                Are you in a good health?
+                                <div class="sub-question"></div>
+                            </li>
+                            <li>
+                                Are you under medical treatment now?
+                                <div class="sub-question">If so, what is the condition being treated?</div>
+                            </li>
+                            <li>
+                                Have you ever had serious illness or surgical operation?
+                                <div class="sub-question">If so, what illness or operation?</div>
+                                <div class="sub-question">When was it?</div>
+                            </li>
+                            <li>
+                                Have you ever been hospitalized?
+                                <div class="sub-question">If so, when and why?</div>
+                            </li>
+                            <li>
+                                Are you taking any prescription/non-prescription Medication?
+                                <div class="sub-question">If so, please specify</div>
+                            </li>
+                            <li>
+                                Do you used tobacco products?
+                                <div class="sub-question"></div>
+                            </li>
+                            <li>
+                                Do you use alcohol, cocaine or other dangerous drugs?
+                                <div class="sub-question"></div>
+                            </li>
+                            <li>
+                                Are you allergic to any of the following:
+                                <div class="checkbox-grid mt-2">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="allergy1" name="allergy">
+                                        <label for="allergy1">Local Anesthetic (ex. Lidocaine)</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="allergy2" name="allergy">
+                                        <label for="allergy2">Penicillin Antibiotics</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="allergy3" name="allergy">
+                                        <label for="allergy3">Latex</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="allergy4" name="allergy">
+                                        <label for="allergy4">Sulfa Drugs</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="allergy5" name="allergy">
+                                        <label for="allergy5">Aspirin</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="allergy6" name="allergy">
+                                        <label for="allergy6">Other:</label>
+                                        <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                Bleeding Time:
+                                <div class="sub-question"></div>
+                            </li>
+                            <li>
+                                For Women only
+                                <div class="checkbox-grid mt-2">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="women1" name="women">
+                                        <label for="women1">Are you pregnant?</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="women2" name="women">
+                                        <label for="women2">Are you nursing?</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="women3" name="women">
+                                        <label for="women3">Are you taking birth control pills?</label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                Blood Type:
+                                <div class="sub-question"></div>
+                            </li>
+                            <li>
+                                Blood Pressure:
+                                <div class="sub-question"></div>
+                            </li>
+                            <li>
+                                Do you have or have any of this following? check which apply:
+                                <div class="checkbox-grid mt-2">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition1" name="condition">
+                                        <label for="condition1">AIDS</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition2" name="condition">
+                                        <label for="condition2">Anemia</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition3" name="condition">
+                                        <label for="condition3">Arthritis</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition4" name="condition">
+                                        <label for="condition4">Allergy</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition5" name="condition">
+                                        <label for="condition5">Angina Pectoris</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition6" name="condition">
+                                        <label for="condition6">Asthma</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition7" name="condition">
+                                        <label for="condition7">Blood Diseases</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition8" name="condition">
+                                        <label for="condition8">Bruises</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition9" name="condition">
+                                        <label for="condition9">Chest Pain</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition10" name="condition">
+                                        <label for="condition10">Blood Pressure</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition11" name="condition">
+                                        <label for="condition11">Cancer</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition12" name="condition">
+                                        <label for="condition12">Circulatory Disturbances</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition13" name="condition">
+                                        <label for="condition13">Diabetes</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition14" name="condition">
+                                        <label for="condition14">Drug Addiction</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition15" name="condition">
+                                        <label for="condition15">Fainting</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition16" name="condition">
+                                        <label for="condition16">Digestive</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition17" name="condition">
+                                        <label for="condition17">Epilepsy</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition18" name="condition">
+                                        <label for="condition18">Glaucoma</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition19" name="condition">
+                                        <label for="condition19">Headaches</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition20" name="condition">
+                                        <label for="condition20">Hepatitis</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition21" name="condition">
+                                        <label for="condition21">Kidney</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition22" name="condition">
+                                        <label for="condition22">Heart Trouble</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition23" name="condition">
+                                        <label for="condition23">Hives</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition24" name="condition">
+                                        <label for="condition24">Liver</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition25" name="condition">
+                                        <label for="condition25">Lung Trouble</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition26" name="condition">
+                                        <label for="condition26">Operation</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition27" name="condition">
+                                        <label for="condition27">Radiation Therapy</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition28" name="condition">
+                                        <label for="condition28">Nervousness</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition29" name="condition">
+                                        <label for="condition29">Pains</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition30" name="condition">
+                                        <label for="condition30">Rheumatic Fever</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition31" name="condition">
+                                        <label for="condition31">Scarlet Fever</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition32" name="condition">
+                                        <label for="condition32">Sickle Cell</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition33" name="condition">
+                                        <label for="condition33">Stomach Trouble</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition34" name="condition">
+                                        <label for="condition34">Sexually Transmitted Diseases</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition35" name="condition">
+                                        <label for="condition35">Sinus Trouble</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition36" name="condition">
+                                        <label for="condition36">Stroke</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition37" name="condition">
+                                        <label for="condition37">Swollen Ankles</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition38" name="condition">
+                                        <label for="condition38">Tumor</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition39" name="condition">
+                                        <label for="condition39">Venereal Disease</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition40" name="condition">
+                                        <label for="condition40">Thyroid Problem</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition41" name="condition">
+                                        <label for="condition41">Ulcer</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition42" name="condition">
+                                        <label for="condition42">Other:</label>
+                                        <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2">
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+                        
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-save">Save</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
-        </div>
     </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-    
-    
