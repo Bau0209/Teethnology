@@ -41,12 +41,16 @@
     width: 100%;
     margin-bottom: 20px;
 }
-.employee-info-card {
+.info-card {
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     padding: 20px;
     margin-top: 20px;
+    margin-left: 45vh;
+    width: 100%;
+    max-width: 200vh;
+    min-width: 165vh;
     margin-bottom: 20px;
 }
 .info-header {
@@ -68,6 +72,7 @@
 }
 .nav-tabs {
     border-bottom: 2px solid #dee2e6;
+    
     margin-bottom: 20px;
 }
 .nav-tabs .nav-link {

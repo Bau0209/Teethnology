@@ -1,162 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Teethnology Branch Info</title>
-    <link rel="stylesheet" href="../../static/css/owner.css">
-    <link rel="stylesheet" href="../../static/css/audio_equalizer.css">
-    <link rel="stylesheet" href="../../static/css/confirmation_modal.css">
-    <link rel="stylesheet" href="../../static/css/o_branches_info.css">
-    <link rel="stylesheet" href="../../static/css/o_branch_info_modal.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<div class="dashboard-container">
-   <header class="topbar">
-        <div class="topbar-left">
-            <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
-            <span class="topbar-title">TEETHNOLOGY</span>
-        </div>
-        <div class="topbar-right">
-            <span class="topbar-icon"><i class="fa fa-bell"></i></span>
-            <span class="topbar-icon"><i class="fa fa-user"></i></span>
-            </span><span class="topbar-username" id="userDropdownBtn">USERNAME
-              <div class="user-dropdown" id="userDropdownMenu">
-                <div class="user-dropdown-links">
-                  <a href="#">ACCOUNT</a>
-                  <a href="#">SECURITY</a>
-                </div>
-                <button class="logout-btn">Logout</button>
-              </div>
-            </span>
-        </div>
-    </header>
-       <div class="dashboard-constainer">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            {% include 'owner/components/O_nav.html' %}
-            <hr>
-            <div class="voice-assistant">
-                <button title="Talk to our voice assistant">
-                    <i class="fa fa-microphone"></i>
-                </button>
-                <!-- ito yung functions for audio and modal kaso ayaw gumana sa akin
-                {% include 'owner/components/confirmation_modal.html' %}
-                {% include 'owner/components/audio_equalizer.html' %}-->
-                <span>Say hi to our<br>voice assistant</span>
-            </div>
-        </aside>
-        <!-- Main Content -->
-         <!-- Place this inside your <div class="dashboard-constainer">, after the sidebar -->
-        <main class="main-content">
-            <div class="branch-info-card">
-                <div class="branch-info-image-row">
-                    <div class="branch-info-image-slider">
-                        <button class="slider-arrow slider-arrow-left"><i class="fa fa-chevron-left"></i></button>
-                        <img id="mainBranchImg" src="../../static/images/quezon clinic example.jpg" alt="Clinic Image" class="branch-info-img">
-                        <button class="slider-arrow slider-arrow-right"><i class="fa fa-chevron-right"></i></button>
-                    </div>
-                    <div class="branch-info-thumbnails">
-                        <img src="../../static/images/quezon clinic example.jpg" class="branch-info-thumb active" data-index="0">
-                        <img src="../../static/images/quezon clinic example.jpg" class="branch-info-thumb" data-index="1">
-                        <img src="../../static/images/quezon clinic example.jpg" class="branch-info-thumb" data-index="2">
-                    </div>
+{% extends 'owner/owner_base.html' %}
+{% block title %}Teethnology Branch Info{% endblock %}
 
-                    <!-- Bootstrap Modal for Branch Images -->
-                    <div class="modal fade" id="branchImagesModal" tabindex="-1" aria-labelledby="branchImagesModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 640px;">
-                        <div class="modal-content" style="border-radius: 5px;">
-                        <div class="modal-header" style="border-bottom: 1px solid rgba(26, 63, 78, 0.568)6;">
-                            <h6 class="modal-title" id="branchImagesModalLabel" style="color: #0097a7; font-weight: 700; letter-spacing: 1px;">IMAGES</h6>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #e74c3c; font-size: 1.2rem;"></button>
-                        </div>
-                        <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
-                            <!-- Image Row 1 -->
-                            <div class="mb-3">
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_branches_info.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_branch_info_modal.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="branch-info-card">
+    <!-- Slider + Thumbnails -->
+    <div class="branch-info-image-row">
+        <div class="branch-info-image-slider">
+            <button class="slider-arrow slider-arrow-left"><i class="fa fa-chevron-left"></i></button>
+            <img id="mainBranchImg" src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" alt="Clinic Image" class="branch-info-img">
+            <button class="slider-arrow slider-arrow-right"><i class="fa fa-chevron-right"></i></button>
+        </div>
+        <div class="branch-info-thumbnails">
+            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" class="branch-info-thumb active" data-index="0">
+            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" class="branch-info-thumb" data-index="1">
+            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" class="branch-info-thumb" data-index="2">
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="branchImagesModal" tabindex="-1" aria-labelledby="branchImagesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 640px;">
+                <div class="modal-content" style="border-radius: 5px;">
+                    <div class="modal-header" style="border-bottom: 1px solid rgba(26, 63, 78, 0.568)6;">
+                        <h6 class="modal-title" id="branchImagesModalLabel" style="color: #0097a7; font-weight: 700;">IMAGES</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                        <!-- Repeating image rows -->
+                        {% for _ in range(2) %}
+                        <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <span style="color: #0097a7; font-size: 12px;">Imagefilename</span>
-                                <a href="#" class="text-danger" style="font-size: 13px; text-decoration: none;" onclick="this.closest('.mb-3').remove();return false;">delete</a>
+                                <a href="#" class="text-danger" style="font-size: 13px;" onclick="this.closest('.mb-3').remove(); return false;">delete</a>
                             </div>
-                            <img src="../../static/images/quezon clinic example.jpg" alt="Clinic Image" class="img-fluid rounded border" style="width: 100%;">
-                            </div>
-                            <!-- Image Row 2 -->
-                            <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <span style="color: #0097a7; font-size: 13px;">Imagefilename</span>
-                                <a href="#" class="text-danger" style="font-size: 13px; text-decoration: none;" onclick="this.closest('.mb-3').remove();return false;">delete</a>
-                            </div>
-                            <img src="../../static/images/quezon clinic example.jpg" alt="Clinic Image" class="img-fluid rounded border" style="width: 100%;">
-                            </div>
-                            <!-- Add more image rows as needed -->
+                            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" alt="Clinic Image" class="img-fluid rounded border" style="width: 100%;">
                         </div>
-                        <div class="modal-footer" style="border-top: 1px solid #eee; background: #fff;">
-                            <button type="button" class="btn" style="background: #0096a7a6; color: #fff; border-radius: 4px;">Add Images</button>
-                            <button type="button" class="btn" style="background: #009688; color: #fff; border-radius: 4px;">Save Changes</button>
-                        </div>
-                        </div>
+                        {% endfor %}
                     </div>
+                    <div class="modal-footer" style="border-top: 1px solid #eee;">
+                        <button type="button" class="btn" style="background: #0096a7a6; color: #fff;">Add Images</button>
+                        <button type="button" class="btn" style="background: #009688; color: #fff;">Save Changes</button>
                     </div>
-                    <button type="button" class="branch-edit-images" data-bs-toggle="modal" data-bs-target="#branchImagesModal">
-                        Edit Images
-                    </button>
-                </div>
-                <div class="branch-info-details-row">
-                <div class="branch-info-col">
-                    <div class="branch-info-label">Branch Name</div>
-                    <div class="branch-info-value branch-info-link">Quezon City Clinic</div>
-                </div>
-                <div class="branch-info-col">
-                    <div class="branch-info-label">Full Address</div>
-                    <div class="branch-info-value branch-info-link">123 ABC St.Brgay 456, Quezon City</div>
-                </div>
-                </div>
-                <div class="branch-info-details-row">
-                <div class="branch-info-col">
-                    <div class="branch-info-label">Services</div>
-                    <ul class="branch-info-list">
-                    <li>Lorem ipsum</li>
-                    <li>Lorem ipsum</li>
-                    <li>Lorem ipsum</li>
-                    <li>Lorem ipsum</li>
-                    </ul>
-                </div>
-                <div class="branch-info-col">
-                    <div class="branch-info-label">Description</div>
-                    <div class="branch-info-value branch-info-desc">
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eleifend tincidunt sapien ut tincidunt. Donec egestas eget odio ac eleifend. In viverra lectus fringilla, commodo urna id, cursus eros. Pellentesque bibendum, dolor et tempor tempus, lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </div>
-                </div>
-                </div>
-                <div class="branch-info-details-row">
-                <div class="branch-info-col">
-                    <div class="branch-info-label">Chief Dentist</div>
-                    <div class="branch-info-value">Dr. Anne Reyes</div>
-                </div>
-                <div class="branch-info-col">
-                    <div class="branch-info-label">Contact</div>
-                    <div class="branch-info-value">(63)917-123-4567</div>
-                </div>
-                </div>
-                <div class="branch-info-details-row">
-                <div class="branch-info-col">
-                    <div class="branch-info-label">Clinic Hours</div>
-                    <div class="branch-info-hours">
-                    <span>9AM</span>
-                    <span class="branch-info-hours-sep">to</span>
-                    <span>6PM</span>
-                    </div>
-                </div>
-                </div>
-                <div class="branch-info-actions">
-                <button class="branch-info-archive-btn">Archive</button>
-                <a class="branch-info-save-btn" href="{{ url_for('owner.branches') }}">Save Changes</a>
                 </div>
             </div>
-          </main>
         </div>
-        <script src="../../static/js/owner.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-</html>
+
+        <button type="button" class="branch-edit-images" data-bs-toggle="modal" data-bs-target="#branchImagesModal">
+            Edit Images
+        </button>
+    </div>
+
+    <!-- Details -->
+    <div class="branch-info-details-row">
+        <div class="branch-info-col">
+            <div class="branch-info-label">Branch Name</div>
+            <div class="branch-info-value branch-info-link">Quezon City Clinic</div>
+        </div>
+        <div class="branch-info-col">
+            <div class="branch-info-label">Full Address</div>
+            <div class="branch-info-value branch-info-link">123 ABC St.Brgay 456, Quezon City</div>
+        </div>
+    </div>
+
+    <div class="branch-info-details-row">
+        <div class="branch-info-col">
+            <div class="branch-info-label">Services</div>
+            <ul class="branch-info-list">
+                <li>Lorem ipsum</li>
+                <li>Lorem ipsum</li>
+                <li>Lorem ipsum</li>
+                <li>Lorem ipsum</li>
+            </ul>
+        </div>
+        <div class="branch-info-col">
+            <div class="branch-info-label">Description</div>
+            <div class="branch-info-value branch-info-desc">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eleifend...
+            </div>
+        </div>
+    </div>
+
+    <div class="branch-info-details-row">
+        <div class="branch-info-col">
+            <div class="branch-info-label">Chief Dentist</div>
+            <div class="branch-info-value">Dr. Anne Reyes</div>
+        </div>
+        <div class="branch-info-col">
+            <div class="branch-info-label">Contact</div>
+            <div class="branch-info-value">(63)917-123-4567</div>
+        </div>
+    </div>
+
+    <div class="branch-info-details-row">
+        <div class="branch-info-col">
+            <div class="branch-info-label">Clinic Hours</div>
+            <div class="branch-info-hours">
+                <span>9AM</span><span class="branch-info-hours-sep">to</span><span>6PM</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="branch-info-actions">
+        <button class="branch-info-archive-btn">Archive</button>
+        <a class="branch-info-save-btn" href="{{ url_for('owner.branches') }}">Save Changes</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
