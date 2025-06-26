@@ -1,129 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Teethnology Branches</title>
-    <link rel="stylesheet" href="../../static/css/owner.css">
-    <link rel="stylesheet" href="../../static/css/audio_equalizer.css">
-    <link rel="stylesheet" href="../../static/css/confirmation_modal.css">
-    <link rel="stylesheet" href="../../static/css/o_branches.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<div class="dashboard-container">
-   <header class="topbar">
-        <div class="topbar-left">
-            <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
-            <span class="topbar-title">TEETHNOLOGY</span>
+{% extends 'owner/owner_base.html' %}
+
+{% block title %}Teethnology Branches{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_branches.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="branches-dashboard">
+    <div class="branches-charts-row">
+        <div class="branches-chart">
+            <h2>Monthly Revenue per Branch</h2>
+            <canvas id="myBarChart" width="400" height="200"></canvas>
         </div>
-        <div class="topbar-right">
-            <span class="topbar-icon"><i class="fa fa-bell"></i></span>
-            <span class="topbar-icon"><i class="fa fa-user"></i></span>
-            </span><span class="topbar-username" id="userDropdownBtn">USERNAME
-              <div class="user-dropdown" id="userDropdownMenu">
-                <div class="user-dropdown-links">
-                  <a href="#">ACCOUNT</a>
-                  <a href="#">SECURITY</a>
-                </div>
-                <button class="logout-btn">Logout</button>
-              </div>
-            </span>
+        <div class="branches-chart">
+            <h2>Monthly Revenue per Branch</h2>
+            <canvas id="myBarChart" width="400" height="200"></canvas>
         </div>
-    </header>
-       <div class="dashboard-constainer">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            {% include 'owner/components/O_nav.html' %}
-            <hr>
-            <div class="voice-assistant">
-                <button title="Talk to our voice assistant">
-                    <i class="fa fa-microphone"></i>
-                </button>
-                <!-- ito yung functions for audio and modal kaso ayaw gumana sa akin
-                {% include 'owner/components/confirmation_modal.html' %}
-                {% include 'owner/components/audio_equalizer.html' %}-->
-                <span>Say hi to our<br>voice assistant</span>
-            </div>
-        </aside>
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="branches-dashboard">
-                <div class="branches-charts-row">
-                <div class="branches-chart">
-                    <h2>Monthly Revenue per Branch</h2>
-                    <!--chart-->
-                    <canvas id="myBarChart" width="400" height="200"></canvas>
-                </div>
-                <div class="branches-chart">
-                    <h2>Monthly Revenue per Branch</h2>
-                   <!--chart--> 
-                   <canvas id="myBarChart" width="400" height="200"></canvas>
-                </div>
-                </div>
-                <div class="branches-list-card">
-                <div class="branches-list-header">
-                    <span class="branches-title">BRANCHES</span>
-                    <button class="branches-add-btn">Add</button>
-                </div>
+    </div>
+
+    <div class="branches-list-card">
+        <div class="branches-list-header">
+            <span class="branches-title">BRANCHES</span>
+            <button class="branches-add-btn">Add</button>
+        </div>
+        <hr>
+
+        <div class="branch-item">
+            <div class="branch-info">
+                <span class="branch-name">Quezon City Clinic</span>
+                <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>
                 <hr>
-                <div class="branch-item">
-                    <div class="branch-info">
-                    <span class="branch-name">Quezon City Clinic</span>
-                    <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>                   
-                    <hr>
-                    </div>
-                    <div class="branch-details">
-                    <div>
-                        <span class="branch-label">Full Address</span><br>
-                        123 ABC St. Brgy 456, <b>Quezon City</b>
-                    </div>
-                    <div>
-                        <span class="branch-label">Chief Dentist</span><br>
-                        Dr. Anna Reyes
-                    </div>
-                    <div>
-                        <span class="branch-label">Contact</span><br>
-                        (63917)-123-4567
-                    </div>
-                    <div>
-                        <span class="branch-label">Hours</span><br>
-                        9AM-6PM
-                    </div>
-                    </div>
-                </div>
-                
-                <div class="branch-item">
-                    <div class="branch-info">
-                    <span class="branch-name">Manila Clinic</span> 
-                    <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>
-                    <hr>
-                    </div>
-                    <div class="branch-details">
-                    <div>
-                        <span class="branch-label">Full Address</span><br>
-                        123 ABC St. Brgy 456, <b>Manila City</b>
-                    </div>
-                    <div>
-                        <span class="branch-label">Chief Dentist</span><br>
-                        Dr. Alan Reyes
-                    </div>
-                    <div>
-                        <span class="branch-label">Contact</span><br>
-                        (63917)-123-4567
-                    </div>
-                    <div>
-                        <span class="branch-label">Hours</span><br>
-                        9AM-6PM
-                    </div>
-                    </div>
-                </div>
-                </div>
             </div>
-            </main>
+            <div class="branch-details">
+                <div>
+                    <span class="branch-label">Full Address</span><br>
+                    123 ABC St. Brgy 456, <b>Quezon City</b>
+                </div>
+                <div>
+                    <span class="branch-label">Chief Dentist</span><br>
+                    Dr. Anna Reyes
+                </div>
+                <div>
+                    <span class="branch-label">Contact</span><br>
+                    (63917)-123-4567
+                </div>
+                <div>
+                    <span class="branch-label">Hours</span><br>
+                    9AM-6PM
+                </div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-        <script src="../../static/js/owner.js"></script>  
-    </body>
-</html>
+
+        <div class="branch-item">
+            <div class="branch-info">
+                <span class="branch-name">Manila Clinic</span>
+                <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>
+                <hr>
+            </div>
+            <div class="branch-details">
+                <div>
+                    <span class="branch-label">Full Address</span><br>
+                    123 ABC St. Brgy 456, <b>Manila City</b>
+                </div>
+                <div>
+                    <span class="branch-label">Chief Dentist</span><br>
+                    Dr. Alan Reyes
+                </div>
+                <div>
+                    <span class="branch-label">Contact</span><br>
+                    (63917)-123-4567
+                </div>
+                <div>
+                    <span class="branch-label">Hours</span><br>
+                    9AM-6PM
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+{% endblock %}

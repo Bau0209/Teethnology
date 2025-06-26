@@ -1,54 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'owner/owner_base.html' %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Patient Information</title>
-    <link rel="stylesheet" href="../../static/css/owner.css">
-    <link rel="stylesheet" href="../../static/css/o_patient_info.css">
-    <link rel="stylesheet" href="../../static/css/audio_equalizer.css">
-    <link rel="stylesheet" href="../../static/css/confirmation_modal.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+{% block title %}Teethnology Patient Record{% endblock %}
 
-<body>
-    <div class="dashboard-container">
-       <header class="topbar">
-                <div class="topbar-left">
-                    <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
-                    <span class="topbar-title">TEETHNOLOGY</span>
-                </div>
-                <div class="topbar-right">
-                    <span class="topbar-icon"><i class="fa fa-bell"></i></span>
-                    <span class="topbar-icon"><i class="fa fa-user"></i></span>
-                    </span><span class="topbar-username" id="userDropdownBtn">USERNAME
-                    <div class="user-dropdown" id="userDropdownMenu">
-                        <div class="user-dropdown-links">
-                        <a href="#">ACCOUNT</a>
-                        <a href="#">SECURITY</a>
-                        </div>
-                        <button class="logout-btn">Logout</button>
-                    </div>
-                    </span>
-                </div>
-            </header>
-            <div class="dashboard-constainer">
-                <!-- Sidebar -->
-                <aside class="sidebar">
-                    {% include 'owner/components/O_nav.html' %}
-                    <hr>
-                    <div class="voice-assistant">
-                        <button title="Talk to our voice assistant">
-                            <i class="fa fa-microphone"></i>
-                        </button>
-                        <span>Say hi to our<br>voice assistant</span>
-                    </div>
-                   <!--{% include 'owner/components/audio_equalizer.html' %}-->
-            </aside>
-        
-        <main class="container">
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_patient_info.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
             <div class="patients-table-container">
                     <table class="patients-table">
                         <tbody>
@@ -555,9 +514,8 @@
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
-    </div>
+    {% endblock %}
+
+{% block extra_js %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

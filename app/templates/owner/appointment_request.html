@@ -1,106 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Teethnology Appointment Request</title>
-    <link rel="stylesheet" href="../../static/css/owner.css">
-    <link rel="stylesheet" href="../../static/css/audio_equalizer.css">
-    <link rel="stylesheet" href="../../static/css/confirmation_modal.css">
-    <link rel="stylesheet" href="../../static/css/o_appointment_req.css">   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+{% extends 'owner/owner_base.html' %}
 
-<body>
-<div class="dashboard-container">
-   <header class="topbar">
-        <div class="topbar-left">
-            <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
-            <span class="topbar-title">TEETHNOLOGY</span>
+{% block title %}Teethnology Appointment Request{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_appointment_req.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="appointments-card calendar-view">
+    <div class="appointments-header calendar-header d-flex justify-content-between align-items-center">
+        <div>
+            <a href="{{ url_for('owner.appointments') }}" class="calendar-tab">Appointment Calendar</a>
+            <a href="{{ url_for('owner.appointment_req') }}" class="calendar-tab active">Appointment Request</a>
         </div>
-        <div class="topbar-right">
-            <span class="topbar-icon"><i class="fa fa-bell"></i></span>
-            <span class="topbar-icon"><i class="fa fa-user"></i></span>
-            </span><span class="topbar-username" id="userDropdownBtn">USERNAME
-              <div class="user-dropdown" id="userDropdownMenu">
-                <div class="user-dropdown-links">
-                  <a href="#">ACCOUNT</a>
-                  <a href="#">SECURITY</a>
-                </div>
-                <button class="logout-btn">Logout</button>
-              </div>
-            </span>
-        </div>
-    </header>
-     <div class="dashboard-constainer">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <nav>
-              {% include 'owner/components/O_nav.html' %}
-            </nav>
-            <hr>
-            <div class="voice-assistant">
-                <button title="Talk to our voice assistant">
-                    <i class="fa fa-microphone"></i>
-                </button>
-                <span>Say hi to our<br>voice assistant</span>
-            </div>
-        </aside>
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="appointments-card calendar-view">
-                <div class="appointments-header calendar-header d-flex justify-content-between align-items-center">
-                    <div>
-                        <a href="{{ url_for('owner.appointments') }}" class="calendar-tab">Appointment Calendar</a>
-                        <a href="{{ url_for('owner.appointment_req') }}" class="calendar-tab active">Appointment Request</a>
-                    </div>
-                    <div>
-                        <select name="branch" class="calendar-branch-icon">
-                            <option value="manila">Manila Branch</option>
-                            <option value="quezon">Quezon Branch</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="request-table-container">
-                    <div class="request-table">
-                        <!-- LEFT COLUMN: Appointment Details -->
-                        <div class="request-details">
-                            <div class="request-section-title">Appointment Details</div>
-                            <div><b>Preferred Date and Time:</b> {{ request.preferred_datetime }}</div>
-                            <div><b>Alternative Date / Time ( Optional ):</b> {{ request.alternative_datetime }}</div>
-                            <div><b>Type of appointment/Reason for Visit:</b> {{ request.reason }}</div>
-                            <div><b>Is this your first visit?</b>
-                                <span class="radio-group">
-                                    <input type="radio" name="first_visit" value="Yes" {% if request.first_visit == 'Yes' %}checked{% endif %}> Yes
-                                    <input type="radio" name="first_visit" value="No" {% if request.first_visit == 'No' %}checked{% endif %}> No
-                                </span>
-                            </div>
-                        </div>
-                        <!-- RIGHT COLUMN: Patient Information -->
-                        <div class="request-patient">
-                            <div class="request-section-title">Patient Information</div>
-                            <div><b>Full Name:</b> {{ request.name }}</div>
-                            <div><b>Date of Birth:</b> {{ request.dob }}</div>
-                            <div><b>Address:</b> {{ request.address }}</div>
-                            <div class="request-actions">
-                                <button type="button" class="btn-accept" aria-label="Accept">Accept</button>
-                                <button type="button" class="btn-reject" aria-label="Reject">Reject</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="request-add-btn">
-                    <button type="button" class="btn-add" href="form_modal.html">Add</button>
-                 </div>
-            </main>
+        <div>
+            <select name="branch" class="calendar-branch-icon">
+                <option value="manila">Manila Branch</option>
+                <option value="quezon">Quezon Branch</option>
+            </select>
         </div>
     </div>
-    <script src="../../static/js/o_appoinment.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
+    <div class="request-table-container">
+        <div class="request-table">
+            <!-- LEFT COLUMN: Appointment Details -->
+            <div class="request-details">
+                <div class="request-section-title">Appointment Details</div>
+                <div><b>Preferred Date and Time:</b> {{ request.preferred_datetime }}</div>
+                <div><b>Alternative Date / Time (Optional):</b> {{ request.alternative_datetime }}</div>
+                <div><b>Type of appointment/Reason for Visit:</b> {{ request.reason }}</div>
+                <div><b>Is this your first visit?</b>
+                    <span class="radio-group">
+                        <input type="radio" name="first_visit" value="Yes" {% if request.first_visit == 'Yes' %}checked{% endif %}> Yes
+                        <input type="radio" name="first_visit" value="No" {% if request.first_visit == 'No' %}checked{% endif %}> No
+                    </span>
+                </div>
+            </div>
 
-    </body>
-</html>
+            <!-- RIGHT COLUMN: Patient Information -->
+            <div class="request-patient">
+                <div class="request-section-title">Patient Information</div>
+                <div><b>Full Name:</b> {{ request.name }}</div>
+                <div><b>Date of Birth:</b> {{ request.dob }}</div>
+                <div><b>Address:</b> {{ request.address }}</div>
+                <div class="request-actions">
+                    <button type="button" class="btn-accept" aria-label="Accept">Accept</button>
+                    <button type="button" class="btn-reject" aria-label="Reject">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="request-add-btn">
+        <a href="form_modal.html"><button type="button" class="btn-add">Add</button></a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/o_appoinment.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

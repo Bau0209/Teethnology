@@ -1,177 +1,139 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Teethnology Appoinment</title>
-    <link rel="stylesheet" href="../../static/css/owner.css">
-    <link rel="stylesheet" href="../../static/css/audio_equalizer.css">
-    <link rel="stylesheet" href="../../static/css/o_appointment_req.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+{% extends 'owner/owner_base.html' %}
 
-<body>
-<div class="dashboard-container">
-   <header class="topbar">
-        <div class="topbar-left">
-            <img src="../../static/images/teethnology.png" alt="Teethnology Logo" class="topbar-logo">
-            <span class="topbar-title">TEETHNOLOGY</span>
+{% block title %}Teethnology Appointment{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_appointment_req.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="appointments-card calendar-view">
+    <div class="appointments-header calendar-header">
+        <div>
+            <a href="{{ url_for('owner.appointments') }}" class="calendar-tab active">Appointment Calendar</a>
+            <a href="{{ url_for('owner.appointment_req') }}" class="calendar-tab">Appointment Request</a>
         </div>
-        <div class="topbar-right">
-            <span class="topbar-icon"><i class="fa fa-bell"></i></span>
-            <span class="topbar-icon"><i class="fa fa-user"></i></span>
-            </span><span class="topbar-username" id="userDropdownBtn">USERNAME
-              <div class="user-dropdown" id="userDropdownMenu">
-                <div class="user-dropdown-links">
-                  <a href="#">ACCOUNT</a>
-                  <a href="#">SECURITY</a>
-                </div>
-                <button class="logout-btn">Logout</button>
-              </div>
-            </span>
+        <div>
+            <select name="branch" class="calendar-branch-icon">
+                <option value="manila">Manila Branch</option>
+                <option value="quezon">Quezon Branch</option>
+            </select>
         </div>
-    </header>
-     <div class="dashboard-constainer">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <nav>
-              {% include 'owner/components/O_nav.html' %}
-            </nav>
-            <hr>
-            <div class="voice-assistant">
-                <button title="Talk to our voice assistant">
-                    <i class="fa fa-microphone"></i>
-                </button>
-                <span>Say hi to our<br>voice assistant</span>
-            </div>
-        </aside>
-        <!-- Appointment Main Content -->
-        <main class="main-content">
-            <div class="appointments-card calendar-view">
-                <div class="appointments-header calendar-header">
-                <div>
-                    <a href="{{ url_for('owner.appointments') }}" class="calendar-tab active">Appointment Calendar</a>
-<!--need baguhin--> <a href="{{ url_for('owner.appointment_req') }}" class="calendar-tab">Appointment Request</a>
-                </div>
-                <div>
-                     <select name="branch" class="calendar-branch-icon">
-                      <option value="manila">Manila Branch</option>
-                      <option value="quezon">Quezon Branch</option>
-                    </select>
-                </div>
-                </div>
-                <div class="calendar-container">
-                    <div id="calendar-controls" class="calendar-controls">
-                        <button id="prev-month" class="calendar-nav">&lt;</button>
-                        <span id="calendar-month"></span>
-                        <select id="calendar-year" class="calendar-year-select"></select>
-                        <button id="next-month" class="calendar-nav">&gt;</button>
+    </div>
+
+    <div class="calendar-container">
+        <div id="calendar-controls" class="calendar-controls">
+            <button id="prev-month" class="calendar-nav">&lt;</button>
+            <span id="calendar-month"></span>
+            <select id="calendar-year" class="calendar-year-select"></select>
+            <button id="next-month" class="calendar-nav">&gt;</button>
+        </div>
+
+        <div id="calendar"></div>
+
+        <!-- Right Side Modal -->
+        <div class="modal fade right" id="appointmentsModal" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-side" style="max-width: 640px;">
+                <div class="modal-content" style="max-height: 60vh;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Appointment Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div id="calendar"></div> 
-                    <!-- Right Side Modal -->
-                    <div class="modal fade right" id="appointmentsModal" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-side" style="max-width: 640px;">
-                            <div class="modal-content" style="max-height: 60vh;">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Appointment Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-date">
-                                    <span id="appointment-date">June 5, 2023</span>
-                                </div>
-                                <hr>
-                                <div class="modal-body">
-                                    <div class="appointment-item">
-                                        <div class="appointment-title">Patient Checkup</div>
-                                        <div class="patient-name">Patient Name</div>
-                                        <ul class="appointment-details">
-                                            <li>Age</li>
-                                            <li>Gender</li>
-                                            <li>Contact</li>
-                                            <li>Email</li>
-                                        </ul>
-                                    </div>
-                                    <hr>
-                                    <div class="appointment-item">
-                                        <div class="appointment-title">Patient Checkup</div>
-                                        <div class="patient-name">Patient Name</div>
-                                        <ul class="appointment-details">
-                                            <li>Age</li>
-                                            <li>Gender</li>
-                                            <li>Contact</li>
-                                            <li>Email</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-add" href="form_modal.html">Add</button>
-                                </div>
-                            </div>
+                    <div class="modal-date">
+                        <span id="appointment-date">June 5, 2023</span>
+                    </div>
+                    <hr>
+                    <div class="modal-body">
+                        <div class="appointment-item">
+                            <div class="appointment-title">Patient Checkup</div>
+                            <div class="patient-name">Patient Name</div>
+                            <ul class="appointment-details">
+                                <li>Age</li>
+                                <li>Gender</li>
+                                <li>Contact</li>
+                                <li>Email</li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="appointment-item">
+                            <div class="appointment-title">Patient Checkup</div>
+                            <div class="patient-name">Patient Name</div>
+                            <ul class="appointment-details">
+                                <li>Age</li>
+                                <li>Gender</li>
+                                <li>Contact</li>
+                                <li>Email</li>
+                            </ul>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">Add</button>
+                    </div>
                 </div>
             </div>
-          </main>          
-       </div>
+        </div>
     </div>
-    <!-- Add this after your appointmentsModal -->
-    <div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-            <div class="modal-content" style="padding: 2rem;">
+</div>
+
+<!-- Modal: Add Appointment -->
+<div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+        <div class="modal-content" style="padding: 2rem;">
             <div class="modal-header border-0">
                 <h5 class="modal-title w-100 text-center" style="color:#0097a7;font-weight:700;">Book an Appointment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <form id="appointmentForm">
-                    <div class="mb-3"><b>Patient Information</b></div>
-                    <div class="row mb-2">
+            <form id="appointmentForm">
+                <div class="mb-3"><b>Patient Information</b></div>
+                <div class="row mb-2">
                     <div class="col"><label>Full Name:</label><input type="text" class="form-control" name="name"></div>
                     <div class="col"><label>Gender:</label><input type="text" class="form-control" name="gender"></div>
-                    </div>
-                    <div class="row mb-2">
+                </div>
+                <div class="row mb-2">
                     <div class="col"><label>Date of Birth:</label><input type="date" class="form-control" name="dob"></div>
                     <div class="col"><label>Contact Number:</label><input type="text" class="form-control" name="contact"></div>
-                    </div>
-                    <div class="mb-2"><label>Address:</label><input type="text" class="form-control" name="address"></div>
-                    <div class="mb-2"><label>Email:</label><input type="email" class="form-control" name="email"></div>
-                    <hr>
-                    <div class="mb-3"><b>Appointment Details</b></div>
-                    <div class="mb-2">
+                </div>
+                <div class="mb-2"><label>Address:</label><input type="text" class="form-control" name="address"></div>
+                <div class="mb-2"><label>Email:</label><input type="email" class="form-control" name="email"></div>
+                <hr>
+                <div class="mb-3"><b>Appointment Details</b></div>
+                <div class="mb-2">
                     <label>Preferred Date / Time:</label>
                     <input type="datetime-local" class="form-control" name="preferred_datetime">
-                    </div>
-                    <div class="mb-2">
+                </div>
+                <div class="mb-2">
                     <label>Alternative Date / Time (Optional):</label>
                     <input type="datetime-local" class="form-control" name="alternative_datetime">
-                    </div>
-                    <div class="mb-2">
+                </div>
+                <div class="mb-2">
                     <label>Type of appointment/Reason for Visit:</label>
                     <input type="text" class="form-control" name="reason">
-                    </div>
-                    <div class="mb-2">
+                </div>
+                <div class="mb-2">
                     <label>Is this your first visit?</label>
                     <div>
                         <input type="radio" name="first_visit" value="Yes"> Yes
                         <input type="radio" name="first_visit" value="No"> No
                     </div>
-                    </div>
-                    <div class="mb-2">
+                </div>
+                <div class="mb-2">
                     <input type="checkbox" name="agree" required> I agree
-                    </div>
-                    <div class="text-center">
+                </div>
+                <div class="text-center">
                     <button type="submit" class="btn btn-add">Submit</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <script src="../../static/js/o_appoinment.js"></script>   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="../../static/js/owner.js"></script>
-    </body> 
-</html>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/o_appoinment.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+{% endblock %}

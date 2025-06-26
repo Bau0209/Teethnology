@@ -84,16 +84,45 @@ document.getElementById('editBtn').addEventListener('click', function() {
 });
 
 // Optional: Handle form submission
-document.getElementById('patientForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  // Your save logic here
-  
-  // After saving, make fields read-only again
-  const inputs = document.querySelectorAll('#patientForm input');
-  inputs.forEach(input => {
-    input.readOnly = true;
-  });
-  
+javascript
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Bootstrap modal
+    const passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'), {
+        backdrop: 'static',
+        keyboard: false
+    });
+    
+    // Show modal immediately when page loads
+    passwordModal.show();
+
+    // Password validation
+    const correctPassword = "admin123"; // Change this to your actual password
+    const submitPasswordBtn = document.getElementById('submitPassword');
+    const passwordInput = document.getElementById('passwordInput');
+    const mainContent = document.querySelector('.patients-container');
+    const forgotPasswordLink = document.getElementById('forgotPassword');
+
+    submitPasswordBtn.addEventListener('click', function() {
+        if (passwordInput.value === correctPassword) {
+            passwordModal.hide();
+            mainContent.style.display = 'block';
+        } else {
+            alert('Incorrect password. Please try again.');
+            passwordInput.value = '';
+        }
+    });
+
+    // Handle Enter key in password field
+    passwordInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            submitPasswordBtn.click();
+        }
+    });
+
+    forgotPasswordLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Please contact your system administrator to reset your password.');
+    });
   // Reset buttons
   document.getElementById('editBtn').disabled = false;
   document.getElementById('saveBtn').disabled = true;
