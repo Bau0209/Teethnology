@@ -16,7 +16,7 @@ def branch_info():
 
 @owner.route('/appointments')
 def appointments():
-    return render_template('/appointment.html')
+    return render_template('/owner/appointment.html')
 
 @owner.route('/appointment_req')
 def appointment_req():

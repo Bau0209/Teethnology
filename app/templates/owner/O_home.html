@@ -34,7 +34,7 @@
        <div class="dashboard-constainer">
         <!-- Sidebar -->
         <aside class="sidebar">
-            {% include 'owner/O_nav.html' %}
+            {% include 'owner/components/O_nav.html' %}
             <hr>
             <div class="voice-assistant">
                 <button title="Talk to our voice assistant">
@@ -42,7 +42,7 @@
                 </button>
                 <span>Say hi to our<br>voice assistant</span>
             </div>
-            <!--{% include 'owner/components/audio_euqalizer.html' %}-->
+            <!--{% include 'owner/components/audio_equalizer.html' %}-->
         </aside>
 
     <!-- Main Content -->
@@ -100,7 +100,7 @@
                 </div>
                 <hr>
                 <div class="request">
-                  <a href="#">View All</a>
+                  <a href="{{ url_for('owner.appointment_req') }}">View All</a>
                     <div class="request-info">
                         <strong>MM-DD-YYYY</strong><br>
                         PATIENT NAME<br>
@@ -155,7 +155,7 @@
                   <span class="appt-type"><b>Patient Checkup</b></span>
                 </div>
               </div>
-              <a href="#" class="appt-link">View Details</a>
+              <a href="{{ url_for('owner.appointments') }}" class="appt-link">View Details</a>
             </li>
             <li class="calendar-appointment">
               <div class="appt-info">
@@ -165,7 +165,7 @@
                   <span class="appt-type"><b>Bleaching</b></span>
                 </div>
               </div>
-              <a href="#" class="appt-link">View Details</a>
+              <a href="{{ url_for('owner.appointments') }}" class="appt-link">View Details</a>
             </li>
             <li class="calendar-appointment">
               <div class="appt-info">
@@ -175,16 +175,16 @@
                   <span class="appt-type"><b>Patient Checkup</b></span>
                 </div>
               </div>
-              <a href="#" class="appt-link">View Details</a>
+              <a href="{{ url_for('owner.appointments') }}" class="appt-link">View Details</a>
             </li>
           </ul>
         </div>
       </section> 
     </main>
   </div>
-  <!-- ito yung functions for audio and modal kaso ayaw gumana sa akin
-  {% include 'owner/confirmation_modal.html' %}
-  {% include 'components/audio_equalizer.html' %}-->
+
+  <!---{% include 'owner/components/confirmation_modal.html' %}-->
+
   <script src="../../static/js/owner.js"></script>
   <script src="../../static/js/o_appoinment.js"></script>
 </body>
