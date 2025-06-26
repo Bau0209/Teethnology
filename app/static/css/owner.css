@@ -17,14 +17,14 @@ body {
   background: #ffffff;
   color: #222;
   width: 250px;
-  height: calc(100vh - 20px);
+  height: calc(100vh - 5px);
   min-width: 220px;
   padding: 25px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: fixed;
-  top: 20px;
+  top: 9px;
   border-right: 1px solid #e0e0e0;
 }
 
@@ -43,8 +43,8 @@ body {
 .sidebar nav a {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 32px;
+  gap: 14px;
+  padding: 10px 25px;
   color: #0097a7;
   text-decoration: none;
   font-size: 1.08rem;
@@ -56,7 +56,7 @@ body {
 .sidebar nav ul {
     list-style: none; 
     padding-left: 0;  
-    margin: 0;
+    margin: 15px auto;
 }
 
 .sidebar nav a.active,
@@ -68,7 +68,7 @@ body {
 
 .voice-assistant {
   margin-top: auto;
-  padding: 24px 0;
+  padding: 10px 0;
   text-align: center;
 }
 
@@ -82,7 +82,7 @@ body {
   font-size: 2rem;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-bottom: 15ssspx;
+  margin-bottom: auto;
 }
 
 .voice-assistant span {
