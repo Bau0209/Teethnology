@@ -38,7 +38,7 @@
                 <!-- Sidebar -->
                 <aside class="sidebar">
                     <nav>
-                    {% include 'owner/O_nav.html' %}
+                    {% include 'owner/components/O_nav.html' %}
                     </nav>
                     <hr>
                     <div class="voice-assistant">
@@ -47,14 +47,14 @@
                         </button>
                         <span>Say hi to our<br>voice assistant</span>
                     </div>
-                    {% include 'owner/audio_euqalizer.html' %}
+                    <!--{% include 'owner/components/audio_equalizer.html' %}-->
             </aside>
            <main class="container">
                 <div class="employee-table-container">
                     <table class="employee-table">
                         <tbody>
                             <tr>
-                                <td><a href="#"><i class="fa fa-chevron-left"></i></a></td>
+                                <td><a href="{{ url_for('owner.employees') }}"><i class="fa fa-chevron-left"></i></a></td>
                                 <td>1</td>
                                 <td>011</td>
                                 <td>Patient name</td>
