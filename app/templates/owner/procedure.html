@@ -45,14 +45,14 @@
                         </button>
                         <span>Say hi to our<br>voice assistant</span>
                     </div>
-                    {% include 'owner/audio_euqalizer.html' %}
+                    <!--{% include 'owner/components/audio_equalizer.html' %}-->
             </aside>
            <main class="container">
                 <div class="patients-table-container">
                     <table class="patients-table">
                         <tbody>
                             <tr>
-                                <td><a href="#"><i class="fa fa-chevron-left"></i></a></td>
+                                <td><a href="{{ url_for('owner.patients') }}"><i class="fa fa-chevron-left"></i></a></td>
                                 <td>1</td>
                                 <td>011</td>
                                 <td>Patient name</td>
@@ -69,13 +69,13 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link " href="#" data-branch="patient_rec">Patient Info</a>
+                            <a class="nav-link " href="{{ url_for('owner.patient_info') }}" data-branch="patient_rec">Patient Info</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#" data-branch="procedure">Procedure History</a>
+                            <a class="nav-link active" href="{{ url_for('owner.patient_procedure') }}" data-branch="procedure">Procedure History</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-branch="dental_record">Dental Record</a>
+                            <a class="nav-link" href="{{ url_for('owner.patient_dental_rec') }}" data-branch="dental_record">Dental Record</a>
                         </li>
                     </ul>
                     <section class="tab-content" id="history">
