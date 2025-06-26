@@ -34,17 +34,15 @@
        <div class="dashboard-constainer">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <nav>
-              {% include 'owner/O_nav.html' %}
-            </nav>
+            {% include 'owner/components/O_nav.html' %}
             <hr>
             <div class="voice-assistant">
                 <button title="Talk to our voice assistant">
                     <i class="fa fa-microphone"></i>
                 </button>
                 <!-- ito yung functions for audio and modal kaso ayaw gumana sa akin
-                {% include 'owner/confirmation_modal.html' %}
-                {% include 'components/audio_equalizer.html' %}-->
+                {% include 'owner/components/confirmation_modal.html' %}
+                {% include 'owner/components/audio_equalizer.html' %}-->
                 <span>Say hi to our<br>voice assistant</span>
             </div>
         </aside>
@@ -72,7 +70,7 @@
                 <div class="branch-item">
                     <div class="branch-info">
                     <span class="branch-name">Quezon City Clinic</span>
-                    <a href="o_branch_info.html" class="branch-edit">Edit</a>                   
+                    <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>                   
                     <hr>
                     </div>
                     <div class="branch-details">
@@ -98,7 +96,7 @@
                 <div class="branch-item">
                     <div class="branch-info">
                     <span class="branch-name">Manila Clinic</span> 
-                    <a href="o_branch_info.html" class="branch-edit">Edit</a>
+                    <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>
                     <hr>
                     </div>
                     <div class="branch-details">
