@@ -12,14 +12,13 @@
     <!-- Branch Tabs -->
     <ul class="nav nav-tabs" id="branchTabs">
         <li class="nav-item">
-            <a class="nav-link active" href="#" data-branch="all">All Records</a>
+            <a class="nav-link {% if selected_branch == 'all' %}active{% endif %}" href="{{ url_for('owner.employees', branch='all') }}">All Records</a>
         </li>
+        {% for branch in branches %}
         <li class="nav-item">
-            <a class="nav-link" href="#" data-branch="branch1">Branch 1</a>
+            <a class="nav-link {% if selected_branch == branch.branch_id|string %}active{% endif %}" href="{{ url_for('owner.employees', branch=branch.branch_id) }}">{{ branch.branch_name }}</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" data-branch="branch2">Branch 2</a>
-        </li>
+        {% endfor %}
     </ul>
 
     <!-- Toolbar -->
@@ -46,7 +45,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Age</th>
-                    <th>Gender</th>
+                    <th>Sex</th>
                     <th>Position</th>
                     <th>Email</th>
                     <th>Branch</th>
@@ -54,28 +53,27 @@
                 </tr>
             </thead>
             <tbody>
+                {% for employee in employees %}
                 <tr>
-                    <td>1</td>
-                    <td>011</td>
-                    <td>Employee Name</td>
-                    <td>25</td>
-                    <td>F</td>
-                    <td>Dentist</td>
-                    <td>example@email.com</td>
-                    <td>Branch 1</td>
-                    <td><a href="{{ url_for('owner.employee_info') }}"><i class="fa fa-chevron-right"></i></a></td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ employee.employee_id }}</td>
+                    <td>{{ employee.full_name }}</td>
+                    <td>{{ employee.age }}</td>
+                    <td>{{ employee.sex | upper }}</td>
+                    <td>{{ employee.position }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.branch.branch_name }}</td>
+                    <td>
+                        <a href="{{ url_for('owner.employee_info', employee_id=employee.id) }}">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </td>
                 </tr>
+                {% else %}
                 <tr>
-                    <td>2</td>
-                    <td>012</td>
-                    <td>Employee Name</td>
-                    <td>25</td>
-                    <td>-</td>
-                    <td>Front Desk</td>
-                    <td>example@email.com</td>
-                    <td>Branch 2</td>
-                    <td><a href="{{ url_for('owner.employee_info') }}"><i class="fa fa-chevron-right"></i></a></td>
+                    <td colspan="9" class="text-center">No employees found.</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

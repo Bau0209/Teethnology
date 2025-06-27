@@ -4,9 +4,9 @@
   "settings": {
     "width": 3500,
     "height": 3500,
-    "scrollTop": -1294.585,
-    "scrollLeft": -1753.4721,
-    "zoomLevel": 0.85,
+    "scrollTop": -700,
+    "scrollLeft": 0,
+    "zoomLevel": 1,
     "show": 431,
     "database": 4,
     "databaseName": "teethnology",
@@ -171,15 +171,15 @@
           "p66ivst3ECnpg-zlvcHSA"
         ],
         "ui": {
-          "x": 36.6468,
-          "y": 841.0273,
+          "x": 45.8219,
+          "y": 841.351,
           "zIndex": 47,
           "widthName": 60,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1750824079086,
+          "updateAt": 1751000538739,
           "createAt": 1748328364840
         }
       },
@@ -317,7 +317,8 @@
           "2nCW5OIdi3fk0NYYKODtu",
           "3yXZVRiOMVm-xHMlbYP9k",
           "0ZI0W4hM_Ep-G_ODCoGop",
-          "mSyUH2hDKkm7rSm0D6d6G"
+          "mSyUH2hDKkm7rSm0D6d6G",
+          "X43bgg9LyaC5gXnQzukY4"
         ],
         "seqColumnIds": [
           "h_6O-ID7YuVlzeYS011pA",
@@ -357,7 +358,8 @@
           "zyoRA3VxLu5lia9PifnD7",
           "lX5DmOEH2z4pz3_ldJukX",
           "O4UiYNX85Llz6t_uqCp5z",
-          "_RnGOjIWRG7yl8ShehKNK"
+          "_RnGOjIWRG7yl8ShehKNK",
+          "X43bgg9LyaC5gXnQzukY4"
         ],
         "ui": {
           "x": 1296.5652,
@@ -368,7 +370,7 @@
           "color": ""
         },
         "meta": {
-          "updateAt": 1750823291958,
+          "updateAt": 1750999807403,
           "createAt": 1748330480422
         }
       },
@@ -6943,6 +6945,26 @@
           "updateAt": 1750823193862,
           "createAt": 1750823181121
         }
+      },
+      "X43bgg9LyaC5gXnQzukY4": {
+        "id": "X43bgg9LyaC5gXnQzukY4",
+        "tableId": "VmfkGiNhGyj9pnbqXKPYF",
+        "name": "image_link",
+        "comment": "Image link if the record is image",
+        "dataType": "text",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 171,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1750999832345,
+          "createAt": 1750999807402
+        }
       }
     },
     "relationshipEntities": {
@@ -6956,8 +6978,8 @@
           "columnIds": [
             "-pSLrsgw3gc6NWiiSkz-d"
           ],
-          "x": 260.6468,
-          "y": 841.0273,
+          "x": 269.8219,
+          "y": 841.351,
           "direction": 4
         },
         "end": {
@@ -7021,8 +7043,8 @@
           "columnIds": [
             "VUGjiQHhNJkVROHKptLg7"
           ],
-          "x": 484.6468,
-          "y": 1061.0273,
+          "x": 493.8219,
+          "y": 1061.351,
           "direction": 2
         },
         "meta": {
@@ -7068,8 +7090,8 @@
           "columnIds": [
             "h_6O-ID7YuVlzeYS011pA"
           ],
-          "x": 1727.5652,
-          "y": 1959.9381,
+          "x": 1838.5652,
+          "y": 1971.9381,
           "direction": 2
         },
         "end": {
@@ -7096,8 +7118,8 @@
           "columnIds": [
             "h_6O-ID7YuVlzeYS011pA"
           ],
-          "x": 1512.0652,
-          "y": 2275.9381000000003,
+          "x": 1567.5652,
+          "y": 2299.9381000000003,
           "direction": 8
         },
         "end": {
@@ -7133,7 +7155,7 @@
           "columnIds": [
             "LametUDxQO_I3bPRzUnb1"
           ],
-          "x": 1368.3985333333335,
+          "x": 1386.8985333333335,
           "y": 1643.9381,
           "direction": 4
         },
@@ -7152,7 +7174,7 @@
           "columnIds": [
             "h_6O-ID7YuVlzeYS011pA"
           ],
-          "x": 1655.731866666667,
+          "x": 1748.231866666667,
           "y": 1643.9381,
           "direction": 4
         },
@@ -7517,7 +7539,7 @@
             "h_6O-ID7YuVlzeYS011pA"
           ],
           "x": 1296.5652,
-          "y": 2117.9381000000003,
+          "y": 2135.9381000000003,
           "direction": 1
         },
         "end": {
@@ -7573,7 +7595,7 @@
             "h_6O-ID7YuVlzeYS011pA"
           ],
           "x": 1296.5652,
-          "y": 1801.9381,
+          "y": 1807.9381,
           "direction": 1
         },
         "end": {
@@ -7656,7 +7678,7 @@
           "columnIds": [
             "h_6O-ID7YuVlzeYS011pA"
           ],
-          "x": 1512.0652000000002,
+          "x": 1567.5652000000002,
           "y": 1643.9381,
           "direction": 4
         },
