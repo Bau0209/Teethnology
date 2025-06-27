@@ -13,33 +13,50 @@
     <div class="branch-info-image-row">
         <div class="branch-info-image-slider">
             <button class="slider-arrow slider-arrow-left"><i class="fa fa-chevron-left"></i></button>
-            <img id="mainBranchImg" src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" alt="Clinic Image" class="branch-info-img">
+
+            {% if branch_images %}
+                <img id="mainBranchImg" src="{{ url_for('static', filename=branch_images[0].image_link) }}"
+                    alt="Clinic Image"
+                    class="branch-info-img">
+            {% else %}
+                <img id="mainBranchImg" src="{{ url_for('static', filename='images/no-image.jpg') }}"
+                    alt="No Image"
+                    class="branch-info-img">
+            {% endif %}
+
             <button class="slider-arrow slider-arrow-right"><i class="fa fa-chevron-right"></i></button>
         </div>
+
         <div class="branch-info-thumbnails">
-            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" class="branch-info-thumb active" data-index="0">
-            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" class="branch-info-thumb" data-index="1">
-            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" class="branch-info-thumb" data-index="2">
+            {% for image in branch_images %}
+                <img src="{{ url_for('static', filename=image.image_link) }}"
+                    class="branch-info-thumb {% if loop.index0 == 0 %}active{% endif %}"
+                    data-index="{{ loop.index0 }}">
+            {% endfor %}
         </div>
 
         <!-- Modal -->
         <div class="modal fade" id="branchImagesModal" tabindex="-1" aria-labelledby="branchImagesModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 640px;">
                 <div class="modal-content" style="border-radius: 5px;">
-                    <div class="modal-header" style="border-bottom: 1px solid rgba(26, 63, 78, 0.568)6;">
+                    <div class="modal-header" style="border-bottom: 1px solid rgba(26, 63, 78, 0.568);">
                         <h6 class="modal-title" id="branchImagesModalLabel" style="color: #0097a7; font-weight: 700;">IMAGES</h6>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
-                        <!-- Repeating image rows -->
-                        {% for _ in range(2) %}
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <span style="color: #0097a7; font-size: 12px;">Imagefilename</span>
-                                <a href="#" class="text-danger" style="font-size: 13px;" onclick="this.closest('.mb-3').remove(); return false;">delete</a>
+                        {% for image in branch_images %}
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span style="color: #0097a7; font-size: 12px;">
+                                        {{ image.image_link.split('/')[-1] }}
+                                    </span>
+                                    <a href="#" class="text-danger" style="font-size: 13px;" onclick="this.closest('.mb-3').remove(); return false;">delete</a>
+                                </div>
+                                <img src="{{ url_for('static', filename=image.image_link) }}"
+                                    alt="Clinic Image"
+                                    class="img-fluid rounded border"
+                                    style="width: 100%;">
                             </div>
-                            <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" alt="Clinic Image" class="img-fluid rounded border" style="width: 100%;">
-                        </div>
                         {% endfor %}
                     </div>
                     <div class="modal-footer" style="border-top: 1px solid #eee;">
@@ -55,15 +72,16 @@
         </button>
     </div>
 
+
     <!-- Details -->
     <div class="branch-info-details-row">
         <div class="branch-info-col">
             <div class="branch-info-label">Branch Name</div>
-            <div class="branch-info-value branch-info-link">Quezon City Clinic</div>
+            <div class="branch-info-value branch-info-link">{{ branch.branch_name}} Clinic</div>
         </div>
         <div class="branch-info-col">
             <div class="branch-info-label">Full Address</div>
-            <div class="branch-info-value branch-info-link">123 ABC St.Brgay 456, Quezon City</div>
+            <div class="branch-info-value branch-info-link">{{ branch.full_address}}</div>
         </div>
     </div>
 
@@ -71,16 +89,15 @@
         <div class="branch-info-col">
             <div class="branch-info-label">Services</div>
             <ul class="branch-info-list">
-                <li>Lorem ipsum</li>
-                <li>Lorem ipsum</li>
-                <li>Lorem ipsum</li>
-                <li>Lorem ipsum</li>
+                {% for service in branch.services.split(',') %}
+                    <li>{{ service.strip() }}</li>
+                {% endfor %}
             </ul>
         </div>
         <div class="branch-info-col">
             <div class="branch-info-label">Description</div>
             <div class="branch-info-value branch-info-desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eleifend...
+                {{ branch.clinic_description }}
             </div>
         </div>
     </div>
@@ -88,11 +105,11 @@
     <div class="branch-info-details-row">
         <div class="branch-info-col">
             <div class="branch-info-label">Chief Dentist</div>
-            <div class="branch-info-value">Dr. Anne Reyes</div>
+            <div class="branch-info-value">{{ branch.chief_dentist }}</div>
         </div>
         <div class="branch-info-col">
             <div class="branch-info-label">Contact</div>
-            <div class="branch-info-value">(63)917-123-4567</div>
+            <div class="branch-info-value">{{ branch.contact_number }}</div>
         </div>
     </div>
 
@@ -100,7 +117,7 @@
         <div class="branch-info-col">
             <div class="branch-info-label">Clinic Hours</div>
             <div class="branch-info-hours">
-                <span>9AM</span><span class="branch-info-hours-sep">to</span><span>6PM</span>
+                {{ branch.clinic_open_hour.strftime('%I:%M %p') }} - {{ branch.clinic_close_hour.strftime('%I:%M %p') }}
             </div>
         </div>
     </div>
