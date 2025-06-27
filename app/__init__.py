@@ -4,10 +4,10 @@ from config import Config
 from dotenv import load_dotenv
 
 db = SQLAlchemy()
+load_dotenv()
 
 def create_app():
     # Load environment variables from .env
-    load_dotenv()
     
     app = Flask(__name__)
     app.config.from_object(Config)

@@ -14,14 +14,13 @@
         <tbody>
             <tr>
                 <td><a href="{{ url_for('owner.employees') }}"><i class="fa fa-chevron-left"></i></a></td>
-                <td>1</td>
-                <td>011</td>
-                <td>Employee name</td>
-                <td>25</td>
-                <td>F</td>
-                <td>(633) 8xx-xxxx-xxx</td>
-                <td>example@email.com</td>
-                <td>Branch 1</td>
+                <td>{{ employee.employee_id }}</td>
+                <td>{{ employee.full_name }}</td>
+                <td>{{ employee.age }}</td>
+                <td>{{ employee.sex }}</td>
+                <td>{{ employee.content_number }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.branch.branch_name }}</td>
             </tr>
         </tbody>
     </table>
@@ -45,41 +44,41 @@
     <section class="tab-content" id="basic_info">
         <div class="info-card">
             <div class="info-header">
-                <h3>Employee ID: 011</h3>
-                <h4>Ectebayu Jay Bautista</h4>
+                <h3>Employee ID: {{ employee.employee_id }}</h3>
+                <h4>{{ employee.full_name }}</h4>
             </div>
             
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label">Age</label>
-                        <input type="text" class="form-control" value="25">
+                        <input type="text" class="form-control" value="{{ employee.age }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sex</label>
-                        <input type="text" class="form-control" value="F">
+                        <input type="text" class="form-control" value="{{ employee.sex }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Birthday</label>
-                        <input type="text" class="form-control" value="mm-dd-yyyy">
+                        <input type="text" class="form-control" value="{{ employee.birthdate }}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label">Contact Number</label>
-                        <input type="text" class="form-control" value="(63) 9tx-csxx-csxx">
+                        <input type="text" class="form-control" value="{{ employee.contact_number }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="text" class="form-control" value="example@email.com">
+                        <input type="text" class="form-control" value="{{ employee.email }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Employment Status</label>
-                        <input type="text" class="form-control" value="Active">
+                        <input type="text" class="form-control" value="{{ employee.employment_status | title }}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Date Hired</label>
-                        <input type="text" class="form-control" value="mm-dd-yyyy">
+                        <input type="text" class="form-control" value="{{ employee.date_hired }}">
                     </div>
                 </div>
             </div>
