@@ -224,6 +224,29 @@
   background-color: #f8f9fa;
   border-radius: 0 0 10px 10px;
 }
+/* Restock Modal Styles */
+#restockModal .modal-content {
+  border-radius: 10px;
+}
+
+#restockModal .modal-header {
+  border-radius: 10px 10px 0 0;
+}
+
+#restockModal .form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+#restockModal .form-control:read-only {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+#restockModal .btn-close-white {
+  filter: invert(1);
+}
 
 /* Equipment Details Modal Styles */
 #equipmentDetailsModal .modal-content {
@@ -280,6 +303,35 @@
   border-top: none;
   background-color: #f8f9fa;
   border-radius: 0 0 10px 10px;
+}
+
+/* Equipment Restock Modal Styles */
+#equipmentRestockModal .modal-content {
+  border-radius: 10px;
+}
+
+#equipmentRestockModal .modal-header {
+  border-radius: 10px 10px 0 0;
+}
+
+#equipmentRestockModal .form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+#equipmentRestockModal .form-control:read-only {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+#equipmentRestockModal hr {
+  margin: 1.5rem 0;
+  opacity: 0.5;
+}
+
+#equipmentRestockModal .btn-close-white {
+  filter: invert(1);
 }
 
 /* Responsive adjustments */
