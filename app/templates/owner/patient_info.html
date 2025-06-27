@@ -13,14 +13,13 @@
                         <tbody>
                             <tr>
                                 <td><a href="{{ url_for('owner.patients') }}"><i class="fa fa-chevron-left"></i></a></td>
-                                <td>1</td>
-                                <td>011</td>
-                                <td>Patient name</td>
-                                <td>25</td>
-                                <td>F</td>
-                                <td>(633) 8xx-xxxx-xxx</td>
-                                <td>example@email.com</td>
-                                <td>Branch 1</td>
+                                <td>{{ patient.patient_id }}</td>
+                                <td>{{ patient.patient_full_name}}</td>
+                                <td>{{ patient.age }}</td>
+                                <td>{{ patient.sex }}</td>
+                                <td>{{ patient.contact_number }}</td>
+                                <td>{{ patient.email }}</td>
+                                <td>{{ patient.branch.branch_name}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -29,7 +28,7 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for('owner.patient_info') }}" data-branch="patient_rec">Patient Info</a>
+                            <a class="nav-link active" href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('owner.patient_procedure') }}" data-branch="procedure">Procedure History</a>
@@ -38,153 +37,156 @@
                             <a class="nav-link " href="{{ url_for('owner.patient_dental_rec') }}" data-branch="dental_record">Dental Record</a>
                         </li>
                     </ul>
+                </div>
                 <!-- Patient Info Tab Content -->
                 <div class="tab-content pt-4" id="patientInfoContent">
                     <div class="patient-info-section">
                         <h2 class="section-title">Patient Information Record</h2>
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Surname Name:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Last Name:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="last_name" value="{{ patient.last_name }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">First Name:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="first_name" value="{{ patient.first_name }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Middle Initial:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="middle_name" value="{{ patient.middle_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Birthdate:</label>
+                                        <div class="col-sm-8">
+                                            <input type="date" class="form-control" name="birthdate" value="{{ patient.birthdate }}" required>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">First Name:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Date Today:</label>
+                                        <div class="col-sm-8">
+                                            <input type="date" class="form-control" value="{{ current_date }}" readonly>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Middle Initial:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Age:</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" value="{{ patient.age }}" readonly>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Birthdate:</label>
-                                    <div class="col-sm-8">
-                                        <input type="date" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Date:</label>
-                                    <div class="col-sm-8">
-                                        <input type="date" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Age:</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Sex:</label>
-                                    <div class="col-sm-8">
-                                        <div class="radio-group">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Sex:</label>
+                                        <div class="col-sm-8">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sex" id="female" value="female">
+                                                <input class="form-check-input" type="radio" name="sex" id="female" value="F" {% if patient.sex == 'F' %}checked{% endif %}>
                                                 <label class="form-check-label" for="female">Female</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sex" id="male" value="male">
+                                                <input class="form-check-input" type="radio" name="sex" id="male" value="M" {% if patient.sex == 'M' %}checked{% endif %}>
                                                 <label class="form-check-label" for="male">Male</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Patient Address Line 1:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+
+                            <!-- Address & Contact -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Address Line 1:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="address_line1" value="{{ patient.address_line1 }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 address-indent">
+                                        <label class="col-sm-4 col-form-label">Barangay:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="baranggay" value="{{ patient.baranggay }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 address-indent">
+                                        <label class="col-sm-4 col-form-label">City:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="city" value="{{ patient.city }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 address-indent">
+                                        <label class="col-sm-4 col-form-label">Province:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="province" value="{{ patient.province }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 address-indent">
+                                        <label class="col-sm-4 col-form-label">Country:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="country" value="{{ patient.country }}" required>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row mb-3 address-indent">
-                                    <label class="col-sm-4 col-form-label">barangay:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Occupation:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="occupation" value="{{ patient.occupation }}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3 address-indent">
-                                    <label class="col-sm-4 col-form-label">city:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Office No:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="office_number" value="{{ patient.office_number }}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3 address-indent">
-                                    <label class="col-sm-4 col-form-label">province:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Contact No:</label>
+                                        <div class="col-sm-8">
+                                            <input type="tel" class="form-control" name="contact_number" value="{{ patient.contact_number }}" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3 address-indent">
-                                    <label class="col-sm-4 col-form-label">country:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Email:</label>
+                                        <div class="col-sm-8">
+                                            <input type="email" class="form-control" name="email" value="{{ patient.email }}">
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Occupation:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Office No:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Contact No:</label>
-                                    <div class="col-sm-8">
-                                        <input type="tel" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Email:</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Who may we thank for referring you?</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">For Minors:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" placeholder="Parent/Guardian Name">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">Occupation:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Referred By:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="reffered_by" value="{{ patient.reffered_by }}">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Guardian Section -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Guardian Name:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="guardian_full_name"
+                                                value="{{ patient.guardian_full_name }}" placeholder="For minors only">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Guardian Occupation:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="guardian_occupation" value="{{ patient.guardian_occupation }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="row mb-3">
                                     <label class="col-sm-4 col-form-label">What is your reason for Dental Consultation?</label>

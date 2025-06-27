@@ -37,14 +37,13 @@
     <!-- Branch Tabs -->
     <ul class="nav nav-tabs" id="branchTabs">
         <li class="nav-item">
-            <a class="nav-link active" href="#" data-branch="all">All Records</a>
+            <a class="nav-link {% if selected_branch == 'all' %}active{% endif %}" href="{{ url_for('owner.patients', branch='all') }}">All Records</a>
         </li>
+        {% for branch in branches %}
         <li class="nav-item">
-            <a class="nav-link" href="#" data-branch="branch1">Branch 1</a>
+            <a class="nav-link {% if selected_branch == branch.branch_id|string %}active{% endif %}" href="{{ url_for('owner.patients', branch=branch.branch_id) }}">{{ branch.branch_name }}</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" data-branch="branch2">Branch 2</a>
-        </li>
+        {% endfor %}
     </ul>
 
     <!-- Toolbar -->
@@ -79,28 +78,23 @@
                 </tr>
             </thead>
             <tbody>
+                {% for patient in patients %}
                 <tr>
-                    <td>1</td>
-                    <td>011</td>
-                    <td>Patient name</td>
-                    <td>25</td>
-                    <td>F</td>
-                    <td>(633) 8xx-xxxx-xxx</td>
-                    <td>example@email.com</td>
-                    <td>Branch 1</td>
-                    <td><a href="{{ url_for('owner.patient_info') }}"><i class="fa fa-chevron-right"></i></a></td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ '{:03d}'.format(patient.patient_id) }}</td>
+                    <td>{{ patient.patient_full_name }}</td>
+                    <td>{{ patient.age }}</td>
+                    <td>{{ patient.sex }}</td>
+                    <td>{{ patient.contact_number }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.branch.branch_name }}</td>
+                    <td>
+                        <a href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>012</td>
-                    <td>Patient name</td>
-                    <td>25</td>
-                    <td>-</td>
-                    <td>(633) 8xx-xxxx-xxx</td>
-                    <td>example@email.com</td>
-                    <td>Branch 2</td>
-                    <td><a href="{{ url_for('owner.patient_info') }}"><i class="fa fa-chevron-right"></i></a></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

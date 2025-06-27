@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request
 from app.models.branches import Branch, ClinicBranchImage
 from app.models.employees import Employee
+from app.models.patients import Patients
 
 owner = Blueprint('owner', __name__)
 
@@ -29,11 +30,20 @@ def appointment_req():
 
 @owner.route('/patients')   
 def patients():
-    return render_template('/owner/patients.html')
+    selected_branch = request.args.get('branch', 'all')
+    
+    if selected_branch == 'all':
+        patients = Patients.query.all()
+    else:
+        patients = Patients.query.filter_by(branch_id=selected_branch)
+    
+    branches = Branch.query.all()
+    return render_template('/owner/patients.html', patients=patients, branches=branches, selected_branch=selected_branch)
 
-@owner.route('/patient_info')   
-def patient_info():
-    return render_template('/owner/patient_info.html')
+@owner.route('/patient_info/<int:patient_id>')   
+def patient_info(patient_id):
+    patient = Patients.query.get_or_404(patient_id)
+    return render_template('/owner/patient_info.html', patient=patient)
 
 @owner.route('/patient_procedure')   
 def patient_procedure():
