@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEETHNOLOGY - Inventory</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/o_inventory.css">
+    <link rel="stylesheet" href="../../static/css/owner.css">
+</head>
+<body>
+     <div class="dashboard-container">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <img src="{{ url_for('static', filename='images/teethnology.png') }}" alt="Teethnology Logo" class="topbar-logo">
+                <span class="topbar-title">TEETHNOLOGY</span>
+            </div>
+            <div class="topbar-right">
+                <span class="topbar-icon"><i class="fa fa-bell"></i></span>
+                <span class="topbar-icon"><i class="fa fa-user"></i></span>
+                <span class="topbar-username" id="userDropdownBtn">USERNAME
+                    <div class="user-dropdown" id="userDropdownMenu">
+                        <div class="user-dropdown-links">
+                            <a href="#">ACCOUNT</a>
+                            <a href="#">SECURITY</a>
+                        </div>
+                        <button class="logout-btn">Logout</button>
+                    </div>
+                </span>
+            </div>
+        </header>
+
+        <!-- Sidebar + Main Content -->
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('owner.owner_home') }}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+                        <li><a href="{{ url_for('owner.branches') }}"><i class="fa fa-code-branch"></i> Branches</a></li>
+                        <li><a href="{{ url_for('owner.appointments') }}"><i class="fa fa-calendar"></i> Appointments</a></li>
+                        <li><a href="{{ url_for('owner.patients') }}"><i class="fa fa-users"></i> Patients</a></li>
+                        <li><a href="{{ url_for('owner.employees') }}"><i class="fa fa-user-md"></i> Employees</a></li>
+                        <li><a href="{{ url_for('owner.inventory') }}"><i class="fa fa-box"></i> Inventory</a></li>
+                        <li><a href="{{ url_for('owner.transactions') }}"><i class="fa fa-credit-card"></i> Transaction</a></li>
+                        <li><a href="{{ url_for('owner.reports') }}"><i class="fa fa-file-alt"></i> Reports</a></li>
+                    </ul>
+                </nav>
+
+                <hr>
+                <div class="voice-assistant">
+                    <div class="version">1.0</div>
+                    <button title="Talk to our voice assistant">
+                        <i class="fa fa-microphone"></i>
+                    </button>
+                    <span>TALK TO OUR VOICE ASSISTANT<br>Say "Hi Joye"</span>
+                </div>
+            </aside>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <div class="inventory-container">
+                    <div class="inventory-tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Consumables</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="o_in_equipment.html">Equipments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Sterilization</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Lab Materials</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Medications</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="search-container">
+                        <div class="search-bar-container">
+                            <input type="text" class="search-bar" placeholder="Search bar" id="searchInput">
+                            <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>
+                        </div>
+                        <button class="add-btn" type="button">
+                            ADD
+                        </button>
+                    </div>
+
+                    <div class="inventory-table">                   
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item Code</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Exp. status</th>
+                                    <th>Last Restock</th>
+                                    <th>Storage Location</th>
+                                    <th>Reorder Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>LAB-AIG-001</td>
+                                    <td>Adjmate Powder</td>
+                                    <td>0</td>
+                                    <td>mm/dd/yyyyy</td>
+                                    <td>mm/dd/yyyyy</td>
+                                    <td>Lab Shell A</td>
+                                    <td><span class="badge bg-danger">Low Stock</span></td>
+                                    <td><button class="btn btn-sm btn-primary">Restocks</button></td>
+                                </tr>
+                                <tr>
+                                    <td>LAB-AIG-001</td>
+                                    <td>Adjmate Powder</td>
+                                    <td>0</td>
+                                    <td>mm/dd/yyyyy</td>
+                                    <td>mm/dd/yyyyy</td>
+                                    <td>Lab Shell A</td>
+                                    <td><span class="badge bg-danger">Low Stock</span></td>
+                                    <td><button class="btn btn-sm btn-primary">Restocks</button></td>
+                                </tr>
+                                <tr>
+                                    <td>LAB-AIG-001</td>
+                                    <td>Adjmate Powder</td>
+                                    <td>0</td>
+                                    <td>mm/dd/yyyyy</td>
+                                    <td>mm/dd/yyyyy</td>
+                                    <td>Lab Shell A</td>
+                                    <td><span class="badge bg-danger">Low Stock</span></td>
+                                    <td><button class="btn btn-sm btn-primary">Restocks</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
