@@ -17,14 +17,14 @@
             <div class="branches-services">
                 <h3>All Branch Services</h3>
                 <div class="services-checklist">
-                    {% for i, service in enumerate([
+                    {% for service in [
                         'Preventive Dentistry', 'Intervention Dentistry', 'Coroneric Dentistry',
                         'Pediatric Dentistry', 'Orthodontics', 'Periodontics',
                         'Oral and Nutritional', 'Sedation Dentistry', 'Others'
-                    ]) %}
+                    ] %}
                         <div class="checklist-item">
-                            <input type="checkbox" id="service{{ i+1 }}">
-                            <label for="service{{ i+1 }}">{{ service }}</label>
+                            <input type="checkbox" id="service{{ loop.index }}">
+                            <label for="service{{ loop.index }}">{{ service }}</label>
                         </div>
                     {% endfor %}
                 </div>
