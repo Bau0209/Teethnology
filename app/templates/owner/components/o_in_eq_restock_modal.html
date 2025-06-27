@@ -1,0 +1,71 @@
+
+<div class="modal fade" id="equipmentRestockModal" tabindex="-1" aria-labelledby="equipmentRestockModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="equipmentRestockModalLabel">Restock Item</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Equipment Name:</label>
+            <input type="text" class="form-control" id="equipmentName" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Equipment Code:</label>
+            <input type="text" class="form-control" id="equipmentCode" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category:</label>
+            <input type="text" class="form-control" id="equipmentCategory" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Condition of Equipment:</label>
+            <input type="text" class="form-control" id="equipmentCondition" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Warranty Card:</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="warrantyCard" readonly>
+              <button class="btn btn-outline-secondary" type="button">View</button>
+            </div>
+          </div>
+          
+          <hr>
+          
+          <div class="mb-3">
+            <label class="form-label">Supplier Name:</label>
+            <select class="form-select" id="supplierName">
+              <option selected>Select supplier</option>
+              <option>Dental Supplies Inc.</option>
+              <option>Medical Equipment Co.</option>
+              <option>Global Dental Partners</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Restock Date:</label>
+            <input type="date" class="form-control" id="restockDate">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Quantity Input:</label>
+            <input type="number" class="form-control" id="restockQuantity" min="1">
+          </div>
+          
+          <div class="d-flex justify-content-between mt-4">
+            <div>
+              <button type="button" class="btn btn-outline-primary">
+                <i class="fa fa-file-text me-2"></i>Current Warranty card
+              </button>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">
+                Restock
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

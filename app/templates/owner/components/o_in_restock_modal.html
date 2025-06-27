@@ -1,0 +1,49 @@
+<div class="modal fade" id="restockModal" tabindex="-1" aria-labelledby="restockModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="restockModalLabel">Restock Item</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Item Name:</label>
+              <input type="text" class="form-control" id="restockItemName" readonly>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Current Stock Level:</label>
+              <input type="text" class="form-control" id="restockCurrentStock" readonly>
+            </div>
+          </div>
+          
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Item Code:</label>
+              <input type="text" class="form-control" id="restockItemCode" readonly>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Restock Date:</label>
+              <input type="date" class="form-control" id="restockDate">
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Quantity input:</label>
+            <input type="number" class="form-control" id="restockQuantity" min="1">
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Category:</label>
+            <input type="text" class="form-control" id="restockCategory" readonly>
+          </div>
+          
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Submit Restock</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
