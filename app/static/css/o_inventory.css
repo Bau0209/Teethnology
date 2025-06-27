@@ -225,6 +225,63 @@
   border-radius: 0 0 10px 10px;
 }
 
+/* Equipment Details Modal Styles */
+#equipmentDetailsModal .modal-content {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#equipmentDetailsModal .modal-header {
+  background-color: #00898E;
+  color: white;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+}
+
+#equipmentDetailsModal .modal-title {
+  font-weight: 600;
+}
+
+#equipmentDetailsModal .item-code {
+  color: #00898E;
+  font-weight: 700;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+#equipmentDetailsModal .badge.bg-success {
+  background-color: #28a745 !important;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+
+#equipmentDetailsModal .detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+#equipmentDetailsModal .detail-label {
+  font-weight: 600;
+  color: #495057;
+  min-width: 150px;
+}
+
+#equipmentDetailsModal .detail-value {
+  color: #6c757d;
+  text-align: right;
+  flex-grow: 1;
+}
+
+#equipmentDetailsModal .modal-footer {
+  border-top: none;
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .sidebar {

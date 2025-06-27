@@ -8,13 +8,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="branch-overview-container my-3">
-    <div class="branch-dropdown">
-        <select class="form-select">
-            <option>Manila Branch</option>
-            <option>Quezon City Branch</option>
-        </select>
-    </div>
+<div class="branch-dropdown">
+    <select class="form-select" onchange="location = this.value;">
+        {% for branch in branches %}
+        <option value="{{ url_for('owner.inventory', branch_id=branch.id) }}"
+                {% if branch.id == current_branch %}selected{% endif %}>
+            {{ branch.name }}
+        </option>
+        {% endfor %}
+    </select>
 </div>
 
 <div class="inventory-container">
@@ -31,11 +33,18 @@
 
     <!-- Search, Filter, Add -->
     <div class="search-container my-3">
-        <div class="search-bar-container d-flex align-items-center">
-            <input type="text" class="search-bar form-control" placeholder="Search bar" id="searchInput">
-            <button class="btn btn-outline-secondary ms-2" title="Filter"><i class="fa fa-filter"></i></button>
-            <button class="btn btn-primary ms-2" type="button">ADD</button>
-        </div>
+        <form action="{{ url_for('owner.inventory_medication') }}" method="GET">
+            <div class="search-bar-container d-flex align-items-center">
+                <input type="text" class="form-control" name="q" placeholder="Search medications..." 
+                       value="{{ request.args.get('q', '') }}" id="searchInput">
+                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
+                    ADD
+                </button>
+            </div>
+        </form>
     </div>
 
     <!-- Inventory Table -->
@@ -54,19 +63,26 @@
                     <th>View</th>
                 </tr>
             </thead>
+            <!-- Instead of hardcoded range(3), use actual data -->
             <tbody>
-                {% for i in range(3) %}
+                {% for item in consumables %}
                 <tr>
-                    <td>CON-CV-V-BLUS</td>
-                    <td>Nitrile Gloves</td>
-                    <td>0</td>
-                    <td>Box</td>
-                    <td>mm/old/yyyyy</td>
-                    <td>Cabinet A-Drawer I</td>
-                    <td><span class="badge bg-danger">Low Stock</span></td>
-                    <td><button class="btn btn-sm btn-primary">Restock</button></td>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.unit }}</td>
+                    <td>{{ item.last_restock }}</td>
+                    <td>{{ item.location }}</td>
                     <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#fullDetailsModal">
+                        <span class="badge bg-{{ 'danger' if item.quantity < item.min_stock else 'success' }}">
+                            {{ 'Low Stock' if item.quantity < item.min_stock else 'In Stock' }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary">Restock</button>
+                    </td>
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#fullDetailsModal-{{ item.id }}">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </td>
@@ -76,7 +92,9 @@
         </table>
     </div>
 </div>
-{% include 'owner/components/o_in_full_details_modal.html' %}
+{% for item in consumables %}
+    {% include 'owner/components/o_in_full_details_modal.html'%}
+{% endfor %}
 {% endblock %}
 
 {% block extra_js %}
