@@ -84,7 +84,7 @@
 }
 
 .checklist-item input[type="checkbox"]:checked::after {
-    content: "✓";
+    content: "" !important;
     position: absolute;
     color: white;
     font-size: 12px;
