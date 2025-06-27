@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from app.models.branches import Branch, ClinicBranchImage
 
 owner = Blueprint('owner', __name__)
 
@@ -8,11 +9,14 @@ def owner_home():
 
 @owner.route('/branches')
 def branches():
-    return render_template('/owner/branches.html')
+    branches = Branch.query.all()
+    return render_template('/owner/branches.html', branches=branches)
 
-@owner.route('/branch_info')
-def branch_info():
-    return render_template('/owner/o_branch_info.html')
+@owner.route('/branch_info/<int:branch_id>')
+def branch_info(branch_id):
+    branch = Branch.query.get_or_404(branch_id)
+    branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
+    return render_template('/owner/o_branch_info.html', branch=branch, branch_images=branch_images)
 
 @owner.route('/appointments')
 def appointments():

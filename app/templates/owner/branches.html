@@ -26,57 +26,33 @@
         </div>
         <hr>
 
-        <div class="branch-item">
-            <div class="branch-info">
-                <span class="branch-name">Quezon City Clinic</span>
-                <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>
-                <hr>
-            </div>
-            <div class="branch-details">
-                <div>
-                    <span class="branch-label">Full Address</span><br>
-                    123 ABC St. Brgy 456, <b>Quezon City</b>
+        {% for branch in branches %}
+            <div class="branch-item">
+                <div class="branch-info">
+                    <span class="branch-name">{{ branch.branch_name }}</span>
+                    <a href="{{ url_for('owner.branch_info', branch_id=branch.branch_id) }}" class="branch-edit">Edit</a>
+                    <hr>
                 </div>
-                <div>
-                    <span class="branch-label">Chief Dentist</span><br>
-                    Dr. Anna Reyes
-                </div>
-                <div>
-                    <span class="branch-label">Contact</span><br>
-                    (63917)-123-4567
-                </div>
-                <div>
-                    <span class="branch-label">Hours</span><br>
-                    9AM-6PM
-                </div>
-            </div>
-        </div>
-
-        <div class="branch-item">
-            <div class="branch-info">
-                <span class="branch-name">Manila Clinic</span>
-                <a href="{{ url_for('owner.branch_info') }}" class="branch-edit">Edit</a>
-                <hr>
-            </div>
-            <div class="branch-details">
-                <div>
-                    <span class="branch-label">Full Address</span><br>
-                    123 ABC St. Brgy 456, <b>Manila City</b>
-                </div>
-                <div>
-                    <span class="branch-label">Chief Dentist</span><br>
-                    Dr. Alan Reyes
-                </div>
-                <div>
-                    <span class="branch-label">Contact</span><br>
-                    (63917)-123-4567
-                </div>
-                <div>
-                    <span class="branch-label">Hours</span><br>
-                    9AM-6PM
+                <div class="branch-details">
+                    <div>
+                        <span class="branch-label">Full Address</span><br>
+                        {{ branch.full_address }}
+                    </div>
+                    <div>
+                        <span class="branch-label">Chief Dentist</span><br>
+                        {{ branch.chief_dentist }}
+                    </div>
+                    <div>
+                        <span class="branch-label">Contact</span><br>
+                        {{ branch.contact_number }}
+                    </div>
+                    <div>
+                        <span class="branch-label">Hours</span><br>
+                        {{ branch.clinic_open_hour.strftime('%I:%M %p') }} - {{ branch.clinic_close_hour.strftime('%I:%M %p') }}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
