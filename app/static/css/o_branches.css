@@ -14,43 +14,125 @@
   flex-direction: column;
 
 }
-.branches-charts-row {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 20px;
-  width: calc(120% - 5px);   
-  margin: 0 auto 24px auto;   
-  justify-content: flex-start;
-}
-
-.branches-chart-card {
+.branches-info-card {
   background: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-  padding: 18px 18px 10px 18px;
-  flex: 1 1 0;
-  min-width: 420px;
-  max-width: 950px;
-  height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  width: calc(120% - 5px);
+  margin: 0 auto 24px auto;
+  border: 1.5px solid #e0efef;
 }
 
-.branches-chart {
-  flex: 1;
+.branches-info-header {
+  padding: 16px 32px;
   background: #f7fdfd;
-  border-radius: 10px;
-  padding: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1.5px solid #e0efef;
 }
-.branches-chart h2 {
+
+.branches-info-header h2 {
   color: #0097a7;
   font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.branches-info-content {
+  display: flex;
+  padding: 20px 32px;
+  gap: 40px;
+}
+
+.branches-services {
+  flex: 1;
+}
+
+.branches-services h3, .branches-about h3 {
+  color: #0097a7;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.services-checklist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checklist-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #0097a7;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.checklist-item input[type="checkbox"]:checked {
+    background-color: #0097a7;
+}
+
+.checklist-item input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checklist-item label {
+    color: #393939;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+.branches-about {
+  flex: 1;
+}
+
+.branches-about p {
+  color: #393939;
+  margin-bottom: 20px;
+}
+
+.branches-contact {
+  margin-bottom: 20px;
+}
+
+.branches-contact p {
+  color: #393939;
+  margin: 5px 0;
+}
+
+.view-website-btn {
+  background: #0097a7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 1rem;
   font-weight: 500;
-  text-align: center;
-  margin-bottom: 10px;
-} 
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.view-website-btn:hover {
+  background: #00bcd4;
+}
 
 /* --- Branches List Card --- */
 .branches-list-card {
@@ -164,7 +246,6 @@
 .branch-info hr {
   display: none;
 }
-
 /* Responsive */
 @media (max-width: 900px) {
   .branches-list-header, .branch-item {
@@ -177,4 +258,7 @@
   .branch-name {
     font-size: 1.3rem;
   }
+  .services-checklist {
+        grid-template-columns: 1fr;
+    }
 }
