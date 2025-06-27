@@ -1,0 +1,99 @@
+{% extends 'owner/owner_base.html' %}
+
+{% block title %}Employee Activity History{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_em_basic_info.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="employee-table-container">
+    <table class="employee-table">
+        <tbody>
+            <tr>
+                <td><a href="{{ url_for('owner.employees') }}"><i class="fa fa-chevron-left"></i></a></td>
+                <td>1</td>
+                <td>011</td>
+                <td>Employee Name</td>
+                <td>25</td>
+                <td>F</td>
+                <td>(633) 8xx-xxxx-xxx</td>
+                <td>example@email.com</td>
+                <td>Branch 1</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="employee-info-container">
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="employeeInfoTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-branch="basic_info">Basic Info</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-branch="work_details">Work Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#" data-branch="activity_history">Activity History</a>
+        </li>
+    </ul>
+
+    <!-- Activity History Section -->
+    <section class="tab-content" id="activity_history">
+        <div class="info-card">
+            <div class="info-header">
+                <h3>Employee ID: 011</h3>
+                <h4>Eddieyn Jay Bautista</h4>
+            </div>
+            
+            <div class="activity-history-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date & Time</th>
+                            <th>Action</th>
+                            <th>Module</th>
+                            <th>Target</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>mm-dd-yyyy</td>
+                            <td>Update</td>
+                            <td>Patients</td>
+                            <td>Patient 011</td>
+                            <td>Changed along into: asked "Pedestin"</td>
+                        </tr>
+                        <!-- Additional rows would go here -->
+                        <tr>
+                            <td>2</td>
+                            <td>mm-dd-yyyy</td>
+                            <td>Create</td>
+                            <td>Appointments</td>
+                            <td>Appointment 205</td>
+                            <td>New appointment scheduled</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>mm-dd-yyyy</td>
+                            <td>Delete</td>
+                            <td>Inventory</td>
+                            <td>Item ID 487</td>
+                            <td>Removed expired item</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/o_employee.js') }}"></script>
+{% endblock %}
