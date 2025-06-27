@@ -118,22 +118,63 @@
   margin: 5px 0;
 }
 
-.view-website-btn {
-  background: #0097a7;
-  color: #fff;
-  border: none;
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Space between buttons */
+  margin-bottom: 20px;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Base Button Styles */
+.save-btn, .view-website-btn {
   border-radius: 6px;
-  padding: 8px 20px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  width: 120px;
+  padding: 10px 20px; 
+  height: 40px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; 
+}
+
+/* Save Button Specific */
+.save-btn {
+  background: #00898E;
+  color: #fff;
+  border: 2px solid #00898E;
+}
+
+.save-btn:hover {
+  background: #00bcd4;
+  border-color: #00bcd4;
+}
+
+/* View Website Button Specific */
+.view-website-btn {
+  background: #00898E;
+  color: #fff;
+  border: 2px solid #00898E;
+  text-align: center; 
+  white-space: nowrap;
+  line-height: normal; 
 }
 
 .view-website-btn:hover {
   background: #00bcd4;
+  border-color: #00bcd4;
 }
-
 /* --- Branches List Card --- */
 .branches-list-card {
   background: #fff;
