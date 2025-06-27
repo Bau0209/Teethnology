@@ -1,16 +1,18 @@
-<!-- templates/owner/components/consumable_details_modal.html -->
-<div class="modal fade" id="consumableDetailsModal" tabindex="-1" aria-labelledby="consumableDetailsModalLabel" aria-hidden="true">
+<div class="modal fade" id="fullDetailsModal-{{ item.id }}" tabindex="-1" aria-labelledby="fullDetailsModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="consumableDetailsModalLabel">Item Details</h5>
+        <h5 class="modal-title" id="fullDetailsModalLabel">Item Details</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col-md-12">
-              <h4 class="item-code">CON-GLV-BLU-S</h4>
+              <h4 class="item-code">{{ item.code }}</h4>
+              {% if item.status %}
+              <span class="badge bg-{{ 'success' if item.status == 'Active' else 'danger' }}">{{ item.status }}</span>
+              {% endif %}
             </div>
           </div>
           
@@ -18,54 +20,63 @@
             <div class="col-md-6">
               <div class="detail-item mb-3">
                 <label class="detail-label">Item Name:</label>
-                <span class="detail-value">Nitrile Gloves</span>
+                <span class="detail-value">{{ item.name }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Category:</label>
-                <span class="detail-value">Personal Protective Equipment</span>
+                <span class="detail-value">{{ item.category }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Quantity in Stock:</label>
-                <span class="detail-value">0</span>
+                <span class="detail-value">{{ item.quantity }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Expiration Status:</label>
-                <span class="detail-value">mm/dd/yyyy</span>
+                <span class="detail-value {{ 'text-danger' if item.is_expired else '' }}">
+                  {{ item.exp_date|format_date }}
+                  {% if item.is_expired %}
+                  <span class="badge bg-danger ms-1">Expired</span>
+                  {% endif %}
+                </span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Minimum Stock Level:</label>
-                <span class="detail-value">10</span>
+                <span class="detail-value">{{ item.min_stock }}</span>
               </div>
             </div>
             
             <div class="col-md-6">
               <div class="detail-item mb-3">
                 <label class="detail-label">Reorder Status:</label>
-                <span class="detail-value"><span class="badge bg-danger">Low Stock</span></span>
+                <span class="detail-value">
+                  <span class="badge bg-{{ 'danger' if item.quantity < item.min_stock else 'success' }}">
+                    {{ 'Low Stock' if item.quantity < item.min_stock else 'In Stock' }}
+                  </span>
+                </span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Description:</label>
-                <span class="detail-value">Blue nitrile examination gloves, powder-free</span>
+                <span class="detail-value">{{ item.description }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Storage Location:</label>
-                <span class="detail-value">Cabinet A-Drawer 1</span>
+                <span class="detail-value">{{ item.location }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Supplier Name:</label>
-                <span class="detail-value">Medical Supplies Inc.</span>
+                <span class="detail-value">{{ item.supplier }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Last Restocked:</label>
-                <span class="detail-value">mm/dd/yyyy</span>
+                <span class="detail-value">{{ item.last_restock|format_date }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Size:</label>
-                <span class="detail-value">Medium</span>
+                <span class="detail-value">{{ item.size }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Total Value:</label>
-                <span class="detail-value">$45.00</span>
+                <span class="detail-value">${{ "%.2f"|format(item.value) }}</span>
               </div>
             </div>
           </div>
@@ -73,7 +84,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Edit Details</button>
+        <button type="button" class="btn btn-primary" 
+                onclick="handleItemAction('archive', '{{ item.id }}')">
+          Archive
+        </button>
       </div>
     </div>
   </div>
