@@ -51,7 +51,7 @@
                                 <p><strong>Name of the Clinic:</strong><br>JCS Dental Clinic {{ branch.branch_name }}</p>
                                 <p><strong>Address:</strong><br>{{ branch.full_address }}</p>
                                 <p><strong>Description:</strong><br>{{ branch.clinic_description }}</p>
-                                <a class="view-more-btn" href="{{ url_for('main.branch') }}">View More</a>
+                                <a class="view-more-btn" href="{{ url_for('main.branch', branch_id=branch.branch_id) }}">View More</a>
                             </div>
                         </div>
                     {% endfor %}

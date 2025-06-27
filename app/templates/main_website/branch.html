@@ -20,28 +20,38 @@
     <main>
         <!-- Branch Image Carousel -->
         <section id="branch-carousel">
-            <img src="../../static/images/quezon clinic example.jpg" alt="Dental Clinic" class="branch-img-carousel">        
+            {% if branch_images %}
+                <img src="{{ url_for('static', filename=branch_images[0].image_link) }}"
+                    alt="Dental Clinic"
+                    class="branch-img-carousel">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/no-image.jpg') }}"
+                    alt="No Image"
+                    class="branch-img-carousel">
+            {% endif %}
         </section>
 
         <!-- Branch Details -->
         <section id="branch">
             <div class="branch-header">
-                <h2>Lorem Ipsum</h2>
-                <span>Manila CITY</span>
-                <p>Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend dictum sapien ut tincidunt. Suspendisse potenti. Etiam euismod, sapien nec laoreet dictum, enim erat dictum erat, nec dictum erat enim nec erat. Mauris eleifend dictum sapien ut tincidunt.</p>
+                <h2>{{ branch.branch_name }}</h2>
+                <span>{{ branch.full_address.split(',')[-1] }}</span>  <!-- optional: shows just the city -->
+                <p>{{ branch.clinic_description }}</p>
             </div>
+
             <div class="branch-content">
                 <div class="branch-details-card">
                     <div class="branch-info">
                         <h4>LOCATION</h4>
-                        <p>123 dolor sit amet, consectetur adipiscing elit, Aenean mattis.</p>
+                        <p>{{ branch.full_address }}</p>
                     </div>
+
                     <div class="branch-info">
                         <h4>SERVICE LIST</h4>
                         <ul>
-                            <li>Lorem ipsum</li>
-                            <li>Maecen dictum</li>
-                            <li>Vivamus dignissim</li>
+                            {% for service in branch.services.split(',') %}
+                                <li>{{ service.strip() }}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -53,10 +63,12 @@
             <div class="services-header">
                 <h2>BOOK AN APPOINTMENT</h2>
             </div>
+
             <div class="appointment-container" style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;">
                 <!-- Calendar -->
                 <div class="appointment-calendar">
                     <h4>APPOINTMENT CALENDAR</h4>
+                    <!-- Static Calendar for now -->
                     <table>
                         <thead>
                             <tr>
@@ -72,6 +84,7 @@
                         </tbody>
                     </table>
                 </div>
+
                 <!-- Appointment Info -->
                 <div class="appointment-info">
                     <h4>INFORMATION</h4>
@@ -82,17 +95,20 @@
                         <li>10:00am-11:00am</li>
                         <li>1:00pm-2:00pm</li>
                     </ul>
+
                     <p>List of Available Doctors:</p>
                     <ul>
-                        <li>Adipiscing elit</li>
-                        <li>Lorem ipsum dolor</li>
-                        <li>Cras rutrum posuere</li>
+                        <li>{{ branch.chief_dentist }}</li>
+                        <li>Doctor #2</li>
+                        <li>Doctor #3</li>
                     </ul>
+
                     <button class="book" onclick="window.location.href='/form'">Book Now</button>
                 </div>
             </div>
         </section>
     </main>
+
     <footer>
         <div class="footer-container">
             <div class="footer-column">
