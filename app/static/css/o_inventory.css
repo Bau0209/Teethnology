@@ -1,10 +1,11 @@
 /*branch style*/
 .branch-overview-container {
     margin: 10px 0;
-    margin-left: auto;
+    border-radius: 5px;
+    margin-left: 205vh;
     display: flex;
     justify-content: space-between;
-    align-items: left;
+    align-items: right;
 }
 
 .section-title {
