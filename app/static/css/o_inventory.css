@@ -1,4 +1,40 @@
+/*branch style*/
+.branch-overview-container {
+    margin: 10px 0;
+    margin-left: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+}
 
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #495057;
+    font-weight: 600;
+}
+
+.branch-dropdown .form-select {
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    color: #495057;
+    cursor: pointer;
+}
+
+.branch-dropdown .form-select:focus {
+    border-color: #00898E;
+    box-shadow: 0 0 0 0.25rem rgba(0, 137, 142, 0.25);
+}
+/*inventory container style*/
 .inventory-container{
     background: #ffffff;
     border-radius: 12px;
@@ -22,8 +58,9 @@
 }
 
 .inventory-tabs .nav-link.active {
-    color: #0d6efd;
-    border-bottom: 2px solid #0d6efd;
+    color: #00898E;
+    font-weight: 700;
+    border-bottom: 2px solid #00898E;
     background-color: transparent;
 }
 .search-container {
