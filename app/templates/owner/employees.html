@@ -64,7 +64,7 @@
                     <td>{{ employee.email }}</td>
                     <td>{{ employee.branch.branch_name }}</td>
                     <td>
-                        <a href="{{ url_for('owner.employee_info', employee_id=employee.id) }}">
+                        <a href="{{ url_for('owner.employee_info', employee_id=employee.employee_id) }}">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </td>

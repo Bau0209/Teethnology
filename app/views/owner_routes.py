@@ -55,9 +55,10 @@ def employees():
     branches = Branch.query.all()
     return render_template('/owner/employees.html', branches=branches, employees=employees)
 
-@owner.route('/employee_info')
-def employee_info():
-    return render_template('/owner/employee_basic_info.html')
+@owner.route('/employee_info/<int:employee_id>')
+def employee_info(employee_id):
+    employee = Employee.query.get_or_404(employee_id)
+    return render_template('/owner/employee_basic_info.html', employee=employee)
 
 @owner.route('/inventory')
 def inventory():
