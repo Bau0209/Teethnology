@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from app.models.branches import Branch
+from app.models.branches import Branch, ClinicBranchImage
 
 main = Blueprint('main', __name__)
 
@@ -16,7 +16,8 @@ def contact():
 def form():
     return render_template('/main_website/form.html')
 
-@main.route('/branch')
-def branch():
-    return render_template('/main_website/branch.html')
-
+@main.route('/branch/<int:branch_id>')
+def branch(branch_id):
+    branch = Branch.query.get_or_404(branch_id)
+    branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
+    return render_template('/main_website/branch.html', branch=branch, branch_images=branch_images)
