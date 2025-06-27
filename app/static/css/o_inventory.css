@@ -173,6 +173,58 @@
     font-size: 0.8rem;
 }
 
+/* Consumable Details Modal Styles */
+#fullDetailsModal .modal-content {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#fullDetailsModal .modal-header {
+  background-color: #00898E;
+  color: white;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+}
+
+#fullDetailsModal .modal-title {
+  font-weight: 600;
+}
+
+#fullDetailsModal .item-code {
+  color: #00898E;
+  font-weight: 700;
+  border-bottom: 2px solid #00898E;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+#fullDetailsModal .detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+#fullDetailsModal .detail-label {
+  font-weight: 600;
+  color: #495057;
+  min-width: 150px;
+}
+
+#fullDetailsModal .detail-value {
+  color: #6c757d;
+  text-align: right;
+  flex-grow: 1;
+}
+
+#fullDetailsModal .modal-footer {
+  border-top: none;
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .sidebar {
