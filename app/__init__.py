@@ -2,13 +2,18 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from dotenv import load_dotenv
+import os
 
 db = SQLAlchemy()
 load_dotenv()
 
 def create_app():
     # Load environment variables from .env
-    
+    print("User:", os.environ.get('DB_USER'))
+    print("Password:", os.environ.get('DB_PASSWORD'))
+    print("Host:", os.environ.get('DB_HOST'))
+    print("Database:", os.environ.get('DB_NAME'))
+
     app = Flask(__name__)
     app.config.from_object(Config)
 
