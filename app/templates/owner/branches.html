@@ -1,6 +1,6 @@
-{% extends 'owner/owner_base.html' %}
+{% extends 'owner_base.html' %}
 
-{% block title %}Teethnology Branches{% endblock %}
+{% block title %}Teethnology Dashboard - Branches{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/o_branches.css') }}">
@@ -8,6 +8,7 @@
 
 {% block content %}
 <div class="branches-dashboard">
+    <!-- Website Information Card -->
     <div class="branches-info-card">
         <div class="branches-info-header">
             <h2>WEBSITE INFORMATION</h2>
@@ -16,59 +17,36 @@
             <div class="branches-services">
                 <h3>All Branch Services</h3>
                 <div class="services-checklist">
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service1" checked>
-                        <label for="service1">Preventive Dentistry</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service2" checked>
-                        <label for="service2">Intervention Dentistry</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service3" checked>
-                        <label for="service3">Coroneric Dentistry</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service4" checked>
-                        <label for="service4">Pediatric Dentistry</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service5" checked>
-                        <label for="service5">Orthodontics</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service6" checked>
-                        <label for="service6">Periodontics</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service7" checked>
-                        <label for="service7">Oral and Nutritional</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service8" checked>
-                        <label for="service8">Sedation Dentistry</label>
-                    </div>
-                    <div class="checklist-item">
-                        <input type="checkbox" id="service9" checked>
-                        <label for="service9">Others</label>
-                    </div>
+                    {% for i, service in enumerate([
+                        'Preventive Dentistry', 'Intervention Dentistry', 'Coroneric Dentistry',
+                        'Pediatric Dentistry', 'Orthodontics', 'Periodontics',
+                        'Oral and Nutritional', 'Sedation Dentistry', 'Others'
+                    ]) %}
+                        <div class="checklist-item">
+                            <input type="checkbox" id="service{{ i+1 }}" checked>
+                            <label for="service{{ i+1 }}">{{ service }}</label>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="branches-about">
+                <div class="button-container">
+                    <button class="save-btn">Save</button>
+                    <button class="view-website-btn">View Website</button>
+                </div>
                 <h3>About Us</h3>
                 <p>Something something</p>
-                
+
                 <div class="branches-contact">
                     <h3>Main Contact</h3>
                     <p>Email</p>
                     <p>Contact Number</p>
                 </div>
-                
-                <button class="view-website-btn">View Website</button>
             </div>
         </div>
     </div>
 
+    <!-- Branch List Card -->
     <div class="branches-list-card">
         <div class="branches-list-header">
             <span class="branches-title">BRANCHES</span>
@@ -77,31 +55,31 @@
         <hr>
 
         {% for branch in branches %}
-            <div class="branch-item">
-                <div class="branch-info">
-                    <span class="branch-name">{{ branch.branch_name }}</span>
-                    <a href="{{ url_for('owner.branch_info', branch_id=branch.branch_id) }}" class="branch-edit">Edit</a>
-                    <hr>
+        <div class="branch-item">
+            <div class="branch-info">
+                <span class="branch-name">{{ branch.branch_name }}</span>
+                <a href="{{ url_for('owner.branch_info', branch_id=branch.branch_id) }}" class="branch-edit">Edit</a>
+                <hr>
+            </div>
+            <div class="branch-details">
+                <div>
+                    <span class="branch-label">Full Address</span><br>
+                    {{ branch.full_address }}
                 </div>
-                <div class="branch-details">
-                    <div>
-                        <span class="branch-label">Full Address</span><br>
-                        {{ branch.full_address }}
-                    </div>
-                    <div>
-                        <span class="branch-label">Chief Dentist</span><br>
-                        {{ branch.chief_dentist }}
-                    </div>
-                    <div>
-                        <span class="branch-label">Contact</span><br>
-                        {{ branch.contact_number }}
-                    </div>
-                    <div>
-                        <span class="branch-label">Hours</span><br>
-                        {{ branch.clinic_open_hour.strftime('%I:%M %p') }} - {{ branch.clinic_close_hour.strftime('%I:%M %p') }}
-                    </div>
+                <div>
+                    <span class="branch-label">Chief Dentist</span><br>
+                    {{ branch.chief_dentist }}
+                </div>
+                <div>
+                    <span class="branch-label">Contact</span><br>
+                    {{ branch.contact_number }}
+                </div>
+                <div>
+                    <span class="branch-label">Hours</span><br>
+                    {{ branch.clinic_open_hour.strftime('%I:%M %p') }} - {{ branch.clinic_close_hour.strftime('%I:%M %p') }}
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>

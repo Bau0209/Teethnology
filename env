@@ -1,0 +1,7 @@
+# .env
+SECRET_KEY=w!h9I$eW@8x2X#v+0ZqM3^7pGn%T1dFz
+DB_USER=root
+DB_PASSWORD=%40Eddielynjoy123
+DB_NAME=teethnology
+DB_HOST=localhost
+DB_PORT=3306
