@@ -1,0 +1,94 @@
+<div class="modal fade" id="equipmentDetailsModal-{{ item.id }}" tabindex="-1" aria-labelledby="equipmentDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="equipmentDetailsModalLabel">Equipment Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <h4 class="item-code">{{ item.serial_no }}</h4>
+              <span class="badge bg-{{ 'success' if item.status == 'Active' else 'warning' }}">{{ item.status }}</span>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="detail-item mb-3">
+                <label class="detail-label">Equipment Name:</label>
+                <span class="detail-value">{{ item.name }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Category:</label>
+                <span class="detail-value">{{ item.category }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Quantity:</label>
+                <span class="detail-value">{{ item.quantity }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Model:</label>
+                <span class="detail-value">{{ item.model }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Warranty Info:</label>
+                <span class="detail-value">
+                  {% if item.warranty_years %}
+                    {{ item.warranty_years }} years (expires {{ item.warranty_expiry|format_date }})
+                  {% else %}
+                    No warranty
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="detail-item mb-3">
+                <label class="detail-label">Condition:</label>
+                <span class="detail-value">
+                  <span class="badge bg-{{ 'success' if item.condition == 'Good' else 'danger' }}">
+                    {{ item.condition }}
+                  </span>
+                </span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Storage Location:</label>
+                <span class="detail-value">{{ item.location }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Supplier:</label>
+                <span class="detail-value">{{ item.supplier }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Last Maintenance:</label>
+                <span class="detail-value {{ 'text-danger' if item.maintenance_overdue else '' }}">
+                  {{ item.last_maintenance|format_date }}
+                  {% if item.maintenance_overdue %}
+                    <span class="badge bg-danger ms-1">Overdue</span>
+                  {% endif %}
+                </span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Acquired:</label>
+                <span class="detail-value">{{ item.acquired_date|format_date }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Total Value:</label>
+                <span class="detail-value">${{ "%0.2f"|format(item.value) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" 
+                onclick="handleEquipmentAction('maintenance', '{{ item.id }}')">
+          Request Maintenance
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
