@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from app.models.branches import Branch, ClinicBranchImage
+from app.models.employees import Employee
 
 owner = Blueprint('owner', __name__)
 
@@ -44,7 +45,15 @@ def patient_dental_rec():
 
 @owner.route('/employees')
 def employees():
-    return render_template('/owner/employees.html')
+    selected_branch = request.args.get('branch', 'all')
+    
+    if selected_branch == 'all':
+        employees = Employee.query.all()
+    else:
+        employees = Employee.query.filter_by(branch_id=selected_branch)
+    
+    branches = Branch.query.all()
+    return render_template('/owner/employees.html', branches=branches, employees=employees)
 
 @owner.route('/employee_info')
 def employee_info():
