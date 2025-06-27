@@ -63,6 +63,22 @@ def employee_info():
 def inventory():
     return render_template('/owner/inventory.html')
 
+@owner.route('/inventory_equipment')
+def inventory_equipment():
+    return render_template('/owner/o_in_equipment.html')
+
+@owner.route('/inventory_lab_material')
+def inventory_lab_material():
+    return render_template('/owner/o_in_lab_materials.html')
+
+@owner.route('/inventory_medication')
+def inventory_medication():
+    return render_template('/owner/o_in_medication.html')
+
+@owner.route('/inventory_sterilization')
+def inventory_sterilization():
+    return render_template('/owner/o_in_sterilization.html')
+
 @owner.route('/transactions')
 def transactions():
     return render_template('/owner/transactions.html')
