@@ -1,0 +1,136 @@
+{% extends "owner/owner_base.html" %}
+
+{% block title %}Transactions | Teethnology{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_transactions.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row">
+        <!-- Left Column (Metrics) -->
+        <div class="col-lg-4">
+            <div class="d-flex flex-column">
+                <!-- Transactions Today Card -->
+                <div class="mb-4">
+                    <div class="metric-card card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted">Revenue Today</h5>
+                            <h2 class="card-text">98</h2>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Total Revenue Section -->
+                <div class="mb-4">
+                    <div class="metric-card card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted">Transactions Today</h5>
+                            <h2 class="card-text">1,500</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column (Graph) -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Total Revenue For The Month</h5>
+                </div>
+                <div class="card-body p-0">
+                    <canvas id="revenueChart" height="350"></canvas>
+                </div>
+            </div>
+                    
+            <!-- Transactions Table Section -->
+            <div class="transaction-container">
+                    <!-- Branch Tabs -->
+                    <ul class="nav nav-tabs" id="transactionTabs">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('owner.transactions') }}">Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Balance Record</a>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <!-- Search Bar -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search transactions...">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                        <i class="fa fa-filter"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                
+                        <!-- Transactions Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Patient</th>
+                                        <th>Date/Time</th>
+                                        <th>Receipt No.</th>
+                                        <th>Payment Method</th>
+                                        <th>Status</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="patient-info">
+                                                <h6 class="mb-1">Patient name</h6>
+                                                <small class="text-muted">Patient info</small>
+                                            </div>
+                                        </td>
+                                        <td>2023-06-15 10:30 AM</td>
+                                            <td>RC-001234</td>
+                                            <td>Credit Card</td>
+                                            <td><span class="badge bg-success">Completed</span></td>
+                                            <td class="text-end">
+                                                <button class="btn btn-sm btn-outline-primary">View</button>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="patient-info">
+                                                <h6 class="mb-1">Patient name</h6>
+                                                <small class="text-muted">Patient info</small>
+                                            </div>
+                                        </td>
+                                        <td>2023-06-15 02:15 PM</td>
+                                        <td>RC-001235</td>
+                                        <td>Cash</td>
+                                        <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-primary">View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                
+                <!-- Add Transaction Button -->
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus me-2"></i> Add Transaction
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

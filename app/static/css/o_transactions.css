@@ -1,0 +1,208 @@
+/* ============== BASE STYLES ============== */
+body {
+    background-color: #8CB7B6;
+}
+
+/* ============== CARD STYLES ============== */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px 10px 0 0 !important;
+    padding: 1rem 1.5rem;
+}
+
+/* ============== TRANSACTION CONTAINER ============== */
+.transaction-container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============== METRIC CARDS ============== */
+.metric-card {
+    background-color: #fff;
+    transition: transform 0.2s;
+    margin-bottom: 10px;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+}
+
+.metric-card .card-body {
+    padding: 1.3rem;
+}
+
+.metric-card .card-title {
+    color: #00898E;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.3rem;
+}
+
+.metric-card .card-text {
+    color: #00898E;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0.75rem 0;
+}
+
+/* ============== TABS ============== */
+.nav-tabs {
+    border-bottom: none;
+    margin: 0 0 16px 0;
+    background: transparent;
+    gap: 32px;
+}
+
+.nav-tabs .nav-link {
+    color: #00898E;
+    font-weight: 600;
+    font-size: 1.15rem;
+    border: none;
+    background: transparent;
+    border-bottom: 3px solid transparent;
+    padding-bottom: 6px;
+    margin-right: 24px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.nav-tabs .nav-link.active {
+    color: #009688;
+    border-bottom: 3px solid #00898E;
+    background: transparent;
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+    color: #00796b;
+}
+
+/* ============== CHART ============== */
+#revenueChart {
+    width: 100% !important;
+    height: 269px !important;
+    margin-top: 15px;
+}
+
+/* ============== TABLE STYLES ============== */
+.table {
+    margin-top: 20px;
+}
+
+.table thead th {
+    background-color: #e9ecef;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.table tbody td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.patient-info {
+    padding: 10px;
+}
+
+/* ============== SEARCH BAR ============== */
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.input-group .form-control {
+    border-right: none;
+    height: 40px;
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.input-group .btn-outline-secondary {
+    border-left: none;
+    background-color: white;
+    height: 40px;
+}
+
+.input-group .btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+}
+
+/* ============== BUTTONS ============== */
+.btn-outline-primary {
+    border-width: 1.5px;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.btn-primary {
+    padding: 0.75rem;
+    font-weight: 500;
+    background-color: #007bff;
+    border-color: #007bff;
+    margin-top: 20px;
+}
+
+/* ============== BADGES ============== */
+.badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+/* ============== LAYOUT ADJUSTMENTS ============== */
+.container-fluid {
+    padding: 20px;
+}
+
+.row {
+    margin: 0 -15px;
+}
+
+.col-lg-4, .col-lg-8 {
+    padding: 0 15px;
+}
+
+/* ============== RESPONSIVE ADJUSTMENTS ============== */
+@media (max-width: 768px) {
+    #revenueChart {
+        height: 200px !important;
+    }
+    
+    .metric-card .card-text {
+        font-size: 1.5rem;
+    }
+    
+    .col-lg-4, .col-lg-8 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
