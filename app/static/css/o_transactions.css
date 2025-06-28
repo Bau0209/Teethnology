@@ -121,6 +121,10 @@
 }
 
 /* ============== SEARCH BAR ============== */
+.row.mb-3 {
+    justify-content: flex-end !important; 
+    border: none !important; 
+}
 .search-bar {
     margin-bottom: 20px;
 }
@@ -141,13 +145,28 @@
 }
 
 .input-group .btn-outline-secondary {
-    border-left: none;
+    border-left: none !important;
     background-color: white;
     height: 40px;
 }
 
 .input-group .btn-outline-secondary:hover {
     background-color: #f8f9fa;
+}
+
+.input-group .btn-outline-secondary .fa-search {
+    color: #00898E !important; 
+}
+
+
+.input-group .btn-outline-secondary .fa-filter {
+    color: #00898E !important; 
+}
+
+
+.input-group .btn-outline-secondary:hover .fa-search,
+.input-group .btn-outline-secondary:hover .fa-filter {
+    color: #00796b !important; 
 }
 
 /* ============== BUTTONS ============== */
