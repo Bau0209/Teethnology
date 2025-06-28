@@ -1,24 +1,15 @@
-.main-container {
+.branches-info-card,
+.branches-list-card {
   width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.branches-dashboard {
-  padding: 10px 20px 0 20px;
-  max-width: 950px;
-  margin:  auto;
-  display: flex;
-  flex-direction: column;
-
+  margin: 0 auto 24px;
+  transition: all 0.3s ease;
 }
 .branches-info-card {
   background: #fff;
   border-radius: 10px;
+  margin-top: 40px !important;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-  width: calc(120% - 5px);
+  width: calc(100% - 5px);
   margin: 0 auto 24px auto;
   border: 1.5px solid #e0efef;
 }
@@ -85,7 +76,7 @@
 
 .checklist-item input[type="checkbox"]:checked::after {
     content: "" !important;
-    position: absolute;
+    position: absolute; 
     color: white;
     font-size: 12px;
     top: 50%;
@@ -130,7 +121,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 /* Base Button Styles */
@@ -177,13 +168,12 @@
 }
 /* --- Branches List Card --- */
 .branches-list-card {
-  background: #fff;
+  background: #ffff;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-  width: calc(120% - 5px);  
+  width: calc(100% -5px);  
   height: inherit;  
-  margin: 0 auto 30px auto;  
-  padding-right: 10px;
+  margin: 0 auto 20px auto;  
   box-sizing: border-box;
   border: 1.5px solid #e0efef;
 }
@@ -223,12 +213,12 @@
 
 /* --- Branch Item --- */
 .branch-item {
-  padding: 24px 32px 18px 32px;
+  padding: 2rem;
   border-bottom: 1.5px solid #e0efef;
-  display: inline-table;
-  background: #f9fefe;
+  background: #ffffff;
   transition: box-shadow 0.2s;
 }
+
 .branch-item:last-child {
   border-bottom: none;
 }
@@ -236,29 +226,56 @@
 .branch-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
 }
 
 .branch-name {
-  font-size: 2rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: #0097a7;
-  letter-spacing: 1px;
+  margin: 0;
 }
 
 .branch-edit {
   color: #0097a7;
   text-decoration: none;
-  font-size: 1.08rem;
+  font-size: 1rem;
   font-weight: 500;
   background: none;
   border: none;
   cursor: pointer;
-  transition: color 0.2s;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
 }
+
 .branch-edit:hover {
   color: #007c8a;
+  text-decoration: underline;
+}
+
+.branch-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.branch-details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.branch-label {
+  font-weight: 700;
+  color: #0097a7;
+  font-size: 1.2rem;
+}
+
+.branch-details p {
+  margin: 0;
+  color: #393939;
+  line-height: 1.5;
 }
 
 /* --- Branch Details --- */
@@ -287,19 +304,146 @@
 .branch-info hr {
   display: none;
 }
-/* Responsive */
-@media (max-width: 900px) {
-  .branches-list-header, .branch-item {
-    padding: 16px 8px 8px 8px;
+
+/* Responsive Media Queries */
+
+@media (max-width: 1200px) {
+  .branches-dashboard {
+    padding: 10px 15px 0;
   }
+  
+  .branches-info-content {
+    gap: 30px;
+  }
+  
+  .branch-details {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .branches-info-card,
+  .branches-list-card {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .branches-info-content {
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .services-checklist {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .button-container {
+    justify-content: flex-start;
+    margin-top: 20px;
+  }
+  
+  .branch-name {
+    font-size: 1.8rem;
+  }
+  
+  .branch-details {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .branches-info-header,
+  .branches-list-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .branches-info-content {
+    padding: 16px 20px;
+  }
+  
+  .branch-item {
+    padding: 20px;
+  }
+  
+  .branch-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .branches-add-btn {
+    align-self: flex-start;
+    padding: 7px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .branches-dashboard {
+    padding: 10px 10px 0;
+  }
+  
+  .services-checklist {
+    grid-template-columns: 1fr;
+  }
+  
   .branch-details {
     flex-direction: column;
-    gap: 8px;
+    gap: 15px;
   }
+  
+  .branch-details > div {
+    min-width: 100%;
+  }
+  
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .save-btn,
+  .view-website-btn {
+    width: 100%;
+  }
+  
+  .branch-name {
+    font-size: 1.5rem;
+  }
+  
+  .branches-info-header h2,
+  .branches-title {
+    font-size: 1.3rem;
+  }
+  
+  .branches-services h3,
+  .branches-about h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .branches-info-header,
+  .branches-list-header {
+    padding: 14px 16px;
+  }
+  
+  .branches-info-content {
+    padding: 14px 16px;
+  }
+  
+  .branch-item {
+    padding: 16px;
+  }
+  
   .branch-name {
     font-size: 1.3rem;
   }
-  .services-checklist {
-        grid-template-columns: 1fr;
-    }
+  
+  .branches-add-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
