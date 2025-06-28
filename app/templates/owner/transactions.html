@@ -16,7 +16,7 @@
             <div class="d-flex flex-column">
                 <!-- Transactions Today Card -->
                 <div class="mb-4">
-                    <div class="metric-card card h-100">
+                    <div class="metric-card card">
                         <div class="card-body">
                             <h5 class="card-title text-muted">Revenue Today</h5>
                             <h2 class="card-text">98</h2>
@@ -26,7 +26,7 @@
                 
                 <!-- Total Revenue Section -->
                 <div class="mb-4">
-                    <div class="metric-card card h-100">
+                    <div class="metric-card card">
                         <div class="card-body">
                             <h5 class="card-title text-muted">Transactions Today</h5>
                             <h2 class="card-text">1,500</h2>
@@ -43,10 +43,10 @@
                     <h5 class="mb-0">Total Revenue For The Month</h5>
                 </div>
                 <div class="card-body p-0">
-                    <canvas id="revenueChart" height="350"></canvas>
+                    <canvas id="revenueChart"></canvas>
                 </div>
             </div>
-                    
+        </div>           
             <!-- Transactions Table Section -->
             <div class="transaction-container">
                     <!-- Branch Tabs -->
@@ -55,7 +55,7 @@
                             <a class="nav-link" href="{{ url_for('owner.transactions') }}">Transactions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Balance Record</a>
+                            <a class="nav-link" href="{{ url_for('owner.balance_record') }}">Balance Record</a>
                         </li>
                     </ul>
                     <div class="card-body">
@@ -100,7 +100,7 @@
                                             <td>Credit Card</td>
                                             <td><span class="badge bg-success">Completed</span></td>
                                             <td class="text-end">
-                                                <button class="btn btn-sm btn-outline-primary">View</button>
+                                                <button class="btn btn-sm btn-outline-primary"><i class="fa fa-chevron-right"></i></button>
                                             </td>
                                     </tr>
                                     <tr>
@@ -115,7 +115,7 @@
                                         <td>Cash</td>
                                         <td><span class="badge bg-warning text-dark">Pending</span></td>
                                         <td class="text-end">
-                                            <button class="btn btn-sm btn-outline-primary">View</button>
+                                            <button class="btn btn-sm btn-outline-primary"><i class="fa fa-chevron-right"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -94,6 +94,10 @@ def inventory_sterilization():
 def transactions():
     return render_template('/owner/transactions.html')
 
+@owner.route('/balance_record')
+def balance_record():
+    return render_template('/owner/o_balance_rec.html')
+
 @owner.route('/reports')    
 def reports():
     return render_template('/owner/reports.html')
