@@ -1,11 +1,10 @@
 from app import db
 from datetime import date
 
-class Patients(db.Model):
+class PatientsInfo(db.Model):
     __tablename__ = 'patient_info'
     
     patient_id = db.Column(db.Integer, primary_key=True )
-    record_image_link = db.Column(db.Text)
     first_name = db.Column(db.String(255), nullable=False)
     middle_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255), nullable=False)
@@ -18,6 +17,7 @@ class Patients(db.Model):
     city = db.Column(db.String(255), nullable=False)
     province = db.Column(db.String(255), nullable=False)
     country = db.Column(db.String(255), nullable=False)
+    initial_consultation_reason = db.Column(db.Text, nullable=False)
     occupation = db.Column(db.String(255))
     office_number = db.Column(db.String(255))
     guardian_first_name = db.Column(db.String(255))
@@ -56,4 +56,3 @@ class Patients(db.Model):
             )
         
         return None
-        

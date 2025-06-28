@@ -25,19 +25,20 @@
                     </table>
                 </div>
                 <div class="patient-info-container">
-                    <!-- Tabs -->
-                    <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('owner.patient_procedure') }}" data-branch="procedure">Procedure History</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="{{ url_for('owner.patient_dental_rec') }}" data-branch="dental_record">Dental Record</a>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('owner.patient_procedure', patient_id=patient.patient_id) }}" data-branch="procedure">Procedure History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('owner.patient_dental_rec', patient_id=patient.patient_id) }}" data-branch="dental_record">Dental Record</a>
+                    </li>
+                </ul>
+            </div>
+
                 <!-- Patient Info Tab Content -->
                 <div class="tab-content pt-4" id="patientInfoContent">
                     <div class="patient-info-section">
@@ -189,9 +190,9 @@
 
                             <div class="col-md-6">
                                 <div class="row mb-3">
-                                    <label class="col-sm-4 col-form-label">What is your reason for Dental Consultation?</label>
+                                    <label class="col-sm-4 col-form-label">Initial Reason for Dental Consultation:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="initial_consultation_reason" value="{{ patient.initial_consultation_reason }}">
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +204,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-4 col-form-label">Previous Dentist:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="previous_dentist" value="{{ patient.previous_dentist }}">
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +212,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-4 col-form-label">Last Dental Visit:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" class="form-control">
+                                        <input type="date" class="form-control" name="last_dentist_visit" value="{{ patient.last_dentist_visit }}">
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +224,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-5 col-form-label">Physician's Name:</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name = "physician_name" value="{{ patient_medical_info.physician_name }}">
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +232,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-5 col-form-label">Date of Last Physical Exam:</label>
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control">
+                                        <input type="date" class="form-control" name = "last_physician_exam" value="{{ patient_medical_info.last_physician_exam }}">
                                     </div>
                                 </div>
                             </div>
@@ -246,268 +247,165 @@
                         </div>
                         
                         <ol class="medical-history-list">
-                            <li>
-                                Are you in a good health?
-                                <div class="sub-question"></div>
-                            </li>
-                            <li>
-                                Are you under medical treatment now?
-                                <div class="sub-question">If so, what is the condition being treated?</div>
-                            </li>
-                            <li>
-                                Have you ever had serious illness or surgical operation?
-                                <div class="sub-question">If so, what illness or operation?</div>
-                                <div class="sub-question">When was it?</div>
-                            </li>
-                            <li>
-                                Have you ever been hospitalized?
-                                <div class="sub-question">If so, when and why?</div>
-                            </li>
-                            <li>
-                                Are you taking any prescription/non-prescription Medication?
-                                <div class="sub-question">If so, please specify</div>
-                            </li>
-                            <li>
-                                Do you used tobacco products?
-                                <div class="sub-question"></div>
-                            </li>
-                            <li>
-                                Do you use alcohol, cocaine or other dangerous drugs?
-                                <div class="sub-question"></div>
-                            </li>
+                        <li>
+                            Are you in good health?
+                            <strong>{{ "Yes" if patient_medical_info.in_good_health else "No" }}</strong>
+                        </li>
+                        <li>
+                            Are you under medical treatment now?
+                            <div class="sub-question">
+                                If so, what is the condition being treated?
+                                <strong>{{ patient_medical_info.medical_treatment_currently_undergoing or "None" }}</strong>
+                            </div>
+                        </li>
+                        <li>
+                            Have you ever had serious illness or surgical operation?
+                            <div class="sub-question">
+                                What illness or operation? 
+                                <strong>{{ patient_medical_info.recent_illness_or_surgical_operation or "None" }}</strong>
+                            </div>
+                            <div class="sub-question">
+                                When was it? 
+                                <strong>{{ patient_medical_info.when_illness_or__operation or "N/A" }}</strong>
+                            </div>
+                        </li>
+                        <li>
+                            Have you ever been hospitalized?
+                            <div class="sub-question">
+                                If so, when and why?
+                                <strong>{{ patient_medical_info.when_why_hospitalized or "No" }}</strong>
+                            </div>
+                        </li>
+                        <li>
+                            Are you taking any prescription/non-prescription Medication?
+                            <div class="sub-question">
+                                If so, please specify:
+                                <strong>{{ patient_medical_info.medications_currently_taking or "None" }}</strong>
+                            </div>
+                        </li>
+                        <li>
+                            Do you use tobacco products?
+                            <strong>{{ "Yes" if patient_medical_info.using_tabacco else "No" }}</strong>
+                        </li>
+                        <li>
+                            Do you use alcohol, cocaine or other dangerous drugs?
+                            <strong>{{ "Yes" if patient_medical_info.using_alcohol_cocaine_drugs else "No" }}</strong>
+                        </li>
+                        {% set allergies = (patient_medical_info.allergies or "").split(",") %}
                             <li>
                                 Are you allergic to any of the following:
                                 <div class="checkbox-grid mt-2">
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="allergy1" name="allergy">
+                                        <input type="checkbox" id="allergy1" name="allergy" {% if "Local Anesthetic" in allergies %}checked{% endif %}>
                                         <label for="allergy1">Local Anesthetic (ex. Lidocaine)</label>
                                     </div>
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="allergy2" name="allergy">
+                                        <input type="checkbox" id="allergy2" name="allergy" {% if "Penicillin Antibiotics" in allergies %}checked{% endif %}>
                                         <label for="allergy2">Penicillin Antibiotics</label>
                                     </div>
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="allergy3" name="allergy">
+                                        <input type="checkbox" id="allergy3" name="allergy" {% if "Latex" in allergies %}checked{% endif %}>
                                         <label for="allergy3">Latex</label>
                                     </div>
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="allergy4" name="allergy">
+                                        <input type="checkbox" id="allergy4" name="allergy" {% if "Sulfa Drugs" in allergies %}checked{% endif %}>
                                         <label for="allergy4">Sulfa Drugs</label>
                                     </div>
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="allergy5" name="allergy">
+                                        <input type="checkbox" id="allergy5" name="allergy" {% if "Aspirin" in allergies %}checked{% endif %}>
                                         <label for="allergy5">Aspirin</label>
                                     </div>
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="allergy6" name="allergy">
+                                        <input type="checkbox" id="allergy6" name="allergy" {% if "Other" in allergies %}checked{% endif %}>
                                         <label for="allergy6">Other:</label>
-                                        <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2">
+                                        <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
+                                            value="{% for item in allergies if item not in ['Local Anesthetic', 'Penicillin Antibiotics', 'Latex', 'Sulfa Drugs', 'Aspirin'] %}{{ item }}{% endfor %}">
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 Bleeding Time:
+                                <strong>{{ patient_medical_info.bleeding_time }}</strong>
                                 <div class="sub-question"></div>
                             </li>
                             <li>
                                 For Women only
                                 <div class="checkbox-grid mt-2">
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="women1" name="women">
+                                        <input type="checkbox" id="women1" name="is_pregnant"
+                                            {% if patient_medical_info.is_pregnant %}checked{% endif %}>
                                         <label for="women1">Are you pregnant?</label>
                                     </div>
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="women2" name="women">
+                                        <input type="checkbox" id="women2" name="is_nursing"
+                                            {% if patient_medical_info.is_nursing %}checked{% endif %}>
                                         <label for="women2">Are you nursing?</label>
                                     </div>
                                     <div class="checkbox-item">
-                                        <input type="checkbox" id="women3" name="women">
+                                        <input type="checkbox" id="women3" name="on_birth_control"
+                                            {% if patient_medical_info.on_birth_control %}checked{% endif %}>
                                         <label for="women3">Are you taking birth control pills?</label>
                                     </div>
                                 </div>
                             </li>
+
                             <li>
                                 Blood Type:
+                                <strong>{{ patient_medical_info.blood_type }}</strong>
                                 <div class="sub-question"></div>
                             </li>
                             <li>
                                 Blood Pressure:
+                                <strong>{{ patient_medical_info.blood_pressure }}</strong>
                                 <div class="sub-question"></div>
                             </li>
-                            <li>
-                                Do you have or have any of this following? check which apply:
-                                <div class="checkbox-grid mt-2">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition1" name="condition">
-                                        <label for="condition1">AIDS</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition2" name="condition">
-                                        <label for="condition2">Anemia</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition3" name="condition">
-                                        <label for="condition3">Arthritis</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition4" name="condition">
-                                        <label for="condition4">Allergy</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition5" name="condition">
-                                        <label for="condition5">Angina Pectoris</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition6" name="condition">
-                                        <label for="condition6">Asthma</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition7" name="condition">
-                                        <label for="condition7">Blood Diseases</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition8" name="condition">
-                                        <label for="condition8">Bruises</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition9" name="condition">
-                                        <label for="condition9">Chest Pain</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition10" name="condition">
-                                        <label for="condition10">Blood Pressure</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition11" name="condition">
-                                        <label for="condition11">Cancer</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition12" name="condition">
-                                        <label for="condition12">Circulatory Disturbances</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition13" name="condition">
-                                        <label for="condition13">Diabetes</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition14" name="condition">
-                                        <label for="condition14">Drug Addiction</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition15" name="condition">
-                                        <label for="condition15">Fainting</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition16" name="condition">
-                                        <label for="condition16">Digestive</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition17" name="condition">
-                                        <label for="condition17">Epilepsy</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition18" name="condition">
-                                        <label for="condition18">Glaucoma</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition19" name="condition">
-                                        <label for="condition19">Headaches</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition20" name="condition">
-                                        <label for="condition20">Hepatitis</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition21" name="condition">
-                                        <label for="condition21">Kidney</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition22" name="condition">
-                                        <label for="condition22">Heart Trouble</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition23" name="condition">
-                                        <label for="condition23">Hives</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition24" name="condition">
-                                        <label for="condition24">Liver</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition25" name="condition">
-                                        <label for="condition25">Lung Trouble</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition26" name="condition">
-                                        <label for="condition26">Operation</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition27" name="condition">
-                                        <label for="condition27">Radiation Therapy</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition28" name="condition">
-                                        <label for="condition28">Nervousness</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition29" name="condition">
-                                        <label for="condition29">Pains</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition30" name="condition">
-                                        <label for="condition30">Rheumatic Fever</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition31" name="condition">
-                                        <label for="condition31">Scarlet Fever</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition32" name="condition">
-                                        <label for="condition32">Sickle Cell</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition33" name="condition">
-                                        <label for="condition33">Stomach Trouble</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition34" name="condition">
-                                        <label for="condition34">Sexually Transmitted Diseases</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition35" name="condition">
-                                        <label for="condition35">Sinus Trouble</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition36" name="condition">
-                                        <label for="condition36">Stroke</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition37" name="condition">
-                                        <label for="condition37">Swollen Ankles</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition38" name="condition">
-                                        <label for="condition38">Tumor</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition39" name="condition">
-                                        <label for="condition39">Venereal Disease</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition40" name="condition">
-                                        <label for="condition40">Thyroid Problem</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition41" name="condition">
-                                        <label for="condition41">Ulcer</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="condition42" name="condition">
-                                        <label for="condition42">Other:</label>
-                                        <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2">
-                                    </div>
-                                </div>
-                            </li>
+                            {% set illnesses = patient_medical_info.illness_checklist.split(',') if patient_medical_info.illness_checklist else [] %}
+
+<li>
+    Do you have or have had any of the following? Check which apply:
+    <div class="checkbox-grid mt-2">
+
+        {% set known_conditions = [
+            'AIDS', 'Anemia', 'Arthritis', 'Allergy', 'Angina Pectoris', 'Asthma', 'Blood Diseases',
+            'Bruises', 'Chest Pain', 'Blood Pressure', 'Cancer', 'Circulatory Disturbances', 'Diabetes',
+            'Drug Addiction', 'Fainting', 'Digestive', 'Epilepsy', 'Glaucoma', 'Headaches', 'Hepatitis',
+            'Kidney', 'Heart Trouble', 'Hives', 'Liver', 'Lung Trouble', 'Operation', 'Radiation Therapy',
+            'Nervousness', 'Pains', 'Rheumatic Fever', 'Scarlet Fever', 'Sickle Cell', 'Stomach Trouble',
+            'Sexually Transmitted Diseases', 'Sinus Trouble', 'Stroke', 'Swollen Ankles', 'Tumor',
+            'Venereal Disease', 'Thyroid Problem', 'Ulcer'
+        ] %}
+
+        {% set illnesses = patient_medical_info.illness_checklist.split(',') if patient_medical_info.illness_checklist else [] %}
+        {% set other_conditions = [] %}
+
+        {# Render checkboxes for known conditions #}
+        {% for cond in known_conditions %}
+        <div class="checkbox-item">
+            <input type="checkbox" id="condition{{ loop.index }}" name="condition" value="{{ cond }}"
+                {% if cond in illnesses %}checked{% endif %}>
+            <label for="condition{{ loop.index }}">{{ cond }}</label>
+        </div>
+        {% endfor %}
+
+        {# Collect unknown conditions as "Other" #}
+        {% for item in illnesses %}
+            {% if item not in known_conditions %}
+                {% set _ = other_conditions.append(item.strip()) %}
+            {% endif %}
+        {% endfor %}
+
+        {# Display Other field #}
+        <div class="checkbox-item">
+            <input type="checkbox" id="conditionOther" name="condition" value="Other"
+                {% if other_conditions %}checked{% endif %}>
+            <label for="conditionOther">Other:</label>
+            <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
+                name="other_condition" value="{{ other_conditions | join(', ') }}">
+        </div>
+    </div>
+</li>
+
+
                         </ol>
                         
                         <div class="d-flex justify-content-end mt-4">
