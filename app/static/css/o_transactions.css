@@ -1,7 +1,3 @@
-/* ============== BASE STYLES ============== */
-body {
-    background-color: #8CB7B6;
-}
 
 /* ============== CARD STYLES ============== */
 .card {
@@ -9,13 +5,16 @@ body {
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 1.5rem;
+    margin-top: 20px;
 }
 
-.card-header {
+.card-header h5.mb-0 {
+    color: #00898E;
+    font-weight: 700;
+    text-align: center;
     background-color: white;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px 10px 0 0 !important;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1rem;
 }
 
 /* ============== TRANSACTION CONTAINER ============== */
@@ -33,7 +32,7 @@ body {
 .metric-card {
     background-color: #fff;
     transition: transform 0.2s;
-    margin-bottom: 10px;
+    margin-bottom: -0.9rem !important;
 }
 
 .metric-card:hover {
@@ -41,12 +40,12 @@ body {
 }
 
 .metric-card .card-body {
-    padding: 1.3rem;
+    padding: 0.8rem;
 }
 
 .metric-card .card-title {
-    color: #00898E;
-    font-size: 0.9rem;
+    color: #00898E !important;
+    font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 0.3rem;
@@ -57,7 +56,6 @@ body {
     text-align: center;
     font-size: 1.8rem;
     font-weight: 600;
-    margin: 0.75rem 0;
 }
 
 /* ============== TABS ============== */
@@ -87,15 +85,20 @@ body {
 }
 
 .nav-tabs .nav-link:not(.active):hover {
-    color: #00796b;
+    color: #00796b !important;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
 }
 
 /* ============== CHART ============== */
 #revenueChart {
     width: 100% !important;
-    height: 269px !important;
-    margin-top: 15px;
+    height: 243px !important;
+    margin-top: 20px;
+    margin: 0;
 }
+
 
 /* ============== TABLE STYLES ============== */
 .table {
@@ -114,7 +117,7 @@ body {
 }
 
 .patient-info {
-    padding: 10px;
+    padding: 15px;
 }
 
 /* ============== SEARCH BAR ============== */
@@ -149,18 +152,26 @@ body {
 
 /* ============== BUTTONS ============== */
 .btn-outline-primary {
-    border-width: 1.5px;
-    font-weight: 500;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.8rem;
+    border: none !important;
+    background-color: transparent !important;
+}
+.btn-outline-primary.btn-sm {
+    padding: 0.10rem 0.5rem !important;  
+    font-size: 1.5rem !important;       
+    width: 32px;                        
+    height: 32px;                       
+    display: inline-flex;               
+    align-items: center;                
+    justify-content: center;            
+    border-radius: 6px !important;      
+}
+.btn-outline-primary.btn-sm .fa-chevron-right {
+    font-size: 0.8rem;                 
+    margin: 0 !important;               
 }
 
-.btn-primary {
-    padding: 0.75rem;
-    font-weight: 500;
-    background-color: #007bff;
-    border-color: #007bff;
-    margin-top: 20px;
+.btn-outline-primary:hover {
+    background-color: rgba(0, 137, 142, 0.1) !important;
 }
 
 /* ============== BADGES ============== */
@@ -191,6 +202,45 @@ body {
     padding: 0 15px;
 }
 
+/* Balance Record Specific Styles */
+.balance-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.balance-card .card-body {
+    padding: 1.5rem;
+}
+
+.balance-card .card-title {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.balance-card .card-text {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.d-grid {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-top: 20px;
+}
+
+.d-grid .btn-primary.btn-lg {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+    height: 40px !important;
+    width: auto !important;
+    border-radius: 6px !important;
+}
+
+.d-grid .btn-primary.btn-lg .fa-plus {
+    font-size: 0.9rem !important;
+    margin-right: 5px !important;
+}
 /* ============== RESPONSIVE ADJUSTMENTS ============== */
 @media (max-width: 768px) {
     #revenueChart {
