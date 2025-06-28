@@ -8,100 +8,19 @@
 
 body {
   background: rgba(157, 202, 202, 0.322);
-  height: 100vh;
-  width: 100vh;
-}
-
-/* Sidebar improvements */
-.sidebar {
-  background: #ffffff;
-  color: #222;
-  width: 250px;
-  height: calc(100vh - 5px);
-  min-width: 220px;
-  padding: 25px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed;
-  top: 9px;
-  border-right: 1px solid #e0e0e0;
-}
-
-.logo {
-  color: #00bcd4;
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-bottom: 40px;
-  letter-spacing: 1px;
-}
-
-.sidebar nav {
+  min-height: 100vh;
   width: 100%;
 }
 
-.sidebar nav a {
+.dashboard-container {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 25px;
-  color: #0097a7;
-  text-decoration: none;
-  font-size: 1.08rem;
-  border-left: 4px solid transparent;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
-  font-weight: 500;
-}
-
-.sidebar nav ul {
-    list-style: none; 
-    padding-left: 0;  
-    margin: 15px auto;
-}
-
-.sidebar nav a.active,
-.sidebar nav a:hover {
-  background: #dff6fd;
-  color: #00bcd4;
-  border-left: 4px solid #00bcd4;
-}
-
-.voice-assistant {
-  margin-top: auto;
-  padding: 10px 0;
-  text-align: center;
-}
-
-.voice-assistant button {
-  background: #00bcd4;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 2rem;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-bottom: auto;
-}
-
-.voice-assistant span {
-  display: block;
-  font-size: 0.95rem;
-  color: #0097a7;
-  font-weight: 500;
-}
-.voice-assistant::after {
-    content: "Say \"Hi Jaya\"";
-    display: block;
-    color: #1de9b6;
-    font-size: 0.95rem;
-    margin-top: 4px;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Topbar improvements */
 .topbar {
-  width: 100vw;
+  width: 100%;
   background: #393939;
   color: #fff;
   display: flex;
@@ -200,24 +119,108 @@ body {
   color: #fff;
 }
 
-.main-content {
-  margin-left: 270px; 
-  width: 100%;
-  max-width: calc(100vw - 270px);
-  margin-top: 8vh; 
-  padding: 32px 32px 32px 32px;
+/* Main layout */
+.dashboard-main-container {
+  display: flex;
+  flex: 1;
+  margin-top: 48px; /* Same as topbar height */
+}
+
+/* Sidebar improvements */
+.sidebar {
+  background: #ffffff;
+  color: #222;
+  width: 250px;
+  min-width: 220px;
+  padding: 25px 0 0 0;
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  justify-content: flex-start;
-  padding: 20px 0;
-  box-sizing: border-box;
+  position: fixed;
+  height: calc(100vh - 15px); /* Full height minus topbar */
+  overflow-y: auto;
+  border-right: 1px solid #e0e0e0;
+  z-index: 90;
+}
+
+.sidebar nav {
+  width: 100%;
+  flex: 1;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 11px 25px;
+  color: #0097a7;
+  text-decoration: none;
+  font-size: 1.08rem;
+  border-left: 4px solid transparent;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  font-weight: 500;
+}
+
+.sidebar nav ul {
+  list-style: none; 
+  padding-left: 0;  
+  margin: 15px auto;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background: #dff6fd;
+  color: #00bcd4;
+  border-left: 4px solid #00bcd4;
+}
+
+.voice-assistant {
+  margin-top: auto;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.voice-assistant button {
+  background: #00bcd4;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: auto;
+}
+
+.voice-assistant span {
+  display: block;
+  font-size: 0.95rem;
+  color: #0097a7;
+  font-weight: 500;
+}
+
+.voice-assistant::after {
+  content: "Say \"Hi Jaya\"";
+  display: block;
+  color: #1de9b6;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 32px;
+  min-height: calc(100vh - 48px);
+  transition: margin-left 0.3s ease;
 }
 
 .dashboard-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  align-items: stretch;
+  margin-top: 30px;
   margin-bottom: 24px;
   width: 100%;
 }
@@ -226,19 +229,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  min-width: 240px;
-  flex-shrink: 0;
-  width: 50%;
 }
 
-.dashboard-center,
-.dashboard-right {
-  flex: 1;
-  min-width: 340px;
-  max-width: 390px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+.dashboard-center.card,
+.dashboard-right.card {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dashboard-center {
@@ -249,16 +245,14 @@ body {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  padding: 24px 20px;
-  margin-bottom: 0;
+  padding: 24px 25px;
   min-height: 170px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
 }
 
 .welcome-card {
-  min-height: 30vh;
+  min-height: 200px;
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0,188,212,0.07);
@@ -302,10 +296,10 @@ body {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-  padding: 30px 25px;
+  padding: 20px;
   min-width: 350px;
   max-width: 420px;
-  margin: 0 0 0 20px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -324,7 +318,7 @@ body {
 
 .dashboard-center.card .branch-select {
   display: block;
-  margin: 0 auto 12px auto;
+  margin: 0 auto 12px;
   padding: 2px 18px 2px 6px;
   border-radius: 4px;
   border: 1px solid #00bcd4;
@@ -332,12 +326,15 @@ body {
   color: #0097a7;
   font-size: 1rem;
   background: #f7f7f7;
-  min-width: 140px;
+  width: 100%;
+  max-width: 200px;
   text-align: center;
 }
 
 .dashboard-center button.send-reminders {
-  margin-top: 16px;
+  width: 100%;
+  max-width: 200px;
+  margin: 16px auto 0;
   background: #00bcd4;
   color: #fff;
   border: none;
@@ -355,10 +352,15 @@ body {
 }
 
 /* Appointment Requests */
+.appointment-requests {
+  padding: 20px;
+}
+
 .appointment-requests-header {
-  display: flex; 
-  justify-content: space-between; 
-  padding: 16px 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0 0 10px 0;
 }
 
 .appointment-request .request-info {
@@ -372,13 +374,14 @@ body {
 
 .appointment-requests-controls {
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 }
 
 .appointment-requests .branch-select  {
   display: flex;
-  margin: 0 auto 12px auto;
+  margin: 0;
   padding: 2px 18px 2px 6px;
   border-radius: 4px;
   border: 1px solid #00bcd4;
@@ -386,7 +389,8 @@ body {
   color: #0097a7;
   font-size: 1rem;
   background: #f7f7f7;
-  min-width: 140px;
+  width: 100%;
+  max-width: 200px;
   text-align: center;
   justify-items: left;
 }
@@ -438,30 +442,24 @@ body {
 /* Calendar Section */
 .calendar-card {
   display: flex;
+  flex-direction: column;
   background: #f7fdfd;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
   width: 100%;
-  max-width: 900px;
-  margin: 30px auto 0 auto;
   min-height: 320px;
-  border: none;
   padding: 0;
 }
 
 /* Left calendar panel */
 .calendar-panel {
   flex: 1.1;
-  padding: 32px 24px 32px 32px;
-  border-radius: 10px;
-  border-right: 1px solid #e0e0e0;
-  background: #f7fdfd;
-  min-width: 95px;
-  max-width: 140px;
-  border-right: 1px solid #eaf6f6;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  padding: 20px;
+  padding: 20px;
+  border-right: none;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+  min-width: 100%;
 }
 
 .calendar-header {
@@ -598,7 +596,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 10px;
-  padding: 32px 32px 32px 32px;
+  padding: 0 32px 32px 32px;
   background: #fff;
   min-width: 109vh;
   max-width: 120vh;
@@ -683,87 +681,197 @@ body {
   align-self: center;
 }
 
-@media (max-width: 700px) {
-  .calendar-details-list li,
-  .calendar-appointment {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-  .appt-link {
-    margin-left: 0;
-    margin-top: 4px;
-  }
-}
+/* Responsive adjustments */
 @media (max-width: 1200px) {
-  .dashboard-top,
-  .calendar-section {
-    flex-direction: column;
-    gap: 18px;
+  .dashboard-top {
+    grid-template-columns: repeat(2, 1fr);
   }
+  
   .dashboard-left {
+    grid-column: 1 / -1;
     flex-direction: row;
-    gap: 16px;
-    min-width: 0;
-    width: 100%;
+    flex-wrap: wrap;
   }
-  .dashboard-center,
-  .dashboard-right,
-  .calendar,
-  .details {
-    min-width: 0;
-    max-width: 100%;
+  
+  .welcome-card {
+    flex: 1 1 100%;
   }
-  .main-content {
-    padding: 16px;
-  }
-  .sidebar {
-    width: 100%;
-    min-width: 0;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 16px;
-    min-height: unset;
+  
+  .info-card {
+    flex: 1 1 calc(50% - 15px);
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
   .main-content {
-    padding: 8px;
+    margin-left: 220px;
+    padding: 24px;
   }
-  .dashboard-top,
-  .calendar-section {
+  
+  .dashboard-top {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-left {
+    flex-direction: column;
+  }
+  
+  .info-card {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+  
+  .calendar-header {
+    flex-direction: column;
     gap: 10px;
   }
-  .sidebar {
-    padding: 8px;
+  
+  .appointment-requests-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .appointment-requests-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .request-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .actions {
+    align-self: flex-end;
   }
 }
 
-@media (max-width: 700px) {
-  .dashboard-left {
-    flex-direction: column;
-    width: 100%;
-  }
-  .dashboard-container {
-    flex-direction: column;
-    padding-top: 48px;
-  }
-  .sidebar {
-    position: static;
-    width: 100%;
-    min-width: 0;
-    border-right: none;
-    border-bottom: 1px solid #e0e0e0;
-  }
+@media (max-width: 576px) {
   .main-content {
-    padding: 4px;
+    padding: 15px;
   }
-  .dashboard-center,
-  .dashboard-right,
-  .calendar,
-  .details {
-    padding: 12px 6px;
+  
+  .card {
+    padding: 15px;
+  }
+  
+  .welcome-card h2 {
+    font-size: 1.2rem;
+  }
+  
+  .info-card h2 {
+    font-size: 1rem;
+  }
+  
+  .info-card .number {
+    font-size: 1.8rem;
+  }
+  
+  .dashboard-center.card,
+  .dashboard-right.card {
+    min-width: 100%;
+  }
+  
+  .appt-info,
+  .appt-link {
+    min-width: 100%;
+  }
+  
+  .calendar-appointment {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .appt-link {
+    margin-left: 0;
+    margin-top: 10px;
+    align-self: flex-start;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 400px) {
+  .main-content {
+    padding: 10px;
+  }
+  
+  .dashboard-top {
+    gap: 15px;
+  }
+  
+  .card {
+    padding: 15px 10px;
+  }
+  
+  .branch-select {
+    width: 100%;
+  }
+  
+  .actions button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+  
+  .main-content {
+    margin-left: 220px;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    min-width: 200px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    position: fixed;
+    height: calc(100vh - 48px);
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+  
+  /* Add a hamburger menu for mobile */
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    padding: 10px;
+    position: fixed;
+    left: 10px;
+    top: 60px;
+    z-index: 1000;
+    background: #00bcd4;
+    color: white;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main-content {
+    padding: 15px;
+  }
+  
+  .topbar {
+    padding: 8px 15px;
   }
 }
 
@@ -771,4 +879,9 @@ body {
 .card:hover {
   box-shadow: 0 4px 20px rgba(0,188,212,0.10);
   transition: box-shadow 0.2s;
+}
+
+/* Ensure all child pages inherit the same background */
+.main-content > * {
+  background: inherit;
 }

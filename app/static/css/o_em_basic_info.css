@@ -1,7 +1,7 @@
 /* Employee Work Details - Responsive Styles */
 .employee-info-container {
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 12px; 
     padding: 30px;
     margin: 20px auto;
     width: calc(100% - 90px);
