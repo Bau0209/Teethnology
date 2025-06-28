@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request
 from app.models.branches import Branch, ClinicBranchImage
 from app.models.employees import Employee
-from app.models.patients import Patients
+from app.models.patients import PatientsInfo
+from app.models.patient_medical_info import PatientMedicalInfo
 
 owner = Blueprint('owner', __name__)
 
@@ -33,25 +34,29 @@ def patients():
     selected_branch = request.args.get('branch', 'all')
     
     if selected_branch == 'all':
-        patients = Patients.query.all()
+        patients = PatientsInfo.query.all()
     else:
-        patients = Patients.query.filter_by(branch_id=selected_branch)
+        patients = PatientsInfo.query.filter_by(branch_id=selected_branch)
     
     branches = Branch.query.all()
     return render_template('/owner/patients.html', patients=patients, branches=branches, selected_branch=selected_branch)
 
 @owner.route('/patient_info/<int:patient_id>')   
 def patient_info(patient_id):
-    patient = Patients.query.get_or_404(patient_id)
-    return render_template('/owner/patient_info.html', patient=patient)
+    patient = PatientsInfo.query.get_or_404(patient_id)
+    patient_medical_info = PatientMedicalInfo.query.get_or_404(patient_id)
+    print(patient_medical_info.physician_name)
+    return render_template('/owner/patient_info.html', patient=patient, patient_medical_info=patient_medical_info)
 
-@owner.route('/patient_procedure')   
-def patient_procedure():
-    return render_template('/owner/procedure.html')
+@owner.route('/patient_procedure/<int:patient_id>')   
+def patient_procedure(patient_id):
+    patient = PatientsInfo.query.get_or_404(patient_id)
+    return render_template('/owner/procedure.html',patient=patient)
 
-@owner.route('/patient_dental_rec')   
-def patient_dental_rec():
-    return render_template('/owner/dental_record.html')
+@owner.route('/patient_dental_rec/<int:patient_id>')   
+def patient_dental_rec(patient_id):
+    patient = PatientsInfo.query.get_or_404(patient_id)
+    return render_template('/owner/dental_record.html', patient=patient)
 
 @owner.route('/employees')
 def employees():

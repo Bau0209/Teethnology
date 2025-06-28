@@ -4,8 +4,8 @@
   "settings": {
     "width": 3500,
     "height": 3500,
-    "scrollTop": -700,
-    "scrollLeft": 0,
+    "scrollTop": -1611.9978,
+    "scrollLeft": -1886.2564,
     "zoomLevel": 1,
     "show": 431,
     "database": 4,
@@ -384,21 +384,17 @@
           "OOo-bZHbWXoqHFW6LKag4",
           "_ubeytCGLJvruCZw50I9e",
           "qKWWW34iFYSudOSVC_Cn8",
-          "mJgEUtl3eKlgFOECJprYZ",
           "FbPnWT0doyf2Uszq2QhlQ",
           "STvtHt4_Hz5N46n93_tG7",
-          "Kgqud65dhrJ014XhED9t-",
           "tnEkMqVF6MDg0m9N3Nf4H",
-          "9YMWyVd5pqUjqUPPV1jJ8",
-          "B05fdbCOp5Ypnlbe4l_rq",
           "aoEQHVoa4wvvua44DmQlt",
-          "hazPzReeDVdl1KBTzQLD8",
           "pNCREo-UZWEKU6urugW_6",
           "Z1HSIR5435fHYluzY-1Lm",
           "VWD8TXt62Wg6_Aohq7oK6",
           "vMAhmThNapJsgg44AIB__",
           "ov2iu9L9tQKJV0QJJRxMj",
-          "9H4ZHwaL5zc6IJVO8F_pH"
+          "9H4ZHwaL5zc6IJVO8F_pH",
+          "hazPzReeDVdl1KBTzQLD8"
         ],
         "seqColumnIds": [
           "qdwsoQk0kGzmcxV6wVXtV",
@@ -407,11 +403,13 @@
           "OOo-bZHbWXoqHFW6LKag4",
           "_ubeytCGLJvruCZw50I9e",
           "VIcagUao2AdmPbMdpm6gJ",
+          "Cn37wuOUb1Rshs-p7EeIS",
           "qKWWW34iFYSudOSVC_Cn8",
           "mJgEUtl3eKlgFOECJprYZ",
           "dEvok3MsxO0IuKGt0SKTh",
           "b06Z47efvt1QPHDkAwKZk",
           "FbPnWT0doyf2Uszq2QhlQ",
+          "psmqujfsQkQiHb3nelYeJ",
           "STvtHt4_Hz5N46n93_tG7",
           "cM9J5KAvks2wEw5sbYXF7",
           "Kgqud65dhrJ014XhED9t-",
@@ -426,28 +424,28 @@
           "4mJKuzN4oxISZcm_5DF1K",
           "OcXvRv9aP79s7lLSU904d",
           "aoEQHVoa4wvvua44DmQlt",
-          "hazPzReeDVdl1KBTzQLD8",
           "pNCREo-UZWEKU6urugW_6",
           "Z1HSIR5435fHYluzY-1Lm",
           "VWD8TXt62Wg6_Aohq7oK6",
           "vMAhmThNapJsgg44AIB__",
           "ov2iu9L9tQKJV0QJJRxMj",
           "9H4ZHwaL5zc6IJVO8F_pH",
+          "hazPzReeDVdl1KBTzQLD8",
           "FV0haQX3DIWnQ0jx9rXXb",
           "N0wwtJOMZ5eyu9C9yEat5",
           "D4ElWXdv0DdKi2B6i79Oi",
           "IcZsQKiiXvoOxSm4EAxQK"
         ],
         "ui": {
-          "x": 1919.1015,
-          "y": 1731.3345,
+          "x": 1955.1015,
+          "y": 1752.3345,
           "zIndex": 614,
           "widthName": 112,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1748797761180,
+          "updateAt": 1751085196110,
           "createAt": 1748392959096
         }
       },
@@ -2609,60 +2607,60 @@
       "bB_MQx3BYBIkP1LHGavm2": {
         "id": "bB_MQx3BYBIkP1LHGavm2",
         "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
-        "name": "good_health",
+        "name": "in_good_health",
         "comment": "",
         "dataType": "BOOLEAN",
         "default": "1",
         "options": 8,
         "ui": {
           "keys": 0,
-          "widthName": 68,
+          "widthName": 83,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748393222482,
+          "updateAt": 1751084266786,
           "createAt": 1748392973071
         }
       },
       "OOo-bZHbWXoqHFW6LKag4": {
         "id": "OOo-bZHbWXoqHFW6LKag4",
         "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
-        "name": "medical_treatment",
+        "name": "medical_treatment_currently_taking",
         "comment": "",
-        "dataType": "BOOLEAN",
+        "dataType": "TEXT",
         "default": "0",
-        "options": 8,
+        "options": 0,
         "ui": {
           "keys": 0,
-          "widthName": 101,
+          "widthName": 191,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748393285696,
+          "updateAt": 1751085107360,
           "createAt": 1748393185551
         }
       },
       "_ubeytCGLJvruCZw50I9e": {
         "id": "_ubeytCGLJvruCZw50I9e",
         "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
-        "name": "surgical_operation",
+        "name": "recent_illness_or_surgical_operation",
         "comment": "",
-        "dataType": "BOOLEAN",
+        "dataType": "TEXT",
         "default": "0",
-        "options": 8,
+        "options": 0,
         "ui": {
           "keys": 0,
-          "widthName": 99,
+          "widthName": 190,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748393286996,
+          "updateAt": 1751086039447,
           "createAt": 1748393230510
         }
       },
@@ -2749,20 +2747,20 @@
       "STvtHt4_Hz5N46n93_tG7": {
         "id": "STvtHt4_Hz5N46n93_tG7",
         "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
-        "name": "taking_medication",
+        "name": "medications_currently_taking",
         "comment": "",
-        "dataType": "BOOLEAN",
+        "dataType": "TEXT",
         "default": "0",
-        "options": 8,
+        "options": 0,
         "ui": {
           "keys": 0,
-          "widthName": 100,
+          "widthName": 157,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748393428665,
+          "updateAt": 1751085133392,
           "createAt": 1748393399134
         }
       },
@@ -2789,20 +2787,20 @@
       "tnEkMqVF6MDg0m9N3Nf4H": {
         "id": "tnEkMqVF6MDg0m9N3Nf4H",
         "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
-        "name": "uses_tabacco",
+        "name": "uses_tabacco_alcohol_drugs",
         "comment": "",
         "dataType": "BOOLEAN",
         "default": "0",
         "options": 8,
         "ui": {
           "keys": 0,
-          "widthName": 72,
+          "widthName": 151,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748393475978,
+          "updateAt": 1751085155267,
           "createAt": 1748393445583
         }
       },
@@ -6829,20 +6827,20 @@
       "hazPzReeDVdl1KBTzQLD8": {
         "id": "hazPzReeDVdl1KBTzQLD8",
         "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
-        "name": "conditions",
+        "name": "illness_checklist",
         "comment": "",
         "dataType": "TEXT",
         "default": "None",
         "options": 0,
         "ui": {
           "keys": 0,
-          "widthName": 60,
+          "widthName": 85,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748797631102,
+          "updateAt": 1751085179663,
           "createAt": 1748797614264
         }
       },
@@ -6853,7 +6851,7 @@
         "comment": "from the form",
         "dataType": "TEXT",
         "default": "",
-        "options": 8,
+        "options": 0,
         "ui": {
           "keys": 0,
           "widthName": 126,
@@ -6862,7 +6860,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748797738035,
+          "updateAt": 1751084461032,
           "createAt": 1748797652328
         }
       },
@@ -6889,20 +6887,20 @@
       "qKWWW34iFYSudOSVC_Cn8": {
         "id": "qKWWW34iFYSudOSVC_Cn8",
         "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
-        "name": "when_what_operation",
+        "name": "when_illness_or_operation",
         "comment": "from the form",
-        "dataType": "TEXT",
+        "dataType": "DATE",
         "default": "",
         "options": 0,
         "ui": {
           "keys": 0,
-          "widthName": 118,
+          "widthName": 140,
           "widthComment": 77,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748797758711,
+          "updateAt": 1751086035916,
           "createAt": 1748797741832
         }
       },
@@ -6964,6 +6962,46 @@
         "meta": {
           "updateAt": 1750999832345,
           "createAt": 1750999807402
+        }
+      },
+      "Cn37wuOUb1Rshs-p7EeIS": {
+        "id": "Cn37wuOUb1Rshs-p7EeIS",
+        "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
+        "name": "what_serious_illness_or_operation",
+        "comment": "from the form",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 179,
+          "widthComment": 77,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1751084387487,
+          "createAt": 1751084362825
+        }
+      },
+      "psmqujfsQkQiHb3nelYeJ": {
+        "id": "psmqujfsQkQiHb3nelYeJ",
+        "tableId": "-3hsx0Z4S8d_bNcV3bJmP",
+        "name": "why_hospitalized",
+        "comment": "",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 92,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1751084414776,
+          "createAt": 1751084402184
         }
       }
     },
@@ -7099,8 +7137,8 @@
           "columnIds": [
             "TINpwOHLhElnSP1zID_Uk"
           ],
-          "x": 1919.1015,
-          "y": 1999.3345,
+          "x": 1955.1015,
+          "y": 1972.3345,
           "direction": 1
         },
         "meta": {
