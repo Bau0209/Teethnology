@@ -137,7 +137,7 @@ body {
   flex-direction: column;
   position: fixed;
   height: calc(100vh); /* Full height minus topbar */
-  overflow-y: auto;
+  overflow-y: hidden !important;
   border-right: 1px solid #e0e0e0;
   z-index: 90;
 }
@@ -319,7 +319,7 @@ body {
 .dashboard-center.card .branch-select {
   display: block;
   margin: 0 auto 12px;
-  padding: 2px 18px 2px 6px;
+  padding: 2px 18px 2px 6px; 
   border-radius: 4px;
   border: 1px solid #00bcd4;
   align-items: center;

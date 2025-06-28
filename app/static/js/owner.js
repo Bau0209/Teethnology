@@ -10,6 +10,19 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })
 
+// Ensure sidebar content doesn’t reload unnecessarily
+document.querySelectorAll('.sidebar a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Load content without refreshing sidebar
+    fetch(link.href)
+      .then(response => response.text())
+      .then(html => {
+        document.querySelector('.main-content').innerHTML = html;
+      });
+  });
+});
+
 //audio equalizer overlay
 var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
 confirmModal.show();
@@ -85,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
 
 //o_branches_info.js
 document.addEventListener('DOMContentLoaded', function() {
