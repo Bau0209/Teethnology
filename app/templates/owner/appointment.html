@@ -31,7 +31,7 @@
         </div>
 
         <div id="calendar"></div>
-
+    </div>
         <!-- Right Side Modal -->
         <div class="modal fade right" id="appointmentsModal" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-side" style="max-width: 640px;">
@@ -73,67 +73,15 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Modal: Add Appointment -->
-<div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-        <div class="modal-content" style="padding: 2rem;">
-            <div class="modal-header border-0">
-                <h5 class="modal-title w-100 text-center" style="color:#0097a7;font-weight:700;">Book an Appointment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="appointmentForm">
-                <div class="mb-3"><b>Patient Information</b></div>
-                <div class="row mb-2">
-                    <div class="col"><label>Full Name:</label><input type="text" class="form-control" name="name"></div>
-                    <div class="col"><label>Gender:</label><input type="text" class="form-control" name="gender"></div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col"><label>Date of Birth:</label><input type="date" class="form-control" name="dob"></div>
-                    <div class="col"><label>Contact Number:</label><input type="text" class="form-control" name="contact"></div>
-                </div>
-                <div class="mb-2"><label>Address:</label><input type="text" class="form-control" name="address"></div>
-                <div class="mb-2"><label>Email:</label><input type="email" class="form-control" name="email"></div>
-                <hr>
-                <div class="mb-3"><b>Appointment Details</b></div>
-                <div class="mb-2">
-                    <label>Preferred Date / Time:</label>
-                    <input type="datetime-local" class="form-control" name="preferred_datetime">
-                </div>
-                <div class="mb-2">
-                    <label>Alternative Date / Time (Optional):</label>
-                    <input type="datetime-local" class="form-control" name="alternative_datetime">
-                </div>
-                <div class="mb-2">
-                    <label>Type of appointment/Reason for Visit:</label>
-                    <input type="text" class="form-control" name="reason">
-                </div>
-                <div class="mb-2">
-                    <label>Is this your first visit?</label>
-                    <div>
-                        <input type="radio" name="first_visit" value="Yes"> Yes
-                        <input type="radio" name="first_visit" value="No"> No
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <input type="checkbox" name="agree" required> I agree
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-add">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+
+<!-- Now load your custom script after the dependencies -->
+<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
 {% endblock %}

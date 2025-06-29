@@ -1,18 +1,20 @@
-
-/* Patients container card */
+body {
+  background: rgba(157, 202, 202, 0.322) !important; 
+}
+/* Employee container card */
 .employee-container {
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-top: 10px;
-    margin-left: auto; 
+    padding: 15px;
+    margin-top: 40px;
+    margin-left: 0;
     width: 100%;
-    max-width: 200vh;
-    min-width: 175vh;
+    min-width: 0;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: auto;
 }
 
 /* Search bar and toolbar buttons */
@@ -23,9 +25,11 @@
     background: #fff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     font-size: 1rem;
-    width: 420px;
+    width: 100%;
+    max-width: 420px;
     outline: none;
-    margin-right: auto;   
+    margin-right: 0;
+    margin-bottom: 10px; 
 }
 
 .filter-btn,.add-btn {
@@ -39,7 +43,7 @@
     transition: background 0.2s;
     display: inline-flex;
     align-items: flex-end;
-    margin-left: 18px;
+    margin-left: 0;
 
 }
 
@@ -69,7 +73,10 @@
     border-bottom: none;
     margin: 10px 0 16px 0;
     background: transparent;
-    gap: 32px;
+    gap: 15px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 5px;
 }
 
 .nav-tabs .nav-link {
@@ -80,7 +87,11 @@
     background: transparent;
     border-bottom: 3px solid transparent;
     padding-bottom: 6px;
-    margin-right: 24px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    padding-bottom: 5px;
+    margin-right: 0;
     transition: border-color 0.2s, color 0.2s;
 }
 
@@ -119,7 +130,7 @@
 }
 
 .dropdown .btn-primary.dropdown-toggle:after {
-    margin-left: 8px;
+    margin-left: 0;
 }
 
 .dropdown-menu {
@@ -155,10 +166,10 @@
     background: #fff;
     overflow-y: auto;     
     overflow-x: auto; 
-    max-height: calc(100vh - 400px); 
+    max-height: none; 
     position: relative;
     transition: max-height 0.3s ease-in-out;
-    padding: 16px;
+    padding: 10px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.04);
     display: flex;
     flex-direction: column;
@@ -172,7 +183,7 @@
     border-collapse: separate;
     border-spacing: 0;
     font-size: 1rem;
-    min-width: 950px;
+    min-width: 0;
     background: #fff;
 }
 
@@ -185,7 +196,8 @@
 }
 
 .employee-table th, .employee-table td {
-    padding: 10px 12px;
+    padding: 8px 10px;
+    font-size: 1rem;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
     background: #fff;
@@ -245,4 +257,84 @@
 /* Hide old record card styles */
 .section, .record, .record-id, .record-details {
     display: none !important;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+    .employee-table th {
+        font-size: 0.95rem;
+    }
+    .employee-table td {
+        padding: 10px 8px;
+    }
+}
+
+@media (max-width: 992px) {
+    .employee-container {
+        margin-top: 40px;
+        padding: 15px;
+    }
+    .nav-tabs .nav-link {
+        font-size: 1rem;
+        padding-bottom: 5px;
+    }
+    .employee-table {
+        min-width: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 10px;
+    }
+    .search-bar {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .filter-btn, 
+    .add-btn, 
+    .select-btn {
+        margin-left: 0;
+    }
+    .employee-table th,
+    .employee-table td {
+        padding: 8px 6px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .employee-container {
+        padding: 12px;
+        margin-top: 40px;
+    }
+    .nav-tabs .nav-link {
+        font-size: 0.9rem;
+    }
+    .employee-table a {
+        font-size: 1rem;
+    }
+    .table-arrow i {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .employee-container {
+        padding: 10px;
+        border-radius: 8px;
+    }
+    .nav-tabs {
+        gap: 8px;
+    }
+    .nav-tabs .nav-link {
+        font-size: 0.85rem;
+    }
+    .employee-table th,
+    .employee-table td {
+        padding: 6px 4px;
+        font-size: 0.8rem;
+    }
 }
