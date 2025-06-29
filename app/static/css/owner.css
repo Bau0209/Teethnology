@@ -8,7 +8,7 @@
 
 body {
   background: rgba(157, 202, 202, 0.322);
-  min-height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
@@ -120,10 +120,10 @@ body {
 }
 
 /* Main layout */
-.dashboard-main-container {
+.dashboard-wrapper {
   display: flex;
-  flex: 1;
-  margin-top: 48px; /* Same as topbar height */
+  flex-direction: column;
+  height: 100vh;
 }
 
 /* Sidebar improvements */
