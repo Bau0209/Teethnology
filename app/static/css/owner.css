@@ -597,8 +597,6 @@ body {
   border-radius: 10px;
   padding: 0 32px 32px 32px;
   background: #fff;
-  min-width: 109vh;
-  max-width: 120vh;
   margin-left: 50vh;
 }
 
@@ -699,6 +697,14 @@ body {
   .info-card {
     flex: 1 1 calc(50% - 15px);
   }
+  .dashboard-center.card {
+    min-width: 300px;
+    max-width: 100%;
+  }
+  
+  .appointment-requests a {
+    margin-left: 20vh;
+  }
 }
 
 @media (max-width: 992px) {
@@ -711,6 +717,14 @@ body {
   .appointment-requests-header {
     flex-direction: row;
     align-items: center;
+  }
+  .appointment-request .request-info {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .appointment-requests a {
+    margin-left: 10vh;
   }
 
   .main-content {
@@ -737,6 +751,53 @@ body {
 }
 
 @media (max-width: 768px) {
+   .dashboard-center.card {
+    padding: 15px;
+  }
+  
+  .appointment-requests {
+    padding: 15px;
+  }
+  
+  .appointment-requests-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .appointment-requests-controls {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  
+  .appointment-request .request-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .appointment-requests .actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .appointment-requests a {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+  
+  .dashboard-center.card .branch-select,
+  .appointment-requests .branch-select {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .dashboard-center button.send-reminders {
+    max-width: 100%;
+  }
   .patient-info {
     font-size: 0.9rem;
   }
@@ -807,11 +868,24 @@ body {
 }
 
 @media (max-width: 576px) {
+  .dashboard-center h3,
+  .dashboard-right h3 {
+    font-size: 1rem;
+  }
+
   .dashboard-center.card .branch-select,
   .appointment-requests .branch-select {
     max-width: 100%;
+    font-size: 0.9rem;
+    padding: 2px 12px 2px 6px;
   }
   
+  .appointment-requests .actions button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    margin: 5px 0;
+  }
+
   .appointment-requests-header {
     flex-direction: column;
     align-items: flex-start;
@@ -825,7 +899,16 @@ body {
   .appointment-requests a {
     align-self: flex-end;
   }
+  .appointment-requests .actions {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
   
+  .appointment-requests .actions button {
+    flex: 1;
+    min-width: 45%;
+  }
+
   .actions {
     flex-wrap: wrap;
   }
@@ -899,6 +982,23 @@ body {
   }
   
   .actions button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  .dashboard-center.card {
+    padding: 12px;
+  }
+  
+  .appointment-requests {
+    padding: 12px;
+  }
+  
+  .appointment-requests .actions button {
+    font-size: 0.85rem;
+    padding: 5px 8px;
+  }
+  
+  .dashboard-center button.send-reminders {
     padding: 6px 12px;
     font-size: 0.9rem;
   }
