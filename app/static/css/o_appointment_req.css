@@ -11,6 +11,7 @@ body {
   height: auto;
   margin: 20px auto;
   margin-top: 40px !important;
+  margin-bottom: 40px !important;
   overflow: hidden;
 }
 
@@ -315,7 +316,6 @@ body {
 }
 
 /* Right Side Modal Styles */
-/* Right Side Modal Styles */
 #appointmentsModal.modal.show {
   display: block !important;
   opacity: 1;
@@ -460,7 +460,7 @@ body {
 }
 
 .btn-submit {
-  background: #0097a7;
+  background: #7FAFAD;
   color: #fff;
   border: none;
   border-radius: 5px;

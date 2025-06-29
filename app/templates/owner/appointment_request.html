@@ -53,9 +53,10 @@
     </div>
 
     <div class="request-add-btn">
-        <a href="form_modal.html"><button type="button" class="btn-add">Add</button></a>
+       <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">Add</button>
     </div>
 </div>
+{% include 'owner/components/form_modal.html' %}
 {% endblock %}
 
 {% block extra_js %}

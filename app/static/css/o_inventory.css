@@ -1,6 +1,12 @@
+body {
+  background: rgba(157, 202, 202, 0.322) !important; 
+}
+
+
 /*branch style*/
 .branch-overview-container {
     margin: 10px 0;
+    margin-top: 40px !important;
     border-radius: 5px;
     margin-left: 205vh;
     display: flex;
@@ -209,7 +215,7 @@
 
 #fullDetailsModal .detail-label {
   font-weight: 600;
-  color: #495057;
+  color: #495057; 
   min-width: 150px;
 }
 
