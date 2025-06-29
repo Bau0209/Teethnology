@@ -30,9 +30,9 @@
     <!-- Tabs -->
     <ul class="nav nav-tabs" id="employeeInfoTabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('owner.employee_info') }}" data-branch="basic_info">Basic Info</a>
+            <a class="nav-link active" href="{{ url_for('owner.employee_info', employee_id=employee.employee_id) }}" data-branch="basic_info">Basic Info</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"> 
             <a class="nav-link" href="{{ url_for('owner.employee_work_details') }}" data-branch="work_details">Work Details</a>
         </li>
         <li class="nav-item">

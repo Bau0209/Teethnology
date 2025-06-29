@@ -1,4 +1,6 @@
-
+body {
+  background: rgba(157, 202, 202, 0.322) !important; 
+}
 /* ============== CARD STYLES ============== */
 .card {
     border: none;
