@@ -23,9 +23,19 @@ body {
 }
 
 .info-header {
-    border-bottom: 1px solid #eee;
+    border-bottom: none !important;
     padding-bottom: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+}
+
+.left-align {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    margin-right: auto;
+    width: 100%;
 }
 
 .info-header h3 {
@@ -36,18 +46,55 @@ body {
 }
 
 .info-header h4 {
-    font-size: 1.4rem;
+    font-size: 0.9rem;
     color: #333;
     font-weight: 600;
     margin-bottom: 0;
 }
 
-/* form styling*/
-.mb-3 {
-    margin-bottom: 1.2rem !important;
+/* Form Grid Layout */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+    justify-content: space-between;
 }
 
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 10px;
+}
+
+/* form styling*/
+.mb-3 {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.column-divider {
+    position: relative;
+    padding-left: 0;
+    margin-left: 0;
+    width: 48%;
+}
+
+.column-divider::after {
+    content: "";
+    position: absolute;
+    top: 0; 
+    right: -12px;
+    height: calc(100% - 20px);
+    width: 1px;
+    background-color: #ccccccee;
+    opacity: 0.7; 
+}
 .form-label {
+    flex: 0 0 40%;
+    max-width: 40%;
+    padding-right: 10px;
     font-weight: 500;
     color: #555;
     margin-bottom: 6px;
@@ -56,7 +103,8 @@ body {
 }
 
 .form-control {
-    width: 100%;
+    flex: 0 0 60%;
+    max-width: 60%;
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -73,10 +121,12 @@ body {
 
 .row .col-md-6:first-child {
     padding-right: 15px;
+    margin-right: auto;
 }
 
 .row .col-md-6:last-child {
-    padding-left: 15px;
+    padding-left: 30px;
+    margin-left: auto;
 }
 
 .save-btn {
@@ -90,13 +140,12 @@ body {
     transition: background-color 0.3s;
     margin-top: 20px;
     display: block;
-    width: 100%;
-    max-width: 200px;
+    width: auto;
     margin-left: auto;
 }
 
 .save-btn:hover {
-    background-color: #218838;
+    background-color: #4cada5c5;
 }
 
 .nav-tabs {
@@ -254,11 +303,9 @@ h5 {
     .employee-info-container {
         padding: 25px;
     }
-    
     .info-header h4 {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
-    
     .activity-history-container th,
     .activity-history-container td {
         padding: 10px 12px;
@@ -266,81 +313,97 @@ h5 {
 }
 
 @media (max-width: 992px) {
-    .info-card {
+    .employee-info-container {
+        width: calc(100% - 40px);
         padding: 20px;
     }
-    
-    .row .col-md-6:first-child,
-    .row .col-md-6:last-child {
-        padding: 0 10px;
+    .info-card {
+        padding: 18px;
+    }
+    .nav-tabs .nav-link {
+        padding: 8px 16px;
+    }
+    .save-btn {
+        max-width: 100%;
+    }
+    .column-divider::after {
+        height: calc(100% - 30px);
     }
 }
 
 @media (max-width: 768px) {
+    .employee-info-container {
+        width: calc(100% - 30px);
+        padding: 15px;
+    }
+    .info-header h3 {
+        font-size: 1.1rem;
+    }
     .info-header h4 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
-    
-    .form-label {
-        font-size: 0.9rem;
+    .form-group {
+        margin-bottom: 15px;
     }
-    
-    .form-control {
-        padding: 7px 10px;
-        font-size: 0.9rem;
-        height: 36px;
+    .activity-history-container {
+        overflow-x: auto;
     }
-    
-    .save-btn {
-        padding: 7px 20px;
-        font-size: 0.9rem;
+    .column-divider::after {
+        display: none;
     }
 }
 
 @media (max-width: 576px) {
-    .info-card {
-        padding: 15px;
+    .employee-info-container {
+        width: calc(100% - 20px);
+        padding: 12px;
     }
-    
     .info-header h3 {
         font-size: 1rem;
     }
-    
     .info-header h4 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
-    
-    .row .col-md-6 {
-        padding: 0 !important;
+    .nav-tabs .nav-link {
+        padding: 6px 12px;
+        font-size: 0.85rem;
     }
-    
+    .form-control {
+        padding: 8px 12px;
+    }
+    h5 {
+        font-size: 0.95rem;
+    }
     .mb-3 {
-        margin-bottom: 1rem !important;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .form-label,
+    .form-control {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }
 
 @media (max-width: 400px) {
     .employee-info-container {
-        width: calc(100% - 12px);
+        width: calc(100% - 16px);
         padding: 10px;
     }
-    
     .info-card {
-        padding: 12px;
+        padding: 10px;
     }
-    
     .nav-tabs .nav-link {
         padding: 5px 8px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
-    
-    .form-label {
-        font-size: 0.9rem;
-    }
-    
     .activity-history-container th,
     .activity-history-container td {
         padding: 6px 8px;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
+    }
+    .save-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
     }
 }
