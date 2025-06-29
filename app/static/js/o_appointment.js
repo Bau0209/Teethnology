@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const appointmentForm = document.getElementById('appointmentForm');
   const appointmentsModalEl = document.getElementById('appointmentsModal');
   const addAppointmentModalEl = document.getElementById('addAppointmentModal');
-  const requestAddBtn = document.querySelector('.request-add-btn .btn-add'); // Add button in appointment_request.html
+  const requestAddBtn = document.querySelector('.request-add-btn .btn-add');
 
   // State
   let today = new Date();
@@ -173,8 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
     appointmentForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      // Here you would typically validate and submit the form
-      // For accessibility, you should provide success/error feedback
 
       const modal = bootstrap.Modal.getInstance(addAppointmentModalEl);
       modal.hide();
