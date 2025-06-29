@@ -47,93 +47,175 @@ body {
   margin-left: 15px;
 }
 
-/*calendar styles*/
+/* Calendar container */
 #calendar {
-  min-height: 335px;
-  background: white;
+  background-color: #fff;
+  border-radius: 12px;
   padding: 20px;
-  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
-#calendar-controls {
+
+/* Calendar header  */
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 20px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
-  padding: 10px 0;
-  flex-wrap: wrap;
   gap: 10px;
 }
 
-.calendar-nav {
-  color: #00898E !important;
+/* Month/year container */
+.fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0097a7;
+  margin: 0 15px;
+  padding: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+/* Month title */
+.fc .fc-toolbar-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0097a7;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Year display */
+.fc-year-select {
+  font-size: 1rem;
+  color: #666;
+  padding: 4px 8px;
   border: none;
-  border-radius: 30%;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  margin: 0 20px;
-  transition: background 0.2s;
-}
-
-.calendar-nav:hover {
-  background: #0097a7;
-}
-
-#calendar-month {
-  margin: 0 10px;
-  color: #0097a7 !important;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.calendar-year-select {
-  border: 1px solid #e0efef;
   border-radius: 4px;
-  padding: 5px 10px;
-  color: #0097a7;
-  background: #fff;
+  background-color: #ffffffd3;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.calendar-table {
-  width: 100% !important;
-  border-collapse: separate;
-  border-spacing: 5px;
-  table-layout: fixed;
+.fc-year-select:hover {
+  border-color: #0097a7;
+  background-color: #e0f7f7;
 }
 
-.calendar-table th {
-  color: #0097a7;
-  padding: 12px 0;
-  font-weight: 600;
+.fc-year-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 151, 167, 0.2);
 }
 
-.calendar-day {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+/* Navigation buttons container */
+.fc-toolbar-chunk {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-}
-.calendar-table td {
-  padding: 10px 0;
-  text-align: center;
-  height: 38px;
 }
 
+/* Previous button */
+.fc .fc-button-prev {
+  order: 1;
+  padding-right: 15px;
+}
 
-.calendar-day.active,
-.calendar-day:focus {
-  background: #36b1b6;
-  color: #fff;
+/* Next button */
+.fc .fc-button-next {
+  order: 3;
+  padding-left: 15px;
+}
+
+/* Navigation buttons */
+.fc .fc-button {
+  background: transparent !important;
+  border: none !important;
+  color: #0097a7 !important;
+  font-size: 1.5rem;
+  padding: 0;
+  line-height: 1;
+  min-width: 30px;
+  transition: all 0.2s;
+}
+
+.fc .fc-button:hover {
+  color: #007c91 !important;
+  transform: scale(1.1);
+}
+
+.fc .fc-button:disabled {
+  color: #b2dfdb !important;
+  opacity: 0.6;
+}
+
+/* Day headers */
+.fc .fc-col-header-cell {
+  padding: 0.75rem 0;
+  color: #2e2e2e !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.fc .fc-col-header-cell-cushion {
+  text-decoration: none !important;
+}
+
+/* Day cells */
+.fc-daygrid-day {
+  background-color: #f7fdfdd3;
+  border: none;
+  transition: all 0.2s;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #e0f7f7;
+  transform: translateY(-2px);
+}
+
+/* Day numbers */
+.fc-daygrid-day-number {
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 8px;
+}
+
+/* Today's date */
+.fc-day-today {
+  background-color: #c8f5f5 !important;
+  position: relative;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+  color: #0097a7;
+  font-weight: 700;
+}
+
+/* Events */
+.fc-event {
+  background-color: #36b1b6;
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 3px 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fc-event:hover {
+  background-color: #0097a7;
+  transform: translateY(-1px);
+}
+
+/* Remove focus styles */
+.fc .fc-button:focus,
+.fc-event:focus {
+  box-shadow: none !important;
   outline: none;
-}
-
-.calendar-day.hovered:hover,
-.calendar-day:hover {
-  background: #0097a7;
-  color: #fff;
 }
 
 /* Request Table Styles */
@@ -233,166 +315,263 @@ body {
 }
 
 /* Right Side Modal Styles */
+/* Right Side Modal Styles */
 #appointmentsModal.modal.show {
   display: block !important;
   opacity: 1;
-  z-index: 2200 !important; /* Higher than everything */
+  z-index: 2200 !important;
   position: fixed !important;
   right: 0;
   top: 0;
   height: 100vh;
+  width: auto;
 }
+
 .modal.right .modal-dialog {
-    position: fixed;
-    right: 14px;
-    top: 10%;
-    margin: 0;
-    max-width: 400px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    max-width: 400px;
-    transform: translate3d(2%, 0, 0.98rem);
-    
+  position: fixed;
+  right: 20px;
+  top: 10%;
+  transform: translateY(-50%);
+  margin: 0;
+  width: 400px;
+  max-width: 90vw;
+  height: auto;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal.right .modal-content {
-    height: 100vh;
-    width: 100%;
-    max-width: 300px;
-    min-height: 150px;
-    border-radius: 0;
-    position: relative;
-    border: none;
-    z-index: 1050;
+  height: auto;
+  width: 100%;
+  max-height: 90vh;
+  min-height: auto;
+  border-radius: 10px;
+  position: relative;
+  border: none;
+  z-index: 1050;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
 }
 
 .modal.right .modal-header {
-    border-bottom: none;
-    padding: 16px;
-}
-
-.modal.right .modal-title {
-    color: #0097a7;
-    font-weight: 700;
-    font-size: 1.25rem;
-    text-align: center;
-
-    margin-bottom: 0.5rem;
-    position: relative;
-}
-
-.modal.right .modal-date {
-    font-size: 1.4rem;
-    font-weight: 700;
-    text-align: center;
-    margin: 0.3rem 0 0.8rem;
-    color: #333;
+  border-bottom: none;
+  margin-top: 10px;
+  align-items: center;
+  padding: 16px 20px;
+  position: relative;
 }
 
 .modal.right .modal-body {
-    padding: 16px;
-    overflow-y: auto;
-    z-index: 1050 !important;
-}
-
-.modal.right .appointment-item {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    border-radius: 8px;
-
-}
-
-.modal.right .appointment-title {
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 0.5rem;
-    
-}
-
-.modal.right .patient-name {
-    font-weight: 500;
-    color: #555;
-    margin-bottom: 0.75rem;
-}
-
-.modal.right .appointment-details {
-    list-style-type: none;
-    padding-left: 0;
-    margin-bottom: 0;
-    z-index: 2100 !important;
-}
-
-.modal.right .appointment-details li {
-    margin-bottom: 0.5rem;
-    color: #666;
-}
-
-.modal.right .btn-close {
-    position: absolute;
-    right: 20px;
-    top: 1.5rem;
-    font-size: 1.10rem;
-    color: #0097a7;
-    cursor: pointer;
-}
-
-.modal.right .btn-add {
-    background: #0097a7;
-    color: #fff;
-    width: 100px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-align: center;
-    justify-content: center;
-    border: none;
-    padding: 0.5rem;
-    font-weight: 600;
-}
-
-.modal.right .btn-add:hover {
-    background: #008394;
-}
-
-.btn-submit {
-    background: #0097a7; 
-    color: #fff; 
-    border: none; 
-    border-radius: 5px; 
-    padding: 0.5rem 1.5rem; 
-    font-size: 16px; 
-    cursor: pointer; 
-    transition: background 0.2s; 
-}
-.btn-submit:hover {
-    background: #007b7e; /* Darker background on hover */
+  padding: 16px 24px;
+  overflow-y: auto;
+  flex: 1;
+  max-height: calc(90vh - 120px); /* Account for header/footer */
 }
 
 .modal.right .modal-footer {
-    border-top: none;
-    justify-content: center;
-    padding: 1rem 1.5rem;
+  border-top: none;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+/* Rest of your existing styles */
+.modal.right .modal-title {
+  color: #0097a7;
+  font-weight: 700;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.modal.right .modal-date {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0.3rem 0 0.4rem;
+  color: #333;
+}
+
+.modal.right .appointment-item {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f7fdfd;
+}
+
+.modal.right .appointment-title {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.modal.right .patient-name {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+
+.modal.right .appointment-details {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  z-index: 2100 !important;
+}
+
+.modal.right .appointment-details li {
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.modal.right .btn-close {
+  position: absolute;
+  right: 20px;
+  top: 1.5rem;
+  font-size: 1.10rem;
+  color: #0097a7;
+  cursor: pointer;
+  z-index: 2200;
+}
+
+.modal.right .btn-close:hover {
+  background: rgb(213, 214, 214);
+  transform: scale(1.1);
+}
+
+.modal.right .btn-add {
+  background: #0097a7;
+  color: #fff;
+  width: 100px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  border: none;
+  padding: 0.5rem;
+  font-weight: 600;
+}
+
+.modal.right .btn-add:hover {
+  background: #008394;
+}
+
+.btn-submit {
+  background: #0097a7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1.5rem;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover {
+  background: #007b7e;
 }
 
 /* Modal backdrop adjustment */
 .modal-backdrop {
   z-index: 1040 !important;
 }
+
 .modal-backdrop.show {
-    opacity: 0.5 !important; /* or 0.6 for even darker */
-    background-color: #222 !important;
+  opacity: 0.5 !important;
+  background-color: #222 !important;
 }
 
 .modal {
-    z-index: 1050 !important;
+  z-index: 1050 !important;
 }
 
 .modal.right .modal-dialog,
 .modal.right .modal-content {
-    z-index: 2150 !important;
+  z-index: 2150 !important;
 }
 
+/* Media Queries */
+@media (max-width: 1200px) {
+  .request-table {
+    gap: 30px;
+  }
+  
+  .request-details, 
+  .request-patient {
+    min-width: 220px;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 992px) {
+  .fc .fc-toolbar.fc-header-toolbar {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .request-table {
+    flex-direction: column;
+  }
+  
+  .request-details,
+  .request-patient {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .appointments-header.calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px 16px;
+  }
+  
+  .calendar-tab {
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+  
+  #calendar {
+    padding: 15px;
+  }
+  
+  .request-table-container {
+    padding: 15px 10px 0 10px;
+  }
+  
+  .request-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-accept,
+  .btn-reject {
+    width: 100%;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 280px;
+  }
+}
 
 @media (max-width: 600px) {
   .appointments-card.calendar-view,
@@ -400,9 +579,90 @@ body {
     max-width: 100vw;
     padding-left: 8px;
     padding-right: 8px;
+    margin-top: 20px !important;
   }
-  .calendar-header {
+  
+  .appointments-header.calendar-header {
     padding-left: 8px;
     padding-right: 8px;
+  }
+  
+  .fc .fc-toolbar-title {
+    font-size: 1.4rem;
+  }
+  
+  .fc-year-select {
+    font-size: 0.9rem;
+  }
+  
+  .fc .fc-button {
+    font-size: 1.2rem;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 260px;
+    right: 8px;
+  }
+  
+  .fc .fc-col-header-cell {
+    font-size: 0.75rem;
+    padding: 0.5rem 0;
+  }
+  
+  .fc-daygrid-day-number {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-tab {
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+  
+  .fc-event {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 90%;
+  }
+  
+  .modal.right .modal-title {
+    font-size: 1.1rem;
+  }
+  
+  .modal.right .modal-date {
+    font-size: 1.2rem;
+  }
+  
+  .btn-add {
+    padding: 6px 24px;
+  }
+}
+
+@media (max-width: 400px) {
+  .fc .fc-toolbar-title {
+    font-size: 1.2rem;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 95%;
+    right: 5px;
+  }
+  
+  .modal.right .modal-content {
+    padding: 10px;
+  }
+  
+  .request-section-title {
+    font-size: 1rem;
+  }
+  
+  .request-details div,
+  .request-patient div {
+    font-size: 0.9rem;
   }
 }
