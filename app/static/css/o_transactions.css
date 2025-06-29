@@ -263,17 +263,135 @@ body {
     margin-right: 5px !important;
 }
 /* ============== RESPONSIVE ADJUSTMENTS ============== */
-@media (max-width: 768px) {
-    #revenueChart {
-        height: 200px !important;
+@media (max-width: 1200px) {
+    .metric-card .card-text {
+        font-size: 1.6rem;
+    }
+    
+    .nav-tabs {
+        gap: 24px;
+    }
+    
+    .nav-tabs .nav-link {
+        font-size: 1.1rem;
+        margin-right: 16px;
+    }
+}
+
+@media (max-width: 992px) {
+    .transaction-container {
+        padding: 15px;
+    }
+    
+    .metric-card .card-title {
+        font-size: 1.3rem;
     }
     
     .metric-card .card-text {
         font-size: 1.5rem;
     }
     
+    .nav-tabs {
+        gap: 16px;
+    }
+    
+    .nav-tabs .nav-link {
+        font-size: 1rem;
+        margin-right: 12px;
+    }
+    
+    .table tbody td {
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    #revenueChart {
+        height: 200px !important;
+    }
+    
     .col-lg-4, .col-lg-8 {
         flex: 0 0 100%;
         max-width: 100%;
+    }
+    
+    .transaction-container {
+        flex-direction: column;
+    }
+    
+    .nav-tabs {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .nav-tabs .nav-link {
+        margin-right: 0;
+        padding: 8px 0;
+        border-bottom: none;
+        border-left: 3px solid transparent;
+    }
+    
+    .nav-tabs .nav-link.active {
+        border-bottom: none;
+        border-left: 3px solid #00898E;
+    }
+    
+    .d-grid {
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-header h5.mb-0 {
+        font-size: 1.1rem;
+    }
+    
+    .metric-card .card-title {
+        font-size: 1.1rem;
+    }
+    
+    .metric-card .card-text {
+        font-size: 1.3rem;
+    }
+    
+    .table thead th,
+    .table tbody td {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+    
+    .input-group .form-control,
+    .input-group .btn-outline-secondary {
+        height: 36px;
+    }
+    
+    .badge {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .transaction-container {
+        padding: 12px 8px;
+    }
+    
+    .card-header h5.mb-0 {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .nav-tabs .nav-link {
+        font-size: 0.9rem;
+    }
+    
+    .table thead th,
+    .table tbody td {
+        padding: 6px;
+        font-size: 0.8rem;
+    }
+    
+    .btn-outline-primary.btn-sm {
+        width: 28px;
+        height: 28px;
     }
 }
