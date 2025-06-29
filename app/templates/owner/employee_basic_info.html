@@ -43,13 +43,13 @@
     <!-- Basic Info Section -->
     <section class="tab-content" id="basic_info">
         <div class="info-card">
-            <div class="info-header">
+            <div class="info-header left-align">
                 <h3>Employee ID: {{ employee.employee_id }}</h3>
                 <h4>{{ employee.full_name }}</h4>
             </div>
             
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 column-divider" >
                     <div class="mb-3">
                         <label class="form-label">Age</label>
                         <input type="text" class="form-control" value="{{ employee.age }}">
@@ -62,8 +62,6 @@
                         <label class="form-label">Birthday</label>
                         <input type="text" class="form-control" value="{{ employee.birthdate }}">
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label">Contact Number</label>
                         <input type="text" class="form-control" value="{{ employee.contact_number }}">
@@ -72,6 +70,8 @@
                         <label class="form-label">Email</label>
                         <input type="text" class="form-control" value="{{ employee.email }}">
                     </div>
+                </div>
+                <div class="col-md-6 ms-auto">  
                     <div class="mb-3">
                         <label class="form-label">Employment Status</label>
                         <input type="text" class="form-control" value="{{ employee.employment_status | title }}">
