@@ -9,13 +9,9 @@
 
 {% block content %}
 <div class="branch-dropdown">
-    <select class="form-select" onchange="location = this.value;">
-        {% for branch in branches %}
-        <option value="{{ url_for('owner.inventory', branch_id=branch.id) }}"
-                {% if branch.id == current_branch %}selected{% endif %}>
-            {{ branch.name }}
-        </option>
-        {% endfor %}
+    <select name="branch" class="form-select">
+        <option value="manila">Manila Branch</option>
+        <option value="quezon">Quezon Branch</option>
     </select>
 </div>
 
@@ -31,7 +27,7 @@
         </ul>
     </div>
 
-    <!-- Search, Filter, Add -->
+    <!-- Search, Filter, Add --> 
     <div class="search-container my-3">
         <form action="{{ url_for('owner.inventory_medication') }}" method="GET">
             <div class="search-bar-container d-flex align-items-center">
