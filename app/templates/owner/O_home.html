@@ -1,86 +1,110 @@
 {% extends 'owner/owner_base.html' %}
 
 {% block title %}Dashboard - Teethnology{% endblock %}
-<!--
+
 {% block extra_css %}
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 {% endblock %}
--->
+
 {% block content %}
-
-  <!-- Dashboard Top Section -->
-  <div class="dashboard-top">
-      <div class="dashboard-left">
-          <div class="card welcome-card">
-                <h2>📈️ BUSINESS INSIGHT</h2>
-                <hr>
-                <div class="business-insight-content">
-                    <div class="insight-item">
-                        <strong>Patients Report:</strong> Cleaning appointments dropped 15% last month. Want to send a <strong>P200</strong> discount code to re-engage patients?
-                    </div>
-                    <div class="insight-item">
-                        <strong>Patients Forecast:</strong> Week 2 of next month may have low bookings. Consider scheduling a flash Email promo.
-                    </div>
-                </div>
+<div class="dashboard-top">
+  <!-- Left Column -->
+    <div class="dashboard-left">
+        <div class="card welcome-card">
+            <h2>📈️ BUSINESS INSIGHT</h2>
+            <hr>
+            <div class="business-insight-content">
+            <div class="insight-item">
+                <strong>Patients Report:</strong> Cleaning appointments dropped 15% last month. Want to send a <strong>P200</strong> discount code to re-engage patients?
             </div>
-          <div class="card info-card">
-              <h2>Appointments Today</h2>
-              <div class="number">12</div>
-          </div>
-          <div class="card info-card">
-              <h2>Birthdays Today</h2>
-              <div class="number">0</div>
-          </div>
-      </div>
+            <div class="insight-item">
+                <strong>Patients Forecast:</strong> Week 2 of next month may have low bookings. Consider scheduling a flash Email promo.
+            </div>
+            </div>
+        </div>
+        
+        <!-- Appointments Today -->
+        <div class="card info-card appointments-today-card">
+            <i class="fas fa-calendar-day calendar-icon"></i>
+            <div class="appointments-today-content">
+                <h2>Appointments Today</h2>
+                <div class="appointments-count">12</div>
+                <div class="branches-text">all branches</div>
+            </div>
+        </div>
+    </div>
 
-      <div class="dashboard-center card">
-          <h3>PATIENTS TOMORROW</h3>
-          <select name="branch" class="branch-select">
-              <option value="manila">Manila Branch</option>
-              <option value="quezon">Quezon Branch</option>
-          </select>
-          <hr>
-          <div class="patient-info">
-              <strong>PATIENT NAME</strong><br>PURPOSE OF APPOINTMENT<br>CONTACT NUMBER<br>EMAIL<br><br>
-              <strong>PATIENT NAME</strong><br>PURPOSE OF APPOINTMENT<br>CONTACT NUMBER<br>EMAIL<br><br>
-              <strong>PATIENT NAME</strong><br>PURPOSE OF APPOINTMENT<br>CONTACT NUMBER<br>EMAIL<br>
-          </div>
-          <button class="send-reminders">Send Reminders</button>
+  <!-- Middle Column -->
+  <div class="dashboard-center card">
+    <h3>PATIENTS TOMORROW</h3>
+    <select name="branch" class="branch-select">
+      <option value="manila">Manila Branch</option>
+      <option value="quezon">Quezon Branch</option>
+    </select>
+    <hr>
+    <div class="patient-info">
+      <div class="patient-item">
+        <strong>PATIENT NAME</strong><br>
+        PURPOSE OF APPOINTMENT<br>
+        CONTACT NUMBER<br>
+        EMAIL
       </div>
-
-      <div class="dashboard-right card appointment-requests">
-          <div class="appointement-requests-header">
-              <span class="calendar-title">APPOINTMENTS</span>
-              <div class="appointment-requests-controls">
-                  <select name="branch" class="branch-select">
-                      <option value="manila">Manila Branch</option>
-                      <option value="quezon">Quezon Branch</option>
-                  </select>
-              </div>
-          </div>
-          <hr>
-          <div class="request">
-              <a href="{{ url_for('owner.appointment_req') }}">View All</a>
-              <div class="request-info">
-                  <strong>MM-DD-YYYY</strong><br>PATIENT NAME<br>PURPOSE OF APPOINTMENT
-              </div>
-              <div class="actions">
-                  <button class="accept">Accept</button>
-                  <button class="reject">Reject</button>
-              </div>
-          </div>
-          <div class="request-info">
-              <div>
-                  <strong>MM-DD-YYYY</strong><br>PATIENT NAME<br>PURPOSE OF APPOINTMENT
-              </div>
-              <div class="actions">
-                  <button class="accept">Accept</button>
-                  <button class="reject">Reject</button>
-              </div>
-          </div>
+      <div class="patient-item">
+        <strong>PATIENT NAME</strong><br>
+        PURPOSE OF APPOINTMENT<br>
+        CONTACT NUMBER<br>
+        EMAIL
       </div>
+      <div class="patient-item">
+        <strong>PATIENT NAME</strong><br>
+        PURPOSE OF APPOINTMENT<br>
+        CONTACT NUMBER<br>
+        EMAIL
+      </div>
+    </div>
+    <button class="send-reminders">Send Reminders</button>
   </div>
 
+  <!-- Right Column -->
+  <div class="dashboard-right card appointment-requests">
+    <div class="appointment-requests-header">
+      <h3>APPOINTMENTS</h3>
+      <div class="appointment-requests-controls">
+        <select name="branch" class="branch-select">
+          <option value="manila">Manila Branch</option>
+          <option value="quezon">Quezon Branch</option>
+        </select>
+        
+      </div>
+    </div>
+    <hr>
+    <a href="{{ url_for('owner.appointment_req') }}" class="view-all">View All</a>
+    <div class="request-list">
+      <div class="request-item">
+        <div class="request-info">
+          <strong>MM-DD-YYYY</strong><br>
+          PATIENT NAME<br>
+          PURPOSE OF APPOINTMENT
+        </div>
+        <div class="actions">
+          <button class="accept">Accept</button>
+          <button class="reject">Reject</button>
+        </div>
+      </div>
+      <div class="request-item">
+        <div class="request-info">
+          <strong>MM-DD-YYYY</strong><br>
+          PATIENT NAME<br>
+          PURPOSE OF APPOINTMENT
+        </div>
+        <div class="actions">
+          <button class="accept">Accept</button>
+          <button class="reject">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Calendar Section -->
   <section class="calendar-card">
       <div class="calendar-panel">
