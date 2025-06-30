@@ -1,15 +1,28 @@
 {% extends 'owner/owner_base.html' %}
 
 {% block title %}Dashboard - Teethnology{% endblock %}
-
+<!--
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css" rel="stylesheet" />
+{% endblock %}
+-->
 {% block content %}
 
   <!-- Dashboard Top Section -->
   <div class="dashboard-top">
       <div class="dashboard-left">
           <div class="card welcome-card">
-              <h2>WELCOME BACK,<br>EDDIELYN</h2>
-          </div>
+                <h2>📈️ BUSINESS INSIGHT</h2>
+                <hr>
+                <div class="business-insight-content">
+                    <div class="insight-item">
+                        <strong>Patients Report:</strong> Cleaning appointments dropped 15% last month. Want to send a <strong>P200</strong> discount code to re-engage patients?
+                    </div>
+                    <div class="insight-item">
+                        <strong>Patients Forecast:</strong> Week 2 of next month may have low bookings. Consider scheduling a flash Email promo.
+                    </div>
+                </div>
+            </div>
           <div class="card info-card">
               <h2>Appointments Today</h2>
               <div class="number">12</div>
@@ -119,6 +132,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 <script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
 {% endblock %}
