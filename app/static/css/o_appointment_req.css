@@ -51,6 +51,8 @@ body {
 
 /* Calendar container */
 #calendar {
+  width: 100%;
+  margin: 0 auto;
   background-color: #fff;
   border-radius: 12px;
   padding: 20px;
@@ -153,6 +155,9 @@ body {
 
 /* Day headers */
 .fc .fc-col-header-cell {
+  width: 100%; 
+  padding: 8px 0;
+  text-align: center;
   padding: 0.75rem 0;
   color: #2e2e2e !important;
   font-weight: 600;
@@ -164,10 +169,21 @@ body {
   text-decoration: none !important;
 }
 
+.fc .fc-col-header-cell,
+.fc .fc-daygrid-day {
+  width: calc(100% / 7); 
+  max-width: 120px; 
+}
 /* Day cells */
+.fc .fc-daygrid-day-frame {
+  height: 0;
+  padding-bottom: 60%;
+  position: relative;
+}
+
 .fc-daygrid-day {
   background-color: #f7fdfdd3;
-  border: none;
+  border: none !important;
   transition: all 0.2s;
 }
 
@@ -176,13 +192,15 @@ body {
   transform: translateY(-2px);
 }
 
+
 /* Day numbers */
 .fc-daygrid-day-number {
   color: #333;
   font-weight: 500;
   text-decoration: none;
-  font-size: 1rem;
-  padding: 8px;
+  font-size: 1.4rem;
+  margin-right: 10px;
+  padding: 10px;
 }
 
 /* Today's date */
@@ -368,7 +386,7 @@ body {
   padding: 16px 24px;
   overflow-y: auto;
   flex: 1;
-  max-height: calc(90vh - 120px); /* Account for header/footer */
+  max-height: calc(90vh - 120px); 
 }
 
 .modal.right .modal-footer {
@@ -495,7 +513,29 @@ body {
 }
 
 /* Media Queries */
+/* Large Desktop (1920px and above)  */
+@media (min-width: 1920px) {
+  .appointments-card.calendar-view {
+    max-width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #calendar {
+    padding: 30px;
+  }
+  
+  .fc .fc-toolbar-title {
+    font-size: 2rem;
+  }
+}
+
+/* Standard Desktop (1200px-1919px)  */
 @media (max-width: 1200px) {
+  .appointments-card.calendar-view {
+    width: calc(100% - 30px);
+  }
+  
   .request-table {
     gap: 30px;
   }
@@ -510,6 +550,7 @@ body {
   }
 }
 
+/* Small Desktop/Tablet (992px-1199px)  */
 @media (max-width: 992px) {
   .fc .fc-toolbar.fc-header-toolbar {
     flex-wrap: wrap;
@@ -538,6 +579,7 @@ body {
   }
 }
 
+/* Tablet (768px-991px)  */
 @media (max-width: 768px) {
   .appointments-header.calendar-header {
     flex-direction: column;
@@ -574,18 +616,12 @@ body {
   }
 }
 
-@media (max-width: 600px) {
-  .appointments-card.calendar-view,
-  .calendar-container {
-    max-width: 100vw;
-    padding-left: 8px;
-    padding-right: 8px;
+/* Mobile (576px-767px)  */
+@media (max-width: 576px) {
+  .appointments-card.calendar-view {
+    padding: 15px 10px;
+    width: calc(100% - 20px);
     margin-top: 20px !important;
-  }
-  
-  .appointments-header.calendar-header {
-    padding-left: 8px;
-    padding-right: 8px;
   }
   
   .fc .fc-toolbar-title {
@@ -614,9 +650,14 @@ body {
     font-size: 0.85rem;
     padding: 6px;
   }
+  
+  .request-add-btn {
+    margin-right: 10px;
+  }
 }
 
-@media (max-width: 480px) {
+/* Small Mobile (<576px) */
+@media (max-width: 400px) {
   .calendar-tab {
     font-size: 1rem;
     margin-right: 10px;
@@ -641,21 +682,6 @@ body {
   
   .btn-add {
     padding: 6px 24px;
-  }
-}
-
-@media (max-width: 400px) {
-  .fc .fc-toolbar-title {
-    font-size: 1.2rem;
-  }
-  
-  .modal.right .modal-dialog {
-    max-width: 95%;
-    right: 5px;
-  }
-  
-  .modal.right .modal-content {
-    padding: 10px;
   }
   
   .request-section-title {

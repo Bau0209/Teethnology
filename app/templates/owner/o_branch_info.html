@@ -33,7 +33,11 @@
                     class="branch-info-thumb {% if loop.index0 == 0 %}active{% endif %}"
                     data-index="{{ loop.index0 }}">
             {% endfor %}
+            <button type="button" class="branch-edit-images" data-bs-toggle="modal" data-bs-target="#branchImagesModal">
+                Edit Images
+            </button>
         </div>
+        
 
         <!-- Modal -->
         <div class="modal fade" id="branchImagesModal" tabindex="-1" aria-labelledby="branchImagesModalLabel" aria-hidden="true">
@@ -67,9 +71,7 @@
             </div>
         </div>
 
-        <button type="button" class="branch-edit-images" data-bs-toggle="modal" data-bs-target="#branchImagesModal">
-            Edit Images
-        </button>
+        
     </div>
 
 
