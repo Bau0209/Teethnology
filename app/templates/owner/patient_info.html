@@ -230,17 +230,25 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="row mb-3">
-                                    <label class="col-sm-5 col-form-label">Date of Last Physical Exam:</label>
+                                    <label class="col-sm-5 col-form-label">Specialty, if applicable:</label>
                                     <div class="col-sm-7">
-                                        <input type="date" class="form-control" name = "last_physician_exam" value="{{ patient_medical_info.last_physician_exam }}">
+                                        <input type="text" class="form-control" name = "physician_specialty" value="{{ patient_medical_info.physician_specialty }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="row mb-3">
-                                    <label class="col-sm-5 col-form-label">Age:</label>
+                                    <label class="col-sm-5 col-form-label">Office Address:</label>
                                     <div class="col-sm-7">
-                                        <input type="number" class="form-control">
+                                        <input type="text" class="form-control" name = "office_address" value="{{ patient_medical_info.physician_office_address }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row mb-3">
+                                    <label class="col-sm-5 col-form-label">Office Number:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name = "office_number" value="{{ patient_medical_info.physician_office_number }}">
                                     </div>
                                 </div>
                             </div>

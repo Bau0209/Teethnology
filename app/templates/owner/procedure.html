@@ -13,14 +13,13 @@
         <tbody>
             <tr>
                 <td><a href="{{ url_for('owner.patients') }}"><i class="fa fa-chevron-left"></i></a></td>
-                <td>1</td>
-                <td>011</td>
-                <td>Patient name</td>
-                <td>25</td>
-                <td>F</td>
-                <td>(633) 8xx-xxxx-xxx</td>
-                <td>example@email.com</td>
-                <td>Branch 1</td>
+                <td>{{ patient.patient_id }}</td>
+                <td>{{ patient.patient_full_name}}</td>
+                <td>{{ patient.age }}</td>
+                <td>{{ patient.sex }}</td>
+                <td>{{ patient.contact_number }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.branch.branch_name}}</td>
             </tr>
         </tbody>
     </table>
@@ -49,6 +48,7 @@
             <table class="table table-bordered table-hover">
                 <thead class="table">
                     <tr>
+                        <th>Procedure ID</th>
                         <th>Date</th>
                         <th>Treatment Procedure</th>
                         <th>Tooth Area</th>
@@ -60,36 +60,23 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for procedure in procedures %}
                     <tr>
-                        <td>mm0047777</td>
-                        <td>Zookx xaptox</td>
-                        <td>0</td>
-                        <td>Laia Hexoua</td>
-                        <td>Root Canal Therapy</td>
-                        <td>P 0.00</td>
-                        <td>Proposed</td>
-                        <td>Ming grucati yoono eartools lippi</td>
+                        <td>{{ procedure.procedure_id }}</td>
+                        <td>{{ procedure.procedure_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ procedure.treatment_procedure }}</td>
+                        <td>{{ procedure.tooth_area }}</td>
+                        <td>{{ procedure.provider }}</td>
+                        <td>{{ procedure.treatment_plan or 'N/A' }}</td>
+                        <td>P {{ '{:,.2f}'.format(procedure.fee) }}</td>
+                        <td>{{ procedure.procedure_status or 'N/A' }}</td>
+                        <td>{{ procedure.notes or 'N/A' }}</td>
                     </tr>
+                    {% else %}
                     <tr>
-                        <td>mm0047777</td>
-                        <td>Zookx xaptox</td>
-                        <td>0</td>
-                        <td>Laia Hexoua</td>
-                        <td>Root Canal Therapy</td>
-                        <td>P 0.00</td>
-                        <td>Proposed</td>
-                        <td>Ming grucati yoono eartools lippi</td>
+                        <td colspan="9" class="text-center">No procedure history found for this patient.</td>
                     </tr>
-                    <tr>
-                        <td>mm0047777</td>
-                        <td>Zookx xaptox</td>
-                        <td>0</td>
-                        <td>Laia Hexoua</td>
-                        <td>Root Canal Therapy</td>
-                        <td>P 0.00</td>
-                        <td>Proposed</td>
-                        <td>Ming grucati yoono eartools lippi</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

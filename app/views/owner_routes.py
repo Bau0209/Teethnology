@@ -3,6 +3,7 @@ from app.models.branches import Branch, ClinicBranchImage
 from app.models.employees import Employee
 from app.models.patients import PatientsInfo
 from app.models.patient_medical_info import PatientMedicalInfo
+from app.models.procedures import Procedures
 
 owner = Blueprint('owner', __name__)
 
@@ -51,7 +52,8 @@ def patient_info(patient_id):
 @owner.route('/patient_procedure/<int:patient_id>')   
 def patient_procedure(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
-    return render_template('/owner/procedure.html',patient=patient)
+    procedures = Procedures.query.filter_by(patient_id=patient_id)
+    return render_template('/owner/procedure.html',patient=patient, procedures=procedures)
 
 @owner.route('/patient_dental_rec/<int:patient_id>')   
 def patient_dental_rec(patient_id):
