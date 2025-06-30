@@ -271,14 +271,14 @@ body {
 .section, .record, .record-id, .record-details {
     display: none !important;
 }
-/* Modal Styles 
+/* Modal Styles*/ 
 .modal-content {
     border-radius: 10px;
     border: none;
 }
 
 .modal-header {
-    background: #00bcd4;
+    background: #00898E;
     color: #fff;
     border-radius: 10px 10px 0 0;
     padding: 15px 20px;
@@ -294,7 +294,7 @@ body {
 }
 
 .form-control {
-    border: 1px solid #00bcd4;
+    border: 1px solid #00898ede;
     padding: 8px 12px;
     border-radius: 6px;
 }
@@ -310,7 +310,7 @@ body {
 }
 
 .btn-primary {
-    background: #00bcd4;
+    background: #00898eec !important;
     border: none;
 }
 
@@ -325,9 +325,115 @@ body {
 
 #forgotPassword:hover {
     text-decoration: underline;
-}*/
+}
 
 /* Responsive Adjustments */
+@media (min-width: 1600px) {
+  /* Main Container */
+  .patients-container {
+    max-width: 1600px;
+    padding: 30px;
+    border-radius: 12px;
+  }
+
+  /* Toolbar */
+  .toolbar {
+    padding: 0 0 1.5rem 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-bar {
+    max-width: 500px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+  }
+
+  .filter-btn, .add-btn, .select-btn {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+  }
+
+  /* Tabs */
+  .nav-tabs {
+    gap: 40px;
+    margin-bottom: 25px;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 1.25rem;
+    padding: 12px 24px;
+  }
+
+  /* Table Container */
+  .patients-table-container {
+    padding: 24px;
+    max-height: calc(100vh - 350px);
+  }
+
+  /* Table */
+  .patients-table {
+    min-width: 1200px;
+  }
+
+  .patients-table th {
+    font-size: 1.1rem;
+    padding: 14px 16px;
+  }
+
+  .patients-table td {
+    font-size: 1.05rem;
+    padding: 12px 16px;
+  }
+
+  .patients-table a {
+    font-size: 1.3rem;
+  }
+
+  /* Dropdown */
+  .dropdown .btn-primary.dropdown-toggle {
+    padding: 10px 22px;
+    font-size: 1.1rem;
+  }
+
+  .dropdown-menu {
+    min-width: 150px;
+  }
+
+  .dropdown-item {
+    padding: 10px 20px;
+    font-size: 1.05rem;
+  }
+}
+
+/* ADDITIONAL OPTIMIZATIONS FOR 1920px+ */
+@media (min-width: 1920px) {
+  .patients-container {
+    max-width: 1800px;
+  }
+
+  .search-bar {
+    max-width: 600px;
+  }
+
+  .patients-table {
+    min-width: 1400px;
+  }
+
+  .patients-table th {
+    font-size: 1.15rem;
+    padding: 16px 20px;
+  }
+
+  .patients-table td {
+    font-size: 1.1rem;
+    padding: 14px 20px;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 1.3rem;
+  }
+}
+
 @media (max-width: 1200px) {
     .patients-container {
         padding: 15px;

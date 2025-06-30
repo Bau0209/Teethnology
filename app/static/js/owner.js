@@ -1,127 +1,103 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.getElementById('userDropdownBtn');
-  const menu = document.getElementById('userDropdownMenu');
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-  });
-  document.addEventListener('click', function() {
-    menu.style.display = 'none';
-  });
-})
-
-
-//audio equalizer overlay
-var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-confirmModal.show();
-
-document.addEventListener('DOMContentLoaded', function() {
-  const micBtn = document.querySelector('.voice-assistant button');
-  const overlay = document.getElementById('audio-equalizer-overlay');
-
-  micBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    overlay.style.display = 'flex';
-  });
-
-  // Hide overlay when clicking outside the equalizer
-  overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) {
-      overlay.style.display = 'none';
-    }
-  });
-});
-
-
-// Confirm modal overlay
-document.addEventListener('DOMContentLoaded', function() {
-  // Dropdown for username
+document.addEventListener('DOMContentLoaded', function () {
+  // Toggle user dropdown
   const btn = document.getElementById('userDropdownBtn');
   const menu = document.getElementById('userDropdownMenu');
   if (btn && menu) {
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
       e.stopPropagation();
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     });
-    document.addEventListener('click', function() {
+    document.addEventListener('click', function () {
       menu.style.display = 'none';
     });
   }
 
-  // Audio equalizer and modal logic
+  // Sidebar navigation using fetch (SPA-like)
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', function (e) {
+      const url = this.href;
+
+      // If it's an anchor link or external, allow default
+      if (url.startsWith('#') || url.startsWith('http')) return;
+
+      e.preventDefault(); // prevent full reload
+
+      fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const newContent = doc.querySelector('#main-content');
+
+          if (newContent) {
+            document.querySelector('#main-content').innerHTML = newContent.innerHTML;
+
+            // Push to browser history
+            window.history.pushState({}, '', url);
+
+            // Re-initialize dynamic scripts if needed
+            initDynamicFeatures();
+          }
+        })
+        .catch(err => {
+          console.error('Page load failed:', err);
+          alert('Failed to load the page. Please try again.');
+        });
+    });
+  });
+
+  // Listen for browser back/forward buttons
+  window.addEventListener('popstate', function () {
+    fetch(window.location.href)
+      .then(res => res.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newContent = doc.querySelector('#main-content');
+        if (newContent) {
+          document.querySelector('#main-content').innerHTML = newContent.innerHTML;
+          initDynamicFeatures();
+        }
+      });
+  });
+
+  // Audio equalizer + modal logic
+  initDynamicFeatures(); // Call once initially
+});
+
+function initDynamicFeatures() {
   const micBtn = document.querySelector('.voice-assistant button');
   const equalizer = document.getElementById('audio-equalizer-overlay');
   const modal = document.getElementById('confirm-modal-overlay');
   let modalTimeout;
 
-  if (micBtn && equalizer && modal) {
-    micBtn.addEventListener('click', function(e) {
+  if (micBtn && equalizer) {
+    micBtn.addEventListener('click', function (e) {
       e.preventDefault();
       equalizer.style.display = 'flex';
-      modal.style.display = 'none';
+      if (modal) modal.style.display = 'none';
       clearTimeout(modalTimeout);
-      modalTimeout = setTimeout(function() {
+      modalTimeout = setTimeout(() => {
         equalizer.style.display = 'none';
-        modal.style.display = 'flex';
-      }, 5000); // 5 seconds
+        if (modal) modal.style.display = 'flex';
+      }, 5000);
     });
 
-    // Hide equalizer when clicking outside
-    equalizer.addEventListener('click', function(e) {
+    equalizer.addEventListener('click', function (e) {
       if (e.target === equalizer) {
         equalizer.style.display = 'none';
         clearTimeout(modalTimeout);
       }
     });
+  }
 
-    // Hide modal on "No" or "Yes"
+  if (modal) {
     const noBtn = document.querySelector('.modal-no');
     const yesBtn = document.querySelector('.modal-yes');
-    if (noBtn) noBtn.onclick = function() { modal.style.display = 'none'; };
-    if (yesBtn) yesBtn.onclick = function() { modal.style.display = 'none'; /* Add Yes action here */ };
-
-    // Hide modal if clicking outside content
-    modal.addEventListener('click', function(e) {
+    if (noBtn) noBtn.onclick = () => modal.style.display = 'none';
+    if (yesBtn) yesBtn.onclick = () => modal.style.display = 'none';
+    modal.addEventListener('click', e => {
       if (e.target === modal) modal.style.display = 'none';
     });
   }
-});
-
-
-//o_branches_info.js
-document.addEventListener('DOMContentLoaded', function() {
-  const images = [
-    '../../static/images/quezon clinic example.jpg',
-    '../../static/images/quezon clinic example2.jpg',
-    '../../static/images/quezon clinic example3.jpg'
-  ];
-  let current = 0;
-  const mainImg = document.getElementById('mainBranchImg');
-  const thumbs = document.querySelectorAll('.branch-info-thumb');
-
-  function showImage(idx) {
-    current = idx;
-    mainImg.src = images[current];
-    thumbs.forEach((thumb, i) => {
-      thumb.classList.toggle('active', i === current);
-    });
-  }
-
-  document.querySelector('.slider-arrow-left').onclick = function() {
-    showImage((current - 1 + images.length) % images.length);
-  };
-  document.querySelector('.slider-arrow-right').onclick = function() {
-    showImage((current + 1) % images.length);
-  };
-  thumbs.forEach((thumb, i) => {
-    thumb.onclick = () => showImage(i);
-  });
-});
-
-// Included code
-document.querySelector('.voice-assistant button').addEventListener('click', function() {
-    document.getElementById('audio-equalizer-overlay').style.display = 'flex';
-    setTimeout(function() {
-        document.getElementById('audio-equalizer-overlay').style.display = 'none';
-    }, 3000);
-});
+}

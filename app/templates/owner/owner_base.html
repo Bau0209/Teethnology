@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Teethnology Dashboard{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/owner.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/audio_equalizer.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/confirmation_modal.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -50,13 +55,7 @@
                     </ul>
                 </nav>
 
-                <!--<hr>
-                <div class="voice-assistant">
-                    <button title="Talk to our voice assistant">
-                        <i class="fa fa-microphone"></i>
-                    </button>
-                    <span>Say hi to our<br>voice assistant</span>
-                </div>-->
+                <!-- Optional: Voice assistant UI -->
                 <!-- {% include 'owner/components/audio_equalizer.html' %} -->
             </aside>
 
@@ -65,6 +64,7 @@
             </main>
         </div>
     </div>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

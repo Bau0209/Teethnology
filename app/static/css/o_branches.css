@@ -1,7 +1,9 @@
 .branches-info-card,
 .branches-list-card {
+  max-width: 1440px;
   width: 100%;
-  margin: 0 auto 24px;
+  margin: 0 auto;
+  padding: 20px;
   transition: all 0.3s ease;
 }
 .branches-info-card {
@@ -306,6 +308,71 @@
 }
 
 /* Responsive Media Queries */
+@media (min-width: 1600px) {
+  
+  .branches-info-card, 
+  .branches-list-card {
+    max-width: 1400px; 
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  
+  .branches-info-content {
+    gap: 60px;
+    padding: 30px 40px; 
+  }
+
+  
+  .branches-info-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .branches-services h3, 
+  .branches-about h3 {
+    font-size: 1.4rem;
+  }
+
+  
+  .services-checklist {
+    gap: 20px;
+  }
+
+  
+  .save-btn, 
+  .view-website-btn {
+    width: 140px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  /* List card adjustments */
+  .branches-list-header {
+    padding: 25px 40px 15px 40px;
+  }
+
+  .branches-title {
+    font-size: 1.8rem;
+  }
+
+  .branches-add-btn {
+    padding: 10px 32px;
+    font-size: 1.1rem;
+  }
+
+  /* Branch item adjustments */
+  .branch-item {
+    padding: 2.5rem;
+  }
+
+  .branch-name {
+    font-size: 1.8rem;
+  }
+
+  .branch-details {
+    gap: 60px;
+  }
+}
 
 @media (max-width: 1200px) {
   .branches-dashboard {
