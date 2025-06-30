@@ -236,7 +236,180 @@ body {
     display: none !important;
 }
 
+/* Modal Styles*/ 
+.modal-content {
+    border-radius: 10px;
+    border: none;
+}
+
+.modal-header {
+    background: #00898E;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    padding: 15px 20px;
+}
+
+.modal-title {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-control {
+    border: 1px solid #00898ede;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 2px rgba(0,188,212,0.2);
+    border-color: #0097a7;
+}
+
+.btn-secondary {
+    background: #757575;
+    border: none;
+}
+
+.btn-primary {
+    background: #00898eec !important;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #0097a7;
+}
+
+#forgotPassword {
+    color: #00bcd4;
+    text-decoration: none;
+}
+
+#forgotPassword:hover {
+    text-decoration: underline;
+}
+
 /* Responsive Media Queries */
+@media (min-width: 1600px) {
+  /* Main Container */
+  .employee-container {
+    max-width: 1600px;
+    margin: 40px auto !important;
+    padding: 25px;
+    border-radius: 12px;
+  }
+
+  /* Tabs */
+  .nav-tabs {
+    gap: 30px;
+    margin: 20px 0 25px 0;
+    padding-bottom: 8px;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 1.25rem;
+    padding-bottom: 8px;
+  }
+
+  /* Toolbar */
+  .toolbar {
+    padding: 0 0 1.5rem 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-bar {
+    max-width: 500px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+  }
+
+  .filter-btn, .add-btn, .select-btn {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+  }
+
+  /* Table Container */
+  .employee-table-container {
+    padding: 20px;
+  }
+
+  /* Table */
+  .employee-table {
+    min-width: 1200px;
+  }
+
+  .employee-table th {
+    font-size: 1.1rem;
+    padding: 14px 16px;
+  }
+
+  .employee-table td {
+    font-size: 1.05rem;
+    padding: 12px 16px;
+  }
+
+  .employee-table a {
+    font-size: 1.3rem;
+  }
+
+  /* Modal */
+  .modal-content {
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 20px 25px;
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .modal-body {
+    padding: 25px;
+  }
+
+  .form-control {
+    padding: 10px 15px;
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .employee-container {
+    max-width: 1800px;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 1.3rem;
+  }
+
+  .search-bar {
+    max-width: 600px;
+  }
+
+  .employee-table {
+    min-width: 1400px;
+  }
+
+  .employee-table th {
+    font-size: 1.15rem;
+    padding: 16px 20px;
+  }
+
+  .employee-table td {
+    font-size: 1.1rem;
+    padding: 14px 20px;
+  }
+
+  .modal-dialog {
+    max-width: 600px;
+  }
+}
+
 @media (max-width: 1200px) {
     .employee-table th {
         font-size: 0.95rem;

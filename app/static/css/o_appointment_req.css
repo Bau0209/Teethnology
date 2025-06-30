@@ -51,7 +51,7 @@ body {
 
 /* Calendar container */
 #calendar {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   background-color: #fff;
   border-radius: 12px;
@@ -530,6 +530,150 @@ body {
 }
 
 /* Standard Desktop (1200px-1919px)  */
+@media (min-width: 1600px) {
+  /* Main Calendar Container */
+  .appointments-card.calendar-view {
+    max-width: 1700px;
+    margin: 50px auto;
+    border-radius: 16px;
+  }
+
+  /* Calendar Header */
+  .appointments-header.calendar-header {
+    padding: 24px 40px;
+  }
+
+  .calendar-tab {
+    font-size: 1.4rem;
+    margin-right: 50px;
+    padding: 10px 0;
+  }
+
+  /* Calendar Body */
+  #calendar {
+    width: 94%;
+    padding: 40px;
+  }
+
+  /* Calendar Toolbar */
+  .fc .fc-toolbar-title {
+    font-size: 2.2rem;
+  }
+
+  .fc-year-select {
+    font-size: 1.2rem;
+    padding: 6px 12px;
+  }
+
+  /* Calendar Cells */
+  .fc .fc-col-header-cell {
+    font-size: 1rem;
+    padding: 1rem 0;
+  }
+
+  .fc-daygrid-day-number {
+    font-size: 1.6rem;
+    padding: 12px;
+  }
+
+  .fc-event {
+    font-size: 1rem;
+    padding: 5px 10px;
+  }
+
+  /* Request Table */
+  .request-table-container {
+    padding: 40px 40px 0 40px;
+  }
+
+  .request-table {
+    gap: 60px;
+    margin-bottom: 40px;
+  }
+
+  .request-details, 
+  .request-patient {
+    padding: 32px 28px;
+    min-width: 320px;
+  }
+
+  .request-section-title {
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+  }
+
+  .request-details div,
+  .request-patient div {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+
+  /* Buttons */
+  .btn-accept,
+  .btn-reject {
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+  }
+
+  /* Modal Adjustments */
+  .modal.right .modal-dialog {
+    width: 480px;
+    right: 40px;
+  }
+
+  .modal.right .modal-title {
+    font-size: 1.6rem;
+  }
+
+  .modal.right .modal-date {
+    font-size: 1.8rem;
+  }
+
+  .modal.right .appointment-item {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .modal.right .btn-add {
+    width: 120px;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+  }
+}
+
+
+@media (min-width: 1920px) {
+  .appointments-card.calendar-view {
+    max-width: 1800px;
+  }
+
+  #calendar {
+    padding: 50px;
+  }
+
+  .fc .fc-toolbar-title {
+    font-size: 2.4rem;
+  }
+
+  .fc .fc-col-header-cell,
+  .fc .fc-daygrid-day {
+    max-width: 140px;
+  }
+
+  .fc-daygrid-day-frame {
+    padding-bottom: 70%;
+  }
+
+  .request-table {
+    gap: 80px;
+  }
+
+  .modal.right .modal-dialog {
+    width: 520px;
+  }
+}
+
 @media (max-width: 1200px) {
   .appointments-card.calendar-view {
     width: calc(100% - 30px);
