@@ -155,6 +155,8 @@ body {
   color: #0097a7;
   text-decoration: none;
   font-size: 1.08rem;
+  margin-top: 10px;
+  position:relative;
   border-left: 4px solid transparent;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
   font-weight: 500;
@@ -214,6 +216,7 @@ body {
   padding: 32px;
   min-height: calc(100vh - 48px);
   transition: margin-left 0.3s ease;
+  overflow-y: auto
 }
 
 .dashboard-top {
@@ -679,6 +682,23 @@ body {
 }
 
 /* Responsive adjustments */
+@media (min-width: 1920px) {
+  .main-content {
+    max-width: 1800px;
+  }
+  
+  .dashboard-center.card,
+  .dashboard-right.card {
+    padding: 30px;
+  }
+  
+  .appointment-requests .actions button {
+    padding: 10px 20px;
+    font-size: 1.05rem;
+  }
+}
+
+
 @media (max-width: 1200px) {
   .dashboard-top {
     grid-template-columns: repeat(2, 1fr);
