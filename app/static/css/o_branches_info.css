@@ -4,12 +4,12 @@ body {
 
 .branch-info-card {
   background: #fff;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
   padding: 24px 32px 24px 32px;
   margin: 10px auto;
   margin-top: 30px !important;
-  max-width: 90vw;
+  max-width: 75vw;
   min-width: auto;
   box-sizing: border-box;
   overflow: hidden;
@@ -101,6 +101,11 @@ body {
 }
 
 .branch-edit-images {
+  position: absolute; 
+  top:250%;
+  left: 150%;
+  right: 0;
+  z-index: 10;
   color: #0097a7;
   text-decoration: none;
   border: none;
@@ -108,9 +113,7 @@ body {
   font-size: 1rem;
   font-weight: 500;
   display: block;
-  position: absolute;
-  right: 5%;
-  margin: 18px 0 0 0;
+  margin: 10px 0 0 50px;
   cursor: pointer;
   white-space: nowrap;
   align-self: flex-end;
