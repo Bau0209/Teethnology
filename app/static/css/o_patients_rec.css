@@ -13,18 +13,33 @@ body {
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
+/* Toolbar container */
+.toolbar {
+    background: none;
+    box-shadow: none;
+    padding: 0 0 1rem 0;
+    margin-bottom: 0.5rem;
+    display: flex; 
+    justify-content:flex-end;
+}
+
+.toolbar .row {
+    align-items: center;
+}
+
 /* Search bar and toolbar buttons */
 .search-bar {
-    flex: 1;
-    padding: 8px 15px;
+    padding: 8px 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     background: #fff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     font-size: 1rem;
+    width: 100%;
+    max-width: 420px;
     outline: none;
-    transition: all 0.2s;
-   
+    margin-right: 0;
+    margin-bottom: 10px; 
 }
 
 .filter-btn,.add-btn {
@@ -32,13 +47,13 @@ body {
     background: #1de9b6;
     color: #fff;
     border-radius: 8px;
-    padding: 8px 15px;
+    padding: 8px 14px;
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s;
     display: inline-flex;
     align-items: flex-end;
-    margin-left: 18px;
+    margin-left: 0;
 
 }
 
@@ -62,6 +77,7 @@ body {
 .add-btn:hover {
     background: #13bfa6;
 }
+
 
 /* Tabs */
 .nav-tabs {
