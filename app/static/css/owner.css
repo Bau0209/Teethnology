@@ -254,19 +254,43 @@ body {
 }
 
 .welcome-card {
-  min-height: 200px;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 2px 8px rgba(0,188,212,0.07);
+    min-height: 200px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-shadow: 0 2px 8px rgba(0,188,212,0.07);
+    padding: 20px;
 }
 
 .welcome-card h2 {
-  margin: 0;
-  font-size: 1.35rem;
-  color: #0097a7;
-  text-align: center;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    color: #0097a7;
+    text-align: left;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.welcome-card hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 10px 0 15px;
+}
+
+.business-insight-content {
+    width: 100%;
+}
+
+.insight-item {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #393939;
+}
+
+.insight-item strong {
+    color: #0097a7;
 }
 
 .info-card {
@@ -456,17 +480,21 @@ body {
 
 /* Left calendar panel */
 .calendar-panel {
-  flex: 1.1;
-  padding: 20px;
-  padding: 20px;
-  border-right: none;
-  border-bottom: 1px solid #e0e0e0;
-  background-color: #fff;
-  min-width: 100%;
-}
-
-#calendar {
+  display: flex;
+  flex-direction: row; 
   width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+}
+/* Left Calendar Section */
+.calendar-left {
+  flex: 1; 
+  padding: 10px;
+  border-right: 1px solid #e0e0e0; 
+}
+#calendar {
+  width: 40%;
   margin: 0 auto;
   background-color: #fff;
   border-radius: 12px;
@@ -485,7 +513,7 @@ body {
 
 /* Month/year container */
 .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
-  font-size: 1.5rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #0097a7;
   margin: 0 15px;
@@ -573,7 +601,7 @@ body {
   width: 100%; 
   padding: 8px 0;
   text-align: center;
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
   color: #2e2e2e !important;
   font-weight: 600;
   text-transform: uppercase;
@@ -613,7 +641,7 @@ body {
   color: #333;
   font-weight: 500;
   text-decoration: none;
-  font-size: 1.4rem;
+  font-size: 0.8rem;
   margin-right: 10px;
   padding: 10px;
 }
@@ -654,12 +682,12 @@ body {
 }
 /* Right details panel */
 .calendar-details-panel {
-  flex: 2;
+  flex: 1.2;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 10px;
-  padding: 0 32px 32px 32px;
+  padding: 20px;
   background: #fff;
   margin-left: 50vh;
 }
