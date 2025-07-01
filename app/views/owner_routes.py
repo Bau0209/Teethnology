@@ -241,3 +241,15 @@ def balance_record():
 @owner.route('/reports')    
 def reports():
     return render_template('/owner/reports.html')
+
+@owner.route('/report_patients')    
+def report_patients():
+    return render_template('/owner/o_rep_patient.html')
+
+@owner.route('/report_marketing')    
+def report_marketing():
+    return render_template('/owner/o_rep_marketing.html')
+
+@owner.route('/report_inventory')    
+def report_inventory():
+    return render_template('/owner/o_rep_inventory.html')
