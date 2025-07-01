@@ -42,347 +42,215 @@
                     
                     <!-- Dental Record Tab Content -->
                     <section class="tab-content" id="dental_record">
+                        <h2 class="section-title">INTRAORAL EXAMINATION</h2>
+                        <select name="chart" class="chart-select">
+                            <option value="adult">Adult Chart</option>
+                             <option value="child">Children Chart</option>
+                        </select>
                         <div class="dental-record-container">
-                            <select name="chart" class="chart-select">
-                                <option value="adult">Adult Chart</option>
-                                <option value="child">Children Chart</option>
-                            </select>
-                                <div class="dental-record-legend">
-                                    <h4 class="dental-record-section-title">Legend</h4>
-                                    <div class="legend-item"><span class="legend-icon">•</span>C - Dental Caries</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>C1 - Dental Caries with Vital Pulp Expose</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>C2 - Dental Caries with Non-Vital Pulp Expose</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>X - Indicated for Extraction</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>Rx - Retained Root Fragment</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>AM - Amalgam Filing</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>Gold - Composite May</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>Ore - Glass Isomers Coment</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>Co - Composite Beain</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>Co - Gold Crown</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>ABt - Bridge Aluminant</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>P - Portic</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>PeuC - Porcelain Jacket Crown</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>PAC - Plastic Jacket Crown</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>ML - Metal Inlay</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>M - Missing due to Extraction</div>
-                                    <div class="legend-item"><span class="legend-icon">•</span>Un - Unerupted</div>
-                                </div>
-                                <div class="dental-record-section">
-                                    <div class="form-group">
-                                        <div class="form-info">
-                                            <!-- First Row -->
-                                            <div style="display: flex; gap: 15px; margin-bottom: 15px; width: 100%;">
-                                                <div class="form-info-item">
-                                                <label for="name">Examin By:</label>
-                                                <input type="text" id="name" class="form-info-control" readonly>
-                                                </div>
-                                                <div class="form-info-item">
-                                                <label for="name">Date Examined:</label>
-                                                <input type="text" id="name" class="form-info-control" readonly>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Second Row -->
-                                            <div style="display: flex; gap: 15px; width: 100%;">
-                                                <div class="form-info-item">
-                                                <label for="name">Branch:</label>
-                                                <input type="text" id="name" class="form-info-control" readonly>
-                                                </div>
-                                                <div class="form-info-item">
-                                                <label for="name">Remarks:</label>
-                                                <input type="text" id="name" class="form-info-control" readonly>
-                                                </div>
-                                                <div class="form-info-item">
-                                                <label for="name">Chief Complaint:</label>
-                                                <input type="text" id="name" class="form-info-control" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="form-info">
+                                <!-- First Row -->
+                                <div style="display: flex; gap: 15px; margin-bottom: 15px; width: 100%;">
+                                    <div class="form-info-item">
+                                        <label for="name">Name:</label>
+                                        <input type="text" id="name" class="form-info-control" readonly>
+                                    </div>
+                                    <div class="form-info-item">
+                                        <label for="age">Age:</label>
+                                        <input type="text" id="age" class="form-info-control" readonly>
+                                    </div>
+                                    <div class="form-info-item">
+                                        <label for="sex">Sex:</label>
+                                        <input type="text" id="sex" class="form-info-control" readonly>
+                                    </div>
+                                    <div class="form-info-item">
+                                        <label for="date">Date:</label>
+                                        <input type="text" id="date" class="form-info-control" readonly>
                                     </div>
                                 </div>
                             </div>
-                    
-                            <div class="dental-record-section">
-                                <h3 class="dental-record-section-title">I. External Examination</h3>
-                                <div class="form-group">
-                                    <label>A. Symmetric Face</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="symmetrical" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="symmetrical">Symmetrical</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="asymmetrical" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="asymmetrical">Asymmetrical</label>
-                                        </div>
-                                    </div>
+                            <div class=" dental_chart">
+                                <canvas id="dentalCanvas" width="800" height="400"></canvas>
+                            </div>
+                            <div class="dental-record-legend">
+                                <h4 class="dental-record-section-title">LEGEND</h4>
+                                <h6>Condition</h6>
+                                <div class="legend-item">
+                                    <span class="legend-icon">D</span> - Decayed (Caries Indicate for Filing)
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">M</span> - Missing
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">F</span> - Filled
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">I</span> - Caries Indicated for Extraction
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">RF</span> - Root Fragment
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">MO</span> - Missing due to Other Causes
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">Im</span> - Impacted Tooth
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label>B. Temporo-Meatblade</label>
-                                        <div class="checkbox-group">
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" id="present" class="form-check-input" disabled>
-                                                <label class="form-check-label" for="present">Present</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" id="absent" class="form-check-input" disabled>
-                                                <label class="form-check-label" for="absent">Absent</label>
-                                            </div>
-                                        </div> 
-                                        <div class="form-subgroup">  
-                                            <label>pain/discomfort</label>
-                                                <div class="checkbox-group">
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="checkbox" id="present" class="form-check-input" disabled>
-                                                        <label class="form-check-label" for="present">Present</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="checkbox" id="absent" class="form-check-input" disabled>
-                                                        <label class="form-check-label" for="absent">Absent</label>
-                                                    </div>
-                                                </div>
-                                            </div>  
-                                        </div>
+                                <h6 style="margin-top: 15px;">Restorations & Prosthetics</h6>
+                                <div class="legend-item">
+                                    <span class="legend-icon">J</span> - Jacket Crown
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">A</span> - Amalgam Filling
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">AB</span> - Abutment
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">P</span> - Pontic
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">In</span> - Inlay
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">Fx</span> - Fixed Cure Composite
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">S</span> - Sealants
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">Rm</span> - Removable Denture
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label>C. Swellings</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="present" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="present">Present</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="absent" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="absent">Absent</label>
-                                        </div>
-                                    </div>
+                                <h6 style="margin-top: 15px;">Surgeon</h6>
+                                <div class="legend-item">
+                                    <span class="legend-icon">X</span> - Extraction due to Caries
                                 </div>
-                                
-                                
-                                <div class="form-group">
-                                    <label>D. Lip Examinations</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="crack" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="crack">Crack/Fissurest</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="ulcers" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="ulcers">Ulcers</label>
-                                        </div>
-                                    </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">XO</span> - Extraction due to Other Caries
                                 </div>
-                                
-                                
-                                <div class="form-group">
-                                    <label>E. Lymph Nodes</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="palpable" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="palpable">Palpable</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="not_palpable" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="not_palpable">Not Pabpable</label>
-                                        </div>
-                                    </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon"></span> ✔ Others
                                 </div>
-                                
-                            
-
-                            <div class="dental-record-section">
-                                <h3 class="dental-record-section-title">II. Internal Examination</h3>
-                                <div class="form-group">
-                                    <label>A. Oral Hygiene</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="good" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="good">Good</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="fair" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="fair">Fair</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="poor" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="poor">Poor</label>
-                                        </div>
-                                    </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon"></span> - Present Teeth
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label>B. Qinghai Color</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="pink" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="pink">Pink</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="pale" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="pale">Pale</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="bright_red" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="bright_red">Bright Red</label>
-                                        </div>
-                                    </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">Cm</span> - Congenitaly Missing
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label>C. Consistency of Origins</label>
-                                    <div class="checkbox-group">
-                                     <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="firm" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="firm">Firm</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="smooth" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="smooth">Smooth</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="enlarge" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="enlarge">Enlarge</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>D. Pathological Conditions</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="elevations" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="elevations">Elevations</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="depression" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="depressions">Depressions</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="color_changes" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="color_changes">Color Changes</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>E. Tongue</label>
-                                    <div class="checkbox-group">
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="elevations" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="elevations">Elevations</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="coated" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="coated">Coated</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="fissures" class="form-check-input" disabled>
-                                            <label class="form-check-label" for="fissures">Fissures</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-subgroup">
-                                        <label>Tongue Position</label>
-                                        <div class="checkbox-group">
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" id="normal" class="form-check-input" disabled>
-                                                <label class="form-check-label" for="normal">Normal</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" id="retracted" class="form-check-input" disabled>
-                                                <label class="form-check-label" for="retracted">Retracted</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>F. Occlusion</label>
-                                    <div class="form-subgroup">
-                                        <label>Class I Type</label>
-                                        <input type="text" class="form-control" readonly>
-                                    </div>
-                                    <div class="form-subgroup">
-                                        <label>Class II Division</label>
-                                        <input type="text" class="form-control" readonly>
-                                    </div>
-                                    <div class="form-subgroup">
-                                        <label>Class III Division</label>
-                                        <input type="text" class="form-control" readonly>
-                                    </div>
-                                    <div class="form-subgroup">
-                                        <label>Facial Profile</label>
-                                        <div class="checkbox-group">
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" id="straight" class="form-check-input" disabled>
-                                                <label class="form-check-label" for="straight">Straight</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" id="convex" class="form-check-input" disabled>
-                                                <label class="form-check-label" for="convex">Convex</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" id="concave" class="form-check-input" disabled>
-                                                <label class="form-check-label" for="concave">Concave</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                
-                                    <div class="form-group">
-                                        <label>G. Others:</label>
-                                        <div class="form-subgroup">
-                                            <label>1. Radiographic Interpretation</label>
-                                            <input type="text"  class="form-info-control" readonly>
-                                        </div>
-                                        <div class="form-subgroup">
-                                            <label>2. Blood Pressure</label>
-                                            <input type="text"  class="form-info-control" readonly>
-                                        </div>
-                                        <div class="form-subgroup">
-                                            <label>Tempt:</label>
-                                            <input type="text"  class="form-info-control" readonly>
-                                        </div>
-                                        <div class="form-subgroup">
-                                            <label>Pulse Rate:</label>
-                                            <input type="text"  class="form-info-control" readonly>
-                                        </div>
-                                        <div class="form-subgroup">
-                                            <label>Ht:</label>
-                                            <input type="text"  class="form-info-control" readonly>
-                                        </div>
-                                        <div class="form-subgroup">
-                                            <label>Wt:</label>
-                                            <input type="text"  class="form-info-control" readonly>
-                                        </div>
-                                        <div class="form-subgroup">
-                                            <label>Resperatory Rate</label>
-                                            <input type="text"  class="form-info-control" readonly>
-                                        </div>
-                                    </div>
+                                <div class="legend-item">
+                                    <span class="legend-icon">Sp</span> - Supernumerary
                                 </div>
                             </div>
                             
-                            
                             <div class="dental-record-section">
-                                <h3 class="dental-record-section-title">III. Medical Conditions</h3>
                                 <div class="form-group">
+                                    <h3 class="dental-record-section-title">Periodontal Screening:</h3>
                                     <div class="checkbox-group">
                                         <div class="form-check form-check-inline">
-                                            <input type="checkbox" id="normal" class="form-check-input" disabled checked>
-                                            <label class="form-check-label" for="normal">Normal</label>
+                                            <input type="checkbox" id="gingivitis" class="form-check-input" disabled>
+                                            <label>Gingivitis</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" id="early_periodontitis" class="form-check-input" disabled>
+                                        <label>Early Periodontitis</label>
+                                    </div>
+                                    
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" id="moderate" class="form-check-input" disabled>
+                                        <label>Moderate</label>
+                                    </div>
+                                    
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" id="periodontitis" class="form-check-input" disabled>
+                                        <label>Periodontitis</label>
+                                    </div>
+                                    
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" id="advanced_periodontitis" class="form-check-input" disabled>
+                                        <label>Advanced Periodontitis</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h3 class="dental-record-section-title">Occlusion:</h3>
+                                    <div class="form-group">
+                                        
+                                        <div class="checkbox-group">
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" id="class" class="form-check-input" disabled>
+                                                <label>Class (Molar)</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="overjet" class="form-check-input" disabled>
+                                            <label>Overjet Overbite</label>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="midline_dev" class="form-check-input" disabled>
+                                            <label>Midline Deviation</label>
+                                        </div>
+                                       
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="crossbite" class="form-check-input" disabled>
+                                            <label>Crossbite</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h3 class="dental-record-section-title">Appliances:</h3>
+                                    <div class="form-group">
+                                        
+                                        <div class="checkbox-group">
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" id="orthodontic" class="form-check-input" disabled>
+                                                <label>Orthodontic</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="stayplate" class="form-check-input" disabled>
+                                            <label>Stayplate</label>
+                                        </div>
+                                        <label>others:</label>
+                                        <input type="text" id="name" class="form-info-control" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label>Present with:</label>
-                                    <input type="text" class="form-control" readonly>
+                                    <h3 class="dental-record-section-title">TMD:</h3>
+                                    <div class="form-group">
+                                        
+                                        <div class="checkbox-group">
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" id="clenching" class="form-check-input" disabled>
+                                                <label>Clenching</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="clicking" class="form-check-input" disabled>
+                                            <label>Clicking</label>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="trismus" class="form-check-input" disabled>
+                                            <label>Trismus</label>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="muscle_spasm" class="form-check-input" disabled>
+                                            <label>Muscle Spasm</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
 {% endblock %}
-
