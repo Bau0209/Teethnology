@@ -4,9 +4,9 @@
   "settings": {
     "width": 3500,
     "height": 3500,
-    "scrollTop": -1530.6785,
-    "scrollLeft": -305.4956,
-    "zoomLevel": 0.85,
+    "scrollTop": -1177.4756,
+    "scrollLeft": -1909.0697,
+    "zoomLevel": 1,
     "show": 431,
     "database": 4,
     "databaseName": "teethnology",
@@ -6206,20 +6206,20 @@
       "7oDxDDaLqpYOOy90t8I8H": {
         "id": "7oDxDDaLqpYOOy90t8I8H",
         "tableId": "DU8grg0katMhF6y4bIyi1",
-        "name": "is_first_time",
+        "name": "is_new_patient",
         "comment": "",
         "dataType": "BOOLEAN",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
-          "widthName": 64,
+          "widthName": 79,
           "widthComment": 60,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1748424641592,
+          "updateAt": 1751346310899,
           "createAt": 1748424619369
         }
       },

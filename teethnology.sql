@@ -87,12 +87,12 @@ CREATE TABLE `appointments` (
   `appointment_id` int NOT NULL AUTO_INCREMENT,
   `branch_id` int NOT NULL,
   `patient_id` int NOT NULL,
-  `is_first_time` tinyint(1) NOT NULL,
+  `returning_patient` tinyint(1) NOT NULL DEFAULT '0',
   `appointment_sched` datetime NOT NULL,
   `alternative_sched` datetime DEFAULT NULL,
   `appointment_type` varchar(255) NOT NULL,
   `appointment_status` enum('pending','approved','cancelled') NOT NULL DEFAULT 'pending',
-  `request_date` datetime NOT NULL,
+  `request_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `approval_date` datetime DEFAULT NULL,
   `approved_by` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`appointment_id`),
@@ -100,7 +100,7 @@ CREATE TABLE `appointments` (
   KEY `patient_id` (`patient_id`),
   CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patient_info` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,6 +109,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES (1,1,1,0,'2024-01-15 09:00:00',NULL,'Tooth Extraction','approved','2024-01-10 08:00:00','2024-01-12 14:00:00','Dr. Reyes'),(2,1,1,1,'2024-03-10 10:30:00',NULL,'Oral Prophylaxis','approved','2024-03-05 11:00:00','2024-03-07 09:00:00','Dr. Reyes'),(3,1,2,0,'2024-02-25 11:00:00',NULL,'Dental Filling','approved','2024-02-20 13:00:00','2024-02-22 10:00:00','Dr. Santos'),(4,2,3,0,'2024-04-12 14:00:00',NULL,'Root Canal Therapy (Session 1)','approved','2024-04-07 09:30:00','2024-04-10 16:00:00','Dr. Tan'),(5,2,3,1,'2024-05-05 10:00:00',NULL,'Temporary Crown Placement','approved','2024-05-01 12:00:00','2024-05-03 14:00:00','Dr. Tan'),(6,2,4,0,'2024-01-10 09:00:00',NULL,'Orthodontic Consultation','approved','2024-01-05 08:00:00','2024-01-08 12:00:00','Dr. Garcia'),(7,2,4,1,'2024-02-05 10:00:00',NULL,'Braces Installation','approved','2024-01-30 13:00:00','2024-02-02 15:00:00','Dr. Garcia'),(8,2,4,1,'2024-03-05 10:00:00',NULL,'Braces Adjustment (Month 1)','approved','2024-03-01 09:30:00','2024-03-03 16:00:00','Dr. Garcia'),(9,2,4,1,'2024-04-05 10:00:00',NULL,'Braces Adjustment (Month 2)','approved','2024-04-01 11:00:00','2024-04-03 13:00:00','Dr. Garcia'),(10,2,4,1,'2024-05-05 10:00:00',NULL,'Braces Adjustment (Month 3)','approved','2024-05-01 11:00:00','2024-05-03 13:00:00','Dr. Garcia'),(11,2,4,1,'2024-06-05 10:00:00',NULL,'Braces Adjustment (Month 4)','approved','2024-06-01 11:00:00','2024-06-03 13:00:00','Dr. Garcia'),(12,1,5,0,'2025-07-30 16:00:00','2025-07-30 18:00:00','Tooth Extraction','pending','2025-07-01 14:28:01',NULL,NULL);
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,7 +269,7 @@ CREATE TABLE `dental_record` (
   PRIMARY KEY (`dental_record_id`),
   KEY `patient_id` (`patient_id`),
   CONSTRAINT `dental_record_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient_info` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -277,6 +278,7 @@ CREATE TABLE `dental_record` (
 
 LOCK TABLES `dental_record` WRITE;
 /*!40000 ALTER TABLE `dental_record` DISABLE KEYS */;
+INSERT INTO `dental_record` VALUES (6,1,'uploads/patients_record/11.png','Gingivitis, Early Periodontitis','Class (Molar), Overjet Overbite','Orthodontic','Clicking, Clenching'),(7,2,'uploads/patients_record/21.png','Moderate Periodontitis','Midline Deviation, Crossbite','Stayplate','None'),(8,3,'uploads/patients_record/31.png','Advanced Periodontitis','Class (Molar), Midline Deviation, Overjet Overbite','Orthodontic, Stayplate','Trismus, Muscle Spasm'),(9,4,'uploads/patients_record/41.png','Gingivitis','None','None','None');
 /*!40000 ALTER TABLE `dental_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,7 +358,7 @@ CREATE TABLE `patient_info` (
   PRIMARY KEY (`patient_id`),
   KEY `branch_id` (`branch_id`),
   CONSTRAINT `patient_info_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,7 +367,7 @@ CREATE TABLE `patient_info` (
 
 LOCK TABLES `patient_info` WRITE;
 /*!40000 ALTER TABLE `patient_info` DISABLE KEYS */;
-INSERT INTO `patient_info` VALUES (1,1,'Juan','Santos','Dela Cruz','1990-05-15','M','09171234567','juan.dc@example.com','123 Mabuhay St.','Barangay Uno','Manila','Metro Manila','Philippines','Dentures','Engineer','02-1234567',NULL,NULL,NULL,NULL,'Friend','Dr. Reyes','2023-07-01',NULL),(2,1,'Maria','Luisa','Reyes','1985-08-22','F','09179876543','maria.reyes@example.com','456 Maligaya Ave.','Barangay Dos','Manila','Metro Manila','Philippines','Braces','Teacher','02-7654321','Lola','Cruz','Reyes','Retired','','None',NULL,NULL),(3,2,'Carlos','David','Santos','1992-02-10','M','09172345678','carlos.santos@example.com','789 Payapa Blvd.','Barangay Tres','Quezon City','Metro Manila','Philippines','Tooth ache','Designer','02-5566778',NULL,NULL,NULL,NULL,'Online Ad','Dr. Tan','2022-12-15',NULL),(4,2,'Angela','Marie','Lopez','1996-11-05','F','09173456789','angela.lopez@example.com','321 Tahimik Lane','Barangay Cuatro','Quezon City','Metro Manila','Philippines','Tooth ache','Student',NULL,'Anna','Grace','Lopez','Nurse','School','None',NULL,NULL);
+INSERT INTO `patient_info` VALUES (1,1,'Juan','Santos','Dela Cruz','1990-05-15','M','09171234567','juan.dc@example.com','123 Mabuhay St.','Barangay Uno','Manila','Metro Manila','Philippines','Dentures','Engineer','02-1234567',NULL,NULL,NULL,NULL,'Friend','Dr. Reyes','2023-07-01',NULL),(2,1,'Maria','Luisa','Reyes','1985-08-22','F','09179876543','maria.reyes@example.com','456 Maligaya Ave.','Barangay Dos','Manila','Metro Manila','Philippines','Braces','Teacher','02-7654321','Lola','Cruz','Reyes','Retired','','None',NULL,NULL),(3,2,'Carlos','David','Santos','1992-02-10','M','09172345678','carlos.santos@example.com','789 Payapa Blvd.','Barangay Tres','Quezon City','Metro Manila','Philippines','Tooth ache','Designer','02-5566778',NULL,NULL,NULL,NULL,'Online Ad','Dr. Tan','2022-12-15',NULL),(4,2,'Angela','Marie','Lopez','1996-11-05','F','09173456789','angela.lopez@example.com','321 Tahimik Lane','Barangay Cuatro','Quezon City','Metro Manila','Philippines','Tooth ache','Student',NULL,'Anna','Grace','Lopez','Nurse','School','None',NULL,NULL),(5,1,'Eddielyn Joy','Calano','Bautista','2004-02-09','F','09501055477','ejbautista0209@gmail.com','129 Hello lane','Baranggay 567','Pasay City','Metro Manila','Philippines','Tooth ache','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `patient_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,4 +492,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-01 12:45:00
+-- Dump completed on 2025-07-01 19:15:52
