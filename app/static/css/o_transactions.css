@@ -261,6 +261,7 @@ body {
     font-size: 0.9rem !important;
     margin-right: 5px !important;
 }
+
 /* ============== RESPONSIVE ADJUSTMENTS ============== */
 @media (max-width: 1200px) {
     .metric-card .card-text {

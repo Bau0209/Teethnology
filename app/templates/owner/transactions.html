@@ -68,7 +68,7 @@
                                         <td>{{ txn.total_amount_paid }}</td>
                                         <td>{{ txn.payment_method }}</td>
                                         <td class="text-end">
-                                            <button class="btn btn-sm btn-outline-primary">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#receiptModal">
                                                 <i class="fa fa-chevron-right"></i>
                                             </button>
                                         </td>
@@ -92,5 +92,13 @@
         </div>
     </div>
 </div>
+{% include 'owner/components/o_tb_full_details.html' %}
 {% include 'owner/components/o_fd_patient_bal_history.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/o_transaction.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 {% endblock %}
