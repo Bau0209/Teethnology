@@ -444,8 +444,41 @@ CREATE TABLE `procedure_history` (
 
 LOCK TABLES `procedure_history` WRITE;
 /*!40000 ALTER TABLE `procedure_history` DISABLE KEYS */;
-INSERT INTO `procedure_history` VALUES (1,1,'2024-01-15','Tooth Extraction','28','Dr. Reyes','Remove decayed upper right wisdom tooth',1500,'Completed','Procedure completed without complications'),(2,1,'2024-03-10','Oral Prophylaxis','Full','Dr. Reyes','Routine cleaning and polish',800,'Completed','Advised 6-month follow-up'),(3,2,'2024-02-25','Dental Filling','14','Dr. Santos','Composite filling due to cavity',1200,'Completed','Patient felt sensitivity post-procedure'),(4,3,'2024-04-12','Root Canal Therapy','36','Dr. Tan','RCT due to pulp infection, 3-session plan',4500,'Ongoing','Session 1 completed; next in 2 weeks'),(5,3,'2024-05-05','Temporary Crown Placement','36','Dr. Tan','Placed temporary crown after RCT',2000,'Completed','Permanent crown scheduled next month'),(6,4,'2024-01-10','Orthodontic Consultation','Full','Dr. Garcia','Assessment for braces. Took impressions and X-rays.',1000,'Completed','Braces recommended; patient agreed to start treatment'),(7,4,'2024-02-05','Braces Installation','Full','Dr. Garcia','Installed metal braces. Discussed oral care and monthly visits.',10000,'Completed','Patient tolerated procedure well'),(8,4,'2024-03-05','Braces Adjustment','Full','Dr. Garcia','Tightened brackets, replaced elastic bands.',1500,'Completed','Minor discomfort reported'),(9,4,'2024-04-05','Braces Adjustment','Full','Dr. Garcia','Adjusted archwire, checked teeth movement progress.',1500,'Completed','Slight improvement in alignment observed'),(10,4,'2024-05-05','Braces Adjustment','Full','Dr. Garcia','Replaced wires and elastics, minor repositioning done.',1500,'Completed','Patient doing well with hygiene'),(11,4,'2024-06-05','Braces Adjustment','Full','Dr. Garcia','Final monthly adjustment for phase 1. Scheduled retainer fitting.',1500,'Completed','Brackets to be removed next session');
+INSERT INTO `procedure_history` VALUES (1,1,'2024-01-15','Tooth Extraction','28','Dr. Reyes','Remove decayed upper right wisdom tooth',1500,'Completed','Procedure completed without complications'),(2,1,'2024-03-10','Oral Prophylaxis','Full','Dr. Reyes','Routine cleaning and polish',800,'Completed','Advised 6-month follow-up'),(3,2,'2024-02-25','Dental Filling','14','Dr. Santos','Composite filling due to cavity',1200,'Completed','Patient felt sensitivity post-procedure'),(4,3,'2024-04-12','Root Canal Therapy','36','Dr. Tan','RCT due to pulp infection, 3-session plan',4500,'Ongoing','Session 1 completed; next in 2 weeks'),(5,3,'2024-05-05','Temporary Crown Placement','36','Dr. Tan','Placed temporary crown after RCT',2000,'Completed','Permanent crown scheduled next month'),(6,4,'2024-01-10','Orthodontic Consultation','Full','Dr. Garcia','Assessment for braces. Took impressions and X-rays.',0,'Completed','Braces recommended; patient agreed to start treatment'),(7,4,'2024-02-05','Braces Installation','Full','Dr. Garcia','Installed metal braces. Discussed oral care and monthly visits.',45000,'Ongoing','Patient tolerated procedure well'),(8,4,'2024-03-05','Braces Adjustment','Full','Dr. Garcia','Tightened brackets, replaced elastic bands.',0,'Completed','Minor discomfort reported'),(9,4,'2024-04-05','Braces Adjustment','Full','Dr. Garcia','Adjusted archwire, checked teeth movement progress.',0,'Completed','Slight improvement in alignment observed'),(10,4,'2024-05-05','Braces Adjustment','Full','Dr. Garcia','Replaced wires and elastics, minor repositioning done.',0,'Completed','Patient doing well with hygiene'),(11,4,'2024-06-05','Braces Adjustment','Full','Dr. Garcia','Final monthly adjustment for phase 1. Scheduled retainer fitting.',0,'Completed','Brackets to be removed next session');
 /*!40000 ALTER TABLE `procedure_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `transactions`
+--
+
+DROP TABLE IF EXISTS `transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transactions` (
+  `transaction_id` int NOT NULL AUTO_INCREMENT,
+  `receipt_number` varchar(100) NOT NULL,
+  `payment_method` enum('Cash','Card','GCash','Maya','Insurance','Other') NOT NULL,
+  `transaction_datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dentist_name` varchar(255) NOT NULL,
+  `service_detail` text NOT NULL,
+  `total_amount_paid` decimal(10,2) NOT NULL,
+  `transaction_image_link` text,
+  `procedure_id` int DEFAULT NULL,
+  PRIMARY KEY (`transaction_id`),
+  KEY `procedure_id` (`procedure_id`),
+  CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`procedure_id`) REFERENCES `procedure_history` (`procedure_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transactions`
+--
+
+LOCK TABLES `transactions` WRITE;
+/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
+INSERT INTO `transactions` VALUES (1,'RCPT-1001','Cash','2024-01-15 00:00:00','Dr. Reyes','Tooth Extraction',1500.00,NULL,1),(2,'RCPT-1002','Cash','2024-03-10 00:00:00','Dr. Reyes','Oral Prophylaxis',800.00,NULL,2),(3,'RCPT-1003','Cash','2025-07-01 00:00:00','Dr. Santos','Dental Filling',1200.00,NULL,3),(4,'RCPT-1004','Cash','2024-04-12 00:00:00','Dr. Tan','Root Canal Therapy (Session 1)',4500.00,NULL,4),(5,'RCPT-1005','Cash','2024-05-05 00:00:00','Dr. Tan','Temporary Crown Placement',2000.00,NULL,5),(6,'RCPT-1006','Cash','2024-01-10 00:00:00','Dr. Garcia','Orthodontic Consultation',0.00,NULL,6),(7,'RCPT-1007','Cash','2024-02-05 00:00:00','Dr. Garcia','Braces Installation',10000.00,NULL,7),(8,'RCPT-1008','Cash','2024-03-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 1)',1500.00,NULL,8),(9,'RCPT-1009','Cash','2024-04-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 2)',1500.00,NULL,9),(10,'RCPT-1010','Cash','2024-05-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 3)',1500.00,NULL,10),(11,'RCPT-1011','Cash','2025-07-01 00:00:00','Dr. Garcia','Braces Adjustment (Month 4)',1500.00,NULL,11);
+/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -457,4 +490,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-30 22:01:31
+-- Dump completed on 2025-07-01 12:45:00

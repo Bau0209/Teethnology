@@ -4,6 +4,7 @@ from app.models.employees import Employee
 from app.models.patients import PatientsInfo
 from app.models.patient_medical_info import PatientMedicalInfo
 from app.models.procedures import Procedures
+from app.models.transactions import Transactions
 
 owner = Blueprint('owner', __name__)
 
@@ -99,11 +100,30 @@ def inventory_sterilization():
 
 @owner.route('/transactions')
 def transactions():
-    return render_template('/owner/transactions.html')
+    transactions = Transactions.query.all()
+    return render_template('/owner/transactions.html', transactions=transactions)
 
 @owner.route('/balance_record')
 def balance_record():
-    return render_template('/owner/o_balance_rec.html')
+    # Get all procedures
+    procedures = Procedures.query.all()
+    balance_data = []
+
+    for proc in procedures:
+        total_fee = proc.fee
+        payments = sum(t.total_amount_paid for t in proc.transactions)
+        remaining = float(total_fee) - float(payments)
+
+        if remaining > 0:  # Show only patients with balance
+            balance_data.append({
+                'patient': proc.patient,
+                'last_visit': proc.procedure_date,
+                'total_fee': total_fee,
+                'amount_paid': payments,
+                'remaining': remaining
+            })
+
+    return render_template('/owner/o_balance_rec.html', balance_data=balance_data)
 
 @owner.route('/reports')    
 def reports():
