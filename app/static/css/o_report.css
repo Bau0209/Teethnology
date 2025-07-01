@@ -8,72 +8,103 @@ body {
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;
+    align-items: flex-start; /* Changed from stretch to flex-start */
 }
 
 .col-lg-8 {
     flex: 0 0 66.666667%;
-    max-width: 66.666667%;
-    padding-right: 15px;
+    max-width: 100%;
+    padding-right: 8px;
     padding-left: 15px;
 }
 
+/* Modified layout for summary section */
 .col-lg-5.d-flex {
-    flex-direction: row !important; 
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding-right: 8px;
+    padding-left: 15px;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0;
+    height: auto; /* Changed from 100% to auto */
+}
+
+/* Adjust the metric cards container */
+.col-lg-5.d-flex > .mb-4 {
+    display: flex;
+    flex-direction: row;
     gap: 0.75rem;
+    margin-bottom: 0 !important;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-top: -5px;
+}
+
+/* Metric card adjustments */
+.metric-card {
+    flex: 1;
+    min-width: calc(33.33% - 0.5rem);
+    height: 70px;
+    text-align: center;
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Top earning services card adjustments */
+.col-lg-5.d-flex > .col-lg-6 {
     width: 100%;
-    margin-top: 1rem;
-}
-
-.nav-tabs {
-    border-bottom: 2px solid #dee2e6;
-    margin-bottom: 20px;
-}
-
-.nav-tabs .nav-link {
-    border: none;
-    color: #00898E;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 10px 20px;
-    transition: all 0.3s;
-}
-
-.nav-tabs .nav-link:hover {
-    color: #007bff;
-}
-
-.nav-tabs .nav-link.active {
-    color: #035153da !important;
-    border-bottom: 2px solid #007bff;
-    background-color: transparent;
+    padding: 0;
+    margin-top: 0.5rem;
 }
 
 /* Card Styling */
-.cards-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 0.75rem;
-}
-
 .card {
     border: none;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Specific height for Revenue by Service and Top Earning cards */
+#revenueChart {
+    height: 250px !important;
+}
+
+/* Card header and body adjustments */
 .card-header {
     background-color: white;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 8px 8px 0 0 !important;
     padding: 0.75rem 1rem;
 }
-
+.card-header h6{
+    text-align: left;
+    font-size: 0.9rem;
+    color: #00898E !important;
+    align-items: left;
+}
 .card-header h5 {
     font-size: 0.9rem;
     font-weight: 600;
     margin: 0;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
 }
 
 /* Revenue Total */
@@ -93,99 +124,137 @@ body {
     color: #212529;
 }
 
-/* Metric Cards */
-.metric-card {
-    flex: 1;
-    min-width: 120px;
-    height: auto;
-    margin-bottom: 0;
-    background-color: #fff;
-    padding: 0.75rem;
-    border-radius: 6px;
-}
-
-.metric-card .card-body {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-grow: 1;
-}
-
-.metric-card .card-title {
-    color: #6c757d;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.metric-card .fa-chevron-down {
-    color: #dc3545;
-    margin-left: 0.5rem;
-}
-
-.top-earning-card {
-    margin-top: 1rem;
-    width: 100%;
-}
-
 /* Business Insight Card */
 .business-insight-card {
     background-color: #f8f9fa;
     border-left: 3px solid #007bff;
+    height: 100%;
 }
 
-.business-insight-card h5 {
-    font-size: 0.9rem;
+/* Patients Tab Specific Styles */
+#patients .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.business-insight-card p {
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
+#patients .card-header {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 15px 20px;
+    background-color: #fff;
 }
 
-.business-insight-card strong {
+#patients .card-header h5 {
+    font-size: 16px;
     font-weight: 600;
+    color: #333;
 }
 
-/* Filter buttons */
-.btn-group-sm .btn {
-    font-size: 0.7rem;
-    padding: 0.25rem 0.5rem;
+#patients .card-body {
+    padding: 20px;
 }
 
-/* Layout adjustments */
-.revenue-dashboard {
-    padding: 1rem;
+/* Appointment Summary Styles */
+#patients .appointment-summary {
+    text-align: center;
 }
 
-.tab-content {
-    padding: 0;
+#patients .appointment-summary h6 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
 }
 
-.row.gy-4 {
-    margin-bottom: 1rem;
+#patients .appointment-summary .fs-5 {
+    font-size: 24px !important;
+    font-weight: 600;
+    color: #333;
 }
 
-/* Chart containers */
-#revenueChart {
+#patients .appointment-summary small {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Patient Metrics Styles */
+#patients .patient-metrics h6 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+#patients .patient-metrics .fs-5 {
+    font-size: 20px !important;
+    font-weight: 600;
+    color: #333;
+}
+
+#patients .patient-metrics .text-muted {
+    font-size: 12px;
+}
+
+/* Business Insight Card */
+#patients .business-insight-card {
+    background-color: #f8f9fa;
+    border-left: 4px solid #0d6efd;
+    border-radius: 8px;
+}
+
+#patients .business-insight-card h5 {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+#patients .business-insight-card p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+#patients .business-insight-card strong {
+    color: #333;
+}
+
+/* Patient Source Styles */
+#patients .patient-source-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#patients .patient-source-item:last-child {
+    border-bottom: none;
+}
+
+#patients .patient-source-item span:first-child {
+    color: #666;
+}
+
+#patients .patient-source-item span:last-child {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Button Group Styles */
+#patients .btn-group-sm .btn {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+#patients .btn-outline-primary {
+    color: #0d6efd;
+    border-color: #dee2e6;
+}
+
+#patients .btn-outline-primary.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+/* Chart Container Styles */
+#patients canvas {
     width: 100% !important;
-    height: 200px !important;
-    padding: 0.5rem;
-}
-
-/* Forecast section */
-.mt-3 {
-    margin-top: 1rem !important;
-}
-
-/* Responsive adjustments */
-@media (min-width: 992px) {
-    .col-lg-8 {
-        padding-right: 0.5rem;
-    }
-    
-    .col-lg-5 {
-        padding-left: 0.5rem;
-    }
+    height: auto !important;
 }

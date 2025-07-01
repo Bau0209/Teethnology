@@ -8,20 +8,20 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid p-4 revenue-dashboard bg-light-blue">
+<div class="container-fluid p-4 revenue">
   <!-- Nav Tabs -->
   <ul class="nav nav-tabs" id="transactionTabs">
     <li class="nav-item">
-        <a class="nav-link" href="#">Revenue</a>
+        <a class="nav-link active" href="{{ url_for('owner.reports') }}">Revenue</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Patients</a>
+        <a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Marketing</a>
+        <a class="nav-link" href="{{ url_for('owner.report_marketing') }}">Marketing</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Inventory</a>
+        <a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a>
     </li>
   </ul>
 
@@ -58,20 +58,21 @@
         </div>
 
         <!-- Summary Card -->
-        <div class="col-lg-5 d-flex flex-column gap-3">
+        <div class="col-lg-5 d-flex flex-column">
+          
             <div class="mb-4">
-                <div class="metric-card card h-80">
+                <div class="metric-card card">
                     <div class="card-body">
                         <h5 class="card-title text-muted">Revenue</h5>
                     </div>
                 </div>
-                <div class="metric-card card h-80">
+                <div class="metric-card card">
                     <div class="card-body">
                         <h5 class="card-title text-muted">Growth</h5>
                         <i class="fa fa-chevron-down"></i>
                     </div>
                 </div>
-                <div class="metric-card card h-80">
+                <div class="metric-card card">
                     <div class="card-body">
                         <h5 class="card-title text-muted">Appointments</h5>
                     </div>
@@ -88,7 +89,7 @@
                 </div>
             </div>    
         </div> 
-    <hr>
+    
       <!-- Forecast Section -->
       <div class="row gy-4 mt-3 align-items-center">
         <h5 class="mb-0">Forecasts</h5>
