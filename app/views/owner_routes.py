@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, Procedures, Transactions, Appointments
+from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, Procedures, Transactions, Appointments, DentalInfo
 import json
 
 owner = Blueprint('owner', __name__)
@@ -161,7 +161,8 @@ def patient_procedure(patient_id):
 @owner.route('/patient_dental_rec/<int:patient_id>')   
 def patient_dental_rec(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
-    return render_template('/owner/dental_record.html', patient=patient)
+    dental_record = DentalInfo.query.filter_by(patient_id=patient_id)
+    return render_template('/owner/dental_record.html', patient=patient, dental_record=dental_record)
 
 @owner.route('/employees')
 def employees():
