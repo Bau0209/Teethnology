@@ -1,0 +1,191 @@
+/* Base styles */
+body {
+  background: #f8f9fa !important;
+}
+
+.revenue .row.gy-4 {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-lg-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-lg-5.d-flex {
+    flex-direction: row !important; 
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: #00898E;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: all 0.3s;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #007bff;
+}
+
+.nav-tabs .nav-link.active {
+    color: #035153da !important;
+    border-bottom: 2px solid #007bff;
+    background-color: transparent;
+}
+
+/* Card Styling */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 0.75rem;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px 8px 0 0 !important;
+    padding: 0.75rem 1rem;
+}
+
+.card-header h5 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Revenue Total */
+.revenue-total {
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.revenue-total small {
+    font-size: 0.7rem;
+    color: #6c757d;
+}
+
+.revenue-total span {
+    font-size: 1.2rem;
+    color: #212529;
+}
+
+/* Metric Cards */
+.metric-card {
+    flex: 1;
+    min-width: 120px;
+    height: auto;
+    margin-bottom: 0;
+    background-color: #fff;
+    padding: 0.75rem;
+    border-radius: 6px;
+}
+
+.metric-card .card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.metric-card .card-title {
+    color: #6c757d;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.metric-card .fa-chevron-down {
+    color: #dc3545;
+    margin-left: 0.5rem;
+}
+
+.top-earning-card {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Business Insight Card */
+.business-insight-card {
+    background-color: #f8f9fa;
+    border-left: 3px solid #007bff;
+}
+
+.business-insight-card h5 {
+    font-size: 0.9rem;
+}
+
+.business-insight-card p {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.business-insight-card strong {
+    font-weight: 600;
+}
+
+/* Filter buttons */
+.btn-group-sm .btn {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Layout adjustments */
+.revenue-dashboard {
+    padding: 1rem;
+}
+
+.tab-content {
+    padding: 0;
+}
+
+.row.gy-4 {
+    margin-bottom: 1rem;
+}
+
+/* Chart containers */
+#revenueChart {
+    width: 100% !important;
+    height: 200px !important;
+    padding: 0.5rem;
+}
+
+/* Forecast section */
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+/* Responsive adjustments */
+@media (min-width: 992px) {
+    .col-lg-8 {
+        padding-right: 0.5rem;
+    }
+    
+    .col-lg-5 {
+        padding-left: 0.5rem;
+    }
+}

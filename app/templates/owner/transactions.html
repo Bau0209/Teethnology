@@ -86,12 +86,11 @@
                 
                 <!-- Add Transaction Button -->
                 <div class="d-grid">
-                    <button class="btn btn-primary btn-lg">
-                        <i class="fas fa-plus me-2"></i> Add Transaction
-                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#patientModal">Add Transaction</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% include 'owner/components/o_fd_patient_bal_history.html' %}
 {% endblock %}
