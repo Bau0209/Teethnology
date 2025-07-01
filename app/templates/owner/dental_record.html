@@ -48,18 +48,6 @@
                                 <!-- First Row -->
                                 <div style="display: flex; gap: 15px; margin-bottom: 15px; width: 100%;">
                                     <div class="form-info-item">
-                                        <label for="name">Name:</label>
-                                        <input type="text" id="name" class="form-info-control" readonly>
-                                    </div>
-                                    <div class="form-info-item">
-                                        <label for="age">Age:</label>
-                                        <input type="text" id="age" class="form-info-control" readonly>
-                                    </div>
-                                    <div class="form-info-item">
-                                        <label for="sex">Sex:</label>
-                                        <input type="text" id="sex" class="form-info-control" readonly>
-                                    </div>
-                                    <div class="form-info-item">
                                         <label for="date">Date:</label>
                                         <input type="text" id="date" class="form-info-control" readonly>
                                     </div>
@@ -70,7 +58,7 @@
                                     <option value="adult">Adult Chart</option>
                                     <option value="child">Children Chart</option>
                                 </select>
-                                <canvas id="dentalCanvas" width="800" height="400"></canvas>
+                                <img id="dentalImage" src="{{ url_for('static', filename='uploads/patient_records/dental_chart/11.png') }}" alt="Dental Diagram" width="100%" height="100%">
                             </div>
                             <div class="dental-record-legend">
                                 <h4 class="dental-record-section-title">LEGEND</h4>

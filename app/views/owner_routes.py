@@ -1,10 +1,6 @@
 from flask import Blueprint, render_template, request
-from app.models.branches import Branch, ClinicBranchImage
-from app.models.employees import Employee
-from app.models.patients import PatientsInfo
-from app.models.patient_medical_info import PatientMedicalInfo
-from app.models.procedures import Procedures
-from app.models.transactions import Transactions
+from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, Procedures, Transactions, Appointments
+import json
 
 owner = Blueprint('owner', __name__)
 
@@ -25,23 +21,129 @@ def branch_info(branch_id):
 
 @owner.route('/appointments')
 def appointments():
-    return render_template('/owner/appointment.html')
+    selected_branch = request.args.get('branch', 'all')
+    appointment_id = request.args.get('appointment_id')
+
+    query = Appointments.query
+
+    if selected_branch != 'all':
+        query = query.filter_by(branch_id=selected_branch)
+
+    if appointment_id:
+        query = query.filter_by(appointment_id=appointment_id)
+
+    appointments = query.all()
+    branches = Branch.query.all()
+
+    events = [
+        {
+            'title': f"{a.patient.patient_full_name} - {a.appointment_type}",
+            'start': a.appointment_sched.strftime('%Y-%m-%d')
+        }
+        for a in appointments
+    ]
+    
+    appointment_data = [
+        {
+            'appointment_id': a.appointment_id,
+            'status': a.appointment_status,
+            'time': a.appointment_sched.strftime('%I:%M %p'),
+            'reason': a.appointment_type,
+            'patient_name': a.patient.patient_full_name,
+            'patient_type': 'Returning Patient' if a.returning_patient else 'New Patient',
+            'contact': a.patient.contact_number,
+            'email': a.patient.email,
+            'alternative_sched': a.alternative_sched.strftime('%Y-%m-%d %I:%M %p') if a.alternative_sched else None,
+            'date': a.appointment_sched.strftime('%Y-%m-%d')
+        }
+        for a in appointments
+    ]
+
+    return render_template(
+        '/owner/appointment.html',
+        branches=branches,
+        appointments=appointments,
+        selected_branch=selected_branch,
+        events=json.dumps(events),
+        appointment_data=json.dumps(appointment_data)
+    )
 
 @owner.route('/appointment_req')
 def appointment_req():
-    return render_template('/owner/appointment_request.html')
+    selected_branch = request.args.get('branch', 'all')
+    
+    appointments = Appointments.query.filter_by(appointment_status='Pending')
 
-@owner.route('/patients')   
+    if selected_branch != 'all':
+        appointments = appointments.filter_by(branch_id=selected_branch)
+
+    appointment_data = [
+        {
+            'date': a.appointment_sched.strftime('%Y-%m-%d'),
+            'time': a.appointment_sched.strftime('%I:%M %p'),
+            'alternative_sched': a.alternative_sched.strftime('%Y-%m-%d %H:%M') if a.alternative_sched else None,
+            'reason': a.appointment_type,
+            'patient_name': a.patient.patient_full_name,
+            'patient_type': 'Returning Patient' if a.returning_patient else 'New Patient',
+            'dob': a.patient.birthdate.strftime('%Y-%m-%d'),
+            'sex': a.patient.sex,
+            'contact': a.patient.contact_number,
+            'email': a.patient.email,
+            'address': f"{a.patient.address_line1 + a.patient.baranggay + a.patient.city + a.patient.province + a.patient.country}"
+        }
+        for a in appointments
+    ]
+    
+    branches = Branch.query.all()
+    return render_template(
+        '/owner/appointment_request.html',
+        branches=branches,
+        appointments=appointments,
+        selected_branch=selected_branch,
+        appointment_data=json.dumps(appointment_data)
+    )
+
+@owner.route('/appointment_req/<int:appointment_id>')
+def appointment_req_detail(appointment_id):
+    appointment = Appointments.query.get_or_404(appointment_id)
+
+    appointment_data = {
+        'date': appointment.appointment_sched.strftime('%Y-%m-%d'),
+        'time': appointment.appointment_sched.strftime('%I:%M %p'),
+        'alternative_sched': appointment.alternative_sched.strftime('%Y-%m-%d %H:%M') if appointment.alternative_sched else None,
+        'reason': appointment.appointment_type,
+        'patient_name': appointment.patient.patient_full_name,
+        'patient_type': 'Returning Patient' if appointment.returning_patient else 'New Patient',
+        'dob': appointment.patient.birthdate.strftime('%Y-%m-%d'),
+        'sex': appointment.patient.sex,
+        'contact': appointment.patient.contact_number,
+        'email': appointment.patient.email,
+        'address': f"{appointment.patient.address_line1 + appointment.patient.baranggay + appointment.patient.city + appointment.patient.province + appointment.patient.country}"
+    }
+
+    return render_template(
+        '/owner/appointment_request.html',
+        appointment=appointment,
+        appointment_data=appointment_data
+    )
+
+
+@owner.route('/patients')
 def patients():
     selected_branch = request.args.get('branch', 'all')
     
     if selected_branch == 'all':
         patients = PatientsInfo.query.all()
     else:
-        patients = PatientsInfo.query.filter_by(branch_id=selected_branch)
+        patients = PatientsInfo.query.filter_by(branch_id=selected_branch).all()
     
     branches = Branch.query.all()
-    return render_template('/owner/patients.html', patients=patients, branches=branches, selected_branch=selected_branch)
+    return render_template(
+        '/owner/patients.html',
+        patients=patients,
+        branches=branches,
+        selected_branch=selected_branch
+    )
 
 @owner.route('/patient_info/<int:patient_id>')   
 def patient_info(patient_id):

@@ -11,15 +11,74 @@ document.addEventListener('DOMContentLoaded', function () {
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     selectable: true,
+    events: dynamicEvents,
     dateClick: function (info) {
-      const clickedDate = new Date(info.dateStr);
-      appointmentDateSpan.textContent = clickedDate.toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
+    const clickedDate = info.dateStr;
+
+    // Set modal date
+    appointmentDateSpan.textContent = new Date(clickedDate).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+
+    const modalBody = appointmentsModalEl.querySelector('.modal-body');
+    modalBody.innerHTML = ''; // Clear existing content
+
+    const matches = appointmentData.filter(a => a.date === clickedDate);
+
+    if (matches.length === 0) {
+      modalBody.innerHTML = '<p class="text-muted">No appointments on this date.</p>';
+    } else {
+      matches.forEach(a => {
+        const item = document.createElement('div');
+        item.classList.add('appointment-item');
+        item.style.cursor = 'pointer';
+        let buttonsHTML = '';
+        if (a.status === 'pending') {
+          buttonsHTML = `
+            <div class="d-flex gap-2 mt-3">
+              <button class="btn btn-success btn-sm" onclick="handleAccept(${a.appointment_id})">Accept</button>
+              <button class="btn btn-danger btn-sm" onclick="handleReject(${a.appointment_id})">Reject</button>
+            </div>
+          `;
+        } else {
+          const isDisabled = a.status === 'cancelled' ? 'disabled' : '';
+
+          buttonsHTML = `
+            <div class="d-flex gap-2 mt-3">
+              <button class="btn btn-success btn-sm" ${isDisabled} onclick="handleComplete(${a.appointment_id})">Completed</button>
+              <button class="btn btn-danger btn-sm" ${isDisabled} onclick="handleCancel(${a.appointment_id})">Cancel</button>
+              <button class="btn btn-warning btn-sm" ${isDisabled} onclick="handleReschedule(${a.appointment_id})">Reschedule</button>
+            </div>
+          `;
+        }
+
+        item.innerHTML = `
+          <div class="request-section-title" style="margin-bottom: 0;">
+            ${a.time} - ${a.reason}
+          </div>
+          <div class="appointment-status-label" style="font-size: 0.9rem; font-weight: 500; color: #6c757d;">
+            ${a.status || 'No Status'}
+          </div>
+          <br>
+          <div><b>Date:</b> ${a.date}</div>
+          <div><b>Time:</b> ${a.time}</div>
+          <div><b>Alternative Date / Time:</b> ${a.alternative_sched || 'None'}</div>
+          <div><b>Patient Name:</b> ${a.patient_name}</div>
+          <div><b>Patient Type:</b> ${a.patient_type}</div>
+          <div><b>Contact:</b> ${a.contact}</div>
+          <div><b>Email:</b> ${a.email}</div>
+          ${buttonsHTML}
+          <hr>
+        `;
+
+        modalBody.appendChild(item);
       });
-      new bootstrap.Modal(appointmentsModalEl).show();
-    },
+    }
+
+    new bootstrap.Modal(appointmentsModalEl).show();
+  },
     headerToolbar: {
       left: 'prev',
       center: 'title',

@@ -8,40 +8,21 @@
 {% endblock %}
 
 {% block content %}
-<!-- Password Modal -->
-<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="passwordModalLabel">TEETHNOLOGY</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h6 class="text-center mb-4">To access Patient Records</h6>
-                <div class="mb-3">
-                    <label for="passwordInput" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="passwordInput" placeholder="Enter password">
-                    <div class="form-text text-end"><a href="#" id="forgotPassword">Forgot password?</a></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="submitPassword">Okay</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Main Patient Records -->
 <div class="patients-container">
     <!-- Branch Tabs -->
     <ul class="nav nav-tabs" id="branchTabs">
         <li class="nav-item">
-            <a class="nav-link {% if selected_branch == 'all' %}active{% endif %}" href="{{ url_for('owner.patients', branch='all') }}">All Records</a>
+            <a class="nav-link {% if selected_branch == 'all' %}active{% endif %}" href="{{ url_for('owner.patients', branch='all') }}">
+                All Records
+            </a>
         </li>
         {% for branch in branches %}
         <li class="nav-item">
-            <a class="nav-link {% if selected_branch == branch.branch_id|string %}active{% endif %}" href="{{ url_for('owner.patients', branch=branch.branch_id) }}">{{ branch.branch_name }}</a>
+            <a class="nav-link {% if selected_branch == branch.branch_id|string %}active{% endif %}" href="{{ url_for('owner.patients', branch=branch.branch_id) }}">
+                {{ branch.branch_name }}
+            </a>
         </li>
         {% endfor %}
     </ul>
