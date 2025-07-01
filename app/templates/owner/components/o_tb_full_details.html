@@ -1,8 +1,8 @@
-<div class="modal fade" id="patientModal" tabindex="-1" aria-labelledby="patientModalLabel" aria-hidden="true">
+<div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="patientModalLabel">Patient ID</h5>
+                <h5 class="modal-title" id="receiptModalLabel">Receipt Number</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -12,37 +12,40 @@
                             <h6>Patient Information</h6>
                             <div class="mb-3">
                                 <label class="form-label">Patient Name:</label>
-                                <input type="text" class="form-control" placeholder="Enter patient name">
+                                <input type="text" class="form-control" placeholder="Enter patient name" readonly>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Contact Number:</label>
-                                <input type="tel" class="form-control" placeholder="Enter contact number">
+                                <label class="form-label">Patient ID:</label>
+                                <input type="text" class="form-control" placeholder="Enter patient name" readonly>
                             </div>
-                            
                         </div>
                         
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Branch Locations:</label>
-                                <input type="tel" class="form-control" placeholder="Enter contact number">
+                                <label class="form-label">Contact Number:</label>
+                                <input type="tel" class="form-control" placeholder="Enter contact number" readonly>
+                            </div>
+                           <div class="mb-3">
+                                <label class="form-label">Branch Location:</label>
+                                <input type="tel" class="form-control" placeholder="Enter contact number" readonly>
                             </div>
                         </div>
                     </div>
                     
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <h6>Billing history:</h6>
+                             <h6>Billing history:</h6>
                             <div class="mb-3">
                                 <label class="form-label">Details name:</label>
-                                <input type="text" class="form-control" placeholder="Enter details">
+                                <input type="text" class="form-control" placeholder="Enter details" readonly>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Date of previous appointment:</label>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" readonly>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Balance:</label>
-                                <input type="text" class="form-control" placeholder="Enter balance">
+                                <input type="text" class="form-control" placeholder="Enter balance" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -78,20 +81,17 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Prior Estimation:</label>
-                                <input type="text" class="form-control" placeholder="Enter prior estimation">
+                                <input type="text" class="form-control" placeholder="Enter prior estimation" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Total Amount Paid:</label>
-                                <input type="text" class="form-control" placeholder="Enter total amount paid">
+                                <input type="text" class="form-control" placeholder="Enter total amount paid" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add Information</button>
             </div>
         </div>
     </div>
