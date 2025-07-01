@@ -29,16 +29,16 @@
     <!-- Tabs -->
     <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
+            <a class="nav-link" href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('owner.patient_procedure', patient_id=patient.patient_id) }}" data-branch="procedure">Procedure History</a>
+            <a class="nav-link active" href="{{ url_for('owner.patient_procedure', patient_id=patient.patient_id) }}" data-branch="procedure">Procedure History</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('owner.patient_dental_rec', patient_id=patient.patient_id) }}" data-branch="dental_record">Dental Record</a>
         </li>
     </ul>
-</div>
+
 
 
     <section class="tab-content" id="history">
@@ -81,6 +81,7 @@
             </table>
         </div>
     </section>
+    </div>
 </div>
 {% endblock %}
 {% block extra_js %}

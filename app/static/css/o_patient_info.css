@@ -4,42 +4,60 @@ body {
 
 /* Patients Table */
 .patients-table-container { 
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 10px;
-    margin-left: 45vh;
-    margin-top: 10vh;
+    margin-top: 30px !important;
     margin-bottom: 20px;
     background: #ffffff;
     overflow-y: auto;     
-    max-height: 300px; 
-    width: 100%;
-    max-width: 150vh;
-    min-width: 165vh;
+    width: calc(100% - 5px);
     padding: 15px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
 .patients-table {
-    margin-left: 0;
-    min-width: 0;
-    max-width: 100%;
+     margin: 0;
+    width: 100%;
+    min-width: 600px;
     margin-top: 20px;
     border-collapse: separate;
-    border-spacing: 1px;
+    border-spacing: 0;
     font-size: 1rem;
+    table-layout: fixed;
     border: none;
 }
+
+.patient-table td {
+    padding: 12px 15px;
+    border-bottom: none; 
+    vertical-align: middle; 
+    font-size: 0.95rem;
+    color: #333;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+/* Column-specific styling */
+.patient-table td:nth-child(1) { width: 5%; }  /* Back button */
+.patient-table td:nth-child(2) { width: 10%; } /* ID */
+.patient-table td:nth-child(3) { width: 20%; } /* Name */
+.patient-table td:nth-child(4) { width: 10%; } /* Age */
+.patient-table td:nth-child(5) { width: 10%; } /* Sex */
+.patient-table td:nth-child(6) { width: 15%; } /* Contact */
+.patient-table td:nth-child(7) { width: 15%; } /* Email */
+.patient-table td:nth-child(8) { width: 10%; }/* Branch */
+
 
 /* Patient Info Container */
  .patient-info-container {
     background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    margin-top: 20px;
-    margin-left: 0;
-    margin-bottom: 20px;
-    min-width: 0;
+    border-radius: 12px; 
+    padding: 30px;
+    margin: 20px auto;
+    width: calc(100% - 5px);
     max-width: 100%;
-    height: auto;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -50,20 +68,28 @@ body {
 
 }
 
-.nav-tabs{
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #00898E;
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
     margin-bottom: 20px;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 5px;
 }
 
-.nav-item {
-    font-weight: 600;
-    font-size: 1.15rem;
+.nav-tabs .nav-link {
+    border: none;
     color: #00898E;
-    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 10px 20px;
+    transition: all 0.3s;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #007bff;
+}
+
+.nav-tabs .nav-link.active {
+    color: #035153da !important;
+    border-bottom: 2px solid #007bff;
+    background-color: transparent;
 }
 
 .section-title {
@@ -181,10 +207,10 @@ body {
     width: 100%;
     height: inherit;
     border-collapse: collapse;
-    border: none; 
+    border: none !important; 
     border-radius: 3px;
-    text-align: center;
-    align-items: center;
+    text-align: center !important;
+    align-items: center !important;
     margin-bottom: 20px;
     font-size: 0.9rem;
     display: block;
@@ -199,13 +225,13 @@ body {
     text-align: center;
     align-items: center; 
     font-weight: 500;
-    border-bottom: 1px solid #e0e0e075;
+    border-bottom: 1px solid #fafafa69;
 }
 
 
 .summary-table td {
     padding: 15px 10px;
-    border-bottom: 1px solid #e0e0e075;
+    border-bottom: 1px solid #ffffff10;
     vertical-align: top;
 }
 
@@ -413,170 +439,164 @@ body {
 }
 
 /* Responsive adjustments */
+@media (min-width: 1600px) {
+  .patients-table-container,
+  .patient-info-container {
+    max-width: 1800px;
+    padding: 30px;
+  }
+  .patients-table {
+    font-size: 1.05rem;
+  }
+  .section-title {
+    font-size: 1.8rem;
+  }
+  .section-subtitle {
+    font-size: 1.5rem;
+  }
+  .nav-tabs {
+    font-size: 1.7rem;
+  }
+  .form-label,
+  .form-control,
+  .form-select {
+    font-size: 1.05rem;
+    height: 45px;
+  }
+  .dental-record-container {
+    padding-right: 400px;
+  }
+  .dental-record-title {
+    font-size: 1.8rem;
+  }
+  .checkbox-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .btn-save {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+  }
+  .dental-record-legend {
+    width: 380px;
+    padding: 25px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .patients-table-container,
+  .patient-info-container {
+    max-width: 2000px;
+  }
+  .patients-table {
+    font-size: 1.1rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .section-subtitle {
+    font-size: 1.6rem;
+  }
+  .nav-tabs {
+    font-size: 1.8rem;
+  }
+  .form-control,
+  .form-select {
+    font-size: 1.1rem;
+    height: 48px;
+  }
+  .dental-record-container {
+    padding-right: 450px;
+  }
+  .dental-record-legend {
+    width: 420px;
+  }
+  .checkbox-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 @media (max-width: 1200px) {
-    .patient-info-container {
-        padding: 25px;
-    }
-    
-    .dental-record-legend {
-        position: static;
-        width: 100%;
-    }
-    
-    .form-info-row {
-        flex-wrap: wrap;
-    }
-    
-    .form-info-item {
-        min-width: 45%;
-    }
+  .form-info-row {
+    flex-wrap: wrap;
+  }
+  .form-info-item {
+    min-width: 45%;
+  }
 }
 
 @media (max-width: 992px) {
-    .patient-info-container {
-        padding: 20px;
-    }
-    
-    .section-title {
-        font-size: 1.3rem;
-    }
-    
-    .section-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .checkbox-group {
-        grid-template-columns: 1fr;
-    }
-    
-    .form-info-item {
-        min-width: 100%;
-    }
+  .section-title {
+    font-size: 1.3rem;
+  }
+  .section-subtitle {
+    font-size: 1.1rem;
+  }
+  .checkbox-group {
+    grid-template-columns: 1fr;
+  }
+  .form-info-item {
+    min-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-    .patient-info-container {
-        padding: 15px;
-    }
-    
-    .nav-tabs {
-        font-size: 1.2rem;
-    }
-    
-    .nav-item {
-        font-size: 1rem;
-    }
-    
-    .section-title {
-        font-size: 1.2rem;
-    }
-    
-    .form-group {
-        gap: 6px;
-    }
-    
-    .summary-table th,
-    .summary-table td {
-        padding: 10px 8px;
-        font-size: 0.85rem;
-    }
-    
-    .btn-save {
-        padding: 8px 15px;
-        font-size: 0.95rem;
-    }
+  .nav-tabs {
+    font-size: 1.2rem;
+  }
+  .nav-item {
+    font-size: 1rem;
+  }
+  .section-title {
+    font-size: 1.2rem;
+  }
+  .form-group {
+    gap: 6px;
+  }
+  .summary-table th,
+  .summary-table td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+  .btn-save {
+    padding: 8px 15px;
+    font-size: 0.95rem;
+  }
 }
 
 @media (max-width: 576px) {
-    .patient-info-container {
-        padding: 12px;
-    }
-    
-    .nav-tabs {
-        font-size: 1.1rem;
-    }
-    
-    .section-title {
-        font-size: 1.1rem;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-    
-    .form-control, .form-select {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.9rem;
-    }
-    
-    .radio-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-    
-    .summary-container h2 {
-        font-size: 1.2rem;
-    }
+  .nav-tabs {
+    font-size: 1.1rem;
+  }
+  .section-title {
+    font-size: 1.1rem;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .form-control,
+  .form-select {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .summary-container h2 {
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 400px) {
-    .patient-info-container {
-        padding: 10px;
-    }
-    
-    .section-title {
-        font-size: 1rem;
-    }
-    
-    .form-info-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 3px;
-    }
-    
-    .form-info-control {
-        width: 100%;
-    }
-    
-    .btn-save {
-        width: 100%;
-    }
-}
-
-/* Maintain original styles for larger screens */
-@media (min-width: 992px) {
-    .patients-table-container {
-        margin-left: 45vh;
-        min-width: 165vh;
-    }
-    
-    .patient-info-container {
-        margin-left: 45vh;
-        min-width: 165vh;
-    }
-    
-    .dental-record-container {
-        padding-right: 350px;
-        flex-wrap: nowrap;
-    }
-    
-    .dental-record-legend {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 400px;
-        margin-left: 90vh;
-    }
-    
-    .form-group {
-        grid-template-columns: 180px 1fr;
-    }
-    
-    .form-subgroup {
-        grid-template-columns: 160px 1fr;
-        margin-left: 20px;
-    }
-    
-    .checkbox-group {
-        grid-template-columns: repeat(3, 3fr);
-    }
+  .form-info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .form-info-control {
+    width: 100%;
+  }
+  .btn-save {
+    width: 100%;
+  }
 }

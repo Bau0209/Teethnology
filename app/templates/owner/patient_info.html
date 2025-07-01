@@ -8,28 +8,28 @@
 {% endblock %}
 
 {% block content %}
-            <div class="patients-table-container">
-                    <table class="patients-table">
-                        <tbody>
-                            <tr>
-                                <td><a href="{{ url_for('owner.patients') }}"><i class="fa fa-chevron-left"></i></a></td>
-                                <td>{{ patient.patient_id }}</td>
-                                <td>{{ patient.patient_full_name}}</td>
-                                <td>{{ patient.age }}</td>
-                                <td>{{ patient.sex }}</td>
-                                <td>{{ patient.contact_number }}</td>
-                                <td>{{ patient.email }}</td>
-                                <td>{{ patient.branch.branch_name}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="patient-info-container">
-                <!-- Tabs -->
-                <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
-                    </li>
+ <div class="patients-table-container">
+      <table class="patients-table">
+        <tbody>
+           <tr>
+              <td><a href="{{ url_for('owner.patients') }}"><i class="fa fa-chevron-left"></i></a></td>
+                <td>{{ patient.patient_id }}</td>
+                <td>{{ patient.patient_full_name}}</td>
+                <td>{{ patient.age }}</td>
+                <td>{{ patient.sex }}</td>
+                <td>{{ patient.contact_number }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.branch.branch_name}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="patient-info-container">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
+            <li class="nav-item">
+                 <a class="nav-link active" href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
+            </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('owner.patient_procedure', patient_id=patient.patient_id) }}" data-branch="procedure">Procedure History</a>
                     </li>
@@ -37,7 +37,7 @@
                         <a class="nav-link" href="{{ url_for('owner.patient_dental_rec', patient_id=patient.patient_id) }}" data-branch="dental_record">Dental Record</a>
                     </li>
                 </ul>
-            </div>
+     
 
                 <!-- Patient Info Tab Content -->
                 <div class="tab-content pt-4" id="patientInfoContent">
@@ -369,49 +369,50 @@
                             </li>
                             {% set illnesses = patient_medical_info.illness_checklist.split(',') if patient_medical_info.illness_checklist else [] %}
 
-<li>
-    Do you have or have had any of the following? Check which apply:
-    <div class="checkbox-grid mt-2">
+                            <li>
+                                Do you have or have had any of the following? Check which apply:
+                                <div class="checkbox-grid mt-2">
 
-        {% set known_conditions = [
-            'AIDS', 'Anemia', 'Arthritis', 'Allergy', 'Angina Pectoris', 'Asthma', 'Blood Diseases',
-            'Bruises', 'Chest Pain', 'Blood Pressure', 'Cancer', 'Circulatory Disturbances', 'Diabetes',
-            'Drug Addiction', 'Fainting', 'Digestive', 'Epilepsy', 'Glaucoma', 'Headaches', 'Hepatitis',
-            'Kidney', 'Heart Trouble', 'Hives', 'Liver', 'Lung Trouble', 'Operation', 'Radiation Therapy',
-            'Nervousness', 'Pains', 'Rheumatic Fever', 'Scarlet Fever', 'Sickle Cell', 'Stomach Trouble',
-            'Sexually Transmitted Diseases', 'Sinus Trouble', 'Stroke', 'Swollen Ankles', 'Tumor',
-            'Venereal Disease', 'Thyroid Problem', 'Ulcer'
-        ] %}
+                                    {% set known_conditions = [
+                                        'AIDS', 'Anemia', 'Arthritis', 'Allergy', 'Angina Pectoris', 'Asthma', 'Blood Diseases',
+                                        'Bruises', 'Chest Pain', 'Blood Pressure', 'Cancer', 'Circulatory Disturbances', 'Diabetes',
+                                        'Drug Addiction', 'Fainting', 'Digestive', 'Epilepsy', 'Glaucoma', 'Headaches', 'Hepatitis',
+                                        'Kidney', 'Heart Trouble', 'Hives', 'Liver', 'Lung Trouble', 'Operation', 'Radiation Therapy',
+                                        'Nervousness', 'Pains', 'Rheumatic Fever', 'Scarlet Fever', 'Sickle Cell', 'Stomach Trouble',
+                                        'Sexually Transmitted Diseases', 'Sinus Trouble', 'Stroke', 'Swollen Ankles', 'Tumor',
+                                        'Venereal Disease', 'Thyroid Problem', 'Ulcer'
+                                    ] %}
 
-        {% set illnesses = patient_medical_info.illness_checklist.split(',') if patient_medical_info.illness_checklist else [] %}
-        {% set other_conditions = [] %}
+                                    {% set illnesses = patient_medical_info.illness_checklist.split(',') if patient_medical_info.illness_checklist else [] %}
+                                    {% set other_conditions = [] %}
 
-        {# Render checkboxes for known conditions #}
-        {% for cond in known_conditions %}
-        <div class="checkbox-item">
-            <input type="checkbox" id="condition{{ loop.index }}" name="condition" value="{{ cond }}"
-                {% if cond in illnesses %}checked{% endif %}>
-            <label for="condition{{ loop.index }}">{{ cond }}</label>
-        </div>
-        {% endfor %}
+                                    {# Render checkboxes for known conditions #}
+                                    {% for cond in known_conditions %}
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="condition{{ loop.index }}" name="condition" value="{{ cond }}"
+                                            {% if cond in illnesses %}checked{% endif %}>
+                                        <label for="condition{{ loop.index }}">{{ cond }}</label>
+                                    </div>
+                                    {% endfor %}
 
-        {# Collect unknown conditions as "Other" #}
-        {% for item in illnesses %}
-            {% if item not in known_conditions %}
-                {% set _ = other_conditions.append(item.strip()) %}
-            {% endif %}
-        {% endfor %}
+                                    {# Collect unknown conditions as "Other" #}
+                                    {% for item in illnesses %}
+                                        {% if item not in known_conditions %}
+                                            {% set _ = other_conditions.append(item.strip()) %}
+                                        {% endif %}
+                                    {% endfor %}
 
-        {# Display Other field #}
-        <div class="checkbox-item">
-            <input type="checkbox" id="conditionOther" name="condition" value="Other"
-                {% if other_conditions %}checked{% endif %}>
-            <label for="conditionOther">Other:</label>
-            <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
-                name="other_condition" value="{{ other_conditions | join(', ') }}">
-        </div>
-    </div>
-</li>
+                                    {# Display Other field #}
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="conditionOther" name="condition" value="Other"
+                                            {% if other_conditions %}checked{% endif %}>
+                                        <label for="conditionOther">Other:</label>
+                                        <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
+                                            name="other_condition" value="{{ other_conditions | join(', ') }}">
+                                    </div>
+                                </div>
+                            </li>
+
 
 
                         </ol>
@@ -422,6 +423,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     {% endblock %}
 
 {% block extra_js %}

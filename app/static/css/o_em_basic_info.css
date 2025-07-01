@@ -12,7 +12,6 @@ body {
     background: #ffffff;
     overflow-y: auto;     
     width: calc(100% - 5px);
-    max-width: 1200px;
     padding: 15px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
@@ -202,8 +201,9 @@ body {
 
 .nav-tabs .nav-link {
     border: none;
-    color: #495057;
-    font-weight: 500;
+    color: #00898E;
+    font-size: 1.2rem;
+    font-weight: 700;
     padding: 10px 20px;
     transition: all 0.3s;
 }
@@ -213,7 +213,7 @@ body {
 }
 
 .nav-tabs .nav-link.active {
-    color: #007bff;
+    color: #035153da !important;
     border-bottom: 2px solid #007bff;
     background-color: transparent;
 }
