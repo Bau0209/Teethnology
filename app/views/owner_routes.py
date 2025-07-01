@@ -78,6 +78,16 @@ def employee_info(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     return render_template('/owner/employee_basic_info.html', employee=employee)
 
+@owner.route('/employee_work_details/<int:employee_id>')
+def employee_work_details(employee_id):
+    employee = Employee.query.get_or_404(employee_id)
+    return render_template('/owner/em_work_details.html', employee=employee)
+
+@owner.route('/employee_activity_details/<int:employee_id>')
+def employee_activity_details(employee_id):
+    employee = Employee.query.get_or_404(employee_id)
+    return render_template('/owner/o_em_activity_details.html', employee=employee)
+
 @owner.route('/inventory')
 def inventory():
     return render_template('/owner/inventory.html')
