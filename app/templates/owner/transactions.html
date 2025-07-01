@@ -44,10 +44,11 @@
                             <thead>
                                 <tr>
                                     <th>Receipt No.</th>
+                                    <th>Procedure ID</th>
                                     <th>Patient</th>
                                     <th>Date/Time</th>
+                                    <th>Total Amound Paid</th>
                                     <th>Payment Method</th>
-                                    <th>Status</th>
                                     <th class="text-end">Action</th>
                                 </tr>
                             </thead>
@@ -56,6 +57,7 @@
                                     {% for txn in transactions %}
                                     <tr>
                                         <td>{{ txn.receipt_number }}</td>
+                                        <td>{{ txn.procedure_id }}</td>
                                         <td>
                                             <div class="patient-info">
                                                 <h6 class="mb-1">{{ txn.procedure.patient.patient_full_name }} </h6>
@@ -63,14 +65,8 @@
                                             </div>
                                         </td>
                                         <td>{{ txn.transaction_datetime.strftime('%Y-%m-%d %I:%M %p') }}</td>
+                                        <td>{{ txn.total_amount_paid }}</td>
                                         <td>{{ txn.payment_method }}</td>
-                                        <td>
-                                            {% if txn.total_amount_paid >= 0 %}
-                                                <span class="badge bg-success">Completed</span>
-                                            {% else %}
-                                                <span class="badge bg-warning text-dark">Pending</span>
-                                            {% endif %}
-                                        </td>
                                         <td class="text-end">
                                             <button class="btn btn-sm btn-outline-primary">
                                                 <i class="fa fa-chevron-right"></i>
