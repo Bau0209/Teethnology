@@ -16,10 +16,16 @@
             <a href="{{ url_for('owner.appointment_req') }}" class="calendar-tab">Appointment Request</a>
         </div>
         <div>
-            <select name="branch" class="calendar-branch-icon">
-                <option value="manila">Manila Branch</option>
-                <option value="quezon">Quezon Branch</option>
-            </select>
+            <form method="get" action="{{ url_for('owner.appointments') }}">
+                <select name="branch" class="calendar-branch-icon" onchange="this.form.submit()">
+                    <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                    {% for branch in branches %}
+                        <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                            {{ branch.branch_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
         </div>
     </div>
 
@@ -36,31 +42,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-date">
-                        <span id="appointment-date">June 5, 2023</span>
+                        <span id="appointment-date"></span>
                     </div>
-                    <hr>
+                    <hr>                      
                     <div class="modal-body">
-                        <div class="appointment-item">
-                            <div class="appointment-title">Patient Checkup</div>
-                            <div class="patient-name">Patient Name</div>
-                            <ul class="appointment-details">
-                                <li>Age</li>
-                                <li>Gender</li>
-                                <li>Contact</li>
-                                <li>Email</li>
-                            </ul>
-                        </div>
-                        <hr>
-                        <div class="appointment-item">
-                            <div class="appointment-title">Patient Checkup</div>
-                            <div class="patient-name">Patient Name</div>
-                            <ul class="appointment-details">
-                                <li>Age</li>
-                                <li>Gender</li>
-                                <li>Contact</li>
-                                <li>Email</li>
-                            </ul>
-                        </div>
+                        <!-- Appointment items will be inserted here dynamically by JS -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">Add</button>
@@ -68,7 +54,12 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
+<script>
+  const dynamicEvents = {{ events | safe }};
+  const appointmentData = {{ appointment_data | safe }};
+</script>
+
 {% include 'owner/components/form_modal.html' %}
 {% endblock %}
 
