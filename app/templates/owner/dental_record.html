@@ -43,10 +43,6 @@
                     <!-- Dental Record Tab Content -->
                     <section class="tab-content" id="dental_record">
                         <h2 class="section-title">INTRAORAL EXAMINATION</h2>
-                        <select name="chart" class="chart-select">
-                            <option value="adult">Adult Chart</option>
-                             <option value="child">Children Chart</option>
-                        </select>
                         <div class="dental-record-container">
                             <div class="form-info">
                                 <!-- First Row -->
@@ -70,6 +66,10 @@
                                 </div>
                             </div>
                             <div class=" dental_chart">
+                                <select name="chart" class="chart-select">
+                                    <option value="adult">Adult Chart</option>
+                                    <option value="child">Children Chart</option>
+                                </select>
                                 <canvas id="dentalCanvas" width="800" height="400"></canvas>
                             </div>
                             <div class="dental-record-legend">
