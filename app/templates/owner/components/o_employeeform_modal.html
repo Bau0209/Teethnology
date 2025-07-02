@@ -1,0 +1,119 @@
+<!-- Button to trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#employeeModal">
+  View Employee Details
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="employeeModalLabel">Employee Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Begin unmodified form content -->
+        <div class="info-header left-align">
+            <h3>ADD AN EMPLOYEE FORM</h3>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 column-divider">
+            <div class="mb-3">
+              <label class="form-label">Age</label>
+              <input type="text" class="form-control" value="{{ employee.age }}">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Sex</label>
+              <input type="text" class="form-control" value="{{ employee.sex }}">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Birthday</label>
+              <input type="text" class="form-control" value="{{ employee.birthdate }}">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Contact Number</label>
+              <input type="text" class="form-control" value="{{ employee.contact_number }}">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="text" class="form-control" value="{{ employee.email }}">
+            </div>
+          </div>
+          <div class="col-md-6 ms-auto">
+            <div class="mb-3">
+              <label class="form-label">Employment Status</label>
+              <input type="text" class="form-control" value="{{ employee.employment_status | title }}">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Date Hired</label>
+              <input type="text" class="form-control" value="{{ employee.date_hired }}">
+            </div>
+          </div>
+        </div>
+
+        <div class="info-header">
+          <h3>Work Details</h3>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Position</label>
+              <input type="text" class="form-control" value="Dentist">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Department</label>
+              <input type="text" class="form-control" value="Dental Services">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Branch Assignment</label>
+              <input type="text" class="form-control" value="Branch 1">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Employment Type</label>
+              <input type="text" class="form-control" value="Full-time">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Shift Schedule</label>
+              <input type="text" class="form-control" value="9:00 AM - 6:00 PM">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Salary Rate</label>
+              <input type="text" class="form-control" value="₱25,000.00">
+            </div>
+          </div>
+        </div>
+
+        <h5 class="mt-4 mb-3">Benefits</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">SSS Number</label>
+              <input type="text" class="form-control" value="xx-xxxxxxx-x">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">PhilHealth Number</label>
+              <input type="text" class="form-control" value="xx-xxxxxxx-x">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Pag-IBIG Number</label>
+              <input type="text" class="form-control" value="xxxx-xxxx-xxxx">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">TIN</label>
+              <input type="text" class="form-control" value="xxx-xxx-xxx-xxx">
+            </div>
+          </div>
+        </div>
+
+        <button class="add-btn">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
