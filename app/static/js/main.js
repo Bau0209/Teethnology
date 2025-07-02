@@ -51,3 +51,91 @@
         });
     });
 })();
+
+//service list function
+document.addEventListener('DOMContentLoaded', function() {
+    const serviceCheckboxes = document.querySelectorAll('.services-checklist input[type="checkbox"]');
+    const selectedServicesContainer = document.getElementById('selected-services-cards');
+    
+    // Service data (matches your existing service cards)
+    const servicesData = {
+        'Preventive Dentistry': {
+            bgImage: '../../static/images/Dental Examination(BG).png',
+            icon: '../../static/images/Dental Examination.png',
+            description: 'Nullam sagittis hendrerit elit vitae faucibus. In augue urna, consequat quis accumsan non, vestibulum id dui.'
+        },
+        'Intervention Dentistry': {
+            bgImage: '../../static/images/Root canal treatment(BG).png',
+            icon: '../../static/images/Root canal treatment.png',
+            description: 'Nullam sagittis hendrerit elit vitae faucibus. In augue urna, consequat quis accumsan non, vestibulum id dui.'
+        },
+        'Coroneric Dentistry': {
+            bgImage: '../../static/images/dentures(bg).jpg',
+            icon: '../../static/images/Dentures.png',
+            description: 'Nullam sagittis hendrerit elit vitae faucibus. In augue urna, consequat quis accumsan non, vestibulum id dui.'
+        },
+        'Pediatric Dentistry': {
+            bgImage: '../../static/images/Dental Examination(BG).png', // Default image if specific one doesn't exist
+            icon: '../../static/images/Dental Examination.png',
+            description: 'Child-focused dental care for healthy smiles.'
+        },
+        // Add other services similarly...
+    };
+
+    serviceCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const serviceName = this.nextElementSibling.textContent;
+            
+            if (this.checked) {
+                addServiceCard(serviceName);
+            } else {
+                removeServiceCard(serviceName);
+            }
+        });
+    });
+
+    // Adds a service card to the selected container
+    function addServiceCard(serviceName) {
+        if (!servicesData[serviceName] || document.querySelector(`.selected-service-card[data-service="${serviceName}"]`)) {
+            return;
+        }
+
+        const service = servicesData[serviceName];
+        const card = document.createElement('div');
+        card.className = 'selected-service-card';
+        card.dataset.service = serviceName;
+
+        card.innerHTML = `
+            <div class="service-card">
+                <img src="${service.bgImage}" alt="${serviceName}" class="service-img">
+                <div class="service-icon">
+                    <img src="${service.icon}" alt="${serviceName} Icon">
+                </div>
+                <h3>${serviceName}</h3>
+                <p>${service.description}</p>
+            </div>
+        `;
+
+        selectedServicesContainer.appendChild(card);
+    }
+/*
+    // Removes a service card
+    function removeServiceCard(serviceName) {
+        const card = document.querySelector(`.selected-service-card[data-service="${serviceName}"]`);
+        if (card) {
+            card.remove();
+        }
+    }
+
+    // Global function for the remove button's onclick event
+    window.removeService = function(serviceName) {
+        removeServiceCard(serviceName);
+        // Uncheck the corresponding checkbox
+        const checkboxes = document.querySelectorAll('.services-checklist input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.nextElementSibling.textContent === serviceName) {
+                checkbox.checked = false;
+            }
+        });
+    };*/
+});
