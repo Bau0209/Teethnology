@@ -9,23 +9,113 @@
 
 {% block content %}
 <div class="container-fluid p-4 revenue">
-  <!-- Nav Tabs -->
-  <ul class="nav nav-tabs" id="transactionTabs">
-    <li class="nav-item">
-        <a class="nav-link " href="{{ url_for('owner.reports') }}">Revenue</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link active" href="{{ url_for('owner.report_marketing') }}">Marketing</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a>
-    </li>
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item"><a class="nav-link " href="{{ url_for('owner.reports') }}">Revenue</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url_for('owner.report_marketing') }}">Marketing</a></li>
+     <!--<li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>-->
   </ul>
+
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+    </div>
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+    </div>
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+    </div>
+  </div>
+
+  <!-- MarketingGgraph -->
+<div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
+  <!-- Left: Popular Services By age and Gender -->
+  <div class="marketing-left flex-grow-1" >
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between align-items-center bg-white">
+        <h6 class="mb-0">Popular Services By age and Gender</h6>
+      </div>
+      <div class="card-body">
+        <canvas id="popularServiceByAgeandGenderChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vertical Divider -->
+  <div class="vr-divider"></div>
+
+  <!-- Right: Patients By Age -->
+    <div class="card-right" style="min-width: 320px;">
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <h6 class="mb-0">Patients By Age</h6>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1">
+                <canvas id="topServicesChart" height="180"></canvas>
+              </div>
+              <div class="ms-4">
+                <ul class="list-unstyled mb-0">
+                  <li>Below 18 - 30%</li>
+                  <li>18-25 - 20%</li>
+                  <li>26-40 - 10%</li>
+                  <li>41-59 - 40%</li>
+                  <li>60+ - 20%</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Service Usage Trend Section -->
+  <div class="row mt-5 gx-4 gy-4">
+    <div class="col-lg-8">
+      <div class="d-flex flex-wrap gap-2 mb-2">
+        <h4>Forcasts</h4>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+        </div>
+      </div>
+      <div class="card h-100">
+        <div class="card-header bg-white">
+          <h6 class="mb-0">Service Usage Trend</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="forecastChart" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Insight -->
+    <div class="col-lg-4">
+      <div class="card business-insight-card p-4">
+        <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
+        <p><strong>Revenue Report:</strong> Cleaning appointments dropped 15% last month. Want to send a ₱200 discount code to re-engage patients?</p>
+        <p><strong>Revenue Forecast:</strong> Week 2 of next month may have low bookings. Consider scheduling a flash Email promo.</p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/o_report.js') }}"></script>
 {% endblock %}

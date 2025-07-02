@@ -52,20 +52,30 @@
   <div class="vr-divider"></div>
 
   <!-- Right: Summary & Top Services -->
-  <div class="revenue-right" style="min-width: 320px;">
+  <div class="card-right" style="min-width: 320px;">
     <div class="row g-3">
       <div class="col-12">
-        <div class="card p-3 text-center">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <div>
+        <div class="row g-2">
+          <!-- Revenue Card -->
+          <h6 class="mb-3 fw-semibold text-muted">This Month</h6>
+          <div class="col-4">
+            <div class="card p-3 text-center">
               <small class="text-muted d-block">Revenue</small>
-              <h6 class="mb-0">₱23,000</h6>
+              <h6 class="mb-0 text-primary">₱23,000</h6>
             </div>
-            <div>
+          </div>
+
+          <!-- Growth Rate Card -->
+          <div class="col-4">
+            <div class="card p-3 text-center">
               <small class="text-muted d-block">Growth Rate</small>
-              <h6 class="text-danger mb-0">-5%</h6>
+              <h6 class="mb-0 text-danger">-5%</h6>
             </div>
-            <div>
+          </div>
+
+          <!-- Appointments Card -->
+          <div class="col-4">
+            <div class="card p-3 text-center">
               <small class="text-muted d-block">Appointments</small>
               <h6 class="mb-0">24</h6>
             </div>
@@ -74,7 +84,7 @@
       </div>
 
       <div class="col-12">
-        <div class="card">
+        <div class="card donut-card">
           <div class="card-header bg-white">
             <h6 class="mb-0">Top Earning Services</h6>
           </div>

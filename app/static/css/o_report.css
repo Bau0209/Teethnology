@@ -32,6 +32,7 @@ body {
 .btn-outline-primary {
   color: #17a2b8;
   border-color: #17a2b8;
+  margin-bottom: auto;
 }
 
 /* Cards */
@@ -46,9 +47,9 @@ body {
   max-width: 65%;
 }
 
-.revenue-right {
+.card-right {
   flex: 0 0 35%;
-  max-width: 45%;
+  max-width: 100%;
 }
 
 .card-header {
@@ -74,7 +75,51 @@ body {
   font-size: 1rem;
   margin-bottom: 0.3rem;
 }
+.card-right .card h6 {
+  font-size: 1rem;
+  font-weight: 600;
+}
 
+.card-right .card small {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.card-right .row.g-2 .card {
+  min-height: 90px;
+}
+
+.donut-card {
+  height: 100%;
+  min-height: 190px !important;
+  width: 94%;
+}
+
+
+.card-right .donut-card .card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.card-right .donut-card canvas {
+  max-width: 150px;
+}
+
+.card-right .donut-card ul {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.85rem;
+}
+
+.card-right .donut-card ul li {
+  font-size: 0.9rem;
+  padding-left: 1.2rem;
+  position: relative;
+  text-align: left;
+  margin-bottom: 0.3rem;
+}
 .vr-divider {
   width: 1px;
   background-color: #ccc;
@@ -109,21 +154,6 @@ body {
 .col-lg-8 h4{
     color: #00898E !important;
 
-}
-
-/* Doughnut Labels */
-ul.list-unstyled li {
-  font-size: 0.9rem;
-  padding-left: 1.2rem;
-  position: relative;
-  margin-bottom: 0.3rem;
-}
-ul.list-unstyled li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  font-size: 1.1rem;
-  top: 0;
 }
 
 /* Business Insight Card */
