@@ -252,16 +252,20 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   padding: 24px 20px;
   min-height: 173px;
-  width: 80%;
+  width: 100%;
   height: 100%;
 }
 
 .welcome-card {
-    min-height: 150px;
-    justify-content: flex-start;
-    align-items: flex-start;
-    box-shadow: 0 2px 8px rgba(0,188,212,0.07);
-    padding: 15px;
+  background-color: #ffffff;
+  margin-top: auto;
+  border-left: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
 }
 
 .welcome-card h2 {
@@ -282,7 +286,7 @@ body {
 }
 
 .business-insight-content {
-    width: 50%;
+    width: 100%;
 }
 
 .insight-item {
@@ -343,8 +347,8 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
   padding: 20px;
   width: 100%; 
-  min-width: 300px; 
-  max-width: 380px;
+  min-width: auto; 
+  max-width: 100%;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -352,7 +356,7 @@ body {
 
 .dashboard-center h3,
 .dashboard-right h3 {
-  margin-top: 0;
+  margin-top: 10px !important;
   margin-bottom: 12px;
   font-weight: 700;
   color: #0097a7;
@@ -416,16 +420,26 @@ body {
 
 /* Appointment Requests */
 .appointment-requests {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  padding: 20px;
+  width: 100%; 
+  min-width: auto; 
+  max-width: 100%;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  padding: 12px;
 }
 
-.appointment-requests-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+.appointment-requests h3{
+  margin-top: 10px !important;
+  margin-bottom: 12px;
+  font-weight: 700;
+  color: #0097a7;
+  letter-spacing: 1px;
+  font-size: 1.08rem;
+  text-align: center;
 }
 
 .request-list {
@@ -478,7 +492,7 @@ body {
 
 .view-all {
   align-self: flex-end;
-  margin-top: 10px;
+  margin-top: 0;
   color: #0097a7;
   text-decoration: none;
 }
@@ -828,30 +842,29 @@ body {
   .dashboard-top {
     grid-template-columns: 1fr;
   }
-  
+
   .dashboard-left {
-    grid-column: 1 / -1;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
   }
-  
-  .welcome-card {
+
+  .welcome-card,
+  .info-card {
     flex: 1 1 100%;
   }
-  
-  .info-card {
-    flex: 1 1 calc(50% - 10px);
-  }
-  
-  .dashboard-center.card {
-    min-width: 100%;
-    max-width: 100%;
-  }
-  
+
+  .dashboard-center.card,
   .calendar-details-panel {
-    margin-left: 0;
+    max-width: 100%;
+    min-width: 100%;
     margin-top: 20px;
+    margin-left: 0;
+  }
+
+  .calendar-card,
+  .calendar-panel {
+    flex-direction: column;
   }
 }
 
@@ -860,17 +873,17 @@ body {
     margin-left: 0;
     padding-top: 70px;
   }
-  
+
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s ease;
     z-index: 95;
   }
-  
+
   .sidebar.active {
     transform: translateX(0);
   }
-  
+
   .menu-toggle {
     display: block;
     position: fixed;
@@ -884,20 +897,16 @@ body {
     padding: 8px 12px;
     cursor: pointer;
   }
-  
+
   .dashboard-left {
     flex-direction: column;
   }
-  
-  .info-card {
-    flex: 1 1 100%;
-  }
-  
+
   .appointments-today-card {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .appointments-today-content {
     align-items: center;
   }
@@ -907,52 +916,34 @@ body {
   .topbar {
     padding: 8px 15px;
   }
-  
+
   .topbar-title {
     font-size: 1rem;
   }
-  
+
   .dashboard-center.card,
   .dashboard-right.card {
     padding: 18px;
   }
-  
+
   .appointment-requests {
     padding: 15px 10px;
   }
-  
-  .appointment-requests-header {
+
+  .appointment-requests-header,
+  .appointment-requests-controls,
+  .request-info,
+  .calendar-header,
+  .fc .fc-toolbar.fc-header-toolbar {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
-  
-  .appointment-requests-controls {
-    width: 100%;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .request-info {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
+
   .actions {
     width: 100%;
     justify-content: space-between;
-  }
-  
-  .calendar-header {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  
-  .fc .fc-toolbar.fc-header-toolbar {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
+    flex-wrap: wrap;
   }
 }
 
@@ -960,40 +951,36 @@ body {
   .main-content {
     padding: 15px;
   }
-  
+
   .card {
     padding: 15px;
   }
-  
+
   .welcome-card h2 {
     font-size: 1.3rem;
   }
-  
-  .business-insight-content {
-    width: 100%;
-  }
-  
+
   .dashboard-center h3,
   .dashboard-right h3 {
     font-size: 1rem;
     text-align: left;
   }
-  
+
   .appointment-requests .actions button {
     padding: 8px 12px;
     font-size: 0.9rem;
     flex: 1;
     min-width: 120px;
   }
-  
+
   .appointment-requests a.view-all {
     margin-top: 15px;
   }
-  
+
   .fc .fc-toolbar-title {
     font-size: 1.3rem;
   }
-  
+
   .fc .fc-button {
     font-size: 1.2rem;
   }
@@ -1003,48 +990,49 @@ body {
   .main-content {
     padding: 12px;
   }
-  
+
   .topbar {
     padding: 8px 10px;
   }
-  
+
   .topbar-right {
     gap: 10px;
   }
-  
+
   .topbar-icon {
     font-size: 1.1rem;
   }
-  
+
   .card {
     padding: 12px 10px;
   }
-  
+
   .appointment-requests .actions button {
     padding: 6px 10px;
     font-size: 0.85rem;
     min-width: 100px;
   }
-  
+
   .dashboard-center button.send-reminders {
     padding: 8px 12px;
     font-size: 0.9rem;
   }
-  
+
   .user-dropdown {
     min-width: 100px;
     padding: 12px 8px;
   }
-  
+
   .user-dropdown-links a {
     font-size: 0.95rem;
   }
-  
+
   .logout-btn {
     width: 80px;
     font-size: 0.9rem;
   }
 }
+
 /* Card hover effect */
 .card:hover {
   box-shadow: 0 4px 20px rgba(0,188,212,0.10);

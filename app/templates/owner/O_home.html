@@ -38,74 +38,71 @@
   <!-- Middle Column -->
   <div class="dashboard-center card">
     <h3>PATIENTS TOMORROW</h3>
-    <select name="branch" class="branch-select">
-      <option value="manila">Manila Branch</option>
-      <option value="quezon">Quezon Branch</option>
-    </select>
-    <hr>
-    <div class="patient-info">
-      <div class="patient-item">
-        <strong>PATIENT NAME</strong><br>
-        PURPOSE OF APPOINTMENT<br>
-        CONTACT NUMBER<br>
-        EMAIL
+      <select name="branch" class="branch-select">
+        <option value="manila">Manila Branch</option>
+        <option value="quezon">Quezon Branch</option>
+      </select>
+      <hr>
+      <div class="patient-info">
+        <div class="patient-item">
+          <strong>PATIENT NAME</strong><br>
+          PURPOSE OF APPOINTMENT<br>
+          CONTACT NUMBER<br>
+          EMAIL
+        </div>
+        <div class="patient-item">
+          <strong>PATIENT NAME</strong><br>
+          PURPOSE OF APPOINTMENT<br>
+          CONTACT NUMBER<br>
+          EMAIL
+        </div>
+        <div class="patient-item">
+          <strong>PATIENT NAME</strong><br>
+          PURPOSE OF APPOINTMENT<br>
+          CONTACT NUMBER<br>
+          EMAIL
+        </div>
       </div>
-      <div class="patient-item">
-        <strong>PATIENT NAME</strong><br>
-        PURPOSE OF APPOINTMENT<br>
-        CONTACT NUMBER<br>
-        EMAIL
-      </div>
-      <div class="patient-item">
-        <strong>PATIENT NAME</strong><br>
-        PURPOSE OF APPOINTMENT<br>
-        CONTACT NUMBER<br>
-        EMAIL
-      </div>
+      <button class="send-reminders">Send Reminders</button>
     </div>
-    <button class="send-reminders">Send Reminders</button>
-  </div>
 
-  <!-- Right Column -->
-  <div class="dashboard-right card appointment-requests">
-    <div class="appointment-requests-header">
+    <!-- Right Column -->
+    <div class="dashboard-right card appointment-requests">
       <h3>APPOINTMENTS</h3>
-      <div class="appointment-requests-controls">
-        <select name="branch" class="branch-select">
-          <option value="manila">Manila Branch</option>
-          <option value="quezon">Quezon Branch</option>
-        </select>
-        
-      </div>
-    </div>
-    <hr>
-    <a href="{{ url_for('owner.appointment_req') }}" class="view-all">View All</a>
-    <div class="request-list">
-      <div class="request-item">
-        <div class="request-info">
-          <strong>MM-DD-YYYY</strong><br>
-          PATIENT NAME<br>
-          PURPOSE OF APPOINTMENT
+        <div class="appointment-requests-controls">
+          <select name="branch" class="branch-select">
+            <option value="manila">Manila Branch</option>
+            <option value="quezon">Quezon Branch</option>
+          </select>
         </div>
-        <div class="actions">
-          <button class="accept">Accept</button>
-          <button class="reject">Reject</button>
+      <hr>
+      <a href="{{ url_for('owner.appointment_req') }}" class="view-all">View All</a>
+      <div class="request-list">
+        <div class="request-item">
+          <div class="request-info">
+            <strong>MM-DD-YYYY</strong><br>
+            PATIENT NAME<br>
+            PURPOSE OF APPOINTMENT
+          </div>
+          <div class="actions">
+            <button class="accept">Accept</button>
+            <button class="reject">Reject</button>
+          </div>
         </div>
-      </div>
-      <div class="request-item">
-        <div class="request-info">
-          <strong>MM-DD-YYYY</strong><br>
-          PATIENT NAME<br>
-          PURPOSE OF APPOINTMENT
-        </div>
-        <div class="actions">
-          <button class="accept">Accept</button>
-          <button class="reject">Reject</button>
+        <div class="request-item">
+          <div class="request-info">
+            <strong>MM-DD-YYYY</strong><br>
+            PATIENT NAME<br>
+            PURPOSE OF APPOINTMENT
+          </div>
+          <div class="actions">
+            <button class="accept">Accept</button>
+            <button class="reject">Reject</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
   <!-- Calendar Section -->
   <section class="calendar-card">
       <div class="calendar-panel">
