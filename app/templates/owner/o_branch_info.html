@@ -11,33 +11,43 @@
 <div class="branch-info-card">
     <!-- Slider + Thumbnails -->
     <div class="branch-info-image-row">
-        <div class="branch-info-image-slider">
-            <button class="slider-arrow slider-arrow-left"><i class="fa fa-chevron-left"></i></button>
+        <div class="branch-info-image-slider position-relative">
+            <button class="slider-arrow slider-arrow-left" onclick="changeImage(-1)">
+                <i class="fa fa-chevron-left"></i>
+            </button>
 
             {% if branch_images %}
-                <img id="mainBranchImg" src="{{ url_for('static', filename=branch_images[0].image_link) }}"
+                <img id="mainBranchImg"
+                    src="{{ url_for('static', filename=branch_images[0].image_link) }}"
                     alt="Clinic Image"
-                    class="branch-info-img">
+                    class="branch-info-img"
+                    data-index="0">
             {% else %}
-                <img id="mainBranchImg" src="{{ url_for('static', filename='images/no-image.jpg') }}"
+                <img id="mainBranchImg"
+                    src="{{ url_for('static', filename='images/no-image.jpg') }}"
                     alt="No Image"
-                    class="branch-info-img">
+                    class="branch-info-img"
+                    data-index="-1">
             {% endif %}
 
-            <button class="slider-arrow slider-arrow-right"><i class="fa fa-chevron-right"></i></button>
+            <button class="slider-arrow slider-arrow-right" onclick="changeImage(1)">
+                <i class="fa fa-chevron-right"></i>
+            </button>
         </div>
 
-        <div class="branch-info-thumbnails">
+        <div class="branch-info-thumbnails mt-2 d-flex gap-2">
             {% for image in branch_images %}
                 <img src="{{ url_for('static', filename=image.image_link) }}"
                     class="branch-info-thumb {% if loop.index0 == 0 %}active{% endif %}"
-                    data-index="{{ loop.index0 }}">
+                    data-index="{{ loop.index0 }}"
+                    data-src="{{ url_for('static', filename=image.image_link) }}"
+                    onclick="setMainImage(this)">
             {% endfor %}
             <button type="button" class="branch-edit-images" data-bs-toggle="modal" data-bs-target="#branchImagesModal">
                 Edit Images
             </button>
         </div>
-        
+       
 
         <!-- Modal -->
         <div class="modal fade" id="branchImagesModal" tabindex="-1" aria-labelledby="branchImagesModalLabel" aria-hidden="true">
@@ -54,7 +64,9 @@
                                     <span style="color: #0097a7; font-size: 12px;">
                                         {{ image.image_link.split('/')[-1] }}
                                     </span>
-                                    <a href="#" class="text-danger" style="font-size: 13px;" onclick="this.closest('.mb-3').remove(); return false;">delete</a>
+                                    <form action="{{ url_for('owner.delete_branch_image', image_id=image.image_id) }}" method="POST" onsubmit="return confirm('Delete this image?');">
+                                        <button type="submit" class="btn btn-link text-danger p-0" style="font-size: 13px;">Delete</button>
+                                    </form>
                                 </div>
                                 <img src="{{ url_for('static', filename=image.image_link) }}"
                                     alt="Clinic Image"
@@ -63,71 +75,72 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="modal-footer" style="border-top: 1px solid #eee;">
-                        <button type="button" class="btn" style="background: #0096a7a6; color: #fff;">Add Images</button>
-                        <button type="button" class="btn" style="background: #009688; color: #fff;">Save Changes</button>
+
+                    <div class="modal-footer d-flex flex-column align-items-start gap-2" style="border-top: 1px solid #eee;">
+                        <form action="{{ url_for('owner.add_branch_image', branch_id=branch.branch_id) }}" method="POST" enctype="multipart/form-data" class="w-100">
+                            <input type="file" name="image" accept="image/*" required class="form-control mb-2">
+                            <div class="d-flex justify-content-between w-100">
+                                <button type="submit" class="btn" style="background: #0096a7a6; color: #fff;">Upload Image</button>
+                                <button type="button" class="btn" data-bs-dismiss="modal" style="background: #009688; color: #fff;">Close</button>
+                            </div>
+                        </form>
                     </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <form method="POST" action="{{ url_for('owner.edit_branch', branch_id=branch.branch_id) }}">
+        <!-- Details -->
+        <div class="branch-info-details-row">
+            <div class="branch-info-col">
+                <div class="branch-info-label">Branch Name</div>
+                <input name="branch_name" class="form-control" value="{{ branch.branch_name }}">
+            </div>
+            <div class="branch-info-col">
+                <div class="branch-info-label">Full Address</div>
+                <input name="full_address" class="form-control" value="{{ branch.full_address }}">
+            </div>
+        </div>
+
+        <div class="branch-info-details-row">
+            <div class="branch-info-col">
+                <div class="branch-info-label">Services (comma separated)</div>
+                <textarea name="services" class="form-control">{{ branch.services }}</textarea>
+            </div>
+            <div class="branch-info-col">
+                <div class="branch-info-label">Description</div>
+                <textarea name="clinic_description" class="form-control">{{ branch.clinic_description }}</textarea>
+            </div>
+        </div>
+
+        <div class="branch-info-details-row">
+            <div class="branch-info-col">
+                <div class="branch-info-label">Chief Dentist</div>
+                <input name="chief_dentist" class="form-control" value="{{ branch.chief_dentist }}">
+            </div>
+            <div class="branch-info-col">
+                <div class="branch-info-label">Contact</div>
+                <input name="contact_number" class="form-control" value="{{ branch.contact_number }}">
+            </div>
+        </div>
+
+        <div class="branch-info-details-row">
+            <div class="branch-info-col">
+                <div class="branch-info-label">Clinic Hours</div>
+                <div class="d-flex gap-2">
+                    <input type="time" name="clinic_open_hour" value="{{ branch.clinic_open_hour.strftime('%H:%M') }}" class="form-control">
+                    <span>-</span>
+                    <input type="time" name="clinic_close_hour" value="{{ branch.clinic_close_hour.strftime('%H:%M') }}" class="form-control">
                 </div>
             </div>
         </div>
 
-        
-    </div>
-
-
-    <!-- Details -->
-    <div class="branch-info-details-row">
-        <div class="branch-info-col">
-            <div class="branch-info-label">Branch Name</div>
-            <div class="branch-info-value branch-info-link">{{ branch.branch_name}} Clinic</div>
+        <div class="branch-info-actions mt-3">
+            <button type="submit" class="branch-info-save-btn">Save Changes</button>
+            <a class="branch-info-archive-btn" href="#">Archive</a>
         </div>
-        <div class="branch-info-col">
-            <div class="branch-info-label">Full Address</div>
-            <div class="branch-info-value branch-info-link">{{ branch.full_address}}</div>
-        </div>
-    </div>
-
-    <div class="branch-info-details-row">
-        <div class="branch-info-col">
-            <div class="branch-info-label">Services</div>
-            <ul class="branch-info-list">
-                {% for service in branch.services.split(',') %}
-                    <li>{{ service.strip() }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="branch-info-col">
-            <div class="branch-info-label">Description</div>
-            <div class="branch-info-value branch-info-desc">
-                {{ branch.clinic_description }}
-            </div>
-        </div>
-    </div>
-
-    <div class="branch-info-details-row">
-        <div class="branch-info-col">
-            <div class="branch-info-label">Chief Dentist</div>
-            <div class="branch-info-value">{{ branch.chief_dentist }}</div>
-        </div>
-        <div class="branch-info-col">
-            <div class="branch-info-label">Contact</div>
-            <div class="branch-info-value">{{ branch.contact_number }}</div>
-        </div>
-    </div>
-
-    <div class="branch-info-details-row">
-        <div class="branch-info-col">
-            <div class="branch-info-label">Clinic Hours</div>
-            <div class="branch-info-hours">
-                {{ branch.clinic_open_hour.strftime('%I:%M %p') }} - {{ branch.clinic_close_hour.strftime('%I:%M %p') }}
-            </div>
-        </div>
-    </div>
-
-    <div class="branch-info-actions">
-        <button class="branch-info-archive-btn">Archive</button>
-        <a class="branch-info-save-btn" href="{{ url_for('owner.branches') }}">Save Changes</a>
-    </div>
+    </form>
 </div>
 {% endblock %}
 

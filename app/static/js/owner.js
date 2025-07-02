@@ -100,4 +100,42 @@ function initDynamicFeatures() {
       if (e.target === modal) modal.style.display = 'none';
     });
   }
+
+  // --- Image Slider Functionality ---
+  const mainImg = document.getElementById('mainBranchImg');
+  const thumbnails = document.querySelectorAll('.branch-info-thumb');
+  const imageList = [];
+
+  thumbnails.forEach((thumb, index) => {
+    imageList.push(thumb.getAttribute('data-src'));
+
+    // Add click to set main image
+    thumb.onclick = () => {
+      mainImg.src = thumb.getAttribute('data-src');
+      mainImg.setAttribute('data-index', index);
+      updateActiveThumb(index);
+    };
+  });
+
+  // Update active thumbnail
+  function updateActiveThumb(index) {
+    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+    const active = document.querySelector(`.branch-info-thumb[data-index="${index}"]`);
+    if (active) active.classList.add('active');
+  }
+
+  // Arrow navigation
+  document.querySelectorAll('.slider-arrow').forEach(button => {
+    button.onclick = (e) => {
+      const dir = button.classList.contains('slider-arrow-right') ? 1 : -1;
+      let currentIndex = parseInt(mainImg.getAttribute('data-index'));
+      if (isNaN(currentIndex)) currentIndex = 0;
+
+      const nextIndex = (currentIndex + dir + imageList.length) % imageList.length;
+      mainImg.src = imageList[nextIndex];
+      mainImg.setAttribute('data-index', nextIndex);
+      updateActiveThumb(nextIndex);
+    };
+  });
+
 }

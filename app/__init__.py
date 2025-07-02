@@ -16,7 +16,8 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(Config)
-
+    app.config['UPLOAD_FOLDER'] = 'static/uploads/branches'
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Max file size: 16MB
     db.init_app(app)
     
     # Import blueprints from views
