@@ -1,3 +1,95 @@
+function handleAccept(id) {
+  fetch(`/owner/appointments/${id}/status`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ status: 'approved' }),
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert('Appointment approved!');
+      location.reload();
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(err => {
+    alert('An error occurred. Please try again.');
+    console.error(err);
+  });
+}
+
+function handleReject(id) {
+  fetch(`/owner/appointments/${id}/status`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ status: 'cancelled' }),
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert('Appointment rejected!');
+      location.reload();
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(err => {
+    alert('An error occurred. Please try again.');
+    console.error(err);
+  });
+}
+
+function handleComplete(appointmentId) {
+  fetch(`/owner/procedures/${appointmentId}/status`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ status: 'completed' }),
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert('Procedure marked as completed.');
+      location.reload();
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(err => {
+    alert('An error occurred.');
+    console.error(err);
+  });
+}
+
+function handleCancel(appointmentId) {
+  fetch(`/owner/procedures/${appointmentId}/status`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ status: 'cancelled' }),
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert('Procedure cancelled.');
+      location.reload();
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(err => {
+    alert('An error occurred.');
+    console.error(err);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   // =====================
   // FullCalendar Setup
@@ -13,13 +105,13 @@ document.addEventListener('DOMContentLoaded', function () {
     selectable: true,
     events: dynamicEvents,
     dateClick: function (info) {
-    const clickedDate = info.dateStr;
+      const clickedDate = info.dateStr;
 
-    // Set modal date
-    appointmentDateSpan.textContent = new Date(clickedDate).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
+      // Set modal date
+      appointmentDateSpan.textContent = new Date(clickedDate).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
     });
 
     const modalBody = appointmentsModalEl.querySelector('.modal-body');
@@ -49,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="d-flex gap-2 mt-3">
               <button class="btn btn-success btn-sm" ${isDisabled} onclick="handleComplete(${a.appointment_id})">Completed</button>
               <button class="btn btn-danger btn-sm" ${isDisabled} onclick="handleCancel(${a.appointment_id})">Cancel</button>
-              <button class="btn btn-warning btn-sm" ${isDisabled} onclick="handleReschedule(${a.appointment_id})">Reschedule</button>
             </div>
           `;
         }

@@ -1,0 +1,46 @@
+// For booking form
+// Toggle returning/new patient fields based on selection
+function togglePatientFields() {
+    const isReturning = document.querySelector('input[name="firstvisit"]:checked')?.value === 'yes';
+    const returningFields = document.getElementById('returning-fields');
+    const newPatientFields = document.getElementById('new-patient-fields');
+    const patientIdInput = document.getElementById('patient_id');
+
+    if (returningFields && newPatientFields) {
+        if (isReturning) {
+            returningFields.style.display = 'block';
+            newPatientFields.style.display = 'none';
+            setRequiredFields(true, false);
+            if (patientIdInput) patientIdInput.readOnly = false;
+        } else {
+            returningFields.style.display = 'block'; // still need name fields
+            newPatientFields.style.display = 'block';
+            setRequiredFields(true, true);
+            if (patientIdInput) patientIdInput.readOnly = true;
+        }
+    }
+}
+
+function setRequiredFields(requireName, requireOthers) {
+    const nameFields = ['first_name', 'last_name'];
+    nameFields.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.required = requireName;
+    });
+
+    const otherFields = ['dob', 'gender-male', 'contact', 'email', 'address_line1', 'baranggay', 'city', 'province'];
+    otherFields.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.required = requireOthers;
+    });
+}
+
+// Attach listeners on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    const radios = document.querySelectorAll('input[name="firstvisit"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', togglePatientFields);
+    });
+
+    togglePatientFields(); // Initial call to set state on load
+});
