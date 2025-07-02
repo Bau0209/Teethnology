@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify
 from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, Procedures, Transactions, Appointments, DentalInfo, MainWeb
 from werkzeug.utils import secure_filename
 import json
 import os
 from app import db
+from datetime import datetime
 
 owner = Blueprint('owner', __name__)
 
@@ -141,6 +142,7 @@ def appointments():
         query = query.filter_by(appointment_id=appointment_id)
 
     appointments = query.all()
+    procedures = Procedures.query.all
     branches = Branch.query.all()
 
     events = [
@@ -235,6 +237,33 @@ def appointment_req_detail(appointment_id):
         appointment_data=appointment_data
     )
 
+@owner.route('/appointments/<int:appointment_id>/status', methods=['POST'])
+def update_appointment_status(appointment_id):
+    data = request.get_json()
+    status = data.get('status')
+
+    if status not in ['approved', 'cancelled', 'completed']:
+        return jsonify({'success': False, 'message': 'Invalid status'}), 400
+
+    appointment = Appointments.query.get(appointment_id)
+    if not appointment:
+        return jsonify({'success': False, 'message': 'Appointment not found'}), 404
+
+    # Update appointment status
+    appointment.appointment_status = status
+
+    # Also update procedure_status if it's 'completed' or 'cancelled'
+    if status in ['completed', 'cancelled']:
+        procedures = Procedures.query.filter_by(appointment_id=appointment_id).all()
+        if not procedures:
+            return jsonify({'success': False, 'message': 'No procedure records found for this appointment'}), 404
+
+        for proc in procedures:
+            proc.procedure_status = status
+
+    db.session.commit()
+
+    return jsonify({'success': True, 'message': 'Status updated successfully'})
 
 @owner.route('/patients')
 def patients():
@@ -255,16 +284,47 @@ def patients():
 
 @owner.route('/patient_info/<int:patient_id>')   
 def patient_info(patient_id):
-    patient = PatientsInfo.query.get_or_404(patient_id)
-    patient_medical_info = PatientMedicalInfo.query.get_or_404(patient_id)
-    print(patient_medical_info.physician_name)
-    return render_template('/owner/patient_info.html', patient=patient, patient_medical_info=patient_medical_info)
+    patient = PatientsInfo.query.get_or_404(patient_id)  # Required
+    patient_medical_info = PatientMedicalInfo.query.get(patient_id)  # Optional
+    dental_info = DentalInfo.query.get(patient_id)  # Optional (if you're including dental info too)
+
+    return render_template(
+        '/owner/patient_info.html',
+        patient=patient,
+        patient_medical_info=patient_medical_info,
+        dental_info=dental_info
+    )
 
 @owner.route('/patient_procedure/<int:patient_id>')   
 def patient_procedure(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     procedures = Procedures.query.filter_by(patient_id=patient_id)
     return render_template('/owner/procedure.html',patient=patient, procedures=procedures)
+
+@owner.route('/procedures/<int:appointment_id>/status', methods=['POST'])
+def update_procedure_status(appointment_id):
+    data = request.get_json()
+    status = data.get('status')
+
+    if status not in ['completed', 'cancelled']:
+        return jsonify({'success': False, 'message': 'Invalid status'}), 400
+
+    # Find procedures with the given appointment_id
+    procedures = Procedures.query.filter_by(appointment_id=appointment_id).all()
+
+    if not procedures:
+        return jsonify({
+            'success': False,
+            'message': f'No procedure found for this appointment (ID: {appointment_id}). Please add the procedure to this patient\'s history first.'
+        }), 404
+
+    # Update all matching procedures (in case there's more than one)
+    for procedure in procedures:
+        procedure.procedure_status = status
+
+    db.session.commit()
+
+    return jsonify({'success': True, 'message': 'Procedure status updated.'})
 
 @owner.route('/patient_dental_rec/<int:patient_id>')   
 def patient_dental_rec(patient_id):

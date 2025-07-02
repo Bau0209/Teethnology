@@ -100,7 +100,7 @@ CREATE TABLE `appointments` (
   KEY `patient_id` (`patient_id`),
   CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `appointments_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patient_info` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +109,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
-INSERT INTO `appointments` VALUES (1,1,1,0,'2024-01-15 09:00:00',NULL,'Tooth Extraction','approved','2024-01-10 08:00:00','2024-01-12 14:00:00','Dr. Reyes'),(2,1,1,1,'2024-03-10 10:30:00',NULL,'Oral Prophylaxis','approved','2024-03-05 11:00:00','2024-03-07 09:00:00','Dr. Reyes'),(3,1,2,0,'2024-02-25 11:00:00',NULL,'Dental Filling','approved','2024-02-20 13:00:00','2024-02-22 10:00:00','Dr. Santos'),(4,2,3,0,'2024-04-12 14:00:00',NULL,'Root Canal Therapy (Session 1)','approved','2024-04-07 09:30:00','2024-04-10 16:00:00','Dr. Tan'),(5,2,3,1,'2024-05-05 10:00:00',NULL,'Temporary Crown Placement','approved','2024-05-01 12:00:00','2024-05-03 14:00:00','Dr. Tan'),(6,2,4,0,'2024-01-10 09:00:00',NULL,'Orthodontic Consultation','approved','2024-01-05 08:00:00','2024-01-08 12:00:00','Dr. Garcia'),(7,2,4,1,'2024-02-05 10:00:00',NULL,'Braces Installation','approved','2024-01-30 13:00:00','2024-02-02 15:00:00','Dr. Garcia'),(8,2,4,1,'2024-03-05 10:00:00',NULL,'Braces Adjustment (Month 1)','approved','2024-03-01 09:30:00','2024-03-03 16:00:00','Dr. Garcia'),(9,2,4,1,'2024-04-05 10:00:00',NULL,'Braces Adjustment (Month 2)','approved','2024-04-01 11:00:00','2024-04-03 13:00:00','Dr. Garcia'),(10,2,4,1,'2024-05-05 10:00:00',NULL,'Braces Adjustment (Month 3)','approved','2024-05-01 11:00:00','2024-05-03 13:00:00','Dr. Garcia'),(11,2,4,1,'2024-06-05 10:00:00',NULL,'Braces Adjustment (Month 4)','approved','2024-06-01 11:00:00','2024-06-03 13:00:00','Dr. Garcia'),(12,1,5,0,'2025-07-30 16:00:00','2025-07-30 18:00:00','Tooth Extraction','pending','2025-07-01 14:28:01',NULL,NULL);
+INSERT INTO `appointments` VALUES (1,1,1,0,'2024-01-15 09:00:00',NULL,'Tooth Extraction','approved','2024-01-10 08:00:00','2024-01-12 14:00:00','Dr. Reyes'),(2,1,1,1,'2024-03-10 10:30:00',NULL,'Oral Prophylaxis','approved','2024-03-05 11:00:00','2024-03-07 09:00:00','Dr. Reyes'),(3,1,2,0,'2024-02-25 11:00:00',NULL,'Dental Filling','approved','2024-02-20 13:00:00','2024-02-22 10:00:00','Dr. Santos'),(4,2,3,0,'2024-04-12 14:00:00',NULL,'Root Canal Therapy (Session 1)','approved','2024-04-07 09:30:00','2024-04-10 16:00:00','Dr. Tan'),(5,2,3,1,'2024-05-05 10:00:00',NULL,'Temporary Crown Placement','approved','2024-05-01 12:00:00','2024-05-03 14:00:00','Dr. Tan'),(6,2,4,0,'2024-01-10 09:00:00',NULL,'Orthodontic Consultation','approved','2024-01-05 08:00:00','2024-01-08 12:00:00','Dr. Garcia'),(7,2,4,1,'2024-02-05 10:00:00',NULL,'Braces Installation','approved','2024-01-30 13:00:00','2024-02-02 15:00:00','Dr. Garcia'),(8,2,4,1,'2024-03-05 10:00:00',NULL,'Braces Adjustment (Month 1)','approved','2024-03-01 09:30:00','2024-03-03 16:00:00','Dr. Garcia'),(9,2,4,1,'2024-04-05 10:00:00',NULL,'Braces Adjustment (Month 2)','approved','2024-04-01 11:00:00','2024-04-03 13:00:00','Dr. Garcia'),(10,2,4,1,'2024-05-04 10:00:00',NULL,'Braces Adjustment (Month 3)','approved','2024-05-01 11:00:00','2024-05-03 13:00:00','Dr. Garcia'),(11,2,4,1,'2024-06-05 10:00:00',NULL,'Braces Adjustment (Month 4)','approved','2024-06-01 11:00:00','2024-06-03 13:00:00','Dr. Garcia'),(12,1,5,0,'2025-07-30 16:00:00','2025-07-30 18:00:00','Tooth Extraction','approved','2025-07-01 14:28:01',NULL,NULL),(24,1,2,1,'2025-07-23 16:30:00',NULL,'Consultation','pending','2025-07-02 06:26:05',NULL,NULL),(25,1,6,0,'2025-07-25 15:30:00',NULL,'Consultation','pending','2025-07-02 06:42:24',NULL,NULL);
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +140,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
-INSERT INTO `branch` VALUES (1,'JCS Manila branch','123 Main St, Manila City','A modern dental clinic offering general and cosmetic services.','Dr. Anna Cruz','09171234567','08:00:00','17:00:00','Cleaning, Whitening, Braces'),(2,'JCS Quezon City Branch','123 Main St, Quezon City','A modern dental clinic offering general and cosmetic services.','Dr. Juan Cruz','09181334435','08:00:00','18:00:00','Cleaning, Whitening, Braces');
+INSERT INTO `branch` VALUES (1,'JCS Manila branch','123 Main St, Manila City','A modern dental clinic offering general and cosmetic services.','Dr. Anna Cruz','09171234567','07:00:00','17:00:00','Cleaning, Whitening, Braces'),(2,'JCS Quezon City Branch','123 Main St, Quezon City','A modern dental clinic offering general and cosmetic services.','Dr. Juan Cruz','09181334435','08:00:00','18:00:00','Cleaning, Whitening, Braces');
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +385,7 @@ CREATE TABLE `patient_info` (
   PRIMARY KEY (`patient_id`),
   KEY `branch_id` (`branch_id`),
   CONSTRAINT `patient_info_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,7 +394,7 @@ CREATE TABLE `patient_info` (
 
 LOCK TABLES `patient_info` WRITE;
 /*!40000 ALTER TABLE `patient_info` DISABLE KEYS */;
-INSERT INTO `patient_info` VALUES (1,1,'Juan','Santos','Dela Cruz','1990-05-15','M','09171234567','juan.dc@example.com','123 Mabuhay St.','Barangay Uno','Manila','Metro Manila','Philippines','Dentures','Engineer','02-1234567',NULL,NULL,NULL,NULL,'Friend','Dr. Reyes','2023-07-01',NULL),(2,1,'Maria','Luisa','Reyes','1985-08-22','F','09179876543','maria.reyes@example.com','456 Maligaya Ave.','Barangay Dos','Manila','Metro Manila','Philippines','Braces','Teacher','02-7654321','Lola','Cruz','Reyes','Retired','','None',NULL,NULL),(3,2,'Carlos','David','Santos','1992-02-10','M','09172345678','carlos.santos@example.com','789 Payapa Blvd.','Barangay Tres','Quezon City','Metro Manila','Philippines','Tooth ache','Designer','02-5566778',NULL,NULL,NULL,NULL,'Online Ad','Dr. Tan','2022-12-15',NULL),(4,2,'Angela','Marie','Lopez','1996-11-05','F','09173456789','angela.lopez@example.com','321 Tahimik Lane','Barangay Cuatro','Quezon City','Metro Manila','Philippines','Tooth ache','Student',NULL,'Anna','Grace','Lopez','Nurse','School','None',NULL,NULL),(5,1,'Eddielyn Joy','Calano','Bautista','2004-02-09','F','09501055477','ejbautista0209@gmail.com','129 Hello lane','Baranggay 567','Pasay City','Metro Manila','Philippines','Tooth ache','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `patient_info` VALUES (1,1,'Juan','Santos','Dela Cruz','1990-05-15','M','09171234567','juan.dc@example.com','123 Mabuhay St.','Barangay Uno','Manila','Metro Manila','Philippines','Dentures','Engineer','02-1234567',NULL,NULL,NULL,NULL,'Friend','Dr. Reyes','2023-07-01',NULL),(2,1,'Maria','Luisa','Reyes','1985-08-22','F','09179876543','maria.reyes@example.com','456 Maligaya Ave.','Barangay Dos','Manila','Metro Manila','Philippines','Braces','Teacher','02-7654321','Lola','Cruz','Reyes','Retired','','None',NULL,NULL),(3,2,'Carlos','David','Santos','1992-02-10','M','09172345678','carlos.santos@example.com','789 Payapa Blvd.','Barangay Tres','Quezon City','Metro Manila','Philippines','Tooth ache','Designer','02-5566778',NULL,NULL,NULL,NULL,'Online Ad','Dr. Tan','2022-12-15',NULL),(4,2,'Angela','Marie','Lopez','1996-11-05','F','09173456789','angela.lopez@example.com','321 Tahimik Lane','Barangay Cuatro','Quezon City','Metro Manila','Philippines','Tooth ache','Student',NULL,'Anna','Grace','Lopez','Nurse','School','None',NULL,NULL),(5,1,'Eddielyn Joy','Calano','Bautista','2004-02-09','F','09501055477','ejbautista0209@gmail.com','129 Hello lane','Baranggay 567','Pasay City','Metro Manila','Philippines','Tooth ache','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,1,'dsadsa','dasdsa','dsadasdsa','2008-02-13','M','9501055477','ejbautista0209@gmail.com','ds','Balara','Quezon City','saddsa','Canada','Consultation',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `patient_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,6 +453,7 @@ DROP TABLE IF EXISTS `procedure_history`;
 CREATE TABLE `procedure_history` (
   `procedure_id` int NOT NULL AUTO_INCREMENT,
   `patient_id` int NOT NULL,
+  `appointment_id` int DEFAULT NULL,
   `Procedure_date` date NOT NULL,
   `treatment_procedure` varchar(255) NOT NULL,
   `tooth_area` varchar(10) NOT NULL,
@@ -463,6 +464,8 @@ CREATE TABLE `procedure_history` (
   `notes` text,
   PRIMARY KEY (`procedure_id`),
   KEY `patient_id` (`patient_id`),
+  KEY `fk_procedure_appointment` (`appointment_id`),
+  CONSTRAINT `fk_procedure_appointment` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`appointment_id`) ON DELETE SET NULL,
   CONSTRAINT `procedure_history_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient_info` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -473,7 +476,7 @@ CREATE TABLE `procedure_history` (
 
 LOCK TABLES `procedure_history` WRITE;
 /*!40000 ALTER TABLE `procedure_history` DISABLE KEYS */;
-INSERT INTO `procedure_history` VALUES (1,1,'2024-01-15','Tooth Extraction','28','Dr. Reyes','Remove decayed upper right wisdom tooth',1500,'Completed','Procedure completed without complications'),(2,1,'2024-03-10','Oral Prophylaxis','Full','Dr. Reyes','Routine cleaning and polish',800,'Completed','Advised 6-month follow-up'),(3,2,'2024-02-25','Dental Filling','14','Dr. Santos','Composite filling due to cavity',1200,'Completed','Patient felt sensitivity post-procedure'),(4,3,'2024-04-12','Root Canal Therapy','36','Dr. Tan','RCT due to pulp infection, 3-session plan',4500,'Ongoing','Session 1 completed; next in 2 weeks'),(5,3,'2024-05-05','Temporary Crown Placement','36','Dr. Tan','Placed temporary crown after RCT',2000,'Completed','Permanent crown scheduled next month'),(6,4,'2024-01-10','Orthodontic Consultation','Full','Dr. Garcia','Assessment for braces. Took impressions and X-rays.',0,'Completed','Braces recommended; patient agreed to start treatment'),(7,4,'2024-02-05','Braces Installation','Full','Dr. Garcia','Installed metal braces. Discussed oral care and monthly visits.',45000,'Ongoing','Patient tolerated procedure well'),(8,4,'2024-03-05','Braces Adjustment','Full','Dr. Garcia','Tightened brackets, replaced elastic bands.',0,'Completed','Minor discomfort reported'),(9,4,'2024-04-05','Braces Adjustment','Full','Dr. Garcia','Adjusted archwire, checked teeth movement progress.',0,'Completed','Slight improvement in alignment observed'),(10,4,'2024-05-05','Braces Adjustment','Full','Dr. Garcia','Replaced wires and elastics, minor repositioning done.',0,'Completed','Patient doing well with hygiene'),(11,4,'2024-06-05','Braces Adjustment','Full','Dr. Garcia','Final monthly adjustment for phase 1. Scheduled retainer fitting.',0,'Completed','Brackets to be removed next session');
+INSERT INTO `procedure_history` VALUES (1,1,1,'2024-01-15','Tooth Extraction','28','Dr. Reyes','Remove decayed upper right wisdom tooth',1500,'Completed','Procedure completed without complications'),(2,1,2,'2024-03-10','Oral Prophylaxis','Full','Dr. Reyes','Routine cleaning and polish',800,'Completed','Advised 6-month follow-up'),(3,2,3,'2024-02-25','Dental Filling','14','Dr. Santos','Composite filling due to cavity',1200,'Completed','Patient felt sensitivity post-procedure'),(4,3,4,'2024-04-12','Root Canal Therapy','36','Dr. Tan','RCT due to pulp infection, 3-session plan',4500,'Ongoing','Session 1 completed; next in 2 weeks'),(5,3,5,'2024-05-05','Temporary Crown Placement','36','Dr. Tan','Placed temporary crown after RCT',2000,'Completed','Permanent crown scheduled next month'),(6,4,6,'2024-01-10','Orthodontic Consultation','Full','Dr. Garcia','Assessment for braces. Took impressions and X-rays.',0,'Completed','Braces recommended; patient agreed to start treatment'),(7,4,7,'2024-02-05','Braces Installation','Full','Dr. Garcia','Installed metal braces. Discussed oral care and monthly visits.',45000,'Ongoing','Patient tolerated procedure well'),(8,4,8,'2024-03-05','Braces Adjustment','Full','Dr. Garcia','Tightened brackets, replaced elastic bands.',0,'Completed','Minor discomfort reported'),(9,4,9,'2024-04-05','Braces Adjustment','Full','Dr. Garcia','Adjusted archwire, checked teeth movement progress.',0,'Completed','Slight improvement in alignment observed'),(10,4,10,'2024-05-04','Braces Adjustment','Full','Dr. Garcia','Replaced wires and elastics, minor repositioning done.',0,'Completed','Patient doing well with hygiene'),(11,4,11,'2024-06-05','Braces Adjustment','Full','Dr. Garcia','Final monthly adjustment for phase 1. Scheduled retainer fitting.',0,'completed','Brackets to be removed next session');
 /*!40000 ALTER TABLE `procedure_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -519,4 +522,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-02 12:24:25
+-- Dump completed on 2025-07-02 16:09:55
