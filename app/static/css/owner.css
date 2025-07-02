@@ -261,7 +261,7 @@ body {
   margin-top: auto;
   border-left: none;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -278,7 +278,7 @@ body {
 }
 
 .welcome-card hr {
-    width: 50%;
+    width: 100%;
     border: 0;
     height: 1px;
     background: #e0e0e0;
@@ -287,11 +287,13 @@ body {
 
 .business-insight-content {
     width: 100%;
+    padding: 30px ;
+    margin: 20px auto;
 }
 
 .insight-item {
     margin-bottom: 15px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.5;
     color: #393939;
 }
@@ -304,7 +306,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 15px;
+    padding: 25px;
     gap: 15px;
 }
 
@@ -323,7 +325,8 @@ body {
 
 .appointments-today-card h2 {
     color: #0097a7;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin-bottom: 5px;
     text-align: center;
 }
@@ -338,7 +341,7 @@ body {
 
 .appointments-today-card .branches-text {
     color: #666;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .dashboard-center.card {
@@ -850,16 +853,12 @@ body {
   }
 
   .welcome-card,
-  .info-card {
-    flex: 1 1 100%;
-  }
-
+  .info-card,
   .dashboard-center.card,
-  .calendar-details-panel {
-    max-width: 100%;
-    min-width: 100%;
+  .calendar-details-panel,
+  .appointment-requests {
+    width: 100%;
     margin-top: 20px;
-    margin-left: 0;
   }
 
   .calendar-card,
@@ -910,6 +909,13 @@ body {
   .appointments-today-content {
     align-items: center;
   }
+
+  .dashboard-center.card,
+  .calendar-details-panel,
+  .appointment-requests {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 @media (max-width: 768px) {
@@ -922,12 +928,10 @@ body {
   }
 
   .dashboard-center.card,
-  .dashboard-right.card {
-    padding: 18px;
-  }
-
+  .dashboard-right.card,
   .appointment-requests {
-    padding: 15px 10px;
+    padding: 18px;
+    width: 100%;
   }
 
   .appointment-requests-header,
@@ -945,6 +949,11 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
   }
+
+  .calendar-card,
+  .calendar-panel {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 576px) {
@@ -952,8 +961,11 @@ body {
     padding: 15px;
   }
 
-  .card {
+  .card,
+  .calendar-card,
+  .calendar-panel {
     padding: 15px;
+    width: 100%;
   }
 
   .welcome-card h2 {
@@ -1003,7 +1015,8 @@ body {
     font-size: 1.1rem;
   }
 
-  .card {
+  .card,
+  .dashboard-center.card {
     padding: 12px 10px;
   }
 
