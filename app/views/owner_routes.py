@@ -142,16 +142,20 @@ def appointments():
         query = query.filter_by(appointment_id=appointment_id)
 
     appointments = query.all()
-    procedures = Procedures.query.all
     branches = Branch.query.all()
 
     events = [
-        {
-            'title': f"{a.patient.patient_full_name} - {a.appointment_type}",
-            'start': a.appointment_sched.strftime('%Y-%m-%d')
-        }
-        for a in appointments
-    ]
+    {
+        'title': f"{a.patient.patient_full_name} - {a.appointment_type}",
+        'start': a.appointment_sched.strftime('%Y-%m-%d'),
+        'color': '#e57373' if a.appointment_status == 'pending' else '#7bb3ad',
+        'patient': a.patient.patient_full_name,
+        'type': a.appointment_type,
+    }
+    for a in appointments
+]
+
+
     
     appointment_data = [
         {
