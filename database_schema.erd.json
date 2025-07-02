@@ -4,8 +4,8 @@
   "settings": {
     "width": 3500,
     "height": 3500,
-    "scrollTop": -1177.4756,
-    "scrollLeft": -1909.0697,
+    "scrollTop": -496.3156,
+    "scrollLeft": -481.1833,
     "zoomLevel": 1,
     "show": 431,
     "database": 4,
@@ -53,7 +53,8 @@
       "NJmjMGHwI66rXjhbN02y9",
       "DU8grg0katMhF6y4bIyi1",
       "3yi-O5n4eauoLkEAhZhQU",
-      "r6Fc1Z5Ik0dpJHDLeqp7r"
+      "r6Fc1Z5Ik0dpJHDLeqp7r",
+      "3-VbBKr0KyG6QGJroMVek"
     ],
     "relationshipIds": [
       "rERCrRBroJF1fg9tyeHVh",
@@ -1099,6 +1100,37 @@
         "meta": {
           "updateAt": 1751291177227,
           "createAt": 1751290976092
+        }
+      },
+      "3-VbBKr0KyG6QGJroMVek": {
+        "id": "3-VbBKr0KyG6QGJroMVek",
+        "name": "main_website",
+        "comment": "",
+        "columnIds": [
+          "OefZiitVI1nvctplX2_PV",
+          "l2yMcRqeO5LjONGJ9B2Hy",
+          "Fym6rD-oBHFNsoDXjXcS1",
+          "W_zwzV5IrJmVlRn5q1UwI",
+          "x09C7ss0JledcLnr7NT06"
+        ],
+        "seqColumnIds": [
+          "OefZiitVI1nvctplX2_PV",
+          "l2yMcRqeO5LjONGJ9B2Hy",
+          "Fym6rD-oBHFNsoDXjXcS1",
+          "W_zwzV5IrJmVlRn5q1UwI",
+          "x09C7ss0JledcLnr7NT06"
+        ],
+        "ui": {
+          "x": 764.1833,
+          "y": 692.3156,
+          "zIndex": 3587,
+          "widthName": 74,
+          "widthComment": 60,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1751428587844,
+          "createAt": 1751428547028
         }
       }
     },
@@ -7121,6 +7153,106 @@
         "meta": {
           "updateAt": 1751332809788,
           "createAt": 1751332805753
+        }
+      },
+      "OefZiitVI1nvctplX2_PV": {
+        "id": "OefZiitVI1nvctplX2_PV",
+        "tableId": "3-VbBKr0KyG6QGJroMVek",
+        "name": "main_website",
+        "comment": "",
+        "dataType": "int",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 74,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1751428569346,
+          "createAt": 1751428559049
+        }
+      },
+      "l2yMcRqeO5LjONGJ9B2Hy": {
+        "id": "l2yMcRqeO5LjONGJ9B2Hy",
+        "tableId": "3-VbBKr0KyG6QGJroMVek",
+        "name": "about_us",
+        "comment": "",
+        "dataType": "text",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1751428574872,
+          "createAt": 1751428564700
+        }
+      },
+      "Fym6rD-oBHFNsoDXjXcS1": {
+        "id": "Fym6rD-oBHFNsoDXjXcS1",
+        "tableId": "3-VbBKr0KyG6QGJroMVek",
+        "name": "services",
+        "comment": "",
+        "dataType": "text",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1751428581123,
+          "createAt": 1751428575887
+        }
+      },
+      "W_zwzV5IrJmVlRn5q1UwI": {
+        "id": "W_zwzV5IrJmVlRn5q1UwI",
+        "tableId": "3-VbBKr0KyG6QGJroMVek",
+        "name": "main_email",
+        "comment": "",
+        "dataType": "text",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 63,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1751428586855,
+          "createAt": 1751428581892
+        }
+      },
+      "x09C7ss0JledcLnr7NT06": {
+        "id": "x09C7ss0JledcLnr7NT06",
+        "tableId": "3-VbBKr0KyG6QGJroMVek",
+        "name": "main_contact",
+        "comment": "",
+        "dataType": "text",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 74,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1751428592108,
+          "createAt": 1751428587844
         }
       }
     },

@@ -1,8 +1,16 @@
-from flask import Blueprint, render_template, request
-from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, Procedures, Transactions, Appointments, DentalInfo
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
+from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, Procedures, Transactions, Appointments, DentalInfo, MainWeb
+from werkzeug.utils import secure_filename
 import json
+import os
+from app import db
 
 owner = Blueprint('owner', __name__)
+
+#For image upload in branches
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @owner.route('/owner_home')
 def owner_home():
@@ -10,14 +18,114 @@ def owner_home():
 
 @owner.route('/branches')
 def branches():
+    main_web = MainWeb.query.first()
     branches = Branch.query.all()
-    return render_template('/owner/branches.html', branches=branches)
+
+    # For each branch, get its first image (if any)
+    branch_images = {}
+    for branch in branches:
+        first_image = ClinicBranchImage.query.filter_by(branch_id=branch.branch_id).first()
+        branch_images[branch.branch_id] = first_image.image_link if first_image else None
+
+    return render_template(
+        '/owner/branches.html',
+        branches=branches,
+        main_web=main_web,
+        branch_images=branch_images
+    )
 
 @owner.route('/branch_info/<int:branch_id>')
 def branch_info(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
     return render_template('/owner/o_branch_info.html', branch=branch, branch_images=branch_images)
+
+@owner.route('/update-main-website', methods=['POST'])
+def update_main_website():
+    main_web = MainWeb.query.first()
+    if not main_web:
+        main_web = MainWeb()
+
+    # Get values from form
+    services = request.form.getlist('services')
+    main_web.services = ','.join(services)
+    main_web.about_us = request.form.get('about_us')
+    main_web.main_email = request.form.get('main_email')
+    main_web.main_contact_number = request.form.get('main_contact_number')
+
+    # Save to DB
+    db.session.add(main_web)
+    db.session.commit()
+    flash('Website info updated successfully.', 'success')
+    return redirect(url_for('owner.branches'))
+
+@owner.route('/branch/<int:branch_id>/add-image', methods=['POST'])
+def add_branch_image(branch_id):
+    if 'image' not in request.files:
+        flash('No file part')
+        return redirect(request.referrer)
+
+    file = request.files['image']
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.referrer)
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        os.makedirs(upload_folder, exist_ok=True)
+
+        filepath = os.path.join(upload_folder, filename)
+        file.save(filepath)
+
+        # Save to DB
+        rel_path = os.path.relpath(filepath, 'static').replace('\\', '/')
+
+        new_image = ClinicBranchImage(
+            image_link=rel_path,
+            branch_id=branch_id
+        )
+
+        db.session.add(new_image)
+        db.session.commit()
+        flash('Image uploaded successfully.')
+    else:
+        flash('Invalid file type.')
+
+    return redirect(request.referrer)
+
+@owner.route('/branch/<int:image_id>/delete-image', methods=['POST'])
+def delete_branch_image(image_id):
+    image = ClinicBranchImage.query.get(image_id)
+    if image:
+        filepath = os.path.join('static', image.image_link)
+        if os.path.exists(filepath):
+            os.remove(filepath)
+
+        db.session.delete(image)
+        db.session.commit()
+        flash('Image deleted successfully.')
+    else:
+        flash('Image not found.')
+
+    return redirect(request.referrer)
+
+@owner.route('/branch/<int:branch_id>/edit', methods=['POST'])
+def edit_branch(branch_id):
+    branch = Branch.query.get_or_404(branch_id)
+
+    branch.branch_name = request.form['branch_name']
+    branch.full_address = request.form['full_address']
+    branch.services = request.form['services']
+    branch.clinic_description = request.form['clinic_description']
+    branch.chief_dentist = request.form['chief_dentist']
+    branch.contact_number = request.form['contact_number']
+    branch.clinic_open_hour = request.form['clinic_open_hour']
+    branch.clinic_close_hour = request.form['clinic_close_hour']
+
+    db.session.commit()
+    flash('Branch information updated successfully.', 'success')
+    return redirect(url_for('owner.branch_info', branch_id=branch_id))
 
 @owner.route('/appointments')
 def appointments():

@@ -1,16 +1,19 @@
 from flask import Blueprint, render_template
-from app.models.branches import Branch, ClinicBranchImage
+from app.models import Branch, ClinicBranchImage, MainWeb
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def homepage():
     branches = Branch.query.all()
-    return render_template('/main_website/Home.html', branches=branches)
+    main_web = MainWeb.query.first()
+    return render_template('/main_website/Home.html', branches=branches, main_web=main_web)
 
 @main.route('/contact')
 def contact():
-    return render_template('/main_website/contact.html')
+    main_web = MainWeb.query.first()
+    branches = Branch.query.all()
+    return render_template('/main_website/contact.html', branches=branches, main_web=main_web)
 
 @main.route('/form')
 def form():

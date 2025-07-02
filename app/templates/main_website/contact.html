@@ -27,25 +27,22 @@
             <div class="contact-icon">
                 <i class="fas fa-envelope"></i>
                 <h3>Email Address</h3>
-                <p>example@gmail.com</p>
+                <p>{{ main_web.main_email }}</p>
             </div>
             <div class="contact-icon">
                 <i class="fas fa-phone"></i>
                 <h3>Phone Number</h3>
-                <p>Manila City:</p>
-                <p>Quezon City:</p>
+                <p><strong>Main Number:</strong> {{ main_web.main_contact_number }}</p>
+                {% for branch in branches %}
+                    <p><strong>{{ branch.branch_name }}:</strong> {{ branch.contact_number }}</p>
+                {% endfor %}
             </div>
             <div class="contact-icon">  
                 <i class="fas fa-map-marker-alt"></i> 
                 <h3>Office Location</h3>
-                <p>Ad Hiora torquent</p>
-                <p>Ad Hiora torquent</p>
-            </div>
-            <div class="contact-icon">
-                <i class="fas fa-clock"></i>
-                <h3>Working Day</h3>
-                <p>Mon - Fri: 9:00 - 17:00</p>
-                <p>Sun - Fri: 9:00 - 17:00</p>
+                {% for branch in branches %}
+                    <p><strong>{{ branch.branch_name }}:</strong> {{ branch.full_address }}</p>
+                {% endfor %}
             </div>
         </section>
         <section class="contact-form-row">
