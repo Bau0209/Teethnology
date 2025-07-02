@@ -229,7 +229,7 @@ body {
   margin-bottom: 15px;
   width: 100%;
 }
-
+ 
 .dashboard-left {
   display: flex;
   flex-direction: column;
@@ -287,8 +287,8 @@ body {
 
 .business-insight-content {
     width: 100%;
-    padding: 30px ;
-    margin: 20px auto;
+    padding: 20px ;
+    margin: 10px auto;
 }
 
 .insight-item {

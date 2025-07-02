@@ -23,7 +23,7 @@ body {
     color: #222;
     touch-action: manipulation; /* Better mobile touch handling */
 }
-
+ 
 
 header {
     width: 100%;
@@ -296,10 +296,18 @@ nav ul li a:hover {
     max-width: 100%;
     padding: 20px;
 }
-
-.branch-img {
+.branch-img-container {
     width: 240px;
     height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 18px;
+    flex-shrink: 0;
+}
+
+.branch-img {
+    width: 100%;
+    height: 100%;
     border-radius: 8px;
     object-fit: cover;
     margin-right: 18px;
@@ -342,7 +350,7 @@ nav ul li a:hover {
 /* Services Section */
 #services {
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
     background: #fff;
     padding: 48px 0 56px 0;
     display: flex;
@@ -383,7 +391,6 @@ nav ul li a:hover {
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.267);
-    width: 250px;
     padding: 0 0 24px 0;
     display: flex;
     flex-direction: column;
@@ -397,7 +404,7 @@ nav ul li a:hover {
 
 .service-img {
     width: 100%;
-    height: 160px;
+    height: 150px;
     object-fit: cover;
     border-radius: 16px 16px 0 0;
 }
@@ -434,6 +441,48 @@ nav ul li a:hover {
     text-align: center;
     margin: 0 18px;
 }
+
+/* Selected Services Container */
+.selected-services-container {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.selected-services-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 0 5%; /* Match your existing services-cards margins */
+}
+
+/* Ensures all cards (static and dynamic) have identical sizing */
+.service-card, 
+.selected-service-card .service-card {
+    width: 100%;
+    max-width: 350px;
+    min-height: 420px; /* Fixed height */
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.267);
+    padding: 0 0 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.2s;
+    position: relative; /* For absolute positioning of remove button */
+}
+
+/* Content area sizing */
+.service-card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 15px;
+    width: 100%;
+}
+
 
 /* About Section */
 #about-us {
