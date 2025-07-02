@@ -1,260 +1,185 @@
 /* Base styles */
 body {
-  background: #f8f9fa !important;
+  background: rgba(157, 202, 202, 0.322) !important; 
 }
 
-.revenue .row.gy-4 {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-    align-items: flex-start; /* Changed from stretch to flex-start */
+.revenue {
+  background-color: none;
+  min-height: 100vh;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-.col-lg-8 {
-    flex: 0 0 66.666667%;
-    max-width: 100%;
-    padding-right: 8px;
-    padding-left: 15px;
+/* Nav Tabs */
+.nav-tabs .nav-link.active {
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid #17a2b8;
+  color: #17a2b8;
+  font-weight: 600;
+}
+.nav-tabs .nav-link {
+  color: #6c757d;
+  font-weight: 500;
 }
 
-/* Modified layout for summary section */
-.col-lg-5.d-flex {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-    padding-right: 8px;
-    padding-left: 15px;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 0;
-    height: auto; /* Changed from 100% to auto */
+/* Buttons for filters */
+.btn-outline-primary.active {
+  background-color: #17a2b8;
+  color: white;
+  border-color: #17a2b8;
+}
+.btn-outline-primary {
+  color: #17a2b8;
+  border-color: #17a2b8;
 }
 
-/* Adjust the metric cards container */
-.col-lg-5.d-flex > .mb-4 {
-    display: flex;
-    flex-direction: row;
-    gap: 0.75rem;
-    margin-bottom: 0 !important;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    margin-top: -5px;
-}
-
-/* Metric card adjustments */
-.metric-card {
-    flex: 1;
-    min-width: calc(33.33% - 0.5rem);
-    height: 70px;
-    text-align: center;
-    background-color: #fff;
-    padding: 0.5rem;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Top earning services card adjustments */
-.col-lg-5.d-flex > .col-lg-6 {
-    width: 100%;
-    padding: 0;
-    margin-top: 0.5rem;
-}
-
-/* Card Styling */
+/* Cards */
 .card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-bottom: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  border: none;
 }
 
-/* Specific height for Revenue by Service and Top Earning cards */
-#revenueChart {
-    height: 250px !important;
+.custom-width-left {
+  flex: 0 0 65%; 
+  max-width: 65%;
 }
 
-/* Card header and body adjustments */
+.revenue-right {
+  flex: 0 0 35%;
+  max-width: 45%;
+}
+
 .card-header {
-    background-color: white;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 8px 8px 0 0 !important;
-    padding: 0.75rem 1rem;
-}
-.card-header h6{
-    text-align: left;
-    font-size: 0.9rem;
-    color: #00898E !important;
-    align-items: left;
-}
-.card-header h5 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin: 0;
+  border-bottom: none;
+  font-weight: 600;
+  color: #00898E;
+  font-size: 1rem;
 }
 
-.card-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
+.metric-card {
+  background-color: #ffffff;
+  text-align: center;
+  margin-bottom: 12px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* Revenue Total */
+.metric-card .card-body {
+  padding: 1rem 0.5rem;
+}
+
+.metric-card .card-title {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.vr-divider {
+  width: 1px;
+  background-color: #ccc;
+  margin: 0 12px;
+}
+
+/* Revenue Summary Text */
+.text-muted {
+  color: #00898E !important;
+}
+
+#revenueByServiceChart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* Revenue Total section (top-right of chart) */
 .revenue-total {
-    padding: 0.5rem 1rem;
-    background: #f8f9fa;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  text-align: right;
 }
 
-.revenue-total small {
-    font-size: 0.7rem;
-    color: #6c757d;
+/* Forecast filters */
+.forecast-filters .btn {
+  border-radius: 50px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.75rem;
+}
+.col-lg-8 h4{
+    color: #00898E !important;
+
 }
 
-.revenue-total span {
-    font-size: 1.2rem;
-    color: #212529;
+/* Doughnut Labels */
+ul.list-unstyled li {
+  font-size: 0.9rem;
+  padding-left: 1.2rem;
+  position: relative;
+  margin-bottom: 0.3rem;
+}
+ul.list-unstyled li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  font-size: 1.1rem;
+  top: 0;
 }
 
 /* Business Insight Card */
 .business-insight-card {
-    background-color: #f8f9fa;
-    border-left: 3px solid #007bff;
-    height: 100%;
+  background-color: #ffffff;
+  margin-top: 45px;
+  border-left: 4px solid #00898E;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
 }
+
+/* Ensure the chart card also stretches */
+.card.h-100 {
+  height: 100%;
+  width: 100%;
+}
+
+.business-insight-card p {
+    margin-bottom: 0.8rem;
+}
+
+/* Chart tweaks */
+canvas {
+  max-width: 100%;
+}
+
 
 /* Patients Tab Specific Styles */
-#patients .card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.patients{
+  background-color: none;
+  min-height: 100vh;
+  color: #333;
+  margin-bottom: 20px;
+
+}
+.patients .vr-divider {
+  width: 1px;
+  background-color: #ccc;
+  margin: 0 12px;
 }
 
-#patients .card-header {
-    border-bottom: 1px solid #f0f0f0;
-    padding: 15px 20px;
-    background-color: #fff;
+.patients-left,
+.patients-right {
+  flex: 0 0 auto;
 }
 
-#patients .card-header h5 {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+.patients-left {
+  flex-grow: 1;
 }
 
-#patients .card-body {
-    padding: 20px;
+.patients-right {
+  min-width: 320px;
 }
 
-/* Appointment Summary Styles */
-#patients .appointment-summary {
-    text-align: center;
-}
 
-#patients .appointment-summary h6 {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-#patients .appointment-summary .fs-5 {
-    font-size: 24px !important;
-    font-weight: 600;
-    color: #333;
-}
-
-#patients .appointment-summary small {
-    font-size: 12px;
-    color: #888;
-}
-
-/* Patient Metrics Styles */
-#patients .patient-metrics h6 {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-#patients .patient-metrics .fs-5 {
-    font-size: 20px !important;
-    font-weight: 600;
-    color: #333;
-}
-
-#patients .patient-metrics .text-muted {
-    font-size: 12px;
-}
-
-/* Business Insight Card */
-#patients .business-insight-card {
-    background-color: #f8f9fa;
-    border-left: 4px solid #0d6efd;
-    border-radius: 8px;
-}
-
-#patients .business-insight-card h5 {
-    font-size: 16px;
-    letter-spacing: 0.5px;
-}
-
-#patients .business-insight-card p {
-    font-size: 14px;
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
-
-#patients .business-insight-card strong {
-    color: #333;
-}
-
-/* Patient Source Styles */
-#patients .patient-source-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-#patients .patient-source-item:last-child {
-    border-bottom: none;
-}
-
-#patients .patient-source-item span:first-child {
-    color: #666;
-}
-
-#patients .patient-source-item span:last-child {
-    font-weight: 600;
-    color: #333;
-}
-
-/* Button Group Styles */
-#patients .btn-group-sm .btn {
-    font-size: 12px;
-    padding: 5px 10px;
-    border-radius: 6px;
-}
-
-#patients .btn-outline-primary {
-    color: #0d6efd;
-    border-color: #dee2e6;
-}
-
-#patients .btn-outline-primary.active {
-    background-color: #0d6efd;
-    color: white;
-}
-
-/* Chart Container Styles */
-#patients canvas {
-    width: 100% !important;
-    height: auto !important;
-}

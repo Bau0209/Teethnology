@@ -9,134 +9,128 @@
 
 {% block content %}
 <div class="container-fluid p-4 revenue">
-  <!-- Nav Tabs -->
-  <ul class="nav nav-tabs" id="transactionTabs">
-    <li class="nav-item">
-        <a class="nav-link active" href="{{ url_for('owner.reports') }}">Revenue</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('owner.report_marketing') }}">Marketing</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a>
-    </li>
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item"><a class="nav-link active" href="{{ url_for('owner.reports') }}">Revenue</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_marketing') }}">Marketing</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>
   </ul>
 
-  <div class="tab-content" id="revenueTabContent">
-    <div class="tab-pane fade show active" id="revenue" role="tabpanel" aria-labelledby="revenue-tab">
-      <!-- Filters row -->
-      <div class="d-flex flex-wrap gap-3 mb-4">
-        <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+    </div>
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+    </div>
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+    </div>
+  </div>
+
+  <!-- Top Section: Revenue Graph + Monthly Summary -->
+<div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
+  <!-- Left: Revenue by Service -->
+  <div class="revenue-left flex-grow-1" >
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between align-items-center bg-white">
+        <h6 class="mb-0">Revenue by Service</h6>
+        <div class="text-end">
+          <small class="text-muted d-block">Total Revenue</small>
+          <strong>₱89,000</strong>
         </div>
-        <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">Jun - Jun</button>
-        </div>
-        <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+      </div>
+      <div class="card-body">
+        <canvas id="revenueByServiceChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vertical Divider -->
+  <div class="vr-divider"></div>
+
+  <!-- Right: Summary & Top Services -->
+  <div class="revenue-right" style="min-width: 320px;">
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="card p-3 text-center">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <small class="text-muted d-block">Revenue</small>
+              <h6 class="mb-0">₱23,000</h6>
+            </div>
+            <div>
+              <small class="text-muted d-block">Growth Rate</small>
+              <h6 class="text-danger mb-0">-5%</h6>
+            </div>
+            <div>
+              <small class="text-muted d-block">Appointments</small>
+              <h6 class="mb-0">24</h6>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="row gy-4">
-        <!-- Revenue by Service Chart -->
-        <div class="col-lg-8">
-            <div class="card mb-4">
-                <div class="card-header bg-white">
-                    <h5 class="mb-0">Revenue by Service</h5>
-                </div> 
-                <div class="text-end revenue-total">
-                    <small class="d-block">Total Revenue</small>
-                    <span class="fs-5 fw-semibold">₱89,000</span>
-                </div>
-                <div class="card-body p-0">
-                    <canvas id="revenueChart" height="250"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Summary Card -->
-        <div class="col-lg-5 d-flex flex-column">
-          
-            <div class="mb-4">
-                <div class="metric-card card">
-                    <div class="card-body">
-                        <h5 class="card-title text-muted">Revenue</h5>
-                    </div>
-                </div>
-                <div class="metric-card card">
-                    <div class="card-body">
-                        <h5 class="card-title text-muted">Growth</h5>
-                        <i class="fa fa-chevron-down"></i>
-                    </div>
-                </div>
-                <div class="metric-card card">
-                    <div class="card-body">
-                        <h5 class="card-title text-muted">Appointments</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card mb-4">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0">Top Earning Services</h5>
-                    </div> 
-                    <div class="card-body p-0">
-                        <canvas id="revenueChart" height="250"></canvas>
-                    </div>
-                </div>
-            </div>    
-        </div> 
-    
-      <!-- Forecast Section -->
-      <div class="row gy-4 mt-3 align-items-center">
-        <h5 class="mb-0">Forecasts</h5>
-            <div class="d-flex flex-wrap gap-3 mb-3">
-              <div class="btn-group btn-group-sm" role="group">
-                <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <h6 class="mb-0">Top Earning Services</h6>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1">
+                <canvas id="topServicesChart" height="180"></canvas>
               </div>
-              <div class="btn-group btn-group-sm" role="group">
-                <button type="button" class="btn btn-outline-primary active">Jun - Jun</button>
+              <div class="ms-4">
+                <ul class="list-unstyled mb-0">
+                  <li>Root Canal - ₱3k</li>
+                  <li>Braces - ₱2.5k</li>
+                  <li>Cleanings - ₱1.2k</li>
+                  <li>Others - ₱7.5k</li>
+                </ul>
               </div>
-              <div class="btn-group btn-group-sm" role="group">
-                <button type="button" class="btn btn-outline-primary active">1 - 25</button>
-              </div>
-            </div>
-        <div class="col-lg-8">
-            <div class="card mb-4">
-                <div class="card-header bg-white">
-                    <h5 class="mb-0">Total Revenue Actual vs Forecast</h5>
-                </div> 
-                <div class="card-body p-0">
-                    <canvas id="revenueChart" height="250"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Insight Card -->
-        <div class="col-lg-5">
-          <div class="card business-insight-card p-3">
-            <h5 class="fw-semibold mb-3 text-primary">BUSINESS INSIGHT</h5>
-            <div>
-              <p><strong>Revenue Report:</strong> You are ₱8,000 short of last month's revenue. Consider promoting your best-selling services.</p>
-              <p><strong>Revenue Forecast:</strong> Next month has fewer working days. Expect a possible dip in revenue.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- Other Tabs Placeholder -->
-    <div class="tab-pane fade" id="patients" role="tabpanel" aria-labelledby="patients-tab">
-      <p class="text-center mt-5">Patients section content goes here.</p>
+  <!-- Forecast Section -->
+  <div class="row mt-5 gx-4 gy-4">
+    <div class="col-lg-8">
+      <div class="d-flex flex-wrap gap-2 mb-2">
+        <h4>Forcasts</h4>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+        </div>
+      </div>
+      <div class="card h-100">
+        <div class="card-header bg-white">
+          <h6 class="mb-0">Total Revenue Actual vs Forecast</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="forecastChart" height="220"></canvas>
+        </div>
+      </div>
     </div>
-    <div class="tab-pane fade" id="marketing" role="tabpanel" aria-labelledby="marketing-tab">
-      <p class="text-center mt-5">Marketing section content goes here.</p>
-    </div>
-    <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
-      <p class="text-center mt-5">Inventory section content goes here.</p>
+
+    <!-- Business Insight -->
+    <div class="col-lg-4">
+      <div class="card business-insight-card p-4">
+        <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
+        <p><strong>Revenue Report:</strong> You are ₱8,000 short of last month's revenue. Consider promoting your best-selling services.</p>
+        <p><strong>Revenue Forecast:</strong> Next month has fewer working days. Expect a possible dip in revenue.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -144,4 +138,6 @@
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/o_report.js') }}"></script>
 {% endblock %}
