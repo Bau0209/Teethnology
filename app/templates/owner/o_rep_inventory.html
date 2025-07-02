@@ -9,23 +9,131 @@
 
 {% block content %}
 <div class="container-fluid p-4 revenue">
-  <!-- Nav Tabs -->
-  <ul class="nav nav-tabs" id="transactionTabs">
-    <li class="nav-item">
-        <a class="nav-link " href="{{ url_for('owner.reports') }}">Revenue</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('owner.report_marketing') }}">Marketing</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link active" href="{{ url_for('owner.report_inventory') }}">Inventory</a>
-    </li>
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item"><a class="nav-link " href="{{ url_for('owner.reports') }}">Revenue</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_marketing') }}">Marketing</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>
   </ul>
+
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+    </div>
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+    </div>
+    <div class="btn-group btn-group-sm" role="group">
+      <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+    </div>
+  </div>
+
+  <!-- Top Section:Inventory vs Consumption +  Supply use per Service -->
+<div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
+  <!-- Left: Inventory vs Consumption -->
+  <div class="inventory-left flex-grow-1" >
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between align-items-center bg-white">
+        <h6 class="mb-0">Inventory vs Consumption</h6>
+      </div>
+      <div class="card-body">
+        <canvas id="inventoryVsConsumptionChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vertical Divider -->
+  <div class="vr-divider"></div>
+
+  <!-- Right: Summary & Supply use per Service -->
+   <div class="card-right" style="min-width: 320px;">
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="card p-3 text-center">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <small class="text-muted d-block">Low Stocked Items</small>
+              <h6 class="mb-0">4</h6>
+            </div>
+            <div>
+              <small class="text-muted d-block">Out of stock Items</small>
+              <h6 class="text-danger mb-0">2</h6>
+            </div>
+            <div>
+              <small class="text-muted d-block">Expired Items</small>
+              <h6 class="mb-0">0</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-white">
+            <h6 class="mb-0">Supply use per Service</h6>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1">
+                <canvas id="topServicesChart" height="180"></canvas>
+              </div>
+              <div class="ms-4">
+                <ul class="list-unstyled mb-0">
+                  <li>Root Canal - 30%</li>
+                  <li>Braces - 20%</li>
+                  <li>Cleanings - 10%</li>
+                  <li>Others - 5%</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Items High Demand Prediction Section -->
+  <div class="row mt-5 gx-4 gy-4">
+    <div class="col-lg-8">
+      <div class="d-flex flex-wrap gap-2 mb-2">
+        <h4>Forcasts</h4>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+        </div>
+      </div>
+      <div class="card h-100">
+        <div class="card-header bg-white">
+          <h6 class="mb-0">Items High Demand Prediction</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="forecastChart" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Insight -->
+    <div class="col-lg-4">
+      <div class="card business-insight-card p-4">
+        <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
+        <p><strong>Revenue Report:</strong>  Gloves consumption decreased by 25% this month. Check for expired stock or changes in procedure volume.</p>
+        <p><strong>Revenue Forecast:</strong> High number of scaling appointments next week. Consider pre-stocking ultrasonic tips and polish paste</p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/o_report.js') }}"></script>
 {% endblock %}
