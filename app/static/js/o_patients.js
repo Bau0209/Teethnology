@@ -52,20 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Searching for:', searchInput.value);
         // In a real app, you would search records based on the input
     });
-
-    // Add dropdown functionality
-    const addDropdownItems = document.querySelectorAll('[data-action]');
-    addDropdownItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            const action = this.dataset.action;
-            if (action === 'scan') {
-                alert('Scan functionality would be implemented here');
-            } else if (action === 'form') {
-                alert('Form would be displayed here');
-            }
-        });
-    });
 });
 
 // js for save type  button
@@ -144,3 +130,4 @@ $('#patientForm').submit(function(e) {
   $('#saveBtn').prop('disabled', true);
   alert('Changes saved!');
 });
+
