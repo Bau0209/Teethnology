@@ -104,6 +104,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initialView: 'dayGridMonth',
     selectable: true,
     events: dynamicEvents,
+    eventDidMount: function(info) {
+        const { patient, type } = info.event.extendedProps;
+        info.el.querySelector('.fc-event-title').innerHTML = `${patient}<br>${type}`;
+    },
     dateClick: function (info) {
       const clickedDate = info.dateStr;
 
@@ -135,12 +139,10 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
           `;
         } else {
-          const isDisabled = a.status === 'cancelled' ? 'disabled' : '';
-
           buttonsHTML = `
             <div class="d-flex gap-2 mt-3">
-              <button class="btn btn-success btn-sm" ${isDisabled} onclick="handleComplete(${a.appointment_id})">Completed</button>
-              <button class="btn btn-danger btn-sm" ${isDisabled} onclick="handleCancel(${a.appointment_id})">Cancel</button>
+              <button class="btn btn-success btn-sm")">Reschedule</button>
+              <button class="btn btn-danger btn-sm"">Cancel</button>
             </div>
           `;
         }
