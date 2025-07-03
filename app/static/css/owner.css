@@ -355,11 +355,11 @@ body {
   padding: 20px;
   width: 100%; 
   min-width: auto; 
-  overflow-y: auto;
   max-width: 100%;
   margin: 0;
   display: flex;
   flex-direction: column;
+  height: 400px; /* Fixed height for the entire card */
 }
 
 .dashboard-center h3,
@@ -375,8 +375,10 @@ body {
 
 .patient-info {
   flex-grow: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* Makes content scrollable */
   padding: 5px 0;
+  height: 0; /* Needed for proper flex-grow behavior */
+  margin-top: 10px;
 }
 
 .patient-item {
@@ -433,12 +435,12 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
   padding: 20px;
   width: 100%; 
-  overflow-y: auto;
   min-width: auto; 
   max-width: 100%;
   margin: 0;
   display: flex;
   flex-direction: column;
+  height: 400px; /* Fixed height for the entire card */
 }
 
 .appointment-requests h3{
@@ -453,6 +455,9 @@ body {
 
 .request-list {
   flex-grow: 1;
+  overflow-y: auto; /* Makes content scrollable */
+  height: 0; /* Needed for proper flex-grow behavior */
+  margin-top: 10px;
 }
 
 .appointment-request .request-info {
