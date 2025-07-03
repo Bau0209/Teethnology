@@ -6,6 +6,7 @@ import json
 import os
 from app import db
 from datetime import datetime, date, timedelta
+from sqlalchemy import extract, func
 
 owner = Blueprint('owner', __name__)
 
@@ -795,9 +796,101 @@ def balance_record():
     return render_template('/owner/o_balance_rec.html', balance_data=balance_data)
 
 @owner.route('/reports')    
-# @role_required('owner')
 def reports():
-    return render_template('/owner/reports.html')
+    # Get current and last month
+    now = datetime.now()
+    current_month = now.month
+    current_year = now.year
+    last_month = current_month - 1 if current_month > 1 else 12
+    last_month_year = current_year if current_month > 1 else current_year - 1
+
+    # Revenue per month (for chart)
+    revenue_data = db.session.query(
+        extract('month', Transactions.transaction_datetime).label('month'),
+        func.sum(Transactions.total_amount_paid).label('total')
+    ).group_by(extract('month', Transactions.transaction_datetime))\
+     .order_by(extract('month', Transactions.transaction_datetime))\
+     .all()
+
+    months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+    values = [0] * 12
+
+    for month, total in revenue_data:
+        values[int(month) - 1] = float(total)
+
+    # Current month revenue
+    current_revenue = values[current_month - 1]
+    last_revenue = values[last_month - 1]
+
+    # Growth rate
+    if last_revenue > 0:
+        growth_rate = ((current_revenue - last_revenue) / last_revenue) * 100
+    else:
+        growth_rate = 0
+
+    # Appointments this month
+    from app.models import Appointments  # Replace with your actual model
+    appointments_this_month = db.session.query(func.count(Appointments.appointment_id))\
+        .filter(extract('month', Appointments.appointment_sched) == current_month)\
+        .filter(extract('year', Appointments.appointment_sched) == current_year)\
+        .scalar()
+
+    # Top earning services
+    top_services = db.session.query(
+        Procedures.treatment_procedure,
+        func.sum(Transactions.total_amount_paid).label('revenue')
+    ).join(Transactions, Transactions.procedure_id == Procedures.procedure_id)\
+     .group_by(Procedures.treatment_procedure)\
+     .order_by(func.sum(Transactions.total_amount_paid).desc())\
+     .limit(5).all()
+
+    # Format for chart
+    top_service_labels = [s[0] for s in top_services]
+    top_service_values = [float(s[1]) for s in top_services]
+
+    # --- BUSINESS INSIGHT BASED ONLY ON CURRENT DATA ---
+    insight_lines = []
+
+    # Insight 1: Appointment count
+    appointment_insight = ["<strong>Appointments:</strong>"]
+    if appointments_this_month < 10:
+        appointment_insight.append("Appointment volume is low. Consider sending reminders or running promotions.")
+    elif appointments_this_month < 20:
+        appointment_insight.append("Appointment count is moderate. You may benefit from increased engagement.")
+    else:
+        appointment_insight.append("Great job! You have a healthy number of appointments this month.")
+    insight_lines.append("<br>".join(appointment_insight))
+
+    # Insight 2: Revenue performance
+    revenue_insight = ["<strong>Revenues:</strong>"]
+    if current_revenue < 10000:
+        revenue_insight.append("Revenue is below ₱10,000. Review pricing or promote top services.")
+    elif current_revenue < 20000:
+        revenue_insight.append("Revenue is fair. Highlight best-sellers to boost earnings.")
+    else:
+        revenue_insight.append("Strong revenue this month! Keep up the momentum.")
+    insight_lines.append("<br>".join(revenue_insight))
+
+    # Insight 3: Top services
+    service_insight = ["<strong>Services:</strong>"]
+    if top_service_labels:
+        service_insight.append(f"Top earning service: {top_service_labels[0]}. Consider upselling related procedures.")
+    insight_lines.append("<br>".join(service_insight))
+
+    # Final output with paragraph spacing
+    insight_text = "<br><br>".join(insight_lines)
+
+    return render_template('/owner/reports.html',
+                           labels=months,
+                           values=values,
+                           total_revenue=sum(values),
+                           current_revenue=current_revenue,
+                           growth_rate=round(growth_rate, 2),
+                           appointments_count=appointments_this_month,
+                           top_service_labels=top_service_labels,
+                           top_service_values=top_service_values,
+                           insight_text=insight_text)
 
 @owner.route('/report_patients') 
 # @role_required('owner')   
