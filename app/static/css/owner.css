@@ -359,7 +359,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  height: 400px; /* Fixed height for the entire card */
+  height: 687px; /* Fixed height for the entire card */
 }
 
 .dashboard-center h3,
@@ -440,7 +440,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  height: 400px; /* Fixed height for the entire card */
+  height: 687px; /* Fixed height for the entire card */
 }
 
 .appointment-requests h3{
