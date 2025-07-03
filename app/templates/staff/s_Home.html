@@ -1,4 +1,4 @@
-{% extends 'owner/owner_base.html' %}
+{% extends 'staff/staff_base.html' %}
 
 {% block title %}Dashboard - Teethnology{% endblock %}
 
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<form method="get" action="{{ url_for('owner.owner_home') }}" style="text-align: right; margin-bottom: 20px; margin-top: 15px;">
+<form method="get" action="{{ url_for('staff.staff_home') }}" style="text-align: right; margin-bottom: 20px; margin-top: 15px;">
   <select name="branch" onchange="this.form.submit()" 
           class="branches-dropdown" 
           style="padding: 10px 15px; font-size: 16px; width: 50%">
@@ -28,7 +28,6 @@
         <div class="card welcome-card">
             <h2>Welcome Back, Eddielyn</h2>
         </div>
-        
         <!-- Appointments Today -->
         <div class="card info-card appointments-today-card">
             <i class="fas fa-calendar-day calendar-icon"></i>
@@ -37,11 +36,11 @@
               <div class="appointments-count">{{ appointments_today|length }}</div>
           </div>
         </div>
-        <div class="card info-card appointments-today-card">
+        <div class="card info-card birthday-today-card">
             <i class="fas fa-birthday-cake birthday cake"></i>
             <div class="appointments-today-content">
               <h2>Birthday Today</h2>
-              <div class="appointments-count"></div>
+              <div class="birthday-count"></div>
           </div>
         </div>
     </div>
