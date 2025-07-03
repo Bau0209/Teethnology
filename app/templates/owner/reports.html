@@ -10,12 +10,12 @@
 {% block content %}
 <div class="container-fluid p-4 revenue">
   <!-- Navigation Tabs -->
-  <ul class="nav nav-tabs mb-4">
+  <!-- <ul class="nav nav-tabs mb-4">
     <li class="nav-item"><a class="nav-link active" href="{{ url_for('owner.reports') }}">Revenue</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_patients') }}">Patients</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_marketing') }}">Marketing</a></li>
-    <!--<li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>-->
-  </ul>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>
+  </ul>-->
 
   <!-- Filters -->
   <div class="d-flex flex-wrap gap-2 mb-3">
@@ -39,7 +39,7 @@
         <h6 class="mb-0">Revenue by Service</h6>
         <div class="text-end">
           <small class="text-muted d-block">Total Revenue</small>
-          <strong>₱89,000</strong>
+          <strong>₱{{ "{:,.2f}".format(total_revenue) }}</strong>
         </div>
       </div>
       <div class="card-body">
@@ -58,28 +58,30 @@
         <div class="row g-2">
           <!-- Revenue Card -->
           <h6 class="mb-3 fw-semibold text-muted">This Month</h6>
-          <div class="col-4">
-            <div class="card p-3 text-center">
-              <small class="text-muted d-block">Revenue</small>
-              <h6 class="mb-0 text-primary">₱23,000</h6>
-            </div>
-          </div>
+<div class="col-4">
+  <div class="card p-3 text-center">
+    <small class="text-muted d-block">Revenue</small>
+    <h6 class="mb-0 text-primary">₱{{ "{:,.0f}".format(current_revenue) }}</h6>
+  </div>
+</div>
 
           <!-- Growth Rate Card -->
-          <div class="col-4">
-            <div class="card p-3 text-center">
-              <small class="text-muted d-block">Growth Rate</small>
-              <h6 class="mb-0 text-danger">-5%</h6>
-            </div>
-          </div>
+          <!-- <div class="col-4">
+  <div class="card p-3 text-center">
+    <small class="text-muted d-block">Growth Rate</small>
+    <h6 class="mb-0 {% if growth_rate < 0 %}text-danger{% else %}text-success{% endif %}">
+      {{ growth_rate }}%
+    </h6>
+  </div>
+</div> -->
 
           <!-- Appointments Card -->
           <div class="col-4">
-            <div class="card p-3 text-center">
-              <small class="text-muted d-block">Appointments</small>
-              <h6 class="mb-0">24</h6>
-            </div>
-          </div>
+  <div class="card p-3 text-center">
+    <small class="text-muted d-block">Appointments</small>
+    <h6 class="mb-0">{{ appointments_count }}</h6>
+  </div>
+</div>
         </div>
       </div>
 
@@ -89,28 +91,27 @@
             <h6 class="mb-0">Top Earning Services</h6>
           </div>
           <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="flex-grow-1">
-                <canvas id="topServicesChart" height="180"></canvas>
-              </div>
+            <div class="d-flex align-items-start">
+              <!-- Doughnut Chart -->
+              <canvas id="topServicesChart" style="max-width: 100%;"></canvas>
+
+              <!-- Legend List (manual list) -->
               <div class="ms-4">
                 <ul class="list-unstyled mb-0">
-                  <li>Root Canal - ₱3k</li>
-                  <li>Braces - ₱2.5k</li>
-                  <li>Cleanings - ₱1.2k</li>
-                  <li>Others - ₱7.5k</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 </div>
 
   <!-- Forecast Section -->
-  <div class="row mt-5 gx-4 gy-4">
+  <!-- <div class="row mt-5 gx-4 gy-4">
     <div class="col-lg-8">
       <div class="d-flex flex-wrap gap-2 mb-2">
         <h4>Forcasts</h4>
@@ -132,23 +133,69 @@
           <canvas id="forecastChart" height="220"></canvas>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Business Insight -->
     <div class="col-lg-4">
       <div class="card business-insight-card p-4">
         <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
-        <p><strong>Revenue Report:</strong> You are ₱8,000 short of last month's revenue. Consider promoting your best-selling services.</p>
-        <p><strong>Revenue Forecast:</strong> Next month has fewer working days. Expect a possible dip in revenue.</p>
+        <p>{{ insight_text | safe }}</p>
       </div>
     </div>
   </div>
 </div>
 {% endblock %}
-
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{ url_for('static', filename='js/o_report.js') }}"></script>
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+
+<script>
+  // Doughnut Chart for Top Services
+  const donutCtx = document.getElementById('topServicesChart').getContext('2d');
+  new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+      labels: {{ top_service_labels | tojson }},
+      datasets: [{
+        data: {{ top_service_values | tojson }},
+        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1']
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '70%'
+    }
+  });
+
+  // Bar Chart for Monthly Revenue
+  const barCtx = document.getElementById('revenueByServiceChart').getContext('2d');
+  new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ labels | tojson }},
+      datasets: [{
+        label: 'Monthly Revenue (₱)',
+        data: {{ values | tojson }},
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return '₱' + value.toLocaleString();
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
 {% endblock %}
