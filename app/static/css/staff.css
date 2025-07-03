@@ -233,7 +233,9 @@ body {
 .dashboard-left {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
 }
 
 .dashboard-center.card,
@@ -258,60 +260,28 @@ body {
 
 .welcome-card {
   background-color: #ffffff;
-  margin-top: auto;
-  border-left: none;
   border-radius: 8px;
-  font-size: 1rem;
-  height: 500px; /* Fixed height */
-  width: 600px; /* Fixed width */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* Ensures no content spills out */
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .welcome-card h2 {
-  margin: 0 0 10px 0;
+  margin: 0;
   font-size: 1.5rem;
-  color: #0097a7;
+  color: #333;
   text-align: left;
   font-weight: 700;
-  letter-spacing: 0.5px;
 }
 
-.welcome-card hr {
-  width: 100%;
-  border: 0;
-  height: 1px;
-  background: #e0e0e0;
-  margin: 8px 0 10px;
-}
-
-.business-insight-content {
-  width: 100%;
-  padding: 20px;
-  margin: 10px auto;
-  overflow-y: auto; /* Enables vertical scrolling */
-  flex-grow: 1; /* Takes remaining space in flex container */
-  height: 0; /* Needed for flex-grow to work properly */
-}
-
-.insight-item {
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  color: #393939;
-}
-
-.insight-item strong {
-  color: #0097a7;
-}
-
+/* Appointments Today Card */
 .appointments-today-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 25px;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  gap: 20px;
 }
 
 .appointments-today-content {
@@ -347,6 +317,39 @@ body {
     color: #666;
     font-size: 1rem;
 }
+
+/* Birthday Today Card */
+.birthday-today-card {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  gap: 20px;
+}
+
+.birthday-today-card h2 {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  text-align: left;
+}
+
+.birthday-today-card .birthday-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00898E;
+  margin: 0;
+}
+
+.birthday-today-card .birthday-cake {
+  color: #ff6b6b;
+  font-size: 2.5rem;
+}
+
+
 
 .dashboard-center.card {
   background: #fff;
@@ -855,35 +858,25 @@ body {
 /* Responsive adjustments */
 @media (max-width: 1440px) {
   .dashboard-top {
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr;
   }
   
-  .dashboard-right {
-    grid-column: span 2;
+  .dashboard-center.card,
+  .dashboard-right.card {
+    height: auto;
+    min-height: 687px;
   }
 }
 
 @media (max-width: 1200px) {
   .dashboard-top {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1.2fr 1fr;
   }
-
-  .dashboard-left {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .welcome-card {
-    width: 100%;
-    height: auto;
-  }
-
-  .dashboard-center.card,
-  .appointment-requests {
-    width: 100%;
-    height: auto;
-    margin-top: 20px;
+  
+  .dashboard-right.card {
+    grid-column: span 2;
+    width: 50%;
+    margin: 20px auto 0;
   }
 }
 
@@ -903,128 +896,140 @@ body {
     transform: translateX(0);
   }
 
-  .dashboard-left {
-    flex-direction: column;
+  .dashboard-top {
+    grid-template-columns: 1fr;
   }
 
-  .appointments-today-card {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .appointments-today-content {
-    align-items: center;
-  }
-
-  .dashboard-center.card,
-  .appointment-requests {
+  .dashboard-right.card {
+    grid-column: span 1;
     width: 100%;
-    margin-left: 0;
+    margin: 20px 0 0;
+  }
+
+  .dashboard-left {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .welcome-card,
+  .appointments-today-card,
+  .birthday-today-card {
+    flex: 1 1 300px;
   }
 }
 
 @media (max-width: 768px) {
   .topbar {
-    padding: 8px 15px;
+    padding: 8px 16px;
   }
 
-  .topbar-title {
-    font-size: 1rem;
+  .dashboard-left {
+    flex-direction: column;
+  }
+
+  .welcome-card,
+  .appointments-today-card,
+  .birthday-today-card {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .appointments-today-card,
+  .birthday-today-card {
+    flex-direction: row;
+    text-align: left;
   }
 
   .dashboard-center.card,
-  .dashboard-right.card,
-  .appointment-requests {
-    padding: 18px;
+  .dashboard-right.card {
+    padding: 20px;
   }
 
-  .appointment-requests-controls,
-  .request-info {
+  .appointment-requests-controls {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: stretch;
   }
 
-  .actions {
-    width: 100%;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  .appointment-requests .branch-select {
+    margin-bottom: 15px;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 576px) {
-  .main-content {
-    padding: 15px;
-  }
-
-  .card {
-    padding: 15px;
-  }
-
-  .welcome-card h2 {
-    font-size: 1.3rem;
-  }
-
-  .dashboard-center h3,
-  .appointment-requests h3 {
-    font-size: 1rem;
-    text-align: left;
-  }
-
-  .appointment-requests .actions button {
-    padding: 8px 12px;
-    font-size: 0.9rem;
-    flex: 1;
-    min-width: 120px;
-  }
-}
-
-@media (max-width: 400px) {
-  .main-content {
-    padding: 12px;
-  }
-
   .topbar {
-    padding: 8px 10px;
+    padding: 8px 12px;
+    height: 56px;
   }
-
-  .topbar-right {
-    gap: 10px;
+  
+  .topbar-title {
+    font-size: 1rem;
   }
 
   .topbar-icon {
     font-size: 1.1rem;
   }
 
+  .main-content {
+    padding: 20px 15px;
+  }
+
   .card {
-    padding: 12px 10px;
+    padding: 18px;
+  }
+
+  .appointments-today-card,
+  .birthday-today-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .appointment-requests .actions {
+    flex-direction: column;
   }
 
   .appointment-requests .actions button {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    min-width: 100px;
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .topbar {
+    padding: 8px 10px;
   }
 
-  .dashboard-center button.send-reminders {
-    padding: 8px 12px;
-    font-size: 0.9rem;
+  .topbar-left {
+    gap: 6px;
+  }
+
+  .topbar-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .main-content {
+    padding: 15px 10px;
+  }
+
+  .card {
+    padding: 15px 12px;
   }
 
   .user-dropdown {
-    min-width: 100px;
-    padding: 12px 8px;
+    min-width: 110px;
+    padding: 10px;
   }
 
-  .user-dropdown-links a {
-    font-size: 0.95rem;
-  }
-
-  .logout-btn {
-    width: 80px;
-    font-size: 0.9rem;
+  .voice-assistant button {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
   }
 }
+
 /* Card hover effect */
 .card:hover {
   box-shadow: 0 4px 20px rgba(0,188,212,0.10);
