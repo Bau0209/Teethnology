@@ -100,10 +100,10 @@
                             {{ request.patient.city }},
                             {{ request.patient.province }},
                             {{ request.patient.country }}
-                        </div>
-                        <div class="request-actions">
-                            <button type="button" class="btn-accept" aria-label="Accept">Accept</button>
-                            <button type="button" class="btn-reject" aria-label="Reject">Reject</button>
+                        </div>                        
+                        <div class="d-flex gap-2 mt-3">
+                            <button class="btn btn-success btn-sm" onclick="handleAccept({{ request.appointment_id }})">Accept</button>
+                            <button class="btn btn-danger btn-sm" onclick="handleReject({{ request.appointment_id }})">Reject</button>
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/o_appoinment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

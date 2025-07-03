@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify, session
 from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Transactions, Appointments, MainWeb
 from werkzeug.utils import secure_filename
+from .auth import role_required
 import json
 import os
 from app import db
@@ -14,10 +15,12 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @owner.route('/owner_home')
+# @role_required('owner')
 def owner_home():
     return render_template('/owner/O_home.html')
 
 @owner.route('/branches')
+# @role_required('owner')
 def branches():
     main_web = MainWeb.query.first()
     branches = Branch.query.all()
@@ -36,12 +39,14 @@ def branches():
     )
 
 @owner.route('/branch_info/<int:branch_id>')
+# @role_required('owner')
 def branch_info(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
     return render_template('/owner/o_branch_info.html', branch=branch, branch_images=branch_images)
 
 @owner.route('/update-main-website', methods=['POST'])
+# @role_required('owner')
 def update_main_website():
     main_web = MainWeb.query.first()
     if not main_web:
@@ -61,6 +66,7 @@ def update_main_website():
     return redirect(url_for('owner.branches'))
 
 @owner.route('/branch/<int:branch_id>/add-image', methods=['POST'])
+# @role_required('owner')
 def add_branch_image(branch_id):
     if 'image' not in request.files:
         flash('No file part')
@@ -96,6 +102,7 @@ def add_branch_image(branch_id):
     return redirect(request.referrer)
 
 @owner.route('/branch/<int:image_id>/delete-image', methods=['POST'])
+# @role_required('owner')
 def delete_branch_image(image_id):
     image = ClinicBranchImage.query.get(image_id)
     if image:
@@ -112,6 +119,7 @@ def delete_branch_image(image_id):
     return redirect(request.referrer)
 
 @owner.route('/branch/<int:branch_id>/edit', methods=['POST'])
+# @role_required('owner')
 def edit_branch(branch_id):
     branch = Branch.query.get_or_404(branch_id)
 
@@ -129,6 +137,7 @@ def edit_branch(branch_id):
     return redirect(url_for('owner.branch_info', branch_id=branch_id))
 
 @owner.route('/appointments')
+# @role_required('owner')
 def appointments():
     selected_branch = request.args.get('branch', 'all')
     appointment_id = request.args.get('appointment_id')
@@ -183,6 +192,7 @@ def appointments():
     )
 
 @owner.route('/appointment_req')
+# @role_required('owner')
 def appointment_req():
     selected_branch = request.args.get('branch', 'all')
     
@@ -217,31 +227,8 @@ def appointment_req():
         appointment_data=json.dumps(appointment_data)
     )
 
-@owner.route('/appointment_req/<int:appointment_id>')
-def appointment_req_detail(appointment_id):
-    appointment = Appointments.query.get_or_404(appointment_id)
-
-    appointment_data = {
-        'date': appointment.appointment_sched.strftime('%Y-%m-%d'),
-        'time': appointment.appointment_sched.strftime('%I:%M %p'),
-        'alternative_sched': appointment.alternative_sched.strftime('%Y-%m-%d %H:%M') if appointment.alternative_sched else None,
-        'reason': appointment.appointment_type,
-        'patient_name': appointment.patient.patient_full_name,
-        'patient_type': 'Returning Patient' if appointment.returning_patient else 'New Patient',
-        'dob': appointment.patient.birthdate.strftime('%Y-%m-%d'),
-        'sex': appointment.patient.sex,
-        'contact': appointment.patient.contact_number,
-        'email': appointment.patient.email,
-        'address': f"{appointment.patient.address_line1 + appointment.patient.baranggay + appointment.patient.city + appointment.patient.province + appointment.patient.country}"
-    }
-
-    return render_template(
-        '/owner/appointment_request.html',
-        appointment=appointment,
-        appointment_data=appointment_data
-    )
-
 @owner.route('/appointments/<int:appointment_id>/status', methods=['POST'])
+# @role_required('owner')
 def update_appointment_status(appointment_id):
     data = request.get_json()
     status = data.get('status')
@@ -270,6 +257,7 @@ def update_appointment_status(appointment_id):
     return jsonify({'success': True, 'message': 'Status updated successfully'})
 
 @owner.route('/patients')
+# @role_required('owner')
 def patients():
     selected_branch = request.args.get('branch', 'all')
     
@@ -291,6 +279,7 @@ def patients():
 
 #Adding an Appointment in the calendar
 @owner.route('/form', methods=['GET', 'POST'])
+# @role_required('owner')
 def form():
     branches = Branch.query.all()
     if request.method == 'POST':
@@ -372,6 +361,7 @@ def form():
     return render_template('/owner/appointment.html', branches=branches)
 
 @owner.route('/edit_patient/<int:patient_id>', methods=['GET', 'POST'])
+# @role_required('owner')
 def edit_patient(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     patient_medical_info = PatientMedicalInfo.query.get(patient_id)
@@ -476,6 +466,7 @@ def edit_patient(patient_id):
     )
 
 @owner.route('/patient_info/<int:patient_id>')   
+# @role_required('owner')
 def patient_info(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)  # Required
     patient_medical_info = PatientMedicalInfo.query.get(patient_id)  # Optional
@@ -488,13 +479,15 @@ def patient_info(patient_id):
         dental_info=dental_info
     )
 
-@owner.route('/patient_procedure/<int:patient_id>')   
+@owner.route('/patient_procedure/<int:patient_id>') 
+# @role_required('owner')  
 def patient_procedure(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     procedures = Procedures.query.filter_by(patient_id=patient_id)
     return render_template('/owner/procedure.html',patient=patient, procedures=procedures)
 
 @owner.route('/procedures/<int:appointment_id>/status', methods=['POST'])
+# @role_required('owner')
 def update_procedure_status(appointment_id):
     data = request.get_json()
     status = data.get('status')
@@ -520,12 +513,14 @@ def update_procedure_status(appointment_id):
     return jsonify({'success': True, 'message': 'Procedure status updated.'})
 
 @owner.route('/patient_dental_rec/<int:patient_id>')   
+# @role_required('owner')
 def patient_dental_rec(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     dental_record = DentalInfo.query.filter_by(patient_id=patient_id)
     return render_template('/owner/dental_record.html', patient=patient, dental_record=dental_record)
 
 @owner.route('/employees')
+# @role_required('owner')
 def employees():
     selected_branch = request.args.get('branch', 'all')
     
@@ -538,46 +533,56 @@ def employees():
     return render_template('/owner/employees.html', branches=branches, employees=employees)
 
 @owner.route('/employee_info/<int:employee_id>')
+# @role_required('owner')
 def employee_info(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     return render_template('/owner/employee_basic_info.html', employee=employee)
 
 @owner.route('/employee_work_details/<int:employee_id>')
+# @role_required('owner')
 def employee_work_details(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     return render_template('/owner/em_work_details.html', employee=employee)
 
 @owner.route('/employee_activity_details/<int:employee_id>')
+# @role_required('owner')
 def employee_activity_details(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     return render_template('/owner/o_em_activity_details.html', employee=employee)
 
 @owner.route('/inventory')
+# @role_required('owner')
 def inventory():
     return render_template('/owner/inventory.html')
 
 @owner.route('/inventory_equipment')
+# @role_required('owner')
 def inventory_equipment():
     return render_template('/owner/o_in_equipment.html')
 
 @owner.route('/inventory_lab_material')
+# @role_required('owner')
 def inventory_lab_material():
     return render_template('/owner/o_in_lab_materials.html')
 
 @owner.route('/inventory_medication')
+# @role_required('owner')
 def inventory_medication():
     return render_template('/owner/o_in_medication.html')
 
 @owner.route('/inventory_sterilization')
+# @role_required('owner')
 def inventory_sterilization():
     return render_template('/owner/o_in_sterilization.html')
 
 @owner.route('/transactions')
+# @role_required('owner')
 def transactions():
     transactions = Transactions.query.all()
     return render_template('/owner/transactions.html', transactions=transactions)
 
 @owner.route('/balance_record')
+# @role_required('owner')
 def balance_record():
     # Get all procedures
     procedures = Procedures.query.all()
@@ -600,18 +605,22 @@ def balance_record():
     return render_template('/owner/o_balance_rec.html', balance_data=balance_data)
 
 @owner.route('/reports')    
+# @role_required('owner')
 def reports():
     return render_template('/owner/reports.html')
 
-@owner.route('/report_patients')    
+@owner.route('/report_patients') 
+# @role_required('owner')   
 def report_patients():
     return render_template('/owner/o_rep_patient.html')
 
 @owner.route('/report_marketing')    
+# @role_required('owner')
 def report_marketing():
     return render_template('/owner/o_rep_marketing.html')
 
-@owner.route('/report_inventory')    
+@owner.route('/report_inventory') 
+# @role_required('owner')   
 def report_inventory():
     return render_template('/owner/o_rep_inventory.html')
 
