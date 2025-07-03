@@ -1,0 +1,74 @@
+{% extends 'staff/staff_base.html' %}
+
+{% block title %}Teethnology Appointment{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_appointment_req.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="appointments-card calendar-view">
+    <div class="appointments-header calendar-header">
+        <div>
+            <a href="{{ url_for('staff.appointments') }}" class="calendar-tab active">Appointment Calendar</a>
+            <a href="{{ url_for('staff.appointment_req') }}" class="calendar-tab">Appointment Request</a>
+        </div>
+        <div>
+            <form method="get" action="{{ url_for('staff.appointments') }}">
+                <select name="branch" class="calendar-branch-icon" onchange="this.form.submit()">
+                    <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                    {% for branch in branches %}
+                        <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                            {{ branch.branch_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <div class="calendar-container">
+    
+        <div id="calendar"></div>
+    </div>
+        <!-- Right Side Modal -->
+        <div class="modal fade right" id="appointmentsModal" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-side" style="max-width: 640px;">
+                <div class="modal-content" style="max-height: 85vh;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Appointment Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-date">
+                        <span id="appointment-date"></span>
+                    </div>
+                    <hr>                      
+                    <div class="modal-body">
+                        <!-- Appointment items will be inserted here dynamically by JS -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+  const dynamicEvents = {{ events | safe }};
+  const appointmentData = {{ appointment_data | safe }};
+</script>
+
+{% include 'owner/components/form_modal.html' %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
+<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+{% endblock %}

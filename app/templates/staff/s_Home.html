@@ -1,0 +1,224 @@
+{% extends 'owner/owner_base.html' %}
+
+{% block title %}Dashboard - Teethnology{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_branches.css') }}">
+{% endblock %}
+
+{% block content %}
+<form method="get" action="{{ url_for('owner.owner_home') }}" style="text-align: right; margin-bottom: 20px; margin-top: 15px;">
+  <select name="branch" onchange="this.form.submit()" 
+          class="branches-dropdown" 
+          style="padding: 10px 15px; font-size: 16px; width: 50%">
+      <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branches</option>
+      {% for branch in branches %}
+          <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+              {{ branch.branch_name }}
+          </option>
+      {% endfor %}
+  </select>
+</form>
+
+<div class="dashboard-top">
+  <!-- Left Column -->
+    <div class="dashboard-left">
+        <div class="card welcome-card">
+            <h2>Welcome Back, Eddielyn</h2>
+        </div>
+        
+        <!-- Appointments Today -->
+        <div class="card info-card appointments-today-card">
+            <i class="fas fa-calendar-day calendar-icon"></i>
+            <div class="appointments-today-content">
+              <h2>Appointments Today</h2>
+              <div class="appointments-count">{{ appointments_today|length }}</div>
+          </div>
+        </div>
+        <div class="card info-card appointments-today-card">
+            <i class="fas fa-birthday-cake birthday cake"></i>
+            <div class="appointments-today-content">
+              <h2>Birthday Today</h2>
+              <div class="appointments-count"></div>
+          </div>
+        </div>
+    </div>
+
+  <!-- Middle Column -->
+  <div class="dashboard-center card">
+    <h3>PATIENTS TOMORROW</h3>
+    <!-- <form method="get" action="{{ url_for('owner.owner_home') }}">
+      <select name="branch" class="branch-select" onchange="this.form.submit()">
+        <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branches</option>
+        {% for branch in branches %}
+          <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+            {{ branch.branch_name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form> -->
+
+    <hr>
+    <div class="patient-info">
+      {% if appointments_tomorrow %}
+        {% for a in appointments_tomorrow %}
+          <div class="patient-item">
+            <strong>{{ a.patient.patient_full_name }}</strong><br>
+            {{ a.appointment_type }}<br>
+            {{ a.patient.contact_number }}<br>
+            {{ a.patient.email }}
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="patient-item">
+          No appointments for tomorrow.
+        </div>
+      {% endif %}
+    </div>
+
+    <button class="send-reminders">Send Reminders</button>
+  </div>
+
+  <!-- Right Column -->
+  <div class="dashboard-right card appointment-requests">
+    <h3>APPOINTMENT REQUESTS</h3>
+    <div class="appointment-requests-controls">
+      <!-- <form method="get" action="{{ url_for('owner.owner_home') }}">
+        <select name="branch" class="branch-select" onchange="this.form.submit()">
+          <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branches</option>
+          {% for branch in branches %}
+            <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+              {{ branch.branch_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </form> -->
+    </div>
+    <hr>
+    <a href="{{ url_for('owner.appointment_req') }}" class="view-all">View All</a>
+    <div class="request-list">
+      {% if appointment_requests %}
+        {% for req in appointment_requests %}
+          <div class="request-item">
+            <div class="request-info">
+              <strong>{{ req.appointment_sched.strftime('%m-%d-%Y') }}</strong><br>
+              {{ req.patient.patient_full_name }}<br>
+              {{ req.appointment_type }}
+            </div>
+            <div class="actions">
+              <button class="accept"><a href="{{ url_for('owner.appointment_req') }}" class="view-all">View More</a></button>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="request-item">
+          No pending appointment requests.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  </div>
+
+  <form method="POST" action="{{ url_for('owner.update_main_website') }}">
+        <div class="branches-info-card">
+            <div class="branches-info-header">
+                <h2>WEBSITE INFORMATION</h2>
+            </div>
+            <div class="branches-info-content">
+                <div class="branches-services">
+                    <h3>All Branch Services</h3>
+                    <div class="services-checklist">
+                        {% set selected_services = main_web.services.split(',') if main_web else [] %}
+                        {% for service in [
+                            'Preventive Dentistry', 'Intervention Dentistry', 'Coroneric Dentistry',
+                            'Pediatric Dentistry', 'Orthodontics', 'Periodontics',
+                            'Oral and Nutritional', 'Sedation Dentistry', 'Others'
+                        ] %}
+                            <div class="checklist-item">
+                                <input type="checkbox" name="services" value="{{ service }}" id="service{{ loop.index }}"
+                                    {% if service in selected_services %}checked{% endif %}>
+                                <label for="service{{ loop.index }}">{{ service }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="branches-about">
+                    <div class="button-container">
+                        <button class="save-btn" type="submit">Save</button>
+                        <a class="view-website-btn" href="{{ url_for('main.homepage') }}">View Website</a>
+                    </div>
+
+                    <h3>About Us</h3>
+                    <textarea name="about_us" class="form-control" rows="5">{{ main_web.about_us if main_web else '' }}</textarea>
+
+                    <div class="branches-contact mt-3">
+                        <h3>Main Contact</h3>
+                        <input type="email" name="main_email" class="form-control" placeholder="Email"
+                            value="{{ main_web.main_email if main_web else '' }}">
+                        <input type="text" name="main_contact_number" class="form-control mt-2" placeholder="Contact Number"
+                            value="{{ main_web.main_contact_number if main_web else '' }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+  <!-- Calendar Section
+  <section class="calendar-card">
+      <div class="calendar-panel">
+          <div id="calendar"></div>
+          <div class="calendar-details-panel">
+            <div class="calendar-details-header">
+                <select name="branch" class="branch-select">
+                    <option value="manila">Manila Branch</option>
+                    <option value="quezon">Quezon Branch</option>
+                </select>
+            </div>
+            <hr>
+            <ul class="calendar-details-list">
+                <li class="calendar-appointment">
+                    <div class="appt-info">
+                        <span class="appt-time">10:30am - 11:30am</span>
+                        <div>
+                            <span class="appt-dot"></span>
+                            <span class="appt-type"><b>Patient Checkup</b></span>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('owner.appointments') }}" class="appt-link">View Details</a>
+                </li>
+                <li class="calendar-appointment">
+                    <div class="appt-info">
+                        <span class="appt-time">11:30am - 12:30pm</span>
+                        <div>
+                            <span class="appt-dot"></span>
+                            <span class="appt-type"><b>Bleaching</b></span>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('owner.appointments') }}" class="appt-link">View Details</a>
+                </li>
+                <li class="calendar-appointment">
+                    <div class="appt-info">
+                        <span class="appt-time">1:00pm - 2:30pm</span>
+                        <div>
+                            <span class="appt-dot"></span>
+                            <span class="appt-type"><b>Patient Checkup</b></span>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('owner.appointments') }}" class="appt-link">View Details</a>
+                </li>
+            </ul>
+        </div>
+      </div>      
+  </section>
+{% endblock %} -->
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
+{% endblock %}
