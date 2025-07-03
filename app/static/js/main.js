@@ -53,10 +53,11 @@
 })();
 
 //service list function
-document.addEventListener('DOMContentLoaded', function() {
-    const serviceCheckboxes = document.querySelectorAll('.services-checklist input[type="checkbox"]');
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("main.js loaded ✅");
+
     const selectedServicesContainer = document.getElementById('selected-services-cards');
-    
+
     // Service data (matches your existing service cards)
     const servicesData = {
         'Preventive Dentistry': {
@@ -79,24 +80,45 @@ document.addEventListener('DOMContentLoaded', function() {
             icon: '../../static/images/Dental Examination.png',
             description: 'Child-focused dental care for healthy smiles.'
         },
-        // Add other services similarly...
+        'Orthodontics': {
+            bgImage: '../../static/images/Dental Examination(BG).png',
+            icon: '../../static/images/Dental Examination.png',
+            description: 'Orthodontic dental care for smile alignment.'
+        },
+        'Periodontics': {
+            bgImage: '../../static/images/Root canal treatment(BG).png',
+            icon: '../../static/images/Root canal treatment.png',
+            description: 'Gum and periodontal treatment.'
+        },
+        'Oral and Nutritional': {
+            bgImage: '../../static/images/dentures(bg).jpg',
+            icon: '../../static/images/Dentures.png',
+            description: 'Diet-based oral care guidance.'
+        },
+        'Sedation Dentistry': {
+            bgImage: '../../static/images/Dental Examination(BG).png', // Default image if specific one doesn't exist
+            icon: '../../static/images/Dental Examination.png',
+            description: 'Comfort-focused sedation procedures.'
+        },
+        'Others': {
+            bgImage: '../../static/images/Dental Examination(BG).png',
+            icon: '../../static/images/Dental Examination.png',
+            description: 'Miscellaneous dental services.'
+        },
+
     };
 
-    serviceCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const serviceName = this.nextElementSibling.textContent;
-            
-            if (this.checked) {
-                addServiceCard(serviceName);
-            } else {
-                removeServiceCard(serviceName);
-            }
-        });
+    // Get services string from the hidden input and split
+    const servicesString = document.getElementById('preselected-services')?.value || "";
+    const selectedServices = servicesString.split(',').map(s => s.trim());
+
+    selectedServices.forEach(serviceName => {
+        addServiceCard(serviceName);
     });
 
-    // Adds a service card to the selected container
     function addServiceCard(serviceName) {
         if (!servicesData[serviceName] || document.querySelector(`.selected-service-card[data-service="${serviceName}"]`)) {
+            console.log(`❌ Skipping: ${serviceName}`);
             return;
         }
 
@@ -117,7 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
 
         selectedServicesContainer.appendChild(card);
+        console.log(`✅ Rendered: ${serviceName}`);
     }
+<<<<<<< HEAD
 /*
     // Removes a service card
     function removeServiceCard(serviceName) {
@@ -139,3 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };*/
 });
+=======
+});
+>>>>>>> 06ec2aaeabc66c2c89f14f1236531b3bab0af1f6
