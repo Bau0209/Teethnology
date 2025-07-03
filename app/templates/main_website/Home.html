@@ -97,31 +97,16 @@ Teethnology Patient Portal
     </div>
 </section>
 
-<section id="services">
-    <div class="services-header">
-        <h2>SERVICES</h2>
-        <p>Services for Every Dental Need</p>
-    </div>
-    <div class="services-cards">
-        <div class="selected-services-container">
-            <div id="selected-services-cards" class="services-cards">
-                <!-- Selected service cards will appear here -->
-            </div>
-        </div>
-        <div class="services-checklist">
-            {% for service in [
-                'Preventive Dentistry', 'Intervention Dentistry', 'Coroneric Dentistry',
-                'Pediatric Dentistry', 'Orthodontics', 'Periodontics',
-                'Oral and Nutritional', 'Sedation Dentistry', 'Others'
-            ] %}
-                <div class="checklist-item">
-                    <input type="checkbox" id="service{{ loop.index }}">
-                    <label for="service{{ loop.index }}">{{ service }}</label>
-                </div>
-            {% endfor %}
+<div class="services-cards">
+    <!-- Container for service cards that appear when checkboxes are selected -->
+    <div class="selected-services-container">
+        <div id="selected-services-cards" class="services-cards">
+            <input type="hidden" id="preselected-services" value="{{ main_web.services }}">
+            <!-- JS will populate cards here -->
         </div>
     </div>
-</section>
+</div>
+
 
 <section id="about-us">
     <div class="about-header">
@@ -132,5 +117,6 @@ Teethnology Patient Portal
 {% endblock %}
 
 {% block extra_js %}
-<script src="../../static/js/main.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
+
