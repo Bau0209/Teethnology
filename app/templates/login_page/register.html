@@ -31,13 +31,23 @@
                             Register a new portfolio option in inventory and experience based on your role.
                         </p>
                     </div>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                     
                     <!-- Registration Form -->
-                    <form class="signup-form">
+                    <form class="signup-form" method="POST" action="{{ url_for('login.register') }}">
                         <!-- Employee ID -->
                         <div class="form-group mb-4">
                             <label for="employee-id" class="form-label">Employee ID</label>
-                            <input type="text" id="employee-id" class="form-control form-control-lg" required>
+                            <input type="text" id="employee-id" name="employee-id" class="form-control form-control-lg" required>
                         </div>
                         
                         <!-- Name Fields -->
@@ -45,19 +55,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="first-name" class="form-label">First name</label>
-                                    <input type="text" id="first-name" class="form-control" required>
+                                    <input type="text" id="first-name" name="first-name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="middle-name" class="form-label">Middle name</label>
-                                    <input type="text" id="middle-name" class="form-control">
+                                    <input type="text" id="middle-name" name="middle-name" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="last-name" class="form-label">Last name</label>
-                                    <input type="text" id="last-name" class="form-control" required>
+                                    <input type="text" id="last-name" name="last-name" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +75,7 @@
                         <!-- Email -->
                         <div class="form-group mb-4">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" class="form-control form-control-lg" required>
+                            <input type="email" id="email" name="email" class="form-control form-control-lg" required>
                         </div>
                         
                         <!-- Password Fields -->
@@ -73,13 +83,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" id="password" class="form-control" required>
+                                    <input type="password" id="password" name="password" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password-confirm" class="form-label">Re-type your Password</label>
-                                    <input type="password" id="password-confirm" class="form-control" required>
+                                    <input type="password" id="password-confirm" name="password-confirm" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -91,9 +101,10 @@
                         </div>
                         
                         <!-- Signup Button -->
-                        <a class="signup-button btn btn-primary btn-lg w-100 py-3 mb-3" href="{{ url_for('login.login_page') }}">
+                        <button type="submit" class="signup-button btn btn-primary btn-lg w-100 py-3 mb-3">
                             Sign up
-                        </a>
+                        </button>
+
                     </form>
                     
                     <!-- Login Link -->
