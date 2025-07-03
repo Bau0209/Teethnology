@@ -5,7 +5,7 @@ from .auth import role_required
 import json
 import os
 from app import db
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 owner = Blueprint('owner', __name__)
 
@@ -14,10 +14,47 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+from flask import request
+
 @owner.route('/owner_home')
-# @role_required('owner')
 def owner_home():
-    return render_template('/owner/O_home.html')
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+    selected_branch = request.args.get('branch', 'all')
+    branches = Branch.query.all()
+    main_web = MainWeb.query.first()
+
+    if selected_branch == 'all':
+        appointments_today = Appointments.query.filter(
+            db.func.date(Appointments.appointment_sched) == today
+        ).all()
+        appointments_tomorrow = Appointments.query.filter(
+            db.func.date(Appointments.appointment_sched) == tomorrow
+        ).all()
+        appointment_requests = Appointments.query.filter_by(appointment_status='pending').all()
+    else:
+        appointments_today = Appointments.query.filter(
+            db.func.date(Appointments.appointment_sched) == today,
+            Appointments.branch_id == int(selected_branch)
+        ).all()
+        appointments_tomorrow = Appointments.query.filter(
+            db.func.date(Appointments.appointment_sched) == tomorrow,
+            Appointments.branch_id == int(selected_branch)
+        ).all()
+        appointment_requests = Appointments.query.filter_by(
+            branch_id=int(selected_branch),
+            appointment_status='pending'
+        ).all()
+
+    return render_template(
+        '/owner/O_home.html',
+        appointments_today=appointments_today,
+        appointments_tomorrow=appointments_tomorrow,
+        appointment_requests=appointment_requests,
+        branches=branches,
+        selected_branch=selected_branch,
+        main_web=main_web
+    )
 
 @owner.route('/branches')
 # @role_required('owner')
