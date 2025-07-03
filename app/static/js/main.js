@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addServiceCard(serviceName) {
         if (!servicesData[serviceName] || document.querySelector(`.selected-service-card[data-service="${serviceName}"]`)) {
-            console.log(`❌ Skipping: ${serviceName}`);
+            console.log(`Skipping: ${serviceName}`);
             return;
         }
 

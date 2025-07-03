@@ -276,7 +276,160 @@ def patients():
         branches=branches,
         selected_branch=selected_branch
     )
+    
+def parse_date(date_str):
+    if date_str:
+        return datetime.strptime(date_str, '%Y-%m-%d').date()
+    return None    
 
+@owner.route('/patients/add', methods=['POST'])
+def add_patient():    
+    try:
+        # Get patient_info fields
+        branch_id = request.form.get('branch_id')
+        last_name = request.form.get('last_name')
+        first_name = request.form.get('first_name')
+        middle_name = request.form.get('middle_name')
+        birthdate = request.form.get('birthdate')
+        sex = request.form.get('sex')
+        contact_number = request.form.get('contact_number')
+        email = request.form.get('email')
+        address_line1 = request.form.get('address_line1')
+        baranggay = request.form.get('baranggay')
+        city = request.form.get('city')
+        province = request.form.get('province')
+        country = request.form.get('country')
+        initial_consultation_reason = request.form.get('initial_consultation_reason')
+        occupation = request.form.get('occupation')
+        office_number = request.form.get('office_number')
+        guardian_first_name = request.form.get('guardian_first_name')
+        guardian_middle_name = request.form.get('guardian_middle_name')
+        guardian_last_name = request.form.get('guardian_last_name')
+        guardian_occupation = request.form.get('guardian_occupation')
+        reffered_by = request.form.get('reffered_by')
+        previous_dentist = request.form.get('previous_dentist')
+        last_dentist_visit_raw = request.form.get('last_dentist_visit')
+        last_dentist_visit = parse_date(last_dentist_visit_raw)
+
+        # Create and save patient_info
+        new_patient = PatientsInfo(
+            branch_id=branch_id,
+            last_name=last_name,
+            first_name=first_name,
+            middle_name=middle_name,
+            birthdate=birthdate,
+            sex=sex,
+            contact_number=contact_number,
+            email=email,
+            address_line1=address_line1,
+            baranggay=baranggay,
+            city=city,
+            province=province,
+            country=country,
+            initial_consultation_reason=initial_consultation_reason,
+            occupation=occupation,
+            office_number=office_number,
+            guardian_first_name=guardian_first_name,
+            guardian_middle_name=guardian_middle_name,
+            guardian_last_name=guardian_last_name,
+            guardian_occupation=guardian_occupation,
+            reffered_by=reffered_by,
+            previous_dentist=previous_dentist,
+            last_dental_visit=last_dentist_visit
+        )
+        db.session.add(new_patient)
+        db.session.commit()  # needed to generate patient_id
+
+        # Get patient_medical_info fields
+        physician_name = request.form.get('physician_name')
+        physician_specialty = request.form.get('physician_specialty')
+        physician_office_address = request.form.get('physician_office_address')
+        physician_office_number = request.form.get('physician_office_number')
+        in_good_health = bool(request.form.get('in_good_health'))
+        medical_treatment = request.form.get('medical_treatment_currently_undergoing')
+        recent_illness = request.form.get('recent_illness_or_surgical_operation')
+        when_illness = request.form.get('when_illness_or_operation')
+        when_why_hospitalized = request.form.get('when_why_hospitalized')
+        medications = request.form.get('medications_currently_taking')
+        using_tabacco = bool(request.form.get('using_tabacco'))
+        using_alcohol = bool(request.form.get('using_alcohol_cocaine_drugs'))
+        allergies = request.form.get('allergies')
+        bleeding_time = request.form.get('bleeding_time')
+        is_pregnant = bool(request.form.get('is_pregnant'))
+        is_nursing = bool(request.form.get('is_nursing'))
+        on_birth_control = bool(request.form.get('on_birth_control'))
+        blood_type = request.form.get('blood_type')
+        blood_pressure = request.form.get('blood_pressure')
+        illness_checklist = request.form.get('illness_checklist')
+
+        # Create and save patient_medical_info
+        medical_info = PatientMedicalInfo(
+            patient_id=new_patient.patient_id,
+            physician_name=physician_name,
+            physician_specialty=physician_specialty,
+            physician_office_address=physician_office_address,
+            physician_office_number=physician_office_number,
+            in_good_health=in_good_health,
+            medical_treatment_currently_undergoing=medical_treatment,
+            recent_illness_or_surgical_operation=recent_illness,
+            when_illness_or_operation=when_illness,
+            when_why_hospitalized=when_why_hospitalized,
+            medications_currently_taking=medications,
+            using_tabacco=using_tabacco,
+            using_alcohol_cocaine_drugs=using_alcohol,
+            allergies=allergies,
+            bleeding_time=bleeding_time,
+            is_pregnant=is_pregnant,
+            is_nursing=is_nursing,
+            on_birth_control=on_birth_control,
+            blood_type=blood_type,
+            blood_pressure=blood_pressure,
+            illness_checklist=illness_checklist
+        )
+        db.session.add(medical_info)
+        db.session.commit()
+        
+        # ---- Dental Info ----
+        periodontal_screening = ','.join(request.form.getlist('periodontal_screening[]'))
+        occlusion = ','.join(request.form.getlist('occlusion[]'))
+
+        appliances = request.form.getlist('appliances[]')
+        appliances_others = request.form.get('appliances_others')
+        if appliances_others:
+            appliances.append(appliances_others)
+        appliances = ','.join(appliances)
+
+        TMD = ','.join(request.form.getlist('TMD[]'))
+
+        dental_info = DentalInfo(
+            patient_id=new_patient.patient_id,
+            dental_record_image_link="",  # You can replace this later with an uploaded image link
+            periodontal_screening=periodontal_screening,
+            occlusion=occlusion,
+            appliances=appliances,
+            TMD=TMD
+        )
+
+        db.session.add(dental_info)
+        db.session.commit()
+
+        flash("Patient record added successfully!", "success")
+        return redirect(url_for('owner.patients'))
+    
+    except Exception as e:
+        error_message = str(e)
+        # Instead of redirecting, re-render the form with error
+        return render_template(
+            '/owner/patients.html',
+            error_message=error_message,
+            patients=[],  # or existing data if needed
+            patient=None,
+            patient_medical_info=None,
+            dental_record=[],
+            branches=Branch.query.all(),
+            selected_branch='all'
+        )
+ 
 #Adding an Appointment in the calendar
 @owner.route('/form', methods=['GET', 'POST'])
 # @role_required('owner')

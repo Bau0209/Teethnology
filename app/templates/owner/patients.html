@@ -26,6 +26,16 @@
         </li>
         {% endfor %}
     </ul>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <!-- Toolbar -->
     <div class="toolbar my-3 d-flex align-items-center">
@@ -72,6 +82,13 @@
         </table>
     </div>
 </div>
+
+{% if error_message %}
+<script>
+    alert("Error: {{ error_message }}");
+</script>
+{% endif %}
+
 
 {% include 'owner/components/o_patientform_modal.html' %}
 
