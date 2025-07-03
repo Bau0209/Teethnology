@@ -24,25 +24,25 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Last Name:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="last_name" value="{{ patient.last_name }}" required>
+                                            <input type="text" class="form-control" name="last_name" value="{{ patient.last_name or '' }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">First Name:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="first_name" value="{{ patient.first_name }}" required>
+                                            <input type="text" class="form-control" name="first_name" value="{{ patient.first_name or '' }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Middle Initial:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="middle_name" value="{{ patient.middle_name }}">
+                                            <input type="text" class="form-control" name="middle_name" value="{{ patient.middle_name or '' }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Birthdate:</label>
                                         <div class="col-sm-8">
-                                            <input type="date" class="form-control" name="birthdate" value="{{ patient.birthdate }}" required>
+                                            <input type="date" class="form-control" name="birthdate" value="{{ patient.birthdate or '' }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -57,18 +57,20 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Age:</label>
                                         <div class="col-sm-8">
-                                            <input type="number" class="form-control" value="{{ patient.age }}" readonly>
+                                            <input type="number" class="form-control" value="{{ patient.age or '' }}" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Sex:</label>
                                         <div class="col-sm-8">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sex" id="female" value="F" {% if patient.sex == 'F' %}checked{% endif %}>
+                                                <input class="form-check-input" type="radio" name="sex" id="female" value="F"
+                                                    {% if patient and patient.sex == 'F' %}checked{% endif %}>
                                                 <label class="form-check-label" for="female">Female</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sex" id="male" value="M" {% if patient.sex == 'M' %}checked{% endif %}>
+                                                <input class="form-check-input" type="radio" name="sex" id="male" value="M"
+                                                    {% if patient and patient.sex == 'M' %}checked{% endif %}>
                                                 <label class="form-check-label" for="male">Male</label>
                                             </div>
                                         </div>
@@ -82,31 +84,31 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Address Line 1:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="address_line1" value="{{ patient.address_line1 }}" required>
+                                            <input type="text" class="form-control" name="address_line1" value="{{ patient.address_line1 or '' }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 address-indent">
                                         <label class="col-sm-4 col-form-label">Barangay:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="baranggay" value="{{ patient.baranggay }}" required>
+                                            <input type="text" class="form-control" name="baranggay" value="{{ patient.baranggay or '' }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 address-indent">
                                         <label class="col-sm-4 col-form-label">City:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="city" value="{{ patient.city }}" required>
+                                            <input type="text" class="form-control" name="city" value="{{ patient.city or '' }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 address-indent">
                                         <label class="col-sm-4 col-form-label">Province:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="province" value="{{ patient.province }}" required>
+                                            <input type="text" class="form-control" name="province" value="{{ patient.province or '' }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 address-indent">
                                         <label class="col-sm-4 col-form-label">Country:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="country" value="{{ patient.country }}" required>
+                                            <input type="text" class="form-control" name="country" value="{{ patient.country or '' }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -115,31 +117,31 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Occupation:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="occupation" value="{{ patient.occupation }}">
+                                            <input type="text" class="form-control" name="occupation" value="{{ patient.occupation or '' }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Office No:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="office_number" value="{{ patient.office_number }}">
+                                            <input type="text" class="form-control" name="office_number" value="{{ patient.office_number or '' }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Contact No:</label>
                                         <div class="col-sm-8">
-                                            <input type="tel" class="form-control" name="contact_number" value="{{ patient.contact_number }}" required>
+                                            <input type="tel" class="form-control" name="contact_number" value="{{ patient.contact_number or '' }}" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Email:</label>
                                         <div class="col-sm-8">
-                                            <input type="email" class="form-control" name="email" value="{{ patient.email }}">
+                                            <input type="email" class="form-control" name="email" value="{{ patient.email or '' }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Referred By:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="reffered_by" value="{{ patient.reffered_by }}">
+                                            <input type="text" class="form-control" name="reffered_by" value="{{ patient.reffered_by or '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -152,13 +154,13 @@
                                         <label class="col-sm-4 col-form-label">Guardian Name:</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="guardian_full_name"
-                                                value="{{ patient.guardian_full_name }}" placeholder="For minors only">
+                                                value="{{ patient.guardian_full_name or '' }}" placeholder="For minors only">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-4 col-form-label">Guardian Occupation:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="guardian_occupation" value="{{ patient.guardian_occupation }}">
+                                            <input type="text" class="form-control" name="guardian_occupation" value="{{ patient.guardian_occupation or '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +170,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-4 col-form-label">Initial Reason for Dental Consultation:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="initial_consultation_reason" value="{{ patient.initial_consultation_reason }}">
+                                        <input type="text" class="form-control" name="initial_consultation_reason" value="{{ patient.initial_consultation_reason or '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +190,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-4 col-form-label">Previous Dentist:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="previous_dentist" value="{{ patient.previous_dentist }}">
+                                        <input type="text" class="form-control" name="previous_dentist" value="{{ patient.previous_dentist or '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +198,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-4 col-form-label">Last Dental Visit:</label>
                                     <div class="col-sm-8">
-                                        <input type="date" class="form-control" name="last_dentist_visit" value="{{ patient.last_dentist_visit }}">
+                                        <input type="date" class="form-control" name="last_dentist_visit" value="{{ patient.last_dentist_visit or '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +210,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-5 col-form-label">Physician's Name:</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name = "physician_name" value="{{ patient_medical_info.physician_name }}">
+                                        <input type="text" class="form-control" name = "physician_name" value="{{ patient_medical_info.physician_name or '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +218,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-5 col-form-label">Specialty, if applicable:</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name = "physician_specialty" value="{{ patient_medical_info.physician_specialty }}">
+                                        <input type="text" class="form-control" name = "physician_specialty" value="{{ patient_medical_info.physician_specialty or '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +226,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-5 col-form-label">Office Address:</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name = "office_address" value="{{ patient_medical_info.physician_office_address }}">
+                                        <input type="text" class="form-control" name = "office_address" value="{{ patient_medical_info.physician_office_address or '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +234,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-5 col-form-label">Office Number:</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name = "office_number" value="{{ patient_medical_info.physician_office_number }}">
+                                        <input type="text" class="form-control" name = "office_number" value="{{ patient_medical_info.physician_office_number or '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -241,7 +243,7 @@
                         <ol class="medical-history-list">
                         <li>
                             Are you in good health?
-                            <strong>{{ "Yes" if patient_medical_info.in_good_health else "No" }}</strong>
+                            <strong>{{ "No" if patient_medical_info.in_good_health == 0 else "Yes" }}</strong>
                         </li>
                         <li>
                             Are you under medical treatment now?
@@ -311,7 +313,7 @@
                                         <input type="checkbox" id="allergy6" name="allergy" {% if "Other" in allergies %}checked{% endif %}>
                                         <label for="allergy6">Other:</label>
                                         <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
-                                            value="{% for item in allergies if item not in ['Local Anesthetic', 'Penicillin Antibiotics', 'Latex', 'Sulfa Drugs', 'Aspirin'] %}{{ item }}{% endfor %}">
+                                            value="{{ allergies | reject('in', ['Local Anesthetic', 'Penicillin Antibiotics', 'Latex', 'Sulfa Drugs', 'Aspirin']) | join(', ') }}">
                                     </div>
                                 </div>
                             </li>

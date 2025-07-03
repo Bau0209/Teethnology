@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify
-from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, Procedures, Transactions, Appointments, DentalInfo, MainWeb
+from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Transactions, Appointments, MainWeb
 from werkzeug.utils import secure_filename
 import json
 import os
@@ -282,8 +282,197 @@ def patients():
     return render_template(
         '/owner/patients.html',
         patients=patients,
+        patient=None,
+        patient_medical_info=None,
+        dental_record=[],
         branches=branches,
         selected_branch=selected_branch
+    )
+
+#Adding an Appointment in the calendar
+@owner.route('/form', methods=['GET', 'POST'])
+def form():
+    branches = Branch.query.all()
+    if request.method == 'POST':
+        is_returning = request.form.get('firstvisit') == 'yes'
+        first_name = request.form.get('first_name', '').strip().lower()
+        last_name = request.form.get('last_name', '').strip().lower()
+        branch_id = int(request.form.get('branch_id'))
+        # Convert 'male'/'female' to 'M'/'F'
+        raw_gender = request.form.get('sex', '').lower()
+        sex = 'M' if raw_gender == 'male' else 'F' if raw_gender == 'female' else None
+
+        if is_returning:
+            # Validate returning patient by ID and name
+            patient_id = int(request.form.get('patient_id'))
+            patient = PatientsInfo.query.filter_by(patient_id=patient_id).first()
+            if not patient or patient.first_name.lower() != first_name or patient.last_name.lower() != last_name:
+                flash(f"Invalid Patient ID or Name. Please try again.", "danger")
+                flash(f"Entered ID: {patient_id}", "danger")
+                flash(f"Entered Name: {first_name.title()} {last_name.title()}", "danger")
+
+                if patient:
+                    flash(f"DB Name: {patient.first_name.title()} {patient.last_name.title()}", "danger")
+                else:
+                    flash("No patient found with that ID.", "danger")
+
+                return redirect(request.referrer)
+
+            # Create appointment
+            new_appointment = Appointments(
+                branch_id=branch_id,
+                patient_id=patient.patient_id,
+                appointment_sched=datetime.fromisoformat(request.form.get('preferred')),
+                alternative_sched=datetime.fromisoformat(request.form.get('alternative')) if request.form.get('alternative') else None,
+                appointment_type=request.form.get('appointment_type'),
+                appointment_status='pending',
+                returning_patient=True
+            )
+            db.session.add(new_appointment)
+            db.session.commit()
+            flash("Appointment booked successfully for returning patient.", "success")
+            return redirect(url_for('owner.appointments'))
+
+        else:
+            # Register new patient
+            new_patient = PatientsInfo(
+                branch_id=branch_id,
+                first_name=request.form.get('first_name'),
+                middle_name=request.form.get('middle_name'),
+                last_name=request.form.get('last_name'),
+                birthdate=request.form.get('dob'),
+                sex=sex,
+                contact_number=request.form.get('contact'),
+                email=request.form.get('email'),
+                address_line1=request.form.get('address_line1'),
+                baranggay=request.form.get('baranggay'),
+                city=request.form.get('city'),
+                province=request.form.get('province'),
+                country=request.form.get('country'),
+                initial_consultation_reason=request.form.get('appointment_type')
+            )
+            db.session.add(new_patient)
+            db.session.commit()
+
+            # Create appointment
+            new_appointment = Appointments(
+                branch_id=branch_id,
+                patient_id=new_patient.patient_id,
+                appointment_sched=datetime.fromisoformat(request.form.get('preferred')),
+                alternative_sched=datetime.fromisoformat(request.form.get('alternative')) if request.form.get('alternative') else None,
+                appointment_type=request.form.get('appointment_type'),
+                appointment_status='pending',
+                returning_patient=False
+            )
+            db.session.add(new_appointment)
+            db.session.commit()
+            flash("Appointment booked successfully for new patient.", "success")
+            return redirect(url_for('owner.appointments'))
+
+    return render_template('/owner/appointment.html', branches=branches)
+
+@owner.route('/edit_patient/<int:patient_id>', methods=['GET', 'POST'])
+def edit_patient(patient_id):
+    patient = PatientsInfo.query.get_or_404(patient_id)
+    patient_medical_info = PatientMedicalInfo.query.get(patient_id)
+    dental_record = DentalInfo.query.filter_by(patient_id=patient_id).all() or []
+
+    form_type = request.args.get("form") 
+    
+    if request.method == 'POST':
+        form_type = request.args.get("form") or request.form.get("form")
+        if form_type =="patient_info":
+            try:
+                # -------- Patient Info Update --------
+                patient.first_name = request.form.get('first_name')
+                patient.middle_name = request.form.get('middle_name')
+                patient.last_name = request.form.get('last_name')
+                patient.birthdate = datetime.strptime(request.form.get('birthdate'), '%Y-%m-%d')
+                patient.sex = request.form.get('sex')
+                patient.contact_number = request.form.get('contact_number')
+                patient.email = request.form.get('email')
+                patient.address_line1 = request.form.get('address_line1')
+                patient.baranggay = request.form.get('baranggay')
+                patient.city = request.form.get('city')
+                patient.province = request.form.get('province')
+                patient.country = request.form.get('country')
+                patient.initial_consultation_reason = request.form.get('initial_consultation_reason')
+                patient.occupation = request.form.get('occupation')
+                patient.office_number = request.form.get('office_number')
+                patient.guardian_first_name = request.form.get('guardian_first_name')
+                patient.guardian_middle_name = request.form.get('guardian_middle_name')
+                patient.guardian_last_name = request.form.get('guardian_last_name')
+                patient.guardian_occupation = request.form.get('guardian_occupation')
+                patient.reffered_by = request.form.get('reffered_by')
+                patient.previous_dentist = request.form.get('previous_dentist')
+                last_visit = request.form.get('last_dental_visit')
+                patient.last_dental_visit = datetime.strptime(last_visit, '%Y-%m-%d') if last_visit else None
+
+                # -------- Medical Info Update --------
+                if patient_medical_info:
+                    patient_medical_info.physician_name = request.form.get('physician_name')
+                    patient_medical_info.physician_specialty = request.form.get('physician_specialty')
+                    patient_medical_info.physician_office_address = request.form.get('physician_office_address')
+                    patient_medical_info.physician_office_number = request.form.get('physician_office_number')
+                    patient_medical_info.in_good_health = bool(request.form.get('in_good_health'))
+                    patient_medical_info.medical_treatment_currently_undergoing = request.form.get('medical_treatment_currently_undergoing')
+                    patient_medical_info.recent_illness_or_surgical_operation = request.form.get('recent_illness_or_surgical_operation')
+                    patient_medical_info.when_illness_or_operation = request.form.get('when_illness_or_operation')
+                    patient_medical_info.when_why_hospitalized = request.form.get('when_why_hospitalized')
+                    patient_medical_info.medications_currently_taking = request.form.get('medications_currently_taking')
+                    patient_medical_info.using_tabacco = bool(request.form.get('using_tabacco'))
+                    patient_medical_info.using_alcohol_cocaine_drugs = bool(request.form.get('using_alcohol_cocaine_drugs'))
+                    patient_medical_info.allergies = ','.join(request.form.getlist('allergy'))
+                    patient_medical_info.bleeding_time = request.form.get('bleeding_time')
+                    patient_medical_info.is_pregnant = bool(request.form.get('is_pregnant'))
+                    patient_medical_info.is_nursing = bool(request.form.get('is_nursing'))
+                    patient_medical_info.on_birth_control = bool(request.form.get('on_birth_control'))
+                    patient_medical_info.blood_type = request.form.get('blood_type')
+                    patient_medical_info.blood_pressure = request.form.get('blood_pressure')
+                    patient_medical_info.illness_checklist = ','.join(request.form.getlist('illness_checklist'))
+
+                db.session.commit()
+                flash("Patient record updated successfully!", "success")
+            except Exception as e:
+                db.session.rollback()
+                flash("Error updating patient record: " + str(e), "danger")
+        elif form_type == "dental_record":
+            try:
+                # Clear old records (optional — depends if you want to replace them)
+                DentalInfo.query.filter_by(patient_id=patient_id).delete()
+
+                # Get form data
+                periodontal = request.form.getlist('periodontal_screening')
+                occlusion = request.form.getlist('occlusion')
+                appliances = request.form.getlist('appliances')
+                tmd = request.form.getlist('TMD')
+                image_link = request.form.get('dental_record_image_link') or "default.png"  # fallback
+
+                new_record = DentalInfo(
+                    patient_id=patient_id,
+                    periodontal_screening=','.join(periodontal),
+                    occlusion=','.join(occlusion),
+                    appliances=','.join(appliances),
+                    TMD=','.join(tmd),
+                    dental_record_image_link=image_link
+                )
+
+                db.session.add(new_record)
+                db.session.commit()
+                flash("Dental record updated successfully!", "success")
+            except Exception as e:
+                db.session.rollback()
+                flash("Error updating dental record: " + str(e), "danger")
+            
+            return redirect(url_for('owner.edit_patient', patient_id=patient_id))
+
+    # GET request
+    return render_template(
+        'owner/patient_info.html',
+        patient=patient,
+        dental_record=dental_record,
+        patient_medical_info=patient_medical_info,
+        current_date=datetime.today().date()
     )
 
 @owner.route('/patient_info/<int:patient_id>')   
@@ -425,3 +614,4 @@ def report_marketing():
 @owner.route('/report_inventory')    
 def report_inventory():
     return render_template('/owner/o_rep_inventory.html')
+

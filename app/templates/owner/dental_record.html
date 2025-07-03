@@ -39,181 +39,196 @@
                             <a class="nav-link active" href="{{ url_for('owner.patient_dental_rec', patient_id=patient.patient_id) }}" data-branch="dental_record">Dental Record</a>
                         </li>
                     </ul>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                     
                     <!-- Dental Record Tab Content -->
-                    <section class="tab-content" id="dental_record">
-                        <h2 class="section-title">INTRAORAL EXAMINATION</h2>
-                        <div class="dental-record-container">
-                            <div class="form-info">
-                                <!-- First Row -->
-                                <div style="display: flex; gap: 15px; margin-bottom: 15px; width: 100%;">
-                                    <div class="form-info-item">
-                                        <label for="date">Date:</label>
-                                        <input type="text" id="date" class="form-info-control" readonly>
+                    <form action="{{ url_for('owner.edit_patient', patient_id=patient.patient_id, form='dental_record') }}" method="post"></form>
+                        <section class="tab-content" id="dental_record">
+                            <h2 class="section-title">INTRAORAL EXAMINATION</h2>
+                            <div class="dental-record-container">
+                                <div class="form-info">
+                                    <!-- First Row -->
+                                    <div style="display: flex; gap: 15px; margin-bottom: 15px; width: 100%;">
+                                        <div class="form-info-item">
+                                            <label for="date">Date:</label>
+                                            <input type="text" id="date" class="form-info-control" readonly>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class=" dental_chart">
-                                <select name="chart" class="chart-select">
-                                    <option value="adult">Adult Chart</option>
-                                    <option value="child">Children Chart</option>
-                                </select>
-                                <img id="dentalImage" src="{{ url_for('static', filename='uploads/patient_records/dental_chart/11.png') }}" alt="Dental Diagram" width="100%" height="100%">
-                            </div>
-                            <div class="dental-record-legend">
-                                <h4 class="dental-record-section-title">LEGEND</h4>
-                                <h6>Condition</h6>
-                                <div class="legend-item">
-                                    <span class="legend-icon">D</span> - Decayed (Caries Indicate for Filing)
+                                <div class=" dental_chart">
+                                    <select name="chart" class="chart-select">
+                                        <option value="adult">Adult Chart</option>
+                                        <option value="child">Children Chart</option>
+                                    </select>
+                                    <img id="dentalImage" src="{{ url_for('static', filename='uploads/patient_records/dental_chart/11.png') }}" alt="Dental Diagram" width="100%" height="100%">
                                 </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">M</span> - Missing
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">F</span> - Filled
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">I</span> - Caries Indicated for Extraction
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">RF</span> - Root Fragment
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">MO</span> - Missing due to Other Causes
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">Im</span> - Impacted Tooth
+                                <div class="dental-record-legend">
+                                    <h4 class="dental-record-section-title">LEGEND</h4>
+                                    <h6>Condition</h6>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">D</span> - Decayed (Caries Indicate for Filing)
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">M</span> - Missing
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">F</span> - Filled
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">I</span> - Caries Indicated for Extraction
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">RF</span> - Root Fragment
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">MO</span> - Missing due to Other Causes
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">Im</span> - Impacted Tooth
+                                    </div>
+                                    
+                                    <h6 style="margin-top: 15px;">Restorations & Prosthetics</h6>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">J</span> - Jacket Crown
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">A</span> - Amalgam Filling
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">AB</span> - Abutment
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">P</span> - Pontic
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">In</span> - Inlay
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">Fx</span> - Fixed Cure Composite
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">S</span> - Sealants
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">Rm</span> - Removable Denture
+                                    </div>
+                                    
+                                    <h6 style="margin-top: 15px;">Surgeon</h6>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">X</span> - Extraction due to Caries
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">XO</span> - Extraction due to Other Caries
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon"></span> ✔ Others
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon"></span> - Present Teeth
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">Cm</span> - Congenitaly Missing
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-icon">Sp</span> - Supernumerary
+                                    </div>
                                 </div>
                                 
-                                <h6 style="margin-top: 15px;">Restorations & Prosthetics</h6>
-                                <div class="legend-item">
-                                    <span class="legend-icon">J</span> - Jacket Crown
+                                {% for record in dental_record %}
+                                <div class="dental-record-entry mb-5">
+                                    <div class="dental-record-section">
+                                        <!-- Periodontal Screening -->
+                                        <h5 class="dental-record-section-title">Periodontal Screening:</h5>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="gingivitis_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Gingivitis' in record.periodontal_screening else '' }}>
+                                            <label for="gingivitis_{{ record.dental_record_id }}">Gingivitis</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="early_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Early Periodontitis' in record.periodontal_screening else '' }}>
+                                            <label for="early_{{ record.dental_record_id }}">Early Periodontitis</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="moderate_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Moderate' in record.periodontal_screening else '' }}>
+                                            <label for="moderate_{{ record.dental_record_id }}">Moderate</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="periodontitis_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Periodontitis' in record.periodontal_screening else '' }}>
+                                            <label for="periodontitis_{{ record.dental_record_id }}">Periodontitis</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="advanced_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Advanced Periodontitis' in record.periodontal_screening else '' }}>
+                                            <label for="advanced_{{ record.dental_record_id }}">Advanced Periodontitis</label>
+                                        </div>
+
+                                        <!-- Occlusion -->
+                                        <h5 class="dental-record-section-title mt-4">Occlusion:</h5>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="class_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Class' in record.occlusion else '' }}>
+                                            <label for="class_{{ record.dental_record_id }}">Class (Molar)</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="overjet_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Overjet' in record.occlusion else '' }}>
+                                            <label for="overjet_{{ record.dental_record_id }}">Overjet Overbite</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="midline_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Midline' in record.occlusion else '' }}>
+                                            <label for="midline_{{ record.dental_record_id }}">Midline Deviation</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="crossbite_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Crossbite' in record.occlusion else '' }}>
+                                            <label for="crossbite_{{ record.dental_record_id }}">Crossbite</label>
+                                        </div>
+
+                                        <!-- Appliances -->
+                                        <h5 class="dental-record-section-title mt-4">Appliances:</h5>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="ortho_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Orthodontic' in record.appliances else '' }}>
+                                            <label for="ortho_{{ record.dental_record_id }}">Orthodontic</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="stayplate_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Stayplate' in record.appliances else '' }}>
+                                            <label for="stayplate_{{ record.dental_record_id }}">Stayplate</label>
+                                        </div>
+                                        <label class="ms-3">Others:</label>
+                                        <input type="text" class="form-control form-info-control d-inline-block w-auto" readonly value="{% if record.appliances not in ['Orthodontic', 'Stayplate'] %}{{ record.appliances }}{% endif %}">
+
+                                        <!-- TMD -->
+                                        <h5 class="dental-record-section-title mt-4">TMD:</h5>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="clenching_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Clenching' in record.TMD else '' }}>
+                                            <label for="clenching_{{ record.dental_record_id }}">Clenching</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="clicking_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Clicking' in record.TMD else '' }}>
+                                            <label for="clicking_{{ record.dental_record_id }}">Clicking</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="trismus_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Trismus' in record.TMD else '' }}>
+                                            <label for="trismus_{{ record.dental_record_id }}">Trismus</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="checkbox" id="muscle_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Muscle Spasm' in record.TMD else '' }}>
+                                            <label for="muscle_{{ record.dental_record_id }}">Muscle Spasm</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">A</span> - Amalgam Filling
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">AB</span> - Abutment
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">P</span> - Pontic
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">In</span> - Inlay
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">Fx</span> - Fixed Cure Composite
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">S</span> - Sealants
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">Rm</span> - Removable Denture
-                                </div>
-                                
-                                <h6 style="margin-top: 15px;">Surgeon</h6>
-                                <div class="legend-item">
-                                    <span class="legend-icon">X</span> - Extraction due to Caries
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">XO</span> - Extraction due to Other Caries
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon"></span> ✔ Others
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon"></span> - Present Teeth
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">Cm</span> - Congenitaly Missing
-                                </div>
-                                <div class="legend-item">
-                                    <span class="legend-icon">Sp</span> - Supernumerary
-                                </div>
+                                <hr>
+                                {% endfor %}
                             </div>
-                            
-                            {% for record in dental_record %}
-                            <div class="dental-record-entry mb-5">
-                                <div class="dental-record-section">
-                                    <!-- Periodontal Screening -->
-                                    <h5 class="dental-record-section-title">Periodontal Screening:</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="gingivitis_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Gingivitis' in record.periodontal_screening else '' }}>
-                                        <label for="gingivitis_{{ record.dental_record_id }}">Gingivitis</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="early_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Early Periodontitis' in record.periodontal_screening else '' }}>
-                                        <label for="early_{{ record.dental_record_id }}">Early Periodontitis</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="moderate_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Moderate' in record.periodontal_screening else '' }}>
-                                        <label for="moderate_{{ record.dental_record_id }}">Moderate</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="periodontitis_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Periodontitis' in record.periodontal_screening else '' }}>
-                                        <label for="periodontitis_{{ record.dental_record_id }}">Periodontitis</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="advanced_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Advanced Periodontitis' in record.periodontal_screening else '' }}>
-                                        <label for="advanced_{{ record.dental_record_id }}">Advanced Periodontitis</label>
-                                    </div>
-
-                                    <!-- Occlusion -->
-                                    <h5 class="dental-record-section-title mt-4">Occlusion:</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="class_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Class' in record.occlusion else '' }}>
-                                        <label for="class_{{ record.dental_record_id }}">Class (Molar)</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="overjet_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Overjet' in record.occlusion else '' }}>
-                                        <label for="overjet_{{ record.dental_record_id }}">Overjet Overbite</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="midline_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Midline' in record.occlusion else '' }}>
-                                        <label for="midline_{{ record.dental_record_id }}">Midline Deviation</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="crossbite_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Crossbite' in record.occlusion else '' }}>
-                                        <label for="crossbite_{{ record.dental_record_id }}">Crossbite</label>
-                                    </div>
-
-                                    <!-- Appliances -->
-                                    <h5 class="dental-record-section-title mt-4">Appliances:</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="ortho_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Orthodontic' in record.appliances else '' }}>
-                                        <label for="ortho_{{ record.dental_record_id }}">Orthodontic</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="stayplate_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Stayplate' in record.appliances else '' }}>
-                                        <label for="stayplate_{{ record.dental_record_id }}">Stayplate</label>
-                                    </div>
-                                    <label class="ms-3">Others:</label>
-                                    <input type="text" class="form-control form-info-control d-inline-block w-auto" readonly value="{% if record.appliances not in ['Orthodontic', 'Stayplate'] %}{{ record.appliances }}{% endif %}">
-
-                                    <!-- TMD -->
-                                    <h5 class="dental-record-section-title mt-4">TMD:</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="clenching_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Clenching' in record.TMD else '' }}>
-                                        <label for="clenching_{{ record.dental_record_id }}">Clenching</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="clicking_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Clicking' in record.TMD else '' }}>
-                                        <label for="clicking_{{ record.dental_record_id }}">Clicking</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="trismus_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Trismus' in record.TMD else '' }}>
-                                        <label for="trismus_{{ record.dental_record_id }}">Trismus</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="muscle_{{ record.dental_record_id }}" class="form-check-input" disabled {{ 'checked' if 'Muscle Spasm' in record.TMD else '' }}>
-                                        <label for="muscle_{{ record.dental_record_id }}">Muscle Spasm</label>
-                                    </div>
-                                </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
-                            <hr>
-                            {% endfor %}
-                        </div>
-                    </section>
+                        </section>
+                    </form>
                 </div>
 {% endblock %}
 {% block extra_js %}

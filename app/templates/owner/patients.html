@@ -62,7 +62,7 @@
                     <td>{{ patient.email }}</td>
                     <td>{{ patient.branch.branch_name }}</td>
                     <td>
-                        <a href="{{ url_for('owner.patient_info', patient_id=patient.patient_id) }}">
+                        <a href="{{ url_for('owner.edit_patient', patient_id=patient.patient_id) }}">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </td>
@@ -73,7 +73,7 @@
     </div>
 </div>
 
-
+{% include 'owner/components/o_patientform_modal.html' %}
 
 {% endblock %}
 
