@@ -176,7 +176,7 @@ body {
 }
 /* Save button */
 .btn-save {
-    background: #0097a7;
+    background: #00898E !important;
     color: white;
     border: none;
     border-radius: 5px;
@@ -185,10 +185,26 @@ body {
     transition: background 0.3s;
 }
 
+.btn-danger{
+    background: #EEA4A4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
 .btn-save:hover {
     background: #007c91;
     color: white;
 }
+.btn-danger:hover{
+  background: #750505ee;
+  color: white;
+}
+
 /*procedure style*/
 .summary-container {
     padding: 20px;
@@ -196,16 +212,19 @@ body {
     margin-left: 10px;
     margin-top: 20px; 
     margin-bottom: auto;
+    max-height: 800px; 
+    display: flex;
+    flex-direction: column;
 }
 
 .summary-container h2{
     font-size: 1.5rem;
     color: #00898E;
     font-weight: 700;
+    margin-bottom: 15px;
 }
 .summary-table {
     width: 100%;
-    height: inherit;
     border-collapse: collapse;
     border: none !important; 
     border-radius: 3px;
@@ -213,11 +232,29 @@ body {
     align-items: center !important;
     margin-bottom: 20px;
     font-size: 0.9rem;
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
+    overflow: hidden; 
+}
+.summary-table-container {
+    overflow-y: auto; /* Vertical scrolling */
+    max-height: 500px; /* Adjust based on your needs */
+    margin-top: -1px; /* Align with header */
 }
 
+/* Fix header */
+.summary-table thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* Equal column widths */
+    position: sticky;
+    top: 0;
+    background-color: white; /* Match your design */
+    z-index: 10;
+}
+
+.summary-table tbody {
+    display: block;
+    overflow-y: auto;
+}
 .summary-table th {
     background-color: transparent;
     color: rgba(134, 134, 134, 0.753); 
@@ -226,6 +263,8 @@ body {
     align-items: center; 
     font-weight: 500;
     border-bottom: 1px solid #fafafa69;
+    position: sticky;
+    top: 0;
 }
 
 
@@ -236,11 +275,55 @@ body {
 }
 
 .summary-table tr {
-    padding: 15px; 
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .summary-table tr:not(:first-child):hover {
     background-color: #f5f5f5;
+}
+/* ============== BUTTONS ============== */
+.btn-outline-primary {
+    border: none !important;
+    background-color: transparent !important;
+}
+.btn-outline-primary.btn-sm {
+    padding: 0.10rem 0.5rem !important;  
+    font-size: 1.5rem !important;       
+    width: 32px;                        
+    height: 32px;                       
+    display: inline-flex;               
+    align-items: center;                
+    justify-content: center;            
+    border-radius: 6px !important;      
+}
+.btn-outline-primary.btn-sm .fa-chevron-right {
+    font-size: 0.8rem;                 
+    margin: 0 !important;               
+}
+
+.btn-outline-primary:hover {
+    background-color: rgba(0, 137, 142, 0.1) !important;
+}
+
+.d-grid {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-top: 20px;
+}
+
+.d-grid .btn-primary.btn-lg {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+    height: 40px !important;
+    width: auto !important;
+    border-radius: 6px !important;
+}
+
+.d-grid .btn-primary.btn-lg .fa-plus {
+    font-size: 0.9rem !important;
+    margin-right: 5px !important;
 }
 
 /* Dental Record Specific Styles */
@@ -459,10 +542,10 @@ body {
   .patients-table-container,
   .patient-info-container {
     max-width: 1800px;
-    padding: 30px;
+    padding: 40px;
   }
   .patients-table {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
   }
   .section-title {
     font-size: 1.8rem;
@@ -471,46 +554,40 @@ body {
     font-size: 1.5rem;
   }
   .nav-tabs {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
   .form-label,
   .form-control,
   .form-select {
-    font-size: 1.05rem;
-    height: 45px;
+    font-size: 1rem;
+    height: 44px;
   }
   .dental-record-container {
     padding-right: 400px;
-  }
-  .dental-record-title {
-    font-size: 1.8rem;
   }
   .checkbox-grid {
     grid-template-columns: repeat(4, 1fr);
   }
   .btn-save {
-    padding: 12px 30px;
     font-size: 1.1rem;
   }
   .dental-record-legend {
     width: 380px;
-    padding: 25px;
   }
-  .dental-record-section {
-    width: calc(100% - 400px);
-  }
+  .dental-record-section,
   .dental_chart {
     width: calc(100% - 400px);
   }
 }
 
+/* Full HD and Wider Screens (≥1920px) */
 @media (min-width: 1920px) {
   .patients-table-container,
   .patient-info-container {
     max-width: 2000px;
   }
   .patients-table {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
   .section-title {
     font-size: 2rem;
@@ -529,20 +606,19 @@ body {
   .dental-record-container {
     padding-right: 450px;
   }
-  .dental-record-legend {
-    width: 420px;
-  }
   .checkbox-grid {
     grid-template-columns: repeat(5, 1fr);
   }
-  .dental-record-section {
-    width: calc(100% - 450px);
+  .dental-record-legend {
+    width: 420px;
   }
+  .dental-record-section,
   .dental_chart {
     width: calc(100% - 450px);
   }
 }
 
+/* Large Desktops (≤1200px) */
 @media (max-width: 1200px) {
   .form-info-row {
     flex-wrap: wrap;
@@ -551,19 +627,18 @@ body {
     min-width: 45%;
   }
   .dental-record-container {
-    padding-right: 350px;
+    padding-right: 340px;
   }
-  .dental-record-section {
-    width: calc(100% - 370px);
-  }
+  .dental-record-section,
   .dental_chart {
-    width: calc(100% - 370px);
+    width: calc(100% - 360px);
   }
   .dental-record-legend {
-    width: 350px;
+    width: 340px;
   }
 }
 
+/* Medium Screens (≤992px) */
 @media (max-width: 992px) {
   .section-title {
     font-size: 1.3rem;
@@ -571,7 +646,7 @@ body {
   .section-subtitle {
     font-size: 1.1rem;
   }
-  .checkbox-group {
+  .checkbox-grid {
     grid-template-columns: 1fr;
   }
   .form-info-item {
@@ -588,18 +663,17 @@ body {
   .dental-record-legend {
     position: relative;
     width: 100%;
-    top: auto;
-    right: auto;
+    top: unset;
+    right: unset;
     margin-top: 20px;
   }
   .chart-select {
-    position: relative;
-    right: auto;
-    top: auto;
     margin-bottom: 15px;
+    position: relative;
   }
 }
 
+/* Tablets (≤768px) */
 @media (max-width: 768px) {
   .nav-tabs {
     font-size: 1.2rem;
@@ -612,19 +686,20 @@ body {
   }
   .form-group {
     grid-template-columns: 1fr;
-    gap: 6px;
+    gap: 10px;
   }
   .summary-table th,
   .summary-table td {
-    padding: 10px 8px;
+    padding: 8px;
     font-size: 0.85rem;
   }
   .btn-save {
-    padding: 8px 15px;
+    padding: 10px 15px;
     font-size: 0.95rem;
   }
 }
 
+/* Mobile Devices (≤576px) */
 @media (max-width: 576px) {
   .nav-tabs {
     font-size: 1.1rem;
@@ -636,13 +711,13 @@ body {
   }
   .form-control,
   .form-select {
-    padding: 0.25rem 0.5rem;
+    padding: 0.3rem 0.5rem;
     font-size: 0.9rem;
   }
   .radio-group {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
   }
   .summary-container h2 {
     font-size: 1.2rem;
@@ -651,15 +726,16 @@ body {
     gap: 10px;
   }
   .checkbox-group {
-    gap: 8px;
+    gap: 10px;
   }
 }
 
+/* Extra Small Devices (≤400px) */
 @media (max-width: 400px) {
   .form-info-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 3px;
+    gap: 5px;
   }
   .form-info-control {
     width: 100%;
