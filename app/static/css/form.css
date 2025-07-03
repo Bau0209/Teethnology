@@ -6,16 +6,20 @@
     padding: 40px 0;
     background: url('../../static/images/BG\ IN\ CALENDAR.jpg') no-repeat center center;
     background-size: cover;
-    min-height: 100vh;
+    position: relative;
+    height: 100%;
 }
 
 .appointment-form::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* This makes it match parent height */
     background: rgba(255,255,255,0.6);
     width: 100vw;
-    height: 145vh;
+    min-height: auto;
     z-index: 0;
 }
 .appointment-form-container {
@@ -56,7 +60,7 @@ legend {
 /* --- Custom layout for paired fields --- */
 .form-row {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 20px;
     margin-bottom: 22px;
     flex-wrap: wrap;
@@ -80,7 +84,7 @@ legend {
 
 .form-half input,
 .form-half select {
-    flex: 2 1 140px;
+    flex: 1 1 140px;
     padding: 8px 10px;
     border: 1.5px solid #cfd8dc;
     border-radius: 6px;
@@ -105,7 +109,7 @@ legend {
 .form-row input[type="date"],
 .form-row input[type="datetime-local"],
 .form-row select {
-    flex: 2 1 220px;
+    flex: 1 1 220px;
     padding: 8px 10px;
     border: 1.5px solid #cfd8dc;
     border-radius: 6px;
@@ -113,7 +117,31 @@ legend {
     background: #f9fafb;
     transition: border 0.2s;
     margin-bottom: 0;
-    height: 20px; 
+    height: 40px; 
+}
+
+.form-third {
+    flex: 1; /* Distributes space equally */
+    min-width: 0; /* Fixes flexbox overflow issues */
+}
+
+.form-third label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444;
+    font-size: 0.95em;
+}
+
+.form-third input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+    height: 40px; /* Match other input heights */
+    margin-top: 0; /* Match label spacing */
 }
 
 .form-row textarea {
@@ -128,8 +156,8 @@ legend {
     min-height: 60px;
     max-width: 100%;
     font-family: inherit;
-    resize: vertical;
 }
+
 
 /* --- Radio group styling --- */
 .radio-group {
@@ -206,48 +234,3 @@ legend {
 }
 
 
-/* --- Responsive adjustments --- */
-@media (max-width: 900px) {
-    .form-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-    .form-half {
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-        gap: 4px;
-    }
-    .radio-group {
-        flex-direction: row;
-        gap: 16px;
-    }
-}
-
-@media (max-width: 600px) {
-    .appointment-form-container {
-        padding: 18px 8px;
-        max-width: 98vw;
-    }
-    .form-row,
-    .form-half {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        width: 100%;
-    }
-    .form-row label,
-    .form-row span,
-    .form-row input,
-    .form-row select,
-    .form-row textarea {
-        flex: 1 1 100%;
-    }
-    .radio-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        flex: 1 1 100%;
-    }
-}
