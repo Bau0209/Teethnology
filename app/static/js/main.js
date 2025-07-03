@@ -141,4 +141,28 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedServicesContainer.appendChild(card);
         console.log(`✅ Rendered: ${serviceName}`);
     }
+<<<<<<< HEAD
+/*
+    // Removes a service card
+    function removeServiceCard(serviceName) {
+        const card = document.querySelector(`.selected-service-card[data-service="${serviceName}"]`);
+        if (card) {
+            card.remove();
+        }
+    }
+
+    // Global function for the remove button's onclick event
+    window.removeService = function(serviceName) {
+        removeServiceCard(serviceName);
+        // Uncheck the corresponding checkbox
+        const checkboxes = document.querySelectorAll('.services-checklist input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.nextElementSibling.textContent === serviceName) {
+                checkbox.checked = false;
+            }
+        });
+    };*/
 });
+=======
+});
+>>>>>>> 06ec2aaeabc66c2c89f14f1236531b3bab0af1f6

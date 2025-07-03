@@ -1,19 +1,18 @@
 /* Branch Carousel */
 #branch-carousel {
     width: 100%;
-    height: 260px;
+    height: auto;
     background: #e6e6e6;
     display: flex;
     align-items: flex-end;
     justify-content: center;
     position: relative;
-    margin-top: 56px;
     overflow: hidden;
 }
 
 .branch-img-carousel {
     width: 100%;
-    height: 100%;
+    height: 500px;
     object-fit: cover;
     display: block;
 }
@@ -27,6 +26,17 @@
     align-items: center;
 }
 
+#branch::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: -1;
+}
+
 /* Responsive branch-header with scalable margin and font sizes */
 .branch-header {
     text-align: left;
@@ -35,17 +45,15 @@
     padding-left: px; /* Optional left spacing on small screens */
 }
 .branch-details-card {
-    background: #ffffff; 
+    background: none !important; 
     border-radius: 10px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
     padding: 20px; 
-    margin: 20px;
-    font-family: 'Arial', sans-serif; 
+    margin: 20px; 
     display: flex; 
     flex-direction: column; 
 }
 .branch-details-card h2 {
-    color: #009688; 
+    color: #00898E !important; 
     margin-bottom: 10px; 
     font-size: 24px; 
 }
@@ -56,69 +64,6 @@
 }
 .branch-details-card .location {
     font-size: 18px; 
-}
-/* Large desktop: keep margin-right for layout */
-@media (min-width: 1200px) {
-    .branch-header {
-        margin-right: 90vh; /* original large margin for desktop */
-        padding-left: 0;
-    }
-}
-
-.branch-header h2 {
-    color: #009ca6;
-    font-size: 2.5rem; /* mobile-friendly base size */
-    font-weight: 700;
-    margin: 0 0 4px 0;
-    letter-spacing: 1px;
-}
-
-/* Increase font-size for larger screens */
-@media (min-width: 900px) {
-    .branch-header h2 {
-        font-size: 3.5rem;
-    }
-}
-
-@media (min-width: 1200px) {
-    .branch-header h2 {
-        font-size: 4em; /* original size for desktop */
-        margin-left: 2px;
-    }
-}
-
-.branch-header span {
-    color: #009ca6;
-    font-weight: 700;
-    font-size: 1em; /* smaller base size */
-    display: block;
-    margin-bottom: 8px;
-}
-
-/* Slightly larger span text on larger screens */
-@media (min-width: 900px) {
-    .branch-header span {
-        font-size: 1.1em;
-    }
-}
-
-.branch-header p {
-    color: #222;
-    font-size: 0.9rem; /* smaller base font on mobile */
-    margin: 0 auto 8px auto;
-    max-width: 100%; /* full width on small */
-    padding: 0 10px;
-    box-sizing: border-box;
-}
-
-/* Adjust max-width and font-size for larger screens */
-@media (min-width: 700px) {
-    .branch-header p {
-        max-width: 700px;
-        font-size: 1rem;
-        margin: 0 auto 8px auto;
-        padding: 0;
-    }
 }
 
 .branch-content {
@@ -147,7 +92,7 @@
     bottom: 16px;
     left: 50%;
     width: 2px;
-    background: #bcbcbc;
+    background: #000000;
     transform: translateX(-50%);
     opacity: 0.7;
 }
@@ -161,7 +106,7 @@
 
 /* LOCATION and SERVICE LIST headings */
 .branch-info h4 {
-    color: #009ca6;
+    color: #00898E !important;
     font-size: 1.1em;
     font-weight: 700;
     margin-bottom: 10px;
@@ -169,7 +114,7 @@
     padding: 4px 16px;
     display: inline-block;
     margin-top: 0;
-    margin-left: 140px;
+    margin-left: 130px;
 }
 
 .branch-info:last-child h4 {
@@ -192,35 +137,40 @@
 /* Service List Bullets */
 .branch-info ul {
     list-style: none;
-    padding-left: 10px;
+    padding-left: 90px;
     margin: 0 0 8px 0;
 }
 
+.branch-info ul li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #00898E;
+    font-weight: bold;
+}
+
 .branch-info ul li {
-    margin-bottom: 10px;
-    font-size: 1em;
-    color: #222;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    color: #555;
+    position: relative;
+    padding-left: 1.5rem;
 }
 
 .branch-info ul li::before {
-    content: '';
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: #616161;
-    border-radius: 50%;
-    margin-right: 10px;
-    vertical-align: middle;
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #00898E;
+    font-weight: bold;
 }
+
 
 /* Appointment Section */
 #appointment {
     width: 100%;
     background: url('../../static/images/BG\ IN\ CALENDAR.jpg') center/cover no-repeat;
-    min-height: 380px;
+    height: 100vh;
     padding: 48px 0 56px 0;
     display: flex;
     flex-direction: column;
@@ -230,10 +180,11 @@
 
 #appointment::before {
     content: "";
+    min-height: auto;
     position: absolute;
     inset: 0;
     background: rgba(247, 247, 247, 0.651);
-    z-index: 1;
+    z-index: 0;
 }
 
 .services-header {
@@ -244,7 +195,7 @@
 }
 
 .services-header h2 {
-    color: #009ca6;
+    color: #009ca6 !important;
     font-size: 2em;
     font-weight: 700;
     margin-bottom: 8px;
@@ -260,23 +211,21 @@
     justify-content: center;
     width: 100%;
     max-width: 1100px;
-    flex-wrap: wrap;
 }
 
+/* Calendar Styles */
 .appointment-calendar {
-    background: rgba(255,255,255,0.10);
-    box-shadow: none;
+    background: #7fafad2a;
     border-radius: 16px;
-    padding: 24px 32px 18px 32px;
-    min-width: 350px;
-    max-width: 420px;
-    margin-right: 0;
-    margin-left: 0;
+    padding: 24px 32px;
+    width: 420px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
     position: relative;
 }
 
+
 .appointment-calendar h4 {
-    color: #009ca6;
+    color: #009ca6 !important;
     font-size: 1.1em;
     font-weight: 700;
     margin-bottom: 10px;
@@ -284,72 +233,73 @@
     text-align: center;
 }
 
-.appointment-calendar table {
+/* Month navigation alignment */
+.appointment-calendar > div:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 8px;
-    background: transparent;
 }
 
-.appointment-calendar th,
-.appointment-calendar td {
+
+#currentMonthYear {
+    font-weight: bold;
+    font-size: 1.2em;
+    flex-grow: 1;
     text-align: center;
-    padding: 9px 5px;
-    font-size: 1.15em;
-    color: #222;
-    background: transparent;
-    border: none;
-    font-weight: 500;
+    color: #00898E;
 }
 
-.appointment-calendar th {
-    color: #222;
-    font-weight: 500;
-    font-size: 1em;
-    letter-spacing: 1px;
-    background: transparent;
-    padding-bottom: 6px;
+#prevMonth, #nextMonth {
+    position: static;
+    transform: none;
 }
 
-.appointment-calendar td.selected,
-.appointment-calendar td.today {
-    background: #009ca6;
-    color: #fff;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    margin: 0 auto;
-    font-weight: 700;
-}
-
-.appointment-calendar td {
-    transition: background 0.2s, color 0.2s;
-    border-radius: 50%;
+.calendar-day {
     cursor: pointer;
-    width: 36px;
-    height: 36px;
+    padding: 8px;
+    transition: all 0.2s;
 }
 
-.appointment-calendar td:hover {
-    background: #e0f7fa;
-    color: #009ca6;
+.calendar-day:hover {
+    background-color: #e9ecef;
+    border-radius: 60%;
 }
 
-/*information card*/
+.selected {
+    background-color: #7FAFAD !important;
+    color: white !important;
+    border-radius: 60%;
+}
+
+#timeSlots .form-check {
+    margin-bottom: 8px;
+}
+
+#timeSlots .form-check-input {
+    margin-top: 0.3em;
+}
+
+/* Information Card - now independent of calendar size */
 .appointment-info {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-    padding: 28px 32px 24px 32px;
-    min-width: 280px;
-    max-width: 340px;
-    margin-left: 0;
+    padding: 28px 32px;
+    width: 420px;
+    height: auto;
     position: relative;
+    align-self: flex-start;
 }
 
 .appointment-info h4,
 .appointment-info .info-title {
-    color: #009ca6;
+    color: #009ca6 !important;
     font-size: 1.05em;
     font-weight: 700;
     margin-bottom: 18px;
@@ -366,6 +316,7 @@
     font-weight: 700;
     letter-spacing: 1px;
 }
+
 .appointment-info p {
     color: #222;
     font-size: 0.95em;
@@ -422,68 +373,4 @@
     background: #007c85;
 }
 
-/* Responsive Design */
-@media (max-width: 1100px) {
-    .branch-details-card, .appointment-container, .footer-container {
-        flex-direction: column;
-        align-items: center;
-        padding: 24px 8px;
-        gap: 18px;
-        min-width: 0;
-        max-width: 100%;
-    }
-    .branch-details-card {
-        gap: 18px;
-    }
-}
-
-@media (max-width: 900px) {
-    .appointment-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-    }
-    .appointment-calendar, .appointment-info {
-        min-width: 220px;
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 700px) {
-    #branch, #appointment {
-        padding: 18px 5%;
-    }
-    #branch-carousel {
-        height: 140px;
-    }
-    .footer-container {
-        flex-direction: column;
-        gap: 12px;
-    }
-    .branch-details-card, .appointment-container {
-        padding: 12px 8px;
-    }
-}
-
-@media (max-width: 600px) {
-    .branch-details-card {
-        flex-direction: column;
-        padding: 16px 8px;
-    }
-    .branch-info {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .branch-header h2 {
-        font-size: 2em;
-    }
-    .branch-header p {
-        font-size: 0.85em;
-    }
-    .appointment-calendar, .appointment-info {
-        padding: 16px 8px;
-    }
-}
 
