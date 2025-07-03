@@ -262,44 +262,48 @@ body {
   border-left: none;
   border-radius: 8px;
   font-size: 1rem;
-  height: 100%;
+  height: 500px; /* Fixed height */
+  width: 600px; /* Fixed width */
   display: flex;
   flex-direction: column;
-  justify-content: right;
+  overflow: hidden; /* Ensures no content spills out */
 }
 
 .welcome-card h2 {
-    margin: 0 0 10px 0;
-    font-size: 1.5rem;
-    color: #0097a7;
-    text-align: left;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  color: #0097a7;
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .welcome-card hr {
-    width: 100%;
-    border: 0;
-    height: 1px;
-    background: #e0e0e0;
-    margin: 8px 0 10px;
+  width: 100%;
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 8px 0 10px;
 }
 
 .business-insight-content {
-    width: 100%;
-    padding: 20px ;
-    margin: 10px auto;
+  width: 100%;
+  padding: 20px;
+  margin: 10px auto;
+  overflow-y: auto; /* Enables vertical scrolling */
+  flex-grow: 1; /* Takes remaining space in flex container */
+  height: 0; /* Needed for flex-grow to work properly */
 }
 
 .insight-item {
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-    line-height: 1.5;
-    color: #393939;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #393939;
 }
 
 .insight-item strong {
-    color: #0097a7;
+  color: #0097a7;
 }
 
 .appointments-today-card {
@@ -351,6 +355,7 @@ body {
   padding: 20px;
   width: 100%; 
   min-width: auto; 
+  overflow-y: auto;
   max-width: 100%;
   margin: 0;
   display: flex;
@@ -428,6 +433,7 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
   padding: 20px;
   width: 100%; 
+  overflow-y: auto;
   min-width: auto; 
   max-width: 100%;
   margin: 0;
@@ -537,7 +543,7 @@ body {
   background: #b71c1c;
 }
 
-/* Calendar Section */
+/* Calendar Section 
 .calendar-card {
   display: flex;
   flex-direction: row; 
@@ -545,9 +551,9 @@ body {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-}
+}*/
 
-/* Left calendar panel */
+/* Left calendar panel
 .calendar-panel {
   display: flex;
   flex-direction: row; 
@@ -555,9 +561,9 @@ body {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-}
+} */
 
-/* Left Calendar Section */
+/* Left Calendar Section
 .calendar-left {
   flex: 1; 
   padding: 10px;
@@ -570,18 +576,18 @@ body {
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
+} */
 
-/* Calendar header  */
+/* Calendar header 
 .fc .fc-toolbar.fc-header-toolbar {
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-}
+} */
 
-/* Month/year container */
+/* Month/year container 
 .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
   font-size: 0.7rem;
   font-weight: 700;
@@ -591,9 +597,9 @@ body {
   display: flex;
   align-items: baseline;
   gap: 5px;
-}
+}*/
 
-/* Month title */
+/* Month title 
 .fc .fc-toolbar-title {
   font-size: 1.75rem;
   font-weight: 700;
@@ -602,9 +608,9 @@ body {
   padding: 0;
   text-transform: uppercase;
   line-height: 1;
-}
+}*/
 
-/* Year display */
+/* Year display 
 .fc-year-select {
   font-size: 1rem;
   color: #666;
@@ -624,27 +630,27 @@ body {
 .fc-year-select:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 151, 167, 0.2);
-}
+}*/
 
-/* Navigation buttons container */
+/* Navigation buttons container
 .fc-toolbar-chunk {
   display: flex;
   align-items: center;
-}
+} */
 
-/* Previous button */
+/* Previous button 
 .fc .fc-button-prev {
   order: 1;
   padding-right: 15px;
-}
+}*/
 
-/* Next button */
+/* Next button 
 .fc .fc-button-next {
   order: 3;
   padding-left: 15px;
-}
+}*/
 
-/* Navigation buttons */
+/* Navigation buttons
 .fc .fc-button {
   background: transparent !important;
   border: none !important;
@@ -664,9 +670,9 @@ body {
 .fc .fc-button:disabled {
   color: #b2dfdb !important;
   opacity: 0.6;
-}
+} */
 
-/* Day headers */
+/* Day headers 
 .fc .fc-col-header-cell {
   width: 100%; 
   padding: 8px 0;
@@ -686,8 +692,8 @@ body {
 .fc .fc-daygrid-day {
   width: calc(100% / 7); 
   max-width: 120px; 
-}
-/* Day cells */
+}*/
+/* Day cells 
 .fc .fc-daygrid-day-frame {
   height: 0;
   padding-bottom: 60%;
@@ -703,10 +709,10 @@ body {
 .fc-daygrid-day:hover {
   background-color: #e0f7f7;
   transform: translateY(-2px);
-}
+}*/
 
 
-/* Day numbers */
+/* Day numbers
 .fc-daygrid-day-number {
   color: #333;
   font-weight: 500;
@@ -714,9 +720,9 @@ body {
   font-size: 0.9rem;
   margin-right: 10px;
   padding: 10px;
-}
+} */
 
-/* Today's date */
+/* Today's date
 .fc-day-today {
   background-color: #c8f5f5 !important;
   position: relative;
@@ -725,9 +731,9 @@ body {
 .fc-day-today .fc-daygrid-day-number {
   color: #0097a7;
   font-weight: 700;
-}
+} */
 
-/* Events */
+/* Events 
 .fc-event {
   background-color: #36b1b6;
   color: white;
@@ -742,20 +748,21 @@ body {
 .fc-event:hover {
   background-color: #0097a7;
   transform: translateY(-1px);
-}
+}*/
 
-/* Remove focus styles */
+/* Remove focus styles 
 .fc .fc-button:focus,
 .fc-event:focus {
   box-shadow: none !important;
   outline: none;
-}
-/* Right details panel */
+}*/
+/* Right details panel 
 .calendar-details-panel {
   flex: 1.2;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow-y: auto;
   border-radius: 10px;
   padding: 20px;
   background: #fff;
@@ -838,7 +845,7 @@ body {
   margin-left: 24px;
   white-space: nowrap;
   align-self: center;
-}
+}*/
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
