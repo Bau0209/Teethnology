@@ -6,6 +6,7 @@ Teethnology Patient Portal
 
 {% block extra_css %}
 <link rel="stylesheet" href="../../static/css/main.css">
+<link rel="stylesheet" href="../../static/css/contact.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
@@ -125,12 +126,16 @@ Teethnology Patient Portal
     </div>
 </section>
 
-<section id="about_us" class="py-5">
-    <div class="about-header">
+<section id="about-us" class="py-5">
+    <div class="contact-header">
+        <img src="../../static/images/pic in contact.jpg" alt="Clinic Interior" class="w-100">
+        <h1>CONTACT US</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada, purus eget accumsan aliquam, est enim aliquet, sapien.</p>
+    </div>
+    <!--<div class="about-header">
         <h1>ABOUT US</h1>
         <p>{{ main_web.about_us }}</p>
-    </div>
-
+    </div>-->
     <main class="container py-5">
         <div class="row g-4 justify-content-center contact-info" style="margin-top: -170px; position: relative; z-index: 2;">
             <div class="col-md-4 col-sm-6 text-center">
@@ -145,24 +150,23 @@ Teethnology Patient Portal
                     <i class="fas fa-phone d-flex align-items-center justify-content-center mx-auto mb-3"></i>
                     <h3>Phone Number</h3>
                     <p class="text-start"><strong>Main Number:</strong> {{ main_web.main_contact_number }}</p>
-                    {% for branch in branches %}
-                        <p class="text-start"><strong>{{ branch.branch_name }}:</strong> {{ branch.contact_number }}</p>
-                    {% endfor %}
+                        {% for branch in branches %}
+                            <p class="text-start"><strong>{{ branch.branch_name }}:</strong> {{ branch.contact_number }}</p>
+                        {% endfor %}
                 </div>
             </div>
             <div class="col-md-4 col-sm-6 text-center">
                 <div class="contact-icon p-4">  
                     <i class="fas fa-map-marker-alt d-flex align-items-center justify-content-center mx-auto mb-3"></i> 
                     <h3>Office Location</h3>
-                    {% for branch in branches %}
-                        <p class="text-start"><strong>{{ branch.branch_name }}:</strong> {{ branch.full_address }}</p>
-                    {% endfor %}
+                        {% for branch in branches %}
+                            <p class="text-start"><strong>{{ branch.branch_name }}:</strong> {{ branch.full_address }}</p>
+                        {% endfor %}
                 </div>
             </div>
         </div>
+    </main>
 </section>
-
-
 {% endblock %}
 
 {% block extra_js %}
