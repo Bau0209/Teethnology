@@ -92,23 +92,31 @@ window.addEventListener('unload', function() {
 
 //function for searchbar
 document.addEventListener('DOMContentLoaded', function () {
-    // Select the first text input inside input-group (your search bar)
+    // Selectors
     const searchInput = document.querySelector('.input-group input[type="text"]');
+    const searchBtn = document.querySelector('.input-group button[type="button"]');
+    const rows = document.querySelectorAll('.table tbody tr');
 
-    if (!searchInput) {
-        console.warn('Search input not found!');
-        return;
+    function filterTransactions() {
+        const query = searchInput.value.trim().toLowerCase();
+
+        rows.forEach(row => {
+            const rowText = row.textContent.toLowerCase();
+            row.style.display = rowText.includes(query) ? '' : 'none';
+        });
     }
 
-    searchInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            const query = searchInput.value.trim().toLowerCase();
-            const rows = document.querySelectorAll('table.table tbody tr');
+    // Trigger search on Enter key
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                filterTransactions();
+            }
+        });
+    }
 
-            rows.forEach(row => {
-                const rowText = row.textContent.toLowerCase();
-                row.style.display = rowText.includes(query) ? '' : 'none';
-            });
-        }
-    });
+    // Trigger search on button click
+    if (searchBtn) {
+        searchBtn.addEventListener('click', filterTransactions);
+    }
 });
