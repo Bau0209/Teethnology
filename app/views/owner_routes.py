@@ -1058,12 +1058,20 @@ def balance_record():
 
     return render_template('/owner/o_balance_rec.html', balance_data=balance_data)
 
+@owner.route('/reports_copy')
+# @role_required('owner')
+def reports_copy():
+    
+    return render_template('owner/reports_copy.html')
+
 @owner.route('/reports')    
+# @role_required('owner')
 def reports():
     # Get current and last month
     now = datetime.now()
     current_month = now.month
     current_year = now.year
+    selected_year = request.args.get('year', type=int) or current_year
     last_month = current_month - 1 if current_month > 1 else 12
     last_month_year = current_year if current_month > 1 else current_year - 1
 
@@ -1072,7 +1080,7 @@ def reports():
         extract('month', Transactions.transaction_datetime).label('month'),
         func.sum(Transactions.total_amount_paid).label('total')
     ).filter(
-        extract('year', Transactions.transaction_datetime) == current_year
+        extract('year', Transactions.transaction_datetime) == selected_year
     ).group_by(
         extract('month', Transactions.transaction_datetime)
     ).order_by(
@@ -1153,6 +1161,8 @@ def reports():
                            values=values,
                            total_revenue=sum(values),
                            current_revenue=current_revenue,
+                            selected_year=selected_year,
+                            current_year=current_year,
                            growth_rate=round(growth_rate, 2),
                            appointments_count=appointments_this_month,
                            top_service_labels=top_service_labels,
