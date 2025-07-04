@@ -17,26 +17,25 @@
     <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>
   </ul>-->
 
-  <!-- Filters -->
-  <div class="d-flex flex-wrap gap-2 mb-3">
-    <div class="btn-group btn-group-sm" role="group">
-      <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
-    </div>
-    <div class="btn-group btn-group-sm" role="group">
-      <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
-    </div>
-    <div class="btn-group btn-group-sm" role="group">
-      <button type="button" class="btn btn-outline-primary active">1 - 25</button>
-    </div>
-  </div>
-
   <!-- Top Section: Revenue Graph + Monthly Summary -->
-<div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
-  <!-- Left: Revenue by Service -->
-  <div class="revenue-left flex-grow-1" >
+  <div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
+    <!-- Left: Revenue by Service -->
+    <div class="revenue-left flex-grow-1" >
+      <!-- Filters -->
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <div class="btn-group btn-group-sm" role="group">
+        <form method="get" action="{{ url_for('owner.reports') }}">
+          <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+            {% for y in range(current_year, current_year - 5, -1) %}
+              <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+    </div>
     <div class="card h-100">
       <div class="card-header d-flex justify-content-between align-items-center bg-white">
-        <h6 class="mb-0">Revenue by Service</h6>
+        <h6 class="mb-0">Monthly Revenue Per Year</h6>
         <div class="text-end">
           <small class="text-muted d-block">Total Revenue</small>
           <strong>₱{{ "{:,.2f}".format(total_revenue) }}</strong>
@@ -57,7 +56,14 @@
       <div class="col-12">
         <div class="row g-2">
           <!-- Revenue Card -->
-          <h6 class="mb-3 fw-semibold text-muted">This Month</h6>
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">This Month</button> <!--show data for this month only-->
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">Today</button> <!--show data for today only-->
+        </div>
+      </div> 
             <div class="col-4">
               <div class="card p-3 text-center">
                 <small class="text-muted d-block">Revenue</small>
@@ -139,14 +145,6 @@
         </div>
       </div>
     </div> -->
-
-    Business Insight
-    <div class="col-lg-4">
-      <div class="card business-insight-card p-4">
-        <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
-        <p>{{ insight_text | safe }}</p>
-      </div>
-    </div>
   </div>
 </div>
 {% endblock %}
