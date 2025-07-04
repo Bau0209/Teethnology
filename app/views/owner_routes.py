@@ -31,7 +31,10 @@ def owner_home():
         appointments_tomorrow = Appointments.query.filter(
             db.func.date(Appointments.appointment_sched) == tomorrow
         ).all()
-        appointment_requests = Appointments.query.filter_by(appointment_status='pending').all()
+        appointment_requests = Appointments.query.filter_by(
+            appointment_status='pending'
+        ).order_by(Appointments.appointment_sched.asc()).all()
+
     else:
         appointments_today = Appointments.query.filter(
             db.func.date(Appointments.appointment_sched) == today,
@@ -44,7 +47,7 @@ def owner_home():
         appointment_requests = Appointments.query.filter_by(
             branch_id=int(selected_branch),
             appointment_status='pending'
-        ).all()
+        ).order_by(Appointments.appointment_sched.asc()).all()
 
     insight_text = generate_business_insight()
 
