@@ -22,5 +22,6 @@ class Appointments(db.Model):
     returning_patient = db.Column(db.Boolean, nullable=False, default=False)
 
     # Relationships
+    procedures = db.relationship('Procedures', backref='appointments', lazy=True)
     branch = db.relationship('Branch', backref=db.backref('appointments', lazy=True))
     patient = db.relationship('PatientsInfo', backref=db.backref('appointments', lazy=True))

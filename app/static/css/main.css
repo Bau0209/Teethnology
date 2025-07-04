@@ -114,7 +114,7 @@ nav ul li a:hover {
 #welcome {
     width: 100%;
     min-height: 100vh;
-    background: url('../images/bg\ landing\ page.jpeg') center/cover no-repeat;
+    background: url('../images/hero_page.png') center/cover no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -122,14 +122,13 @@ nav ul li a:hover {
     position: relative;
     padding: 80px 5% 60px;
     box-sizing: border-box;
-    text-align: center;
+    text-align: left;
 }
 
 #welcome::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
     z-index: 1;
     pointer-events: none;
 }
@@ -137,15 +136,26 @@ nav ul li a:hover {
 .welcome-header {
     position: relative;
     z-index: 2;
-    margin-bottom: 20px;
+    align-self: flex-start; /* aligns it to the left of the flex container */
+    padding-left: 60px;
+    color: #ffffff;
 }
 
+
 #welcome h1 {
-    color: #ffffff;
-    font-size: 5em;
-    font-weight: 700;
+    font-size: 14em;
+    font-weight: 700;    
+    margin-bottom: -40px;
     letter-spacing: 2px;
-    margin: 10px auto 10 auto;
+    text-align: center;
+}
+
+#welcome h2 {
+    font-size: 4em;
+    font-weight: 700;    
+    margin-bottom: -40px;
+    letter-spacing: 2px;
+    text-align: center;
 }
 
 .chat-input-row {
@@ -234,7 +244,7 @@ nav ul li a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(223, 236, 238, 0.85);
     z-index: 0;
 }
 

@@ -55,6 +55,79 @@
             </div>
         </div>
     </div>
+
+    <!-- Complete Procedure Modal -->
+    <div class="modal fade" id="completeProcedureModal" tabindex="-1" aria-labelledby="completeProcedureLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form id="completeProcedureForm" method="POST" action="/owner/procedures/complete" enctype="multipart/form-data">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="completeProcedureLabel">Complete Procedure & Transaction</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+            <input type="hidden" name="appointment_id" id="complete-appointment-id">
+
+            <div class="mb-3">
+                <label><strong>Treatment Procedure</strong></label>
+                <input type="text" name="treatment_procedure" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Tooth Area</strong></label>
+                <input type="text" name="tooth_area" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Provider</strong></label>
+                <input type="text" name="provider" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Treatment Plan</strong></label>
+                <textarea name="treatment_plan" class="form-control" rows="2"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Fee</strong></label>
+                <input type="number" name="fee" class="form-control" required>
+            </div>
+
+            <hr>
+
+            <div class="mb-3">
+                <label><strong>Payment Method</strong></label>
+                <select name="payment_method" class="form-select" required>
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+                <option value="GCash">GCash</option>
+                <option value="Maya">Maya</option>
+                <option value="Insurance">Insurance</option>
+                <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Total Amount Paid</strong></label>
+                <input type="number" step="0.01" name="total_amount_paid" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Receipt Image</strong></label>
+                <input type="file" name="receipt" class="form-control">
+            </div>
+            </div>
+
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+
 <script>
   const dynamicEvents = {{ events | safe }};
   const appointmentData = {{ appointment_data | safe }};

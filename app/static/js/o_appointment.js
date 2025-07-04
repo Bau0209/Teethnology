@@ -45,27 +45,17 @@ function handleReject(id) {
 }
 
 function handleComplete(appointmentId) {
-  fetch(`/owner/procedures/${appointmentId}/status`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ status: 'completed' }),
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert('Procedure marked as completed.');
-      location.reload();
-    } else {
-      alert(data.message);
-    }
-  })
-  .catch(err => {
-    alert('An error occurred.');
-    console.error(err);
-  });
+  // Store appointment ID in a hidden field
+  document.getElementById('complete-appointment-id').value = appointmentId;
+
+  // Reset modal form
+  document.getElementById('completeProcedureForm').reset();
+
+  // Show modal
+  const modal = new bootstrap.Modal(document.getElementById('completeProcedureModal'));
+  modal.show();
 }
+
 
 function handleCancel(appointmentId) {
   fetch(`/owner/procedures/${appointmentId}/status`, {
@@ -108,14 +98,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const { patient, type } = info.event.extendedProps;
         info.el.querySelector('.fc-event-title').innerHTML = `${patient}<br>${type}`;
     },
-    dateClick: function (info) {
-      const clickedDate = info.dateStr;
+  dateClick: function (info) {
+    const clickedDate = info.dateStr;
 
-      // Set modal date
-      appointmentDateSpan.textContent = new Date(clickedDate).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
+    // Set modal date
+    appointmentDateSpan.textContent = new Date(clickedDate).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
     });
 
     const modalBody = appointmentsModalEl.querySelector('.modal-body');
@@ -130,7 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const item = document.createElement('div');
         item.classList.add('appointment-item');
         item.style.cursor = 'pointer';
+
         let buttonsHTML = '';
+
         if (a.status === 'pending') {
           buttonsHTML = `
             <div class="d-flex gap-2 mt-3">
@@ -139,13 +131,24 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
           `;
         } else {
-          buttonsHTML = `
-            <div class="d-flex gap-2 mt-3">
-              <button class="btn btn-success btn-sm")">Reschedule</button>
-              <button class="btn btn-danger btn-sm"">Cancel</button>
-            </div>
-          `;
+          if (a.procedure_status === 'completed') {
+            buttonsHTML = `
+              <div class="mt-3">
+                <span class="badge bg-success text-white px-3 py-2 fs-6">✔ Procedure Completed</span>
+              </div>
+            `;
+
+          } else {
+            buttonsHTML = `
+              <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-primary btn-sm" onclick="handleComplete(${a.appointment_id})">Mark as Completed</button>
+                <button class="btn btn-warning btn-sm" onclick="handleReschedule(${a.appointment_id})">Reschedule</button>
+                <button class="btn btn-danger btn-sm" onclick="handleCancel(${a.appointment_id})">Cancel</button>
+              </div>
+            `;
+          }
         }
+
 
         item.innerHTML = `
           <div class="request-section-title" style="margin-bottom: 0;">
@@ -169,9 +172,18 @@ document.addEventListener('DOMContentLoaded', function () {
         modalBody.appendChild(item);
       });
     }
+  // Automatically set the preferred date in the Add Appointment Modal
+  const preferredInput = document.getElementById('preferred');
+  if (preferredInput) {
+    const date = new Date(info.date);
+    date.setHours(9, 0, 0, 0);  // Set default time to 09:00
+    preferredInput.value = date.toISOString().slice(0, 16); // Format: yyyy-MM-ddTHH:mm
+  }
 
-    new bootstrap.Modal(appointmentsModalEl).show();
-  },
+  // SHOW THE MODAL
+  const modal = new bootstrap.Modal(appointmentsModalEl);
+  modal.show();
+},
     headerToolbar: {
       left: 'prev',
       center: 'title',
