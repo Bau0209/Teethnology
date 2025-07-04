@@ -51,7 +51,7 @@
                     {% endwith %}
                     
                     <!-- Dental Record Tab Content -->
-                    <form action="{{ url_for('owner.edit_patient', patient_id=patient.patient_id, form='dental_record') }}" method="post"></form>
+                    <form action="{{ url_for('staff.edit_patient', patient_id=patient.patient_id, form='dental_record') }}" method="post"></form>
                         <section class="tab-content" id="dental_record">
                             <h2 class="section-title">INTRAORAL EXAMINATION</h2>
                             <div class="dental-record-container">
