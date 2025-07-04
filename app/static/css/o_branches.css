@@ -1,3 +1,7 @@
+body {
+  background: rgba(157, 202, 202, 0.322) !important; 
+}
+
 h2, h3, strong {
   color: #32a3a4;
 }
