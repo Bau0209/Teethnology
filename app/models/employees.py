@@ -4,7 +4,7 @@ from datetime import date
 class Employee(db.Model):
     __tablename__ = 'employees'
     
-    employee_id = db.Column(db.Integer, primary_key=True)
+    employee_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(255), nullable=False)
     middle_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255), nullable=False)
