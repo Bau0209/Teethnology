@@ -17,7 +17,7 @@ body {
     border-radius: 10px 10px 0 0 !important;
     padding: 1rem 1rem;
 }
-
+ 
 /* ============== TRANSACTION CONTAINER ============== */
 .transaction-container {
     background: #ffffff;
@@ -119,6 +119,7 @@ body {
 
 .patient-info {
     padding: 15px;
+    height: auto;
 }
 
 /* ============== SEARCH BAR ============== */
