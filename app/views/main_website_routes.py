@@ -17,7 +17,6 @@ def contact():
     branches = Branch.query.all()
     return render_template('/main_website/contact.html', branches=branches, main_web=main_web)
 
-
 @main.route('/form', methods=['GET', 'POST'])
 def form():
     branches = Branch.query.all()

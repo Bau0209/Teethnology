@@ -525,7 +525,7 @@ nav ul li a:hover {
 #about-us {
     width: 100%;
     min-height: 100vh;
-    background: url('../../static/images/quezon\ clinic\ example.jpg') center/cover no-repeat;
+    background: url('../../static/images/about_us.png') center/cover no-repeat;
     position: relative;
     padding: 48px 0 48px 0;
     box-sizing: border-box;
@@ -539,7 +539,6 @@ nav ul li a:hover {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 80, 80, 0.30); 
     z-index: 1;
 }
 
