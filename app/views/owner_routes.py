@@ -389,7 +389,7 @@ def patients():
         branches=branches,
         selected_branch=selected_branch
     )
-    
+
 def parse_date(date_str):
     if date_str:
         return datetime.strptime(date_str, '%Y-%m-%d').date()
