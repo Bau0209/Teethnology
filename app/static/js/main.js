@@ -53,85 +53,57 @@
 })();
 
 //service list function
+// service list function
 document.addEventListener('DOMContentLoaded', function () {
     console.log("main.js loaded ✅");
 
     const selectedServicesContainer = document.getElementById('selected-services-cards');
 
-    // Service data (matches your existing service cards)
-    const servicesData = {
-        'Preventive Dentistry': {
-            bgImage: '../../static/images/Dental Examination(BG).png',
-            icon: '../../static/images/Dental Examination.png',
-            description: 'Nullam sagittis hendrerit elit vitae faucibus. In augue urna, consequat quis accumsan non, vestibulum id dui.'
-        },
-        'Intervention Dentistry': {
-            bgImage: '../../static/images/Root canal treatment(BG).png',
-            icon: '../../static/images/Root canal treatment.png',
-            description: 'Nullam sagittis hendrerit elit vitae faucibus. In augue urna, consequat quis accumsan non, vestibulum id dui.'
-        },
-        'Coroneric Dentistry': {
-            bgImage: '../../static/images/dentures(bg).jpg',
-            icon: '../../static/images/Dentures.png',
-            description: 'Nullam sagittis hendrerit elit vitae faucibus. In augue urna, consequat quis accumsan non, vestibulum id dui.'
-        },
-        'Pediatric Dentistry': {
-            bgImage: '../../static/images/Dental Examination(BG).png', // Default image if specific one doesn't exist
-            icon: '../../static/images/Dental Examination.png',
-            description: 'Child-focused dental care for healthy smiles.'
-        },
-        'Orthodontics': {
-            bgImage: '../../static/images/Dental Examination(BG).png',
-            icon: '../../static/images/Dental Examination.png',
-            description: 'Orthodontic dental care for smile alignment.'
-        },
-        'Periodontics': {
-            bgImage: '../../static/images/Root canal treatment(BG).png',
-            icon: '../../static/images/Root canal treatment.png',
-            description: 'Gum and periodontal treatment.'
-        },
-        'Oral and Nutritional': {
-            bgImage: '../../static/images/dentures(bg).jpg',
-            icon: '../../static/images/Dentures.png',
-            description: 'Diet-based oral care guidance.'
-        },
-        'Sedation Dentistry': {
-            bgImage: '../../static/images/Dental Examination(BG).png', // Default image if specific one doesn't exist
-            icon: '../../static/images/Dental Examination.png',
-            description: 'Comfort-focused sedation procedures.'
-        },
-        'Others': {
-            bgImage: '../../static/images/Dental Examination(BG).png',
-            icon: '../../static/images/Dental Examination.png',
-            description: 'Miscellaneous dental services.'
-        },
+    // Get services string from the hidden input (expects a JSON array or comma-separated string)
+    const servicesString = document.getElementById('preselected-services')?.value || "[]";
 
-    };
+    // Parse string (supports both JSON array or comma-separated fallback)
+    let selectedServices;
+    try {
+        selectedServices = JSON.parse(servicesString);
+    } catch (err) {
+        selectedServices = servicesString.split(',').map(s => s.trim());
+    }
 
-    // Get services string from the hidden input and split
-    const servicesString = document.getElementById('preselected-services')?.value || "";
-    const selectedServices = servicesString.split(',').map(s => s.trim());
+    // Fetch real service data from the backend
+    fetch('/api/services')
+        .then(response => response.json())
+        .then(servicesData => {
+            selectedServices.forEach(serviceName => {
+                const matched = servicesData.find(s => s.name === serviceName);
+                if (matched) {
+                    addServiceCard(matched);
+                } else {
+                    console.warn(`⚠️ Service not found: ${serviceName}`);
+                }
+            });
+        })
+        .catch(error => {
+            console.error('❌ Failed to load service data:', error);
+        });
 
-    selectedServices.forEach(serviceName => {
-        addServiceCard(serviceName);
-    });
-
-    function addServiceCard(serviceName) {
-        if (!servicesData[serviceName] || document.querySelector(`.selected-service-card[data-service="${serviceName}"]`)) {
-            console.log(`Skipping: ${serviceName}`);
+    // Dynamically add service card
+    function addServiceCard(service) {
+        const serviceName = service.name;
+        if (document.querySelector(`.selected-service-card[data-service="${serviceName}"]`)) {
+            console.log(`⏭️ Skipping duplicate: ${serviceName}`);
             return;
         }
 
-        const service = servicesData[serviceName];
         const card = document.createElement('div');
         card.className = 'selected-service-card';
         card.dataset.service = serviceName;
 
         card.innerHTML = `
             <div class="service-card">
-                <img src="${service.bgImage}" alt="${serviceName}" class="service-img">
+                <img src="${service.bg_image}" alt="${serviceName}" class="service-img">
                 <div class="service-icon">
-                    <img src="${service.icon}" alt="${serviceName} Icon">
+                    <i class="${service.icon_class}" style="color: #00898e; font-size: 40px;"></i>
                 </div>
                 <h3>${serviceName}</h3>
                 <p>${service.description}</p>
@@ -141,8 +113,10 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedServicesContainer.appendChild(card);
         console.log(`✅ Rendered: ${serviceName}`);
     }
+});
+
 /*
-    // Removes a service card
+ // Removes a service card
     function removeServiceCard(serviceName) {
         const card = document.querySelector(`.selected-service-card[data-service="${serviceName}"]`);
         if (card) {
@@ -161,4 +135,3 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     };*/
-});

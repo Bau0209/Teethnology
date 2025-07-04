@@ -1,6 +1,6 @@
 .branches-info-card,
 .branches-list-card {
-  /*max-width: 1440px;*/
+  /*max-width: 1440px; -removed for appdev purposes only*/
   width: 100%;
   margin: 0 auto;
   padding: 20px;

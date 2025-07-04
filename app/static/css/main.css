@@ -446,10 +446,11 @@ nav ul li a:hover {
     border-radius: 16px 16px 0 0;
 }
 
-.service-icon {
+.service-icon  i{
     width: 54px;
     height: 54px;
     background: #b8aea2; 
+    color: #12726fe8;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -457,11 +458,6 @@ nav ul li a:hover {
     margin-top: -27px;
     margin-bottom: 8px;
     box-shadow: 0 5px 15px #fff;
-}
-
-.service-icon img {
-    width: 34px;
-    height: 34px;
 }
 
 .service-card h3 {
