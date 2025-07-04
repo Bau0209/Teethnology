@@ -59,10 +59,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const selectedServicesContainer = document.getElementById('selected-services-cards');
 
-    // Get services string from the hidden input (expects a JSON array or comma-separated string)
-    const servicesString = document.getElementById('preselected-services')?.value || "[]";
+    // Hardcoded services list (since you're not using an API)
+    const servicesData = [
+        {
+            "name": "Preventive Dentistry",
+            "description": "Focuses on regular cleanings, exams, and education to prevent dental issues.",
+            "icon_class": "fas fa-shield-alt",
+            "bg_image": "/static/images/contact.jpg"
+        },
+        {
+            "name": "Intervention Dentistry",
+            "description": "Treats developing problems with fillings, sealants, and restorations.",
+            "icon_class": "fas fa-tools",
+            "bg_image": "/static/images/dentures(bg).jpg"
+        },
+        {
+            "name": "Coroneric Dentistry",
+            "description": "Specializes in restoring severely damaged or decayed teeth.",
+            "icon_class": "fas fa-tooth",
+            "bg_image": "/static/images/Root canal treatment(BG).png"
+        },
+        {
+            "name": "Pediatric Dentistry",
+            "description": "Provides dental care tailored for children.",
+            "icon_class": "fas fa-child",
+            "bg_image": "/static/images/Dental Examination(BG).png"
+        },
+        {
+            "name": "Orthodontics",
+            "description": "Aligns teeth and jaws using braces or aligners.",
+            "icon_class": "fas fa-teeth",
+            "bg_image": "/static/images/contact.jpg"
+        },
+        {
+            "name": "Periodontics",
+            "description": "Focuses on gum health and treatment of gum diseases.",
+            "icon_class": "fas fa-syringe",
+            "bg_image": "/static/images/dentures(bg).jpg"
+        },
+        {
+            "name": "Oral and Nutritional",
+            "description": "Promotes overall oral health through proper nutrition.",
+            "icon_class": "fas fa-apple-alt",
+            "bg_image": "/static/images/Root canal treatment(BG).png"
+        },
+        {
+            "name": "Sedation Dentistry",
+            "description": "Helps patients relax during procedures using sedation.",
+            "icon_class": "fas fa-bed",
+            "bg_image": "/static/images/Dental Examination(BG).png"
+        },
+        {
+            "name": "Others",
+            "description": "Miscellaneous or custom dental services.",
+            "icon_class": "fas fa-ellipsis-h",
+            "bg_image": "/static/images/contact.jpg"
+        }
+    ];
 
-    // Parse string (supports both JSON array or comma-separated fallback)
+    const servicesString = document.getElementById('preselected-services')?.value || "[]";
     let selectedServices;
     try {
         selectedServices = JSON.parse(servicesString);
@@ -70,24 +125,15 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedServices = servicesString.split(',').map(s => s.trim());
     }
 
-    // Fetch real service data from the backend
-    fetch('/api/services')
-        .then(response => response.json())
-        .then(servicesData => {
-            selectedServices.forEach(serviceName => {
-                const matched = servicesData.find(s => s.name === serviceName);
-                if (matched) {
-                    addServiceCard(matched);
-                } else {
-                    console.warn(`⚠️ Service not found: ${serviceName}`);
-                }
-            });
-        })
-        .catch(error => {
-            console.error('❌ Failed to load service data:', error);
-        });
+    selectedServices.forEach(serviceName => {
+        const matched = servicesData.find(s => s.name === serviceName);
+        if (matched) {
+            addServiceCard(matched);
+        } else {
+            console.warn(`⚠️ Service not found: ${serviceName}`);
+        }
+    });
 
-    // Dynamically add service card
     function addServiceCard(service) {
         const serviceName = service.name;
         if (document.querySelector(`.selected-service-card[data-service="${serviceName}"]`)) {
@@ -114,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(`✅ Rendered: ${serviceName}`);
     }
 });
+
 
 /*
  // Removes a service card

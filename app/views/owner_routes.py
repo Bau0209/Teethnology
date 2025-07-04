@@ -168,7 +168,7 @@ def update_main_website():
     db.session.add(main_web)
     db.session.commit()
     flash('Website info updated successfully.', 'success')
-    return redirect(url_for('owner.branches'))
+    return redirect(url_for('owner.owner_home'))
 
 @owner.route('/branch/<int:branch_id>/add-image', methods=['POST'])
 # @role_required('owner')
@@ -260,23 +260,20 @@ def appointments():
     branches = Branch.query.all()
 
     events = [
-    {
-        'title': f"{a.patient.patient_full_name} - {a.appointment_type}",
-        'start': a.appointment_sched.strftime('%Y-%m-%d'),
-        'color': (
-            "#228ad9" if a.procedures and a.procedures[0].procedure_status and 
-            a.procedures[0].procedure_status.lower() == 'completed'
-            else ('#e57373' if a.appointment_status == 'pending' else '#7bb3ad')
-        ),
-        'patient': a.patient.patient_full_name,
-        'type': a.appointment_type,
-    }
-    for a in appointments
-]
+        {
+            'title': f"{a.patient.patient_full_name} - {a.appointment_type}",
+            'start': a.appointment_sched.strftime('%Y-%m-%d'),
+            'color': (
+                "#228ad9" if a.procedures and a.procedures[0].procedure_status and 
+                a.procedures[0].procedure_status.lower() == 'completed'
+                else ('#e57373' if a.appointment_status == 'pending' else '#7bb3ad')
+            ),
+            'patient': a.patient.patient_full_name,
+            'type': a.appointment_type,
+        }
+        for a in appointments
+    ]
 
-
-
-    
     appointment_data = [
         {
             'appointment_id': a.appointment_id,
