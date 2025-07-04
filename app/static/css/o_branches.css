@@ -1,3 +1,79 @@
+h2, h3, strong {
+  color: #32a3a4;
+}
+
+.dashboard-top {
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Stack items vertically inside the left column */
+.dashboard-left {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100%; /* Adjust based on your layout */
+}
+
+/* Let appointment card grow to fill remaining space */
+.appointment {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-card {
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+/* Ensure .appointments-today-content fills height if needed */
+.appointments-today-content {
+  flex-grow: 1;
+}
+
+
+.banner-card {
+  background-color: #32a3a4;
+  margin-bottom: 1%;
+}
+
+
+.appointment-banner {
+  padding-left: 20px;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.banner-button {
+  background-color: #18606f;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.banner-image img {
+  max-height: 15vh;
+}
+
+
+@media (max-width: 900px) {
+  .appointment-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .banner-image img {
+    margin-top: 5px;
+  }
+}
+
 .branches-info-card,
 .branches-list-card {
   /*max-width: 1440px; -removed for appdev purposes only*/
