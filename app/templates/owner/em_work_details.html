@@ -14,14 +14,13 @@
         <tbody>
             <tr>
                 <td><a href="{{ url_for('owner.employees') }}"><i class="fa fa-chevron-left"></i></a></td>
-                <td>1</td>
-                <td>011</td>
-                <td>Employee name</td>
-                <td>25</td>
-                <td>F</td>
-                <td>(633) 8xx-xxxx-xxx</td>
-                <td>example@email.com</td>
-                <td>Branch 1</td>
+                <td>{{ employee.employee_id }}</td>
+                <td>{{ employee.full_name }}</td>
+                <td>{{ employee.age }}</td>
+                <td>{{ employee.sex }}</td>
+                <td>{{ employee.content_number }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.branch.branch_name }}</td>
             </tr>
         </tbody>
     </table>
@@ -36,121 +35,106 @@
         <li class="nav-item"> 
             <a class="nav-link active" href="{{ url_for('owner.employee_work_details', employee_id=employee.employee_id) }}" data-branch="work_details">Work Details</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="{{ url_for('owner.employee_activity_details', employee_id=employee.employee_id) }}" data-branch="activity_history">Activity History</a>
-        </li>
+        </li> -->
     </ul>
-
-
     <!-- employee Info Section -->
-    <section class="tab-content" id="work_details">
-        <div class="info-card">
-            <div class="info-header">
-                <h3>Login & Access</h3>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label">Age</label>
-                        <input type="text" class="form-control" value="25">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Sex</label>
-                        <input type="text" class="form-control" value="F">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Birthday</label>
-                        <input type="text" class="form-control" value="mm-dd-yyyy">
-                    </div>
+    <form method="POST" action="{{ url_for('owner.edit_employee', employee_id=employee.employee_id, form='work_details') }}">
+        <!-- <section class="tab-content" id="work_details">
+            <div class="info-card">
+                <div class="info-header">
+                    <h3>Login & Access</h3>
                 </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label">Contact Number</label>
-                        <input type="text" class="form-control" value="(63) 9tx-csxx-csxx">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="text" class="form-control" value="example@email.com">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Employment Status</label>
-                        <input type="text" class="form-control" value="Active">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Date Hired</label>
-                        <input type="text" class="form-control" value="mm-dd-yyyy">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="example@email.com" value="{{ account.email if account else '' }}">
+                        </div>
 
-    <!-- Work Details Section -->
-    <section class="tab-content" id="work_details" style="display: none;">
-        <div class="info-card">
-            <div class="info-header">
-                <h3>Work Details</h3>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="account_password" placeholder="Enter new password (leave blank to keep current)">
+                        </div>
+
+                        Access Level
+                        <div class="mb-3">
+                            <label class="form-label">Access Level</label>
+                            <select class="form-select" name="access_level" required
+                                    {% if account and account.access_level == 'owner' %}disabled{% endif %}>
+                                <option disabled {% if not account %}selected{% endif %}>Select Access Level</option>
+                                <option value="staff" {% if account and account.access_level == 'staff' %}selected{% endif %}>Staff</option>
+                                <option value="owner" {% if account and account.access_level == 'owner' %}selected{% endif %}>Owner</option>
+                            </select>
+
+                            {% if account and account.access_level == 'owner' %}
+                                <input type="hidden" name="access_level" value="owner">
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Account Status</label>
+                            <select class="form-select" name="account_status" required>
+                                <option disabled selected>Select Account Status</option>
+                                <option value="active" {% if account and account.account_status == 'active' %}selected{% endif %}>Active</option>
+                                <option value="inactive" {% if account and account.account_status == 'inactive' %}selected{% endif %}>Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">                    
+                    </div>
+                </div>
             </div>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
+        </section> -->
+
+        <!-- Work Details Section -->
+        <section class="tab-content" id="work_details" style="display: none;">
+            <div class="info-card">                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="info-header">
+                    <h3>Work Details</h3>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
                         <label class="form-label">Position</label>
-                        <input type="text" class="form-control" value="Dentist">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department</label>
-                        <input type="text" class="form-control" value="Dental Services">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Branch Assignment</label>
-                        <input type="text" class="form-control" value="Branch 1">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label">Employment Type</label>
-                        <input type="text" class="form-control" value="Full-time">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Shift Schedule</label>
-                        <input type="text" class="form-control" value="9:00 AM - 6:00 PM">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Salary Rate</label>
-                        <input type="text" class="form-control" value="₱25,000.00">
-                    </div>
-                </div>
-            </div>
-            
-            <h5 class="mt-4 mb-3">Benefits</h5>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label">SSS Number</label>
-                        <input type="text" class="form-control" value="xx-xxxxxxx-x">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">PhilHealth Number</label>
-                        <input type="text" class="form-control" value="xx-xxxxxxx-x">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label">Pag-IBIG Number</label>
-                        <input type="text" class="form-control" value="xxxx-xxxx-xxxx">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">TIN</label>
-                        <input type="text" class="form-control" value="xxx-xxx-xxx-xxx">
-                    </div>
-                </div>
-            </div>
+                        <input type="text" class="form-control" name="position" value="{{ employee.position }}">
+                        </div>
 
-        </div>            
-    </section>
-    <button class="save-btn">Save Changes</button>
+                        <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <input type="text" class="form-control" name="department" value="{{ employee.department }}">
+                        </div>
+
+                        <div class="mb-3">
+                        <label class="form-label">Shift Days</label>
+                        <input type="text" class="form-control" name="shift_days" value="{{ employee.shift_days }}">
+                        </div>
+
+                        <div class="mb-3">
+                        <label class="form-label">Shift Hours</label>
+                        <input type="text" class="form-control" name="shift_hours" value="{{ employee.shift_hours }}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">                    
+                    </div>
+                </div>
+            </div>            
+        </section>
+        <button type="submit" class="save-btn">Save Changes</button>
+    </form>
 </div>
 {% endblock %}
 

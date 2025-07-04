@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify, session
-from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Transactions, Appointments, MainWeb
+from app.models import Account, Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Transactions, Appointments, MainWeb
 from app.utils.insights import generate_business_insight
 from werkzeug.utils import secure_filename
 from .auth import role_required
@@ -182,7 +182,8 @@ def add_branch_image(branch_id):
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        upload_folder = current_app.config['UPLOAD_FOLDER']
+        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads', 'branches')
+        
         os.makedirs(upload_folder, exist_ok=True)
 
         filepath = os.path.join(upload_folder, filename)
@@ -877,18 +878,113 @@ def patient_dental_rec(patient_id):
     dental_record = DentalInfo.query.filter_by(patient_id=patient_id)
     return render_template('/owner/dental_record.html', patient=patient, dental_record=dental_record)
 
-@owner.route('/employees')
+@owner.route('/employees', methods=['GET', 'POST'])
 # @role_required('owner')
 def employees():
     selected_branch = request.args.get('branch', 'all')
-    
+    branches = Branch.query.all()
+
+    # --- Handle form submission ---
+    if request.method == 'POST':
+        # Get form data
+        branch_id = request.form.get('branch_id')
+        first_name = request.form.get('first_name')
+        middle_name = request.form.get('middle_name')
+        last_name = request.form.get('last_name')
+        sex = request.form.get('sex')
+        birthdate = request.form.get('birthdate')
+        contact_number = request.form.get('contact_number')
+        email = request.form.get('email')
+        date_hired = request.form.get('date_hired')
+        position = request.form.get('position')
+        department = request.form.get('department')
+        shift_days = request.form.get('shift_days')
+        shift_hours = request.form.get('shift_hours')
+
+        # Create new employee object
+        new_employee = Employee(
+            first_name=first_name,
+            middle_name=middle_name,
+            last_name=last_name,
+            sex=sex,
+            birthdate=birthdate,
+            contact_number=contact_number,
+            email=email,
+            employment_status='active',  # default
+            date_hired=date_hired,
+            position=position,
+            department=department,
+            shift_days=shift_days,
+            shift_hours=shift_hours,
+            branch_id=branch_id
+        )
+
+        # Add to database
+        db.session.add(new_employee)
+        db.session.commit()
+        flash('New employee added successfully!', 'success')
+        return redirect(url_for('owner.employees', branch=selected_branch))
+
+    # --- Handle GET: fetch employees based on selected branch ---
     if selected_branch == 'all':
         employees = Employee.query.all()
     else:
-        employees = Employee.query.filter_by(branch_id=selected_branch)
+        employees = Employee.query.filter_by(branch_id=selected_branch).all()
+
+    return render_template('/owner/employees.html', 
+                           branches=branches, 
+                           selected_branch=selected_branch,
+                           employees=employees, 
+                           employee=None,
+                           today=date.today())
+
+@owner.route('/edit_employee/<int:employee_id>', methods=['POST'])
+# @role_required('owner')
+def edit_employee(employee_id):
+    form_type = request.args.get("form")
     
-    branches = Branch.query.all()
-    return render_template('/owner/employees.html', branches=branches, employees=employees)
+    if form_type == "basic_info":
+        employee = Employee.query.get_or_404(employee_id)
+        birthdate_str = request.form.get('birthdate')  # e.g., '2025-08-02'
+        date_hired_str = request.form.get('date_hired')
+        
+        try:
+            employee.birthdate = datetime.strptime(birthdate_str, '%Y-%m-%d').date()
+            employee.date_hired = datetime.strptime(date_hired_str, '%Y-%m-%d').date()
+        except ValueError:
+            flash("Invalid date format. Please use YYYY-MM-DD.", "danger")
+            return redirect(request.referrer)
+
+        # Other fields
+        employee.first_name = request.form.get('first_name')
+        employee.middle_name = request.form.get('middle_name')
+        employee.last_name = request.form.get('last_name')
+        employee.sex = request.form.get('sex')
+        employee.employment_status = request.form.get('employment_status')
+        employee.contact_number = request.form.get('contact_number')
+        employee.email = request.form.get('email')
+        
+        db.session.commit()
+        flash("Employee updated successfully!", "success")
+        return redirect(url_for('owner.employee_info', employee_id=employee_id))
+    elif form_type == "work_details":
+        employee = Employee.query.get_or_404(employee_id)
+        account = Account.query.filter_by(employee_id=employee_id).first()
+
+        # Update Employee fields
+        employee.position = request.form.get('position')
+        employee.department = request.form.get('department')
+        employee.shift_days = request.form.get('shift_days')
+        employee.shift_hours = request.form.get('shift_hours')
+
+        # Optional: If position is duplicated in Account, also update account
+        if account:
+            account.position = request.form.get('position')  # Only if Account has this field
+
+        db.session.commit()
+        flash("Work details updated successfully!", "success")
+        return redirect(url_for('owner.employee_work_details', employee_id=employee_id))
+    
 
 @owner.route('/employee_info/<int:employee_id>')
 # @role_required('owner')
@@ -899,8 +995,9 @@ def employee_info(employee_id):
 @owner.route('/employee_work_details/<int:employee_id>')
 # @role_required('owner')
 def employee_work_details(employee_id):
-    employee = Employee.query.get_or_404(employee_id)
-    return render_template('/owner/em_work_details.html', employee=employee)
+    employee = Employee.query.get_or_404(employee_id)    
+    account = Account.query.filter_by(employee_id=employee_id).first()
+    return render_template('/owner/em_work_details.html', employee=employee, account=account)
 
 @owner.route('/employee_activity_details/<int:employee_id>')
 # @role_required('owner')

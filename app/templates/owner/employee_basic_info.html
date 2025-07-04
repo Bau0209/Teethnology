@@ -35,56 +35,103 @@
         <li class="nav-item"> 
             <a class="nav-link" href="{{ url_for('owner.employee_work_details', employee_id=employee.employee_id) }}" data-branch="work_details">Work Details</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="{{ url_for('owner.employee_activity_details', employee_id=employee.employee_id) }}" data-branch="activity_history">Activity History</a>
-        </li>
+        </li> -->
     </ul>
 
     <!-- Basic Info Section -->
-    <section class="tab-content" id="basic_info">
-        <div class="info-card">
-            <div class="info-header left-align">
-                <h3>Employee ID: {{ employee.employee_id }}</h3>
-                <h4>{{ employee.full_name }}</h4>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6 column-divider" >
-                    <div class="mb-3">
-                        <label class="form-label">Age</label>
-                        <input type="text" class="form-control" value="{{ employee.age }}">
+    <form method="POST" action="{{ url_for('owner.edit_employee', employee_id=employee.employee_id, form='basic_info') }}">
+        <section class="tab-content" id="basic_info">
+            <div class="info-card">
+                <div class="info-header left-align">
+                    <h3>Employee ID: {{ employee.employee_id }}</h3>
+                    <h4>{{ employee.full_name }}</h4>
+                </div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="row">
+                    <div class="col-md-6 column-divider">
+                        <div class="mb-3">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="first_name" value="{{ employee.first_name }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Middle Name</label>
+                            <input type="text" class="form-control" name="middle_name" value="{{ employee.middle_name }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="last_name" value="{{ employee.last_name }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Age</label>
+                            <input type="text" class="form-control" name="age" value="{{ employee.age }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Sex</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sex" id="sexMale" value="M"
+                                    {% if employee.sex.upper() == 'M' %}checked{% endif %}>
+                                <label class="form-check-label" for="sexMale">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sex" id="sexFemale" value="F"
+                                    {% if employee.sex.upper() == 'F' %}checked{% endif %}>
+                                <label class="form-check-label" for="sexFemale">Female</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Birthday</label>
+                            <input type="date" class="form-control" name="birthdate" value="{{ employee.birthdate.strftime('%Y-%m-%d') }}">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Sex</label>
-                        <input type="text" class="form-control" value="{{ employee.sex }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Birthday</label>
-                        <input type="text" class="form-control" value="{{ employee.birthdate }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Contact Number</label>
-                        <input type="text" class="form-control" value="{{ employee.contact_number }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="text" class="form-control" value="{{ employee.email }}">
+
+                    <div class="col-md-6 ms-auto">
+                        <div class="mb-3">
+                            <label class="form-label">Contact Number</label>
+                            <input type="text" class="form-control" name="contact_number" value="{{ employee.contact_number }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" name="email" value="{{ employee.email }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Employment Status</label>
+                            <select class="form-select" name="employment_status" required>
+                                <option value="active" {% if employee and employee.employment_status == 'active' %}selected{% endif %}>Active</option>
+                                <option value="inactive" {% if employee and employee.employment_status == 'inactive' %}selected{% endif %}>Inactive</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Date Hired</label>
+                            <input type="date" class="form-control" name="date_hired" value="{{ employee.date_hired.strftime('%Y-%m-%d') }}">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 ms-auto">  
-                    <div class="mb-3">
-                        <label class="form-label">Employment Status</label>
-                        <input type="text" class="form-control" value="{{ employee.employment_status | title }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Date Hired</label>
-                        <input type="text" class="form-control" value="{{ employee.date_hired }}">
-                    </div>
-                </div>
+
+                <button class="save-btn">Save Changes</button>
             </div>
-            <button class="save-btn">Save Changes</button>
-        </div>
-    </section>
+        </section>
+    </form>
+
 </div>
 {% endblock %}
 
