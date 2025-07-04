@@ -89,3 +89,26 @@ window.addEventListener('unload', function() {
     const style = document.getElementById('modal-fix-styles');
     if (style) style.remove();
 });
+
+//function for searchbar
+document.addEventListener('DOMContentLoaded', function () {
+    // Select the first text input inside input-group (your search bar)
+    const searchInput = document.querySelector('.input-group input[type="text"]');
+
+    if (!searchInput) {
+        console.warn('Search input not found!');
+        return;
+    }
+
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.trim().toLowerCase();
+            const rows = document.querySelectorAll('table.table tbody tr');
+
+            rows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                row.style.display = rowText.includes(query) ? '' : 'none';
+            });
+        }
+    });
+});
