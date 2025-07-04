@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedServicesContainer.appendChild(card);
         console.log(`✅ Rendered: ${serviceName}`);
     }
-<<<<<<< HEAD
 /*
     // Removes a service card
     function removeServiceCard(serviceName) {
@@ -163,6 +162,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };*/
 });
-=======
-});
->>>>>>> 06ec2aaeabc66c2c89f14f1236531b3bab0af1f6
