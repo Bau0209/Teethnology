@@ -60,7 +60,7 @@ Teethnology Patient Portal
                     </button>
                 {% endfor %}
             </div>
-            
+
             <!-- Branch Details - Now in right column -->
             <div class="branch-details-wrapper col-md-9">
                 {% for branch in branches %}
@@ -128,7 +128,7 @@ Teethnology Patient Portal
 
 <section id="about-us" class="py-5">
     <div class="contact-header">
-        <img src="../../static/images/pic in contact.jpg" alt="Clinic Interior" class="w-100">
+        <img src="../../static/images/pic in contact.png" alt="Clinic Interior" class="w-100">
         <h1>ABOUT US</h1>
         <p>{{ main_web.about_us }}</p>
     </div>
@@ -170,6 +170,22 @@ Teethnology Patient Portal
 {% endblock %}
 
 {% block extra_js %}
+<script>
+  function showBranch(branchId) {
+    // Hide all branch cards
+    const cards = document.querySelectorAll('.branch-details-card');
+    cards.forEach(card => {
+      card.style.display = 'none';
+    });
+
+    // Show the selected branch card
+    const selectedCard = document.getElementById(branchId);
+    if (selectedCard) {
+      selectedCard.style.display = 'block';
+    }
+  }
+</script>
+
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
 
