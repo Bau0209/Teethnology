@@ -247,7 +247,7 @@ body {
 }
 
 .modal-header {
-    background: #00898E;
+    background: #00898E ;
     color: #fff;
     border-radius: 10px 10px 0 0;
     padding: 15px 20px;
@@ -256,6 +256,7 @@ body {
 .modal-title {
     font-weight: 700;
     letter-spacing: 0.5px;
+ 
 }
 
 .modal-body {
