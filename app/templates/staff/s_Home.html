@@ -96,7 +96,7 @@
       </form> -->
     </div>
     <hr>
-    <a href="{{ url_for('owner.appointment_req') }}" class="view-all">View All</a>
+    <a href="{{ url_for('staff.appointment_req') }}" class="view-all">View All</a>
     <div class="request-list">
       {% if appointment_requests %}
         {% for req in appointment_requests %}
@@ -107,7 +107,7 @@
               {{ req.appointment_type }}
             </div>
             <div class="actions">
-              <button class="accept"><a href="{{ url_for('owner.appointment_req') }}" class="view-all">View More</a></button>
+              <button class="accept"><a href="{{ url_for('staff.appointment_req') }}" class="view-all">View More</a></button>
             </div>
           </div>
         {% endfor %}
@@ -121,7 +121,7 @@
 
   </div>
 
-  <form method="POST" action="{{ url_for('owner.update_main_website') }}">
+  <form method="POST" action="{{ url_for('staff.update_main_website') }}">
         <div class="branches-info-card">
             <div class="branches-info-header">
                 <h2>WEBSITE INFORMATION</h2>
