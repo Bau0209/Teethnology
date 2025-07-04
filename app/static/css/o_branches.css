@@ -1,6 +1,6 @@
 .branches-info-card,
 .branches-list-card {
-  max-width: 1440px;
+  /*max-width: 1440px;*/
   width: 100%;
   margin: 0 auto;
   padding: 20px;
@@ -11,7 +11,7 @@
   border-radius: 10px;
   margin-top: 30px !important;
   box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-  width: calc(100% - 5px);
+  width: 100%;
   margin: 0 auto 24px auto;
   border: 1.5px solid #e0efef;
 }
@@ -175,6 +175,7 @@
   background: #00bcd4;
   border-color: #00bcd4;
 }
+
 /* --- Branches List Card --- */
 .branches-list-card {
   background: #ffff;
