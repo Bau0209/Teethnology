@@ -147,7 +147,6 @@ body {
 
 .revenue-left {
   order: 2; /* Move Revenue by Service to bottom */
-  margin-top: 20px;
 }
 
 /* Revenue Total section (top-right of chart) */
