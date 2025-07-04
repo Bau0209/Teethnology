@@ -1,4 +1,4 @@
-{% extends "staff/staff_base.html" %}
+{% extends "owner/owner_base.html" %}
 
 {% block title %}Balance Record | Teethnology{% endblock %}
 
@@ -16,10 +16,10 @@
             <!-- Branch Tabs -->
             <ul class="nav nav-tabs" id="transactionTabs">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('staff.transactions') }}">Transactions</a>
+                    <a class="nav-link" href="{{ url_for('owner.transactions') }}">Transactions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ url_for('staff.balance_record') }}">Balance Record</a>
+                    <a class="nav-link active" href="{{ url_for('owner.balance_record') }}">Balance Record</a>
                 </li>
             </ul>
             

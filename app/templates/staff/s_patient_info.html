@@ -51,7 +51,7 @@
      
 
                 <!-- Patient Info Tab Content -->
-                <form action="{{ url_for('owner.edit_patient', patient_id=patient.patient_id, form='patient_info') }}" method="post">
+                <form action="{{ url_for('staff.edit_patient', patient_id=patient.patient_id, form='patient_info') }}" method="post">
                     <div class="tab-content pt-4" id="patientInfoContent">
                         <div class="patient-info-section">
                             <h2 class="section-title">Patient Information Record</h2>
