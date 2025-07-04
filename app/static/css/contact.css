@@ -7,7 +7,7 @@
     
 .contact-header img {
     width: 100%;
-    height: clamp(200px, 70vh, 450px);
+    height: clamp(200px, 70vh, 525px);
     object-fit: cover;
     object-position: center;
 }
