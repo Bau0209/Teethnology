@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Searching for:', searchInput.value);
         // In a real app, you would search records based on the input
     });
+
 });
 
 // js for save type  button
