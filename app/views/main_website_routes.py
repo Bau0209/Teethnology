@@ -103,3 +103,15 @@ def branch(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
     return render_template('/main_website/branch.html', branch=branch, branch_images=branch_images)
+
+@main.route('/api/services')
+def get_services():
+    services = Services.query.all()
+    return jsonify([
+        {
+            "name": s.name,
+            "description": s.description,
+            "icon_class": s.icon_class,         # Example: 'fas fa-tooth'
+            "bg_image": s.bg_image              # Example: '/static/images/tooth-bg.png'
+        } for s in services
+    ])

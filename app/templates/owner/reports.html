@@ -58,30 +58,30 @@
         <div class="row g-2">
           <!-- Revenue Card -->
           <h6 class="mb-3 fw-semibold text-muted">This Month</h6>
-<div class="col-4">
-  <div class="card p-3 text-center">
-    <small class="text-muted d-block">Revenue</small>
-    <h6 class="mb-0 text-primary">₱{{ "{:,.0f}".format(current_revenue) }}</h6>
-  </div>
-</div>
+            <div class="col-4">
+              <div class="card p-3 text-center">
+                <small class="text-muted d-block">Revenue</small>
+                <h6 class="mb-0 text-primary">₱{{ "{:,.0f}".format(current_revenue) }}</h6>
+              </div>
+            </div>
 
-          <!-- Growth Rate Card -->
-          <div class="col-4">
-  <div class="card p-3 text-center">
-    <small class="text-muted d-block">Growth Rate</small>
-    <h6 class="mb-0 {% if growth_rate < 0 %}text-danger{% else %}text-success{% endif %}">
-      {{ growth_rate }}%
-    </h6>
-  </div>
-</div>
+            <!-- Growth Rate Card -->
+            <div class="col-4">
+              <div class="card p-3 text-center">
+                <small class="text-muted d-block">Growth Rate</small>
+                <h6 class="mb-0 {% if growth_rate < 0 %}text-danger{% else %}text-success{% endif %}">
+                  {{ growth_rate }}%
+                </h6>
+              </div>
+            </div>
 
           <!-- Appointments Card -->
           <div class="col-4">
-  <div class="card p-3 text-center">
-    <small class="text-muted d-block">Appointments</small>
-    <h6 class="mb-0">{{ appointments_count }}</h6>
-  </div>
-</div>
+            <div class="card p-3 text-center">
+              <small class="text-muted d-block">Appointments</small>
+              <h6 class="mb-0">{{ appointments_count }}</h6>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -104,8 +104,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </div>
@@ -135,7 +133,7 @@
       </div>
     </div> -->
 
-    <!-- Business Insight -->
+    <!-- Business Insight-->
     <div class="col-lg-4">
       <div class="card business-insight-card p-4">
         <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
