@@ -119,12 +119,44 @@ Teethnology Patient Portal
 </div>
 
 
-<section id="about-us">
+<section id="about_us" class="py-5">
     <div class="about-header">
-        <h2>ABOUT US</h2>
+        <h1>ABOUT US</h1>
         <p>{{ main_web.about_us }}</p>
     </div>
+
+    <main class="container py-5">
+        <div class="row g-4 justify-content-center contact-info" style="margin-top: -170px; position: relative; z-index: 2;">
+            <div class="col-md-4 col-sm-6 text-center">
+                <div class="contact-icon p-4">
+                    <i class="fas fa-envelope d-flex align-items-center justify-content-center mx-auto mb-3"></i>
+                    <h3>Email Address</h3>
+                    <p class="text-start">{{ main_web.main_email }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 text-center">
+                <div class="contact-icon p-4">
+                    <i class="fas fa-phone d-flex align-items-center justify-content-center mx-auto mb-3"></i>
+                    <h3>Phone Number</h3>
+                    <p class="text-start"><strong>Main Number:</strong> {{ main_web.main_contact_number }}</p>
+                    {% for branch in branches %}
+                        <p class="text-start"><strong>{{ branch.branch_name }}:</strong> {{ branch.contact_number }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 text-center">
+                <div class="contact-icon p-4">  
+                    <i class="fas fa-map-marker-alt d-flex align-items-center justify-content-center mx-auto mb-3"></i> 
+                    <h3>Office Location</h3>
+                    {% for branch in branches %}
+                        <p class="text-start"><strong>{{ branch.branch_name }}:</strong> {{ branch.full_address }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
 </section>
+
+
 {% endblock %}
 
 {% block extra_js %}
