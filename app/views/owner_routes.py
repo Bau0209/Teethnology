@@ -1072,9 +1072,13 @@ def reports():
     revenue_data = db.session.query(
         extract('month', Transactions.transaction_datetime).label('month'),
         func.sum(Transactions.total_amount_paid).label('total')
-    ).group_by(extract('month', Transactions.transaction_datetime))\
-     .order_by(extract('month', Transactions.transaction_datetime))\
-     .all()
+    ).filter(
+        extract('year', Transactions.transaction_datetime) == current_year
+    ).group_by(
+        extract('month', Transactions.transaction_datetime)
+    ).order_by(
+        extract('month', Transactions.transaction_datetime)
+    ).all()
 
     months = ['January', 'February', 'March', 'April', 'May', 'June',
               'July', 'August', 'September', 'October', 'November', 'December']

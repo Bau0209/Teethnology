@@ -9,17 +9,23 @@
 {% endblock %}
 
 {% block content %}
-<form method="get" action="{{ url_for('owner.owner_home') }}" style="text-align: right; margin-bottom: 20px; margin-top: 15px;">
-  <select name="branch" onchange="this.form.submit()" 
-          class="branches-dropdown" 
-          style="padding: 10px 15px; font-size: 16px; width: 50%">
-      <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branches</option>
-      {% for branch in branches %}
-          <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
-              {{ branch.branch_name }}
-          </option>
-      {% endfor %}
-  </select>
+<form method="get" action="{{ url_for('owner.owner_home') }}" style="margin-bottom: 20px; margin-top: 15px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+    
+    <h1 style="margin: 0; color: #1ba6ab;">Welcome to Teethnology</h1>
+
+    <select name="branch" onchange="this.form.submit()" 
+            class="branches-dropdown" 
+            style="padding: 10px 15px; font-size: 16px; width: 50%;">
+        <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branches</option>
+        {% for branch in branches %}
+            <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                {{ branch.branch_name }}
+            </option>
+        {% endfor %}
+    </select>
+  
+  </div>
 </form>
 
 <div class="dashboard-top">
@@ -28,7 +34,7 @@
         <div class="card welcome-card">
             <h2>📈️ BUSINESS INSIGHT</h2>
             <hr>
-            <p style="font-size: 0.9rem;">{{ insight_text | safe }}</p>
+            <p style="font-size: 1.1rem;">{{ insight_text | safe }}</p>
         </div>
         
         <!-- Appointments Today -->
