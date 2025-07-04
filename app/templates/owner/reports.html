@@ -21,18 +21,6 @@
   <div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
     <!-- Left: Revenue by Service -->
     <div class="revenue-left flex-grow-1" >
-      <!-- Filters -->
-    <div class="d-flex flex-wrap gap-2 mb-3">
-      <div class="btn-group btn-group-sm" role="group">
-        <form method="get" action="{{ url_for('owner.reports') }}">
-          <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
-            {% for y in range(current_year, current_year - 5, -1) %}
-              <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
-            {% endfor %}
-          </select>
-        </form>
-      </div>
-    </div>
     <div class="card h-100">
       <div class="card-header d-flex justify-content-between align-items-center bg-white">
         <h6 class="mb-0">Monthly Revenue Per Year</h6>
@@ -50,72 +38,72 @@
   <!-- Vertical Divider -->
   <div class="vr-divider"></div>
 
-  <!-- Right: Summary & Top Services -->
-  <div class="card-right" style="min-width: 320px;">
-    <div class="row g-3">
-      <div class="col-12">
-        <div class="row g-2">
-          <!-- Revenue Card -->
-      <div class="d-flex flex-wrap gap-2 mb-3">
-        <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">This Month</button> <!--show data for this month only-->
+  <!-- Top Summary Section -->
+<div class="row g-3">
+  <div class="col-12">
+    <div class="row g-">     
+      <!-- Revenue Cards -->
+      <div class="col-4">
+        <div class="card p-3 text-center">
+          <h3 class="text-muted d-block">Today's Revenue</h3>
+          <h1 style="color:rgb(32, 178, 115)">₱{{ "{:,.0f}".format(today_revenue) }}</h1>
         </div>
-        <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">Today</button> <!--show data for today only-->
-        </div>
-      </div> 
-            <div class="col-4">
-              <div class="card p-3 text-center">
-                <small class="text-muted d-block">Revenue</small>
-                <h6 class="mb-0 text-primary">₱{{ "{:,.0f}".format(current_revenue) }}</h6>
-              </div>
-            </div>
-
-            <!-- Growth Rate Card -->
-            <div class="col-4">
-              <div class="card p-3 text-center">
-                <small class="text-muted d-block">Growth Rate</small>
-                <h6 class="mb-0 {% if growth_rate < 0 %}text-danger{% else %}text-success{% endif %}">
-                  {{ growth_rate }}%
-                </h6>
-              </div>
-            </div>
-
-          <!-- Appointments Card -->
-          <div class="col-4">
-            <div class="card p-3 text-center">
-              <small class="text-muted d-block">Appointments</small>
-              <h6 class="mb-0">{{ appointments_count }}</h6>
-            </div>
-          </div>
+      </div>
+       <div class="col-4">
+        <div class="card p-3 text-center">
+          <h3 class="text-muted d-block">This Month's Revenue</h3>
+          <h1 style="color:rgb(32, 178, 115)">₱{{ "{:,.0f}".format(current_revenue) }}</h1>
         </div>
       </div>
 
-      <div class="col-12">
-        <div class="card donut-card">
-          <div class="card-header bg-white">
-            <h6 class="mb-0">Top Earning Services</h6>
-          </div>
-          <div class="card-body">
-            <div class="d-flex align-items-start">
-              <!-- Doughnut Chart -->
-              <canvas id="topServicesChart" style="max-width: 100%;"></canvas>
-
-              <!-- Legend List (manual list) -->
-              <div class="ms-4">
-                <ul class="list-unstyled mb-0">
-                </ul>
-              </div>
-            </div>
-          </div>
+      <div class="col-4">
+        <div class="card p-3 text-center">
+          <h3 class="text-muted d-block">This Month's Appointments</h3>
+          <h1 style="color:rgb(32, 178, 115)">{{ appointments_count }}</h1>
         </div>
       </div>
     </div>
-    <!-- Business Insight-->
-    <div class="col-lg-4">
-      <div class="card business-insight-card p-4">
+  </div>
+</div>
+<hr>
+<!-- Revenue Filters -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <div class="btn-group btn-group-sm" role="group">
+          <form method="get" action="{{ url_for('owner.reports') }}">
+            <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+              {% for y in range(current_year, current_year - 5, -1) %}
+                <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
+        <!-- <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">This Month</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">Today</button>
+        </div> -->
+      </div>
+      <div class="row">
+  <!-- Chart Card (80%) -->
+  <div class="col-md-9 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">Monthly Revenue by Service</h6>
+        <small class="text-muted">Top earning services stacked per month</small>
+      </div>
+      <div class="card-body">
+        <canvas id="topServicesChart" style="width: 100%; height: 400px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Insight Card (20%) -->
+  <div class="col-md-3 mb-4">
+    <div class="card h-100">
+      <div class="card-body">
         <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
-        <p>{{ insight_text | safe }}</p>
+        <p class="small mb-0">{{ insight_text | safe }}</p>
       </div>
     </div>
   </div>
@@ -145,7 +133,6 @@
         </div>
       </div>
     </div> -->
-  </div>
 </div>
 {% endblock %}
 {% block extra_js %}
@@ -156,19 +143,43 @@
 
 <script>
   // Doughnut Chart for Top Services
+  // Stacked Bar Chart for Monthly Revenue by Top Services
   const donutCtx = document.getElementById('topServicesChart').getContext('2d');
   new Chart(donutCtx, {
-    type: 'doughnut',
+    type: 'bar',
     data: {
-      labels: {{ top_service_labels | tojson }},
-      datasets: [{
-        data: {{ top_service_values | tojson }},
-        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1']
-      }]
+      labels: {{ labels | tojson }}, // These are the month names
+      datasets: {{ stacked_datasets | tojson }} // New variable from Flask
     },
     options: {
       responsive: true,
-      cutout: '70%'
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Revenue by Service'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
+        },
+        legend: {
+          position: 'top'
+        }
+      },
+      scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return '₱' + value.toLocaleString();
+            }
+          }
+        }
+      }
     }
   });
 

@@ -8,6 +8,7 @@ import os
 from app import db
 from datetime import datetime, date, timedelta
 from sqlalchemy import extract, func
+from collections import defaultdict
 
 owner = Blueprint('owner', __name__)
 
@@ -1073,7 +1074,14 @@ def reports():
     current_year = now.year
     selected_year = request.args.get('year', type=int) or current_year
     last_month = current_month - 1 if current_month > 1 else 12
-    last_month_year = current_year if current_month > 1 else current_year - 1
+    
+    # Today's Revenue
+    today = date.today()
+    today_revenue = db.session.query(
+        func.sum(Transactions.total_amount_paid)
+    ).filter(
+        func.date(Transactions.transaction_datetime) == today
+    ).scalar() or 0
 
     # Revenue per month (for chart)
     revenue_data = db.session.query(
@@ -1086,12 +1094,23 @@ def reports():
     ).order_by(
         extract('month', Transactions.transaction_datetime)
     ).all()
+    
+    unchangable_revenue_data = db.session.query(
+        extract('month', Transactions.transaction_datetime).label('month'),
+        func.sum(Transactions.total_amount_paid).label('total')
+    ).filter(
+        extract('year', Transactions.transaction_datetime) == current_year
+    ).group_by(
+        extract('month', Transactions.transaction_datetime)
+    ).order_by(
+        extract('month', Transactions.transaction_datetime)
+    ).all()
 
     months = ['January', 'February', 'March', 'April', 'May', 'June',
               'July', 'August', 'September', 'October', 'November', 'December']
     values = [0] * 12
 
-    for month, total in revenue_data:
+    for month, total in unchangable_revenue_data:
         values[int(month) - 1] = float(total)
 
     # Current month revenue
@@ -1112,17 +1131,34 @@ def reports():
         .scalar()
 
     # Top earning services
-    top_services = db.session.query(
+    service_month_data = db.session.query(
+        extract('month', Transactions.transaction_datetime).label('month'),
         Procedures.treatment_procedure,
-        func.sum(Transactions.total_amount_paid).label('revenue')
-    ).join(Transactions, Transactions.procedure_id == Procedures.procedure_id)\
-     .group_by(Procedures.treatment_procedure)\
-     .order_by(func.sum(Transactions.total_amount_paid).desc())\
-     .limit(5).all()
+        func.sum(Transactions.total_amount_paid).label('total')
+    ).join(Procedures, Procedures.procedure_id == Transactions.procedure_id)\
+    .filter(extract('year', Transactions.transaction_datetime) == selected_year)\
+    .group_by('month', Procedures.treatment_procedure)\
+    .order_by('month')\
+    .all()
 
-    # Format for chart
-    top_service_labels = [s[0] for s in top_services]
-    top_service_values = [float(s[1]) for s in top_services]
+    # Example: {'Cleaning': [1000, 1500, 0, ..., 2000], 'Whitening': [...], ...}
+    service_monthly_totals = defaultdict(lambda: [0]*12)
+
+    for month, service, total in service_month_data:
+        service_monthly_totals[service][int(month) - 1] = float(total)
+
+    # Convert to chart.js dataset format
+    stacked_datasets = [{
+        'label': service,
+        'data': totals
+    } for service, totals in service_monthly_totals.items()]
+
+    # Color generator (optional)
+    colors = ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1',
+            '#17a2b8', '#6610f2', '#fd7e14', '#20c997', '#6c757d']
+
+    for i, ds in enumerate(stacked_datasets):
+        ds['backgroundColor'] = colors[i % len(colors)]
 
     # --- BUSINESS INSIGHT BASED ONLY ON CURRENT DATA ---
     insight_lines = []
@@ -1148,16 +1184,30 @@ def reports():
     insight_lines.append("<br>".join(revenue_insight))
 
     # Insight 3: Top services
+    # Filter to current month only
+    current_month_services = [
+        entry for entry in service_month_data if int(entry.month) == current_month
+    ]
+
+    # Find the top earning service this month
+    top_service_this_month = None
+    if current_month_services:
+        top_service_this_month = max(current_month_services, key=lambda x: x.total)
+
     service_insight = ["<strong>Services:</strong>"]
-    if top_service_labels:
-        service_insight.append(f"Top earning service: {top_service_labels[0]}. Consider upselling related procedures.")
+    if top_service_this_month:
+        service_insight.append(
+            f"Top earning service this month: {top_service_this_month.treatment_procedure}. Consider upselling related procedures."
+        )
+    else:
+        service_insight.append("No services recorded yet this month.")
     insight_lines.append("<br>".join(service_insight))
 
-    # Final output with paragraph spacing
     insight_text = "<br><br>".join(insight_lines)
 
     return render_template('/owner/reports.html',
                            labels=months,
+                           today_revenue=today_revenue,
                            values=values,
                            total_revenue=sum(values),
                            current_revenue=current_revenue,
@@ -1165,8 +1215,7 @@ def reports():
                             current_year=current_year,
                            growth_rate=round(growth_rate, 2),
                            appointments_count=appointments_this_month,
-                           top_service_labels=top_service_labels,
-                           top_service_values=top_service_values,
+                           stacked_datasets=stacked_datasets,
                            insight_text=insight_text)
 
 @owner.route('/report_patients') 
