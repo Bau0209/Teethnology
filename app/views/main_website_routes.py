@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for,jsonify
 from app.models import Branch, ClinicBranchImage, MainWeb, PatientsInfo, Appointments
 from app import db
 from datetime import datetime
@@ -106,7 +106,7 @@ def branch(branch_id):
 
 @main.route('/api/services')
 def get_services():
-    services = Services.query.all()
+    services = MainWeb.query.all()
     return jsonify([
         {
             "name": s.name,
