@@ -20,4 +20,3 @@ class Procedures(db.Model):
 
     # Relationships
     patient = db.relationship('PatientsInfo', backref=db.backref('procedures', lazy=True, cascade="all, delete-orphan"))
-    appointment = db.relationship('Appointments', backref=db.backref('procedures', lazy=True))

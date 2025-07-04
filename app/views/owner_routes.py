@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify, session
 from app.models import Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Transactions, Appointments, MainWeb
+from app.utils.insights import generate_business_insight
 from werkzeug.utils import secure_filename
 from .auth import role_required
 import json
@@ -16,7 +17,6 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 from flask import request
-
 @owner.route('/owner_home')
 def owner_home():
     today = date.today()
@@ -47,6 +47,8 @@ def owner_home():
             appointment_status='pending'
         ).all()
 
+    insight_text = generate_business_insight()
+
     return render_template(
         '/owner/O_home.html',
         appointments_today=appointments_today,
@@ -54,7 +56,8 @@ def owner_home():
         appointment_requests=appointment_requests,
         branches=branches,
         selected_branch=selected_branch,
-        main_web=main_web
+        main_web=main_web,
+        insight_text=insight_text
     )
 
 @owner.route('/branches')
@@ -75,6 +78,68 @@ def branches():
         main_web=main_web,
         branch_images=branch_images
     )
+
+@owner.route('/branches/add', methods=['POST'])
+# @role_required('owner')
+def add_branch():    
+    branch_name = request.form.get('branch_name')
+    full_address = request.form.get('full_address')
+    description = request.form.get('description')
+    chief_dentist = request.form.get('chief_dentist')
+    contact_number = request.form.get('contact')
+    open_time = request.form.get('open_time')
+    close_time = request.form.get('close_time')
+    services_list = request.form.getlist('services[]')
+    services = ', '.join(services_list)
+
+    # Check if branch name already exists
+    if Branch.query.filter_by(branch_name=branch_name).first():
+        flash('Branch name already exists.', 'error')
+        return redirect(url_for('owner.branches'))
+
+    # Convert times
+    open_hour = datetime.strptime(open_time, '%H:%M').time()
+    close_hour = datetime.strptime(close_time, '%H:%M').time()
+
+    # Handle image upload
+    image_file = request.files.get('image')
+    if not image_file:
+        flash('Image is required.', 'error')
+        return redirect(url_for('owner.branches'))
+
+    filename = secure_filename(image_file.filename)
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+    os.makedirs(upload_folder, exist_ok=True)
+
+    # Save image to filesystem
+    image_path = os.path.join(upload_folder, filename)
+    image_file.save(image_path)
+
+    # Save branch to DB
+    new_branch = Branch(
+        branch_name=branch_name,
+        full_address=full_address,
+        clinic_description=description,
+        chief_dentist=chief_dentist,
+        contact_number=contact_number,
+        clinic_open_hour=open_hour,
+        clinic_close_hour=close_hour,
+        services=services
+    )
+    db.session.add(new_branch)
+    db.session.commit()
+
+    # Save image path to DB (relative to static/)
+    image_link = f"uploads/branches/{filename}"  # ✅ relative URL path
+    new_image = ClinicBranchImage(
+        image_link=image_link,
+        branch_id=new_branch.branch_id
+    )
+    db.session.add(new_image)
+    db.session.commit()
+
+    flash('Branch successfully added!', 'success')
+    return redirect(url_for('owner.branches'))
 
 @owner.route('/branch_info/<int:branch_id>')
 # @role_required('owner')
@@ -195,12 +260,17 @@ def appointments():
     {
         'title': f"{a.patient.patient_full_name} - {a.appointment_type}",
         'start': a.appointment_sched.strftime('%Y-%m-%d'),
-        'color': '#e57373' if a.appointment_status == 'pending' else '#7bb3ad',
+        'color': (
+            "#228ad9" if a.procedures and a.procedures[0].procedure_status and 
+            a.procedures[0].procedure_status.lower() == 'completed'
+            else ('#e57373' if a.appointment_status == 'pending' else '#7bb3ad')
+        ),
         'patient': a.patient.patient_full_name,
         'type': a.appointment_type,
     }
     for a in appointments
 ]
+
 
 
     
@@ -215,7 +285,12 @@ def appointments():
             'contact': a.patient.contact_number,
             'email': a.patient.email,
             'alternative_sched': a.alternative_sched.strftime('%Y-%m-%d %I:%M %p') if a.alternative_sched else None,
-            'date': a.appointment_sched.strftime('%Y-%m-%d')
+            'date': a.appointment_sched.strftime('%Y-%m-%d'),
+            'procedure_status': (
+                a.procedures[0].procedure_status.lower()
+                if a.procedures and a.procedures[0].procedure_status
+                else ''
+            )
         }
         for a in appointments
     ]
@@ -677,31 +752,123 @@ def patient_procedure(patient_id):
     procedures = Procedures.query.filter_by(patient_id=patient_id)
     return render_template('/owner/procedure.html',patient=patient, procedures=procedures)
 
-@owner.route('/procedures/<int:appointment_id>/status', methods=['POST'])
+# @owner.route('/procedures/<int:appointment_id>/status', methods=['POST'])
+# # @role_required('owner')
+# def update_procedure_status(appointment_id):
+#     data = request.get_json()
+#     status = data.get('status')
+
+#     if status not in ['completed', 'cancelled']:
+#         return jsonify({'success': False, 'message': 'Invalid status'}), 400
+
+#     procedures = Procedures.query.filter_by(appointment_id=appointment_id).all()
+
+#     if not procedures:
+#         # Get appointment info to seed procedure
+#         appointment = Appointments.query.get(appointment_id)
+#         if not appointment:
+#             return jsonify({'success': False, 'message': 'Appointment not found.'}), 404
+
+#         # Create new Procedure using data from appointment
+#         new_procedure = Procedures(
+#             patient_id=appointment.patient_id,
+#             appointment_id=appointment_id,
+#             procedure_date=date.today(),
+#             treatment_procedure="General Treatment",  # default or replace later
+#             tooth_area="N/A",
+#             provider=appointment.approved_by or "Unknown",
+#             treatment_plan="Auto-generated on status update.",
+#             fee=0,  # default or override later
+#             procedure_status=status,
+#             notes="Procedure created via status update."
+#         )
+#         db.session.add(new_procedure)
+#         db.session.commit()
+
+#         # Create matching transaction (optional defaults)
+#         new_transaction = Transactions(
+#             procedure_id=new_procedure.procedure_id,
+#             receipt_number=f"AUTO-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+#             payment_method="Other",  # or "Cash", if you want
+#             transaction_datetime=datetime.now(),
+#             dentist_name=new_procedure.provider,
+#             service_detail=new_procedure.treatment_procedure,
+#             total_amount_paid=0.00,  # set real value later
+#             transaction_image_link=None
+#         )
+#         db.session.add(new_transaction)
+#         db.session.commit()
+
+#         return jsonify({'success': True, 'message': 'Procedure and transaction created and marked as ' + status + '.'})
+
+#     # If procedure(s) already exist, just update all their statuses
+#     for procedure in procedures:
+#         procedure.procedure_status = status
+
+#     db.session.commit()
+
+#     return jsonify({'success': True, 'message': 'Procedure status updated.'})
+
+@owner.route('/procedures/complete', methods=['POST'])
 # @role_required('owner')
-def update_procedure_status(appointment_id):
-    data = request.get_json()
-    status = data.get('status')
+def complete_procedure():
+    appointment_id = request.form.get('appointment_id')
+    treatment_procedure = request.form.get('treatment_procedure')
+    tooth_area = request.form.get('tooth_area')
+    provider = request.form.get('provider')
+    treatment_plan = request.form.get('treatment_plan')
+    fee = int(float(request.form.get('fee')))
+    payment_method = request.form.get('payment_method')
+    total_paid = request.form.get('total_amount_paid')
+    receipt_file = request.files.get('receipt')
 
-    if status not in ['completed', 'cancelled']:
-        return jsonify({'success': False, 'message': 'Invalid status'}), 400
+    # Get appointment and patient
+    appointment = Appointments.query.get(appointment_id)
+    if not appointment:
+        flash("Appointment not found.", "error")
+        return redirect(url_for('owner.branches'))
 
-    # Find procedures with the given appointment_id
-    procedures = Procedures.query.filter_by(appointment_id=appointment_id).all()
-
-    if not procedures:
-        return jsonify({
-            'success': False,
-            'message': f'No procedure found for this appointment (ID: {appointment_id}). Please add the procedure to this patient\'s history first.'
-        }), 404
-
-    # Update all matching procedures (in case there's more than one)
-    for procedure in procedures:
-        procedure.procedure_status = status
-
+    # Create procedure
+    procedure = Procedures(
+        patient_id=appointment.patient_id,
+        appointment_id=appointment.appointment_id,
+        procedure_date=date.today(),
+        treatment_procedure=treatment_procedure,
+        tooth_area=tooth_area,
+        provider=provider,
+        treatment_plan=treatment_plan,
+        fee=fee,
+        procedure_status='completed',
+        notes='Recorded via modal'
+    )
+    db.session.add(procedure)
     db.session.commit()
 
-    return jsonify({'success': True, 'message': 'Procedure status updated.'})
+    # Handle receipt upload
+    receipt_path = None
+    if receipt_file and receipt_file.filename:
+        filename = secure_filename(receipt_file.filename)
+        upload_folder = os.path.join(current_app.root_path, 'static/uploads/receipts')
+        os.makedirs(upload_folder, exist_ok=True)
+        receipt_path = os.path.join('static/uploads/receipts', filename)
+        receipt_file.save(os.path.join(upload_folder, filename))
+
+    # Create transaction
+    transaction = Transactions(
+        procedure_id=procedure.procedure_id,
+        receipt_number=f"AUTO-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+        payment_method=payment_method,
+        transaction_datetime=datetime.now(),
+        dentist_name=provider,
+        service_detail=treatment_procedure,
+        total_amount_paid=total_paid,
+        transaction_image_link=receipt_path
+    )
+    db.session.add(transaction)
+    db.session.commit()
+
+    flash("Procedure and transaction successfully saved!", "success")
+    return redirect(url_for('owner.appointments'))  # or wherever you list appointments
 
 @owner.route('/patient_dental_rec/<int:patient_id>')   
 # @role_required('owner')
