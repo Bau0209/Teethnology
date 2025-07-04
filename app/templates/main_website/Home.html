@@ -108,16 +108,22 @@ Teethnology Patient Portal
     </div>
 </section>
 
-<div class="services-cards">
-    <!-- Container for service cards that appear when checkboxes are selected -->
-    <div class="selected-services-container">
-        <div id="selected-services-cards" class="services-cards">
-            <input type="hidden" id="preselected-services" value="{{ main_web.services }}">
-            <!-- JS will populate cards here -->
+<section id="services" class="py-5">
+    <div class="services-cards">
+        <!-- Header -->
+        <div class="branch-header text-center position-relative mb-5">
+            <h2 class="text-primary fw-bold display-5 mb-3">SERVICES</h2>
+            <p class="text-dark fs-5">Services for Every Dental Need</p>
+        </div>
+        <!-- Container for service cards that appear when checkboxes are selected -->
+        <div class="selected-services-container">
+            <div id="selected-services-cards" class="services-cards">
+                <input type="hidden" id="preselected-services" value="{{ main_web.services }}">
+                <!-- JS will populate cards here -->
+            </div>
         </div>
     </div>
-</div>
-
+</section>
 
 <section id="about_us" class="py-5">
     <div class="about-header">
