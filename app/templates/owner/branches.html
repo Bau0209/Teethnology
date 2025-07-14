@@ -9,51 +9,6 @@
 
 {% block content %}
 
-    <!-- <form method="POST" action="{{ url_for('owner.update_main_website') }}">
-        <div class="branches-info-card">
-            <div class="branches-info-header">
-                <h2>WEBSITE INFORMATION</h2>
-            </div>
-            <div class="branches-info-content">
-                <div class="branches-services">
-                    <h3>All Branch Services</h3>
-                    <div class="services-checklist">
-                        {% set selected_services = main_web.services.split(',') if main_web else [] %}
-                        {% for service in [
-                            'Preventive Dentistry', 'Intervention Dentistry', 'Coroneric Dentistry',
-                            'Pediatric Dentistry', 'Orthodontics', 'Periodontics',
-                            'Oral and Nutritional', 'Sedation Dentistry', 'Others'
-                        ] %}
-                            <div class="checklist-item">
-                                <input type="checkbox" name="services" value="{{ service }}" id="service{{ loop.index }}"
-                                    {% if service in selected_services %}checked{% endif %}>
-                                <label for="service{{ loop.index }}">{{ service }}</label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="branches-about">
-                    <div class="button-container">
-                        <button class="save-btn" type="submit">Save</button>
-                        <a class="view-website-btn" href="{{ url_for('main.homepage') }}">View Website</a>
-                    </div>
-
-                    <h3>About Us</h3>
-                    <textarea name="about_us" class="form-control" rows="5">{{ main_web.about_us if main_web else '' }}</textarea>
-
-                    <div class="branches-contact mt-3">
-                        <h3>Main Contact</h3>
-                        <input type="email" name="main_email" class="form-control" placeholder="Email"
-                            value="{{ main_web.main_email if main_web else '' }}">
-                        <input type="text" name="main_contact_number" class="form-control mt-2" placeholder="Contact Number"
-                            value="{{ main_web.main_contact_number if main_web else '' }}">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form> -->
-
     <!-- Branch List Card -->
     <div class="branches-list-card">
         <div class="branches-list-header">

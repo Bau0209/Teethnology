@@ -175,16 +175,16 @@
     }
     </style>
     <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
-        <div class="modal-content" style="padding: 2rem;">
-            <div class="modal-header border-0">
-                <h5 class="modal-title w-100 text-center" style="color:#0097a7;font-weight:700;">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="background: #00898E;">
+                <h5 class="modal-title w-100 text-center" style="color:#ffffff;font-weight:700;">
                     Book an Appointment
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="{{ url_for('owner.form') }}" method="post" class="appointment-form-container">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 1rem;">
+            <form action="{{ url_for('owner.form') }}" method="post" class="appointment-form-container" style="padding: 1rem;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 10px;">
                     <select name="branch_id" id="branch_id" required>
                         <option value="" disabled selected>Select a branch</option>
                         {% for branch in branches %}

@@ -332,11 +332,14 @@ body {
     flex-wrap: wrap;
     position: relative;
     gap: 20px;
+    min-height: 600px; /* Set a minimum height */
+    padding-right: 320px; /* Make space for the legend */
 }
 
 .dental-record-content {
     flex: 1;
-    min-width: 0;
+    margin-bottom: 30px;
+    width: 100%; /* Take full width minus legend space */
 }
 
 .chart-select {
@@ -361,8 +364,8 @@ body {
 }
 
 .dental-record-section {
-    margin-bottom: 30px;
-    width: calc(100% - 320px); 
+    margin-top: 30px;
+    width: 100%; /* Take full width minus legend space */
 }
 
 .section-header {
@@ -499,7 +502,7 @@ body {
 
 /* Dental Chart and Legend Positioning */
 .dental_chart {
-    width: calc(100% - 320px); /* Adjust width to account for legend */
+    width: 100%; /* Take full width minus legend space */
     margin-bottom: 20px;
 }
 
@@ -510,8 +513,10 @@ body {
     width: 300px;
     position: absolute;
     right: 0;
-    top: 100px; /* Adjust this value based on your header height */
-    height: fit-content;
+    top: 0; /* Position at top */
+    height: auto;
+    max-height: 100%; /* Don't exceed container height */
+    overflow-y: auto; /* Add scroll if content is too long */
 }
 
 .dental-record-legend h6 {

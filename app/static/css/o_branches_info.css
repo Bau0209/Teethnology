@@ -110,6 +110,7 @@ body {
 .branch-edit-images {
   position: static; /* removes absolute positioning */
   margin-top: 20px;
+  margin-left: 80%;
   color: #0097a7;
   text-decoration: none;
   border: none;
@@ -211,7 +212,7 @@ body {
   background: #0097a7;
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 8px; 
   padding: 10px 28px;
   font-size: 1rem;
   text-decoration: none;

@@ -53,8 +53,8 @@
         <div class="modal fade" id="branchImagesModal" tabindex="-1" aria-labelledby="branchImagesModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 640px;">
                 <div class="modal-content" style="border-radius: 5px;">
-                    <div class="modal-header" style="border-bottom: 1px solid rgba(26, 63, 78, 0.568);">
-                        <h6 class="modal-title" id="branchImagesModalLabel" style="color: #0097a7; font-weight: 700;">IMAGES</h6>
+                    <div class="modal-header" style=" background: #00898E; border-radius: 4px;">
+                        <h6 class="modal-title" id="branchImagesModalLabel" style="color: #ffffff; font-weight: 700;">IMAGES</h6>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
@@ -70,7 +70,7 @@
                                 </div>
                                 <img src="{{ url_for('static', filename=image.image_link) }}"
                                     alt="Clinic Image"
-                                    class="img-fluid rounded border"
+                                     class="img-fluid rounded border"
                                     style="width: 100%;">
                             </div>
                         {% endfor %}
