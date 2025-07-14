@@ -76,7 +76,7 @@ def branches():
     branch_images = get_first_branch_images()
     
     return render_template(
-        '/owner/branches.html',
+        f'owner/branches.html',
         branches=branches,
         main_web=main_web,
         branch_images=branch_images
@@ -233,12 +233,13 @@ def appointments():
     ]
 
     return render_template(
-        '/owner/appointment.html',
+        f'{session["access_level"]}/appointment.html',
         branches=branches,
         appointments=appointments,
         selected_branch=selected_branch,
         events=json.dumps(events),
-        appointment_data=json.dumps(appointment_data)
+        appointment_data=json.dumps(appointment_data),
+        access_level='staff'
     )
 
 @owner.route('/appointment_req')

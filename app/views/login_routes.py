@@ -20,8 +20,7 @@ def login_post():
     if not account or account.account_password != account_password:
         flash("Invalid email or password", "error")
         return redirect(url_for('login.login_page'))
-    
-    session.permanent = True
+
     session['user_id'] = account.account_id
     session['email'] = account.email
     session['access_level'] = account.access_level

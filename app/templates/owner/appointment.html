@@ -16,16 +16,18 @@
             <a href="{{ url_for('owner.appointment_req') }}" class="calendar-tab">Appointment Request</a>
         </div>
         <div>
-            <form method="get" action="{{ url_for('owner.appointments') }}">
-                <select name="branch" class="calendar-branch-icon" onchange="this.form.submit()">
-                    <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
-                    {% for branch in branches %}
-                        <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
-                            {{ branch.branch_name }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </form>
+            {% if access_level == 'owner' %}
+                <form method="get" action="{{ url_for('owner.appointments') }}">
+                    <select name="branch" class="calendar-branch-icon" onchange="this.form.submit()">
+                        <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                        {% for branch in branches %}
+                            <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                                {{ branch.branch_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            {% endif %}
         </div>
     </div>
 
