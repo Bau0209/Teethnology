@@ -17,39 +17,32 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def get_appointments_by_date(target_date, branch_id=None):
+    query = Appointments.query.filter(db.func.date(Appointments.appointment_sched) == target_date)
+    if branch_id:
+        query = query.filter(Appointments.branch_id == branch_id)
+    return query.all()
+
+def get_pending_appointments(branch_id=None):
+    query = Appointments.query.filter_by(appointment_status='pending')
+    if branch_id:
+        query = query.filter(Appointments.branch_id == branch_id)
+    return query.order_by(Appointments.appointment_sched.asc()).all()
+
 @owner.route('/owner_home')
 @role_required('owner')
 def owner_home():
     today = date.today()
     tomorrow = today + timedelta(days=1)
     selected_branch = request.args.get('branch', 'all')
+    branch_id = int(selected_branch) if selected_branch != 'all' else None
+
     branches = Branch.query.all()
     main_web = MainWeb.query.first()
 
-    if selected_branch == 'all':
-        appointments_today = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == today
-        ).all()
-        appointments_tomorrow = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == tomorrow
-        ).all()
-        appointment_requests = Appointments.query.filter_by(
-            appointment_status='pending'
-        ).order_by(Appointments.appointment_sched.asc()).all()
-
-    else:
-        appointments_today = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == today,
-            Appointments.branch_id == int(selected_branch)
-        ).all()
-        appointments_tomorrow = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == tomorrow,
-            Appointments.branch_id == int(selected_branch)
-        ).all()
-        appointment_requests = Appointments.query.filter_by(
-            branch_id=int(selected_branch),
-            appointment_status='pending'
-        ).order_by(Appointments.appointment_sched.asc()).all()
+    appointments_today = get_appointments_by_date(today, branch_id)
+    appointments_tomorrow = get_appointments_by_date(tomorrow, branch_id)
+    appointment_requests = get_pending_appointments(branch_id)
 
     insight_text = generate_business_insight()
 
@@ -63,6 +56,26 @@ def owner_home():
         main_web=main_web,
         insight_text=insight_text
     )
+
+@owner.route('/update-main-website', methods=['POST'])
+@role_required('owner')
+def update_main_website():
+    main_web = MainWeb.query.first()
+    if not main_web:
+        main_web = MainWeb()
+
+    # Get values from form
+    services = request.form.getlist('services')
+    main_web.services = ','.join(services)
+    main_web.about_us = request.form.get('about_us')
+    main_web.main_email = request.form.get('main_email')
+    main_web.main_contact_number = request.form.get('main_contact_number')
+
+    # Save to DB
+    db.session.add(main_web)
+    db.session.commit()
+    flash('Website info updated successfully.', 'success')
+    return redirect(url_for('owner.owner_home'))
 
 @owner.route('/branches')
 @role_required('owner')
@@ -151,26 +164,6 @@ def branch_info(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
     return render_template('/owner/o_branch_info.html', branch=branch, branch_images=branch_images)
-
-@owner.route('/update-main-website', methods=['POST'])
-@role_required('owner')
-def update_main_website():
-    main_web = MainWeb.query.first()
-    if not main_web:
-        main_web = MainWeb()
-
-    # Get values from form
-    services = request.form.getlist('services')
-    main_web.services = ','.join(services)
-    main_web.about_us = request.form.get('about_us')
-    main_web.main_email = request.form.get('main_email')
-    main_web.main_contact_number = request.form.get('main_contact_number')
-
-    # Save to DB
-    db.session.add(main_web)
-    db.session.commit()
-    flash('Website info updated successfully.', 'success')
-    return redirect(url_for('owner.owner_home'))
 
 @owner.route('/branch/<int:branch_id>/add-image', methods=['POST'])
 @role_required('owner')
