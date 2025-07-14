@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, jsonify, session
 from app.models import Account, Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Transactions, Appointments, MainWeb
 from app.utils.insights import generate_business_insight
+from app.utils.appointment_handler import get_appointments_by_date, get_pending_appointments
+from app.utils.branch_handler import branch_exists, save_branch_image, parse_time_str, get_first_branch_images
 from werkzeug.utils import secure_filename
 from app.utils.auth import role_required
-import json
-import os
+import json, os
 from app import db
 from datetime import datetime, date, timedelta
 from sqlalchemy import extract, func
@@ -16,18 +17,6 @@ owner = Blueprint('owner', __name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def get_appointments_by_date(target_date, branch_id=None):
-    query = Appointments.query.filter(db.func.date(Appointments.appointment_sched) == target_date)
-    if branch_id:
-        query = query.filter(Appointments.branch_id == branch_id)
-    return query.all()
-
-def get_pending_appointments(branch_id=None):
-    query = Appointments.query.filter_by(appointment_status='pending')
-    if branch_id:
-        query = query.filter(Appointments.branch_id == branch_id)
-    return query.order_by(Appointments.appointment_sched.asc()).all()
 
 @owner.route('/owner_home')
 @role_required('owner')
@@ -84,11 +73,8 @@ def branches():
     branches = Branch.query.all()
 
     # For each branch, get its first image (if any)
-    branch_images = {}
-    for branch in branches:
-        first_image = ClinicBranchImage.query.filter_by(branch_id=branch.branch_id).first()
-        branch_images[branch.branch_id] = first_image.image_link if first_image else None
-
+    branch_images = get_first_branch_images()
+    
     return render_template(
         '/owner/branches.html',
         branches=branches,
@@ -98,62 +84,39 @@ def branches():
 
 @owner.route('/branches/add', methods=['POST'])
 @role_required('owner')
-def add_branch():    
+def add_branch():
     branch_name = request.form.get('branch_name')
     full_address = request.form.get('full_address')
     description = request.form.get('description')
     chief_dentist = request.form.get('chief_dentist')
     contact_number = request.form.get('contact')
-    open_time = request.form.get('open_time')
-    close_time = request.form.get('close_time')
-    services_list = request.form.getlist('services[]')
-    services = ', '.join(services_list)
+    open_time = parse_time_str(request.form.get('open_time'))
+    close_time = parse_time_str(request.form.get('close_time'))
+    services = ', '.join(request.form.getlist('services[]'))
 
-    # Check if branch name already exists
-    if Branch.query.filter_by(branch_name=branch_name).first():
+    if branch_exists(branch_name):
         flash('Branch name already exists.', 'error')
         return redirect(url_for('owner.branches'))
 
-    # Convert times
-    open_hour = datetime.strptime(open_time, '%H:%M').time()
-    close_hour = datetime.strptime(close_time, '%H:%M').time()
-
-    # Handle image upload
     image_file = request.files.get('image')
     if not image_file:
         flash('Image is required.', 'error')
         return redirect(url_for('owner.branches'))
 
-    filename = secure_filename(image_file.filename)
-    upload_folder = current_app.config['UPLOAD_FOLDER']
-    os.makedirs(upload_folder, exist_ok=True)
-
-    # Save image to filesystem
-    image_path = os.path.join(upload_folder, filename)
-    image_file.save(image_path)
-
-    # Save branch to DB
     new_branch = Branch(
         branch_name=branch_name,
         full_address=full_address,
         clinic_description=description,
         chief_dentist=chief_dentist,
         contact_number=contact_number,
-        clinic_open_hour=open_hour,
-        clinic_close_hour=close_hour,
+        clinic_open_hour=open_time,
+        clinic_close_hour=close_time,
         services=services
     )
     db.session.add(new_branch)
     db.session.commit()
 
-    # Save image path to DB (relative to static/)
-    image_link = f"uploads/branches/{filename}"  # ✅ relative URL path
-    new_image = ClinicBranchImage(
-        image_link=image_link,
-        branch_id=new_branch.branch_id
-    )
-    db.session.add(new_image)
-    db.session.commit()
+    save_branch_image(image_file, new_branch.branch_id)
 
     flash('Branch successfully added!', 'success')
     return redirect(url_for('owner.branches'))
@@ -168,37 +131,16 @@ def branch_info(branch_id):
 @owner.route('/branch/<int:branch_id>/add-image', methods=['POST'])
 @role_required('owner')
 def add_branch_image(branch_id):
-    if 'image' not in request.files:
-        flash('No file part')
+    file = request.files.get('image')
+    if not file or file.filename == '':
+        flash('No file selected', 'danger')
         return redirect(request.referrer)
 
-    file = request.files['image']
-    if file.filename == '':
-        flash('No selected file')
-        return redirect(request.referrer)
-
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads', 'branches')
-        
-        os.makedirs(upload_folder, exist_ok=True)
-
-        filepath = os.path.join(upload_folder, filename)
-        file.save(filepath)
-
-        # Save to DB
-        rel_path = os.path.relpath(filepath, 'static').replace('\\', '/')
-
-        new_image = ClinicBranchImage(
-            image_link=rel_path,
-            branch_id=branch_id
-        )
-
-        db.session.add(new_image)
-        db.session.commit()
+    if allowed_file(file.filename):
+        save_branch_image(file, branch_id)
         flash('Image uploaded successfully.')
     else:
-        flash('Invalid file type.')
+        flash('Invalid file type.', 'danger')
 
     return redirect(request.referrer)
 

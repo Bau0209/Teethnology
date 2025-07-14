@@ -83,8 +83,8 @@ Teethnology Patient Portal
                                 <!-- Image Column -->
                                 <div class="col-md-4">
                                     <div class="branch-img-container">
-                                        <img src="{{ url_for('static', filename='images/quezon clinic example.jpg') }}" 
-                                            alt="{{ branch.branch_name }}" 
+                                        <img src="{{ url_for('static', filename=branch_images[branch.branch_id] if branch.branch_id in branch_images else 'images/default.jpg') }}"
+                                            alt="{{ branch.branch_name }}"
                                             class="branch-img">
                                     </div>
                                 </div> 

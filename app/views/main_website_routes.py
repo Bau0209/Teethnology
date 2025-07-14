@@ -1,12 +1,14 @@
 from flask import Blueprint, render_template, jsonify
 from app.models import Branch, ClinicBranchImage, MainWeb
 from app.utils.appointment_handler import handle_appointment_form
+from app.utils.branch_handler import get_first_branch_images
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def homepage():
-    return render_template('/main_website/Home.html')
+    branch_images = get_first_branch_images()
+    return render_template('/main_website/Home.html', branch_images=branch_images)
 
 @main.route('/contact')
 def contact():
