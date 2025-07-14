@@ -1,7 +1,13 @@
-#Ignore compiled output 
-compiledOutput.txt
-.env
+# Ignore Python cache and compiled files
 __pycache__/
 *.pyc
-"venv/" 
-".env" 
+*.pyo
+*.pyd
+
+# Ignore environment files
+.env
+.venv/
+venv/
+
+# Ignore output or generated files
+compiledOutput.txt
