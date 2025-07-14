@@ -3,6 +3,7 @@ from app.models import Appointments, PatientsInfo
 from app import db
 from datetime import datetime, timedelta
 
+#Appointment Booking functions
 def safe_input(key):
     return request.form.get(key, '').strip()
 
@@ -104,3 +105,17 @@ def handle_appointment_form(template_path):
             return redirect(request.referrer)
 
     return render_template(template_path)
+
+#--------------------
+#Dashboard data
+def get_appointments_by_date(target_date, branch_id=None):
+    query = Appointments.query.filter(db.func.date(Appointments.appointment_sched) == target_date)
+    if branch_id:
+        query = query.filter(Appointments.branch_id == branch_id)
+    return query.all()
+
+def get_pending_appointments(branch_id=None):
+    query = Appointments.query.filter_by(appointment_status='pending')
+    if branch_id:
+        query = query.filter(Appointments.branch_id == branch_id)
+    return query.order_by(Appointments.appointment_sched.asc()).all()

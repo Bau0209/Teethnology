@@ -5,7 +5,6 @@ from datetime import timedelta
 from app import db
 
 login = Blueprint('login', __name__, template_folder='../templates')
-login.permanent_session_lifetime = timedelta(minutes=15)
 
 @login.route('/', methods=['GET'])
 def login_page():
@@ -26,6 +25,7 @@ def login_post():
     session['user_id'] = account.account_id
     session['email'] = account.email
     session['access_level'] = account.access_level
+    session.permanent = True
     
     if account.access_level == 'owner':
         return redirect(url_for('owner.owner_home'))
