@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from app.models import Account, Employee
 from werkzeug.security import generate_password_hash
-from datetime import timedelta, date
+from datetime import timedelta
 from app import db
 
 login = Blueprint('login', __name__, template_folder='../templates')
@@ -17,10 +17,7 @@ def login_post():
     account_password = request.form.get('password')
     
     account = Account.query.filter_by(email=email).first()
-    
-    print("DB hashed password:", account.account_password)
-    print("Entered password:", account_password)
-    
+
     if not account or account.account_password != account_password:
         flash("Invalid email or password", "error")
         return redirect(url_for('login.login_page'))

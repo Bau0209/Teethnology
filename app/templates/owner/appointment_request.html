@@ -74,8 +74,8 @@
                 <div class="request-table">
                     <div class="request-details">
                         <div class="request-section-title">Appointment Details</div>
-                        <div><b>Date:</b> {{ request.appointment_sched.strftime('%Y-%m-%d') }}</div>
-                        <div><b>Time:</b> {{ request.appointment_sched.strftime('%I:%M %p') }}</div>
+                            <div><b>Date:</b> {{ request.appointment_sched.strftime('%B %d, %Y') }}</div>
+                            <div><b>Time:</b> {{ request.appointment_sched.strftime('%I:%M %p') }}</div>
                         <div><b>Alternative Date / Time:</b>
                             {% if request.alternative_sched %}
                                 {{ request.alternative_sched.strftime('%Y-%m-%d %I:%M %p') }}
