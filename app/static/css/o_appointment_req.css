@@ -375,8 +375,8 @@ body {
 
 .modal.right .modal-header {
   border-bottom: none;
-  margin-top: 10px;
   align-items: center;
+  background: #00898E;
   padding: 16px 20px;
   position: relative;
 }
@@ -396,7 +396,7 @@ body {
 
 /* Rest of your existing styles */
 .modal.right .modal-title {
-  color: #0097a7;
+  color: #ffffff;
   font-weight: 700;
   margin-left: auto;
   margin-right: auto;

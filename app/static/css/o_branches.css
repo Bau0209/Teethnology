@@ -397,14 +397,18 @@ h2, h3, strong {
 
 /*add branch modal*/
 .modal-header {
-  border-bottom: none;
+  background: #00898E ;
+  border-radius: 2px;
+  padding: 15px 20px;
 }
+
+
 .modal-title {
   padding: 20px auto;
   margin: 10px auto 0 0;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #00898E;
+  color: #fff;
 }
 .form-control, .form-select {
   border-radius: 0;
