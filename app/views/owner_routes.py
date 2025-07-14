@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from app.models import Account, Branch, ClinicBranchImage, Employee, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Transactions, Appointments, MainWeb
 from app.utils.insights import generate_business_insight
 from werkzeug.utils import secure_filename
-from .auth import role_required
+from app.utils.auth import role_required
 import json
 import os
 from app import db
@@ -18,6 +18,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @owner.route('/owner_home')
+@role_required('owner')
 def owner_home():
     today = date.today()
     tomorrow = today + timedelta(days=1)
@@ -64,7 +65,7 @@ def owner_home():
     )
 
 @owner.route('/branches')
-# @role_required('owner')
+@role_required('owner')
 def branches():
     main_web = MainWeb.query.first()
     branches = Branch.query.all()
@@ -83,7 +84,7 @@ def branches():
     )
 
 @owner.route('/branches/add', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def add_branch():    
     branch_name = request.form.get('branch_name')
     full_address = request.form.get('full_address')
@@ -145,14 +146,14 @@ def add_branch():
     return redirect(url_for('owner.branches'))
 
 @owner.route('/branch_info/<int:branch_id>')
-# @role_required('owner')
+@role_required('owner')
 def branch_info(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
     return render_template('/owner/o_branch_info.html', branch=branch, branch_images=branch_images)
 
 @owner.route('/update-main-website', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def update_main_website():
     main_web = MainWeb.query.first()
     if not main_web:
@@ -172,7 +173,7 @@ def update_main_website():
     return redirect(url_for('owner.owner_home'))
 
 @owner.route('/branch/<int:branch_id>/add-image', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def add_branch_image(branch_id):
     if 'image' not in request.files:
         flash('No file part')
@@ -209,7 +210,7 @@ def add_branch_image(branch_id):
     return redirect(request.referrer)
 
 @owner.route('/branch/<int:image_id>/delete-image', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def delete_branch_image(image_id):
     image = ClinicBranchImage.query.get(image_id)
     if image:
@@ -226,7 +227,7 @@ def delete_branch_image(image_id):
     return redirect(request.referrer)
 
 @owner.route('/branch/<int:branch_id>/edit', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def edit_branch(branch_id):
     branch = Branch.query.get_or_404(branch_id)
 
@@ -244,7 +245,7 @@ def edit_branch(branch_id):
     return redirect(url_for('owner.branch_info', branch_id=branch_id))
 
 @owner.route('/appointments')
-# @role_required('owner')
+@role_required('owner')
 def appointments():
     selected_branch = request.args.get('branch', 'all')
     appointment_id = request.args.get('appointment_id')
@@ -306,14 +307,14 @@ def appointments():
     )
 
 @owner.route('/appointment_req')
-# @role_required('owner')
+@role_required('owner')
 def appointment_req():
     selected_branch = request.args.get('branch', 'all')
     
-    appointments = Appointments.query.filter_by(appointment_status='Pending')
+    appointments = Appointments.query.filter_by(appointment_status='Pending').order_by(Appointments.appointment_sched.asc()).all()
 
     if selected_branch != 'all':
-        appointments = appointments.filter_by(branch_id=selected_branch)
+        appointments = appointments.filter_by(branch_id=selected_branch).order_by(Appointments.appointment_sched.asc()).all()
 
     appointment_data = [
         {
@@ -342,7 +343,7 @@ def appointment_req():
     )
 
 @owner.route('/appointments/<int:appointment_id>/status', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def update_appointment_status(appointment_id):
     data = request.get_json()
     status = data.get('status')
@@ -371,7 +372,7 @@ def update_appointment_status(appointment_id):
     return jsonify({'success': True, 'message': 'Status updated successfully'})
 
 @owner.route('/patients')
-# @role_required('owner')
+@role_required('owner')
 def patients():
     selected_branch = request.args.get('branch', 'all')
     
@@ -546,7 +547,7 @@ def add_patient():
  
 #Adding an Appointment in the calendar
 @owner.route('/form', methods=['GET', 'POST'])
-# @role_required('owner')
+@role_required('owner')
 def form():
     branches = Branch.query.all()
     if request.method == 'POST':
@@ -628,7 +629,7 @@ def form():
     return render_template('/owner/appointment.html', branches=branches)
 
 @owner.route('/edit_patient/<int:patient_id>', methods=['GET', 'POST'])
-# @role_required('owner')
+@role_required('owner')
 def edit_patient(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     patient_medical_info = PatientMedicalInfo.query.get(patient_id)
@@ -733,7 +734,7 @@ def edit_patient(patient_id):
     )
 
 @owner.route('/patient_info/<int:patient_id>')   
-# @role_required('owner')
+@role_required('owner')
 def patient_info(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)  # Required
     patient_medical_info = PatientMedicalInfo.query.get(patient_id)  # Optional
@@ -747,7 +748,7 @@ def patient_info(patient_id):
     )
 
 @owner.route('/patient_procedure/<int:patient_id>') 
-# @role_required('owner')  
+@role_required('owner')  
 def patient_procedure(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     procedures = Procedures.query.filter_by(patient_id=patient_id)
@@ -811,7 +812,7 @@ def patient_procedure(patient_id):
 #     return jsonify({'success': True, 'message': 'Procedure status updated.'})
 
 @owner.route('/procedures/complete', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def complete_procedure():
     appointment_id = request.form.get('appointment_id')
     treatment_procedure = request.form.get('treatment_procedure')
@@ -872,14 +873,14 @@ def complete_procedure():
     return redirect(url_for('owner.appointments'))  # or wherever you list appointments
 
 @owner.route('/patient_dental_rec/<int:patient_id>')   
-# @role_required('owner')
+@role_required('owner')
 def patient_dental_rec(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     dental_record = DentalInfo.query.filter_by(patient_id=patient_id)
     return render_template('/owner/dental_record.html', patient=patient, dental_record=dental_record)
 
 @owner.route('/employees', methods=['GET', 'POST'])
-# @role_required('owner')
+@role_required('owner')
 def employees():
     selected_branch = request.args.get('branch', 'all')
     branches = Branch.query.all()
@@ -939,7 +940,7 @@ def employees():
                            today=date.today())
 
 @owner.route('/edit_employee/<int:employee_id>', methods=['POST'])
-# @role_required('owner')
+@role_required('owner')
 def edit_employee(employee_id):
     form_type = request.args.get("form")
     
@@ -987,57 +988,57 @@ def edit_employee(employee_id):
     
 
 @owner.route('/employee_info/<int:employee_id>')
-# @role_required('owner')
+@role_required('owner')
 def employee_info(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     return render_template('/owner/employee_basic_info.html', employee=employee)
 
 @owner.route('/employee_work_details/<int:employee_id>')
-# @role_required('owner')
+@role_required('owner')
 def employee_work_details(employee_id):
     employee = Employee.query.get_or_404(employee_id)    
     account = Account.query.filter_by(employee_id=employee_id).first()
     return render_template('/owner/em_work_details.html', employee=employee, account=account)
 
 @owner.route('/employee_activity_details/<int:employee_id>')
-# @role_required('owner')
+@role_required('owner')
 def employee_activity_details(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     return render_template('/owner/o_em_activity_details.html', employee=employee)
 
 @owner.route('/inventory')
-# @role_required('owner')
+@role_required('owner')
 def inventory():
     return render_template('/owner/inventory.html')
 
 @owner.route('/inventory_equipment')
-# @role_required('owner')
+@role_required('owner')
 def inventory_equipment():
     return render_template('/owner/o_in_equipment.html')
 
 @owner.route('/inventory_lab_material')
-# @role_required('owner')
+@role_required('owner')
 def inventory_lab_material():
     return render_template('/owner/o_in_lab_materials.html')
 
 @owner.route('/inventory_medication')
-# @role_required('owner')
+@role_required('owner')
 def inventory_medication():
     return render_template('/owner/o_in_medication.html')
 
 @owner.route('/inventory_sterilization')
-# @role_required('owner')
+@role_required('owner')
 def inventory_sterilization():
     return render_template('/owner/o_in_sterilization.html')
 
 @owner.route('/transactions')
-# @role_required('owner')
+@role_required('owner')
 def transactions():
     transactions = Transactions.query.all()
     return render_template('/owner/transactions.html', transactions=transactions)
 
 @owner.route('/balance_record')
-# @role_required('owner')
+@role_required('owner')
 def balance_record():
     # Get all procedures
     procedures = Procedures.query.all()
@@ -1059,21 +1060,14 @@ def balance_record():
 
     return render_template('/owner/o_balance_rec.html', balance_data=balance_data)
 
-@owner.route('/reports_copy')
-# @role_required('owner')
-def reports_copy():
-    
-    return render_template('owner/reports_copy.html')
-
 @owner.route('/reports')    
-# @role_required('owner')
+@role_required('owner')
 def reports():
     # Get current and last month
     now = datetime.now()
     current_month = now.month
     current_year = now.year
     selected_year = request.args.get('year', type=int) or current_year
-    last_month = current_month - 1 if current_month > 1 else 12
     
     # Today's Revenue
     today = date.today()
@@ -1115,13 +1109,6 @@ def reports():
 
     # Current month revenue
     current_revenue = values[current_month - 1]
-    last_revenue = values[last_month - 1]
-
-    # Growth rate
-    if last_revenue > 0:
-        growth_rate = ((current_revenue - last_revenue) / last_revenue) * 100
-    else:
-        growth_rate = 0
 
     # Appointments this month
     from app.models import Appointments  # Replace with your actual model
@@ -1211,25 +1198,24 @@ def reports():
                            values=values,
                            total_revenue=sum(values),
                            current_revenue=current_revenue,
-                            selected_year=selected_year,
-                            current_year=current_year,
-                           growth_rate=round(growth_rate, 2),
+                           selected_year=selected_year,
+                           current_year=current_year,
                            appointments_count=appointments_this_month,
                            stacked_datasets=stacked_datasets,
                            insight_text=insight_text)
 
 @owner.route('/report_patients') 
-# @role_required('owner')   
+@role_required('owner')   
 def report_patients():
     return render_template('/owner/o_rep_patient.html')
 
 @owner.route('/report_marketing')    
-# @role_required('owner')
+@role_required('owner')
 def report_marketing():
     return render_template('/owner/o_rep_marketing.html')
 
 @owner.route('/report_inventory') 
-# @role_required('owner')   
+@role_required('owner')   
 def report_inventory():
     return render_template('/owner/o_rep_inventory.html')
 

@@ -27,7 +27,7 @@ h2, h3, strong {
 }
 
 .scrollable-card {
-  max-height: 460px;
+  max-height: 465px;
   overflow-y: auto;
 }
 
@@ -465,7 +465,6 @@ h2, h3, strong {
   
   .branches-info-card, 
   .branches-list-card {
-    max-width: 1400px; 
     margin-left: auto;
     margin-right: auto;
   }
