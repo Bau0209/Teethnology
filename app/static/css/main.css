@@ -176,11 +176,13 @@ nav ul li a:hover {
 .chat-container {
     max-height: 300px;  /* Set a maximum height */
     min-height: 200px;  /* Set a minimum height */
+    width: 700px;
     overflow-y: auto;   /* Change to auto for better scrollbar behavior */
     border: none;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 20px;
+    text-align: right;
     background-color: #20202056;
     display: flex;
     flex-direction: column;
@@ -210,10 +212,10 @@ nav ul li a:hover {
     position: relative;
     z-index: 3;
     width: 45%;
-    max-width: 500px;
+    max-width: 700px;
     margin-top: 20%;
     margin-left: auto; /* Push to right side */
-    margin-right: 15%;
+    margin-right: 8%;
     margin-bottom: 2vh; /* Distance from bottom */
 }
 
