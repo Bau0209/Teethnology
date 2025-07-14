@@ -42,20 +42,19 @@
     text-align: left;
     margin-right: 0; 
     margin-bottom: 18px;
-    padding-left: px; /* Optional left spacing on small screens */
+    padding-left: 10px; /* Optional left spacing on small screens */
 }
-.branch-details-card {
-    background: none !important; 
-    border-radius: 10px;  
-    padding: 20px; 
-    margin: 20px; 
-    display: flex; 
-    flex-direction: column; 
+.branch-details-card .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
 }
 .branch-details-card h2 {
     color: #00898E !important; 
     margin-bottom: 10px; 
-    font-size: 24px; 
+    font-size: 34px; 
 }
 .branch-details-card .location,
 .branch-details-card .service-list {
@@ -70,31 +69,13 @@
     display: flex;
     justify-content: center;
     width: 100%;
+
 }
 
-.branch-details-card {
-    padding: 24px 38px;
-    display: flex;
-    gap: 70px;
-    align-items: flex-start;
-    justify-content: center;
-    background: transparent;
-    min-width: 500px;
-    max-width: 900px;
-    width: 100%;
-    position: relative;
-}
-
-.branch-details-card::after {
-    content: "";
-    position: absolute;
-    top: 16px;
-    bottom: 16px;
-    left: 50%;
-    width: 2px;
-    background: #000000;
-    transform: translateX(-50%);
-    opacity: 0.7;
+.branch-details-card .branch-info {
+    flex: 1;
+    min-width: 350px; /* Adjust as needed */
+    padding: 0 15px;
 }
 
 .branch-info {
@@ -107,14 +88,14 @@
 /* LOCATION and SERVICE LIST headings */
 .branch-info h4 {
     color: #00898E !important;
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-weight: 700;
     margin-bottom: 10px;
     letter-spacing: 1px;
-    padding: 4px 16px;
+    padding: 4px;
     display: inline-block;
     margin-top: 0;
-    margin-left: 130px;
+    margin-left: 0 !important;
 }
 
 .branch-info:last-child h4 {
@@ -125,7 +106,7 @@
 /* SERVICE LIST heading style */
 .branch-info:last-child h4 {
     color: #009ca6;
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-weight: 700;
     margin-bottom: 10px;
     letter-spacing: 1px;
@@ -137,8 +118,8 @@
 /* Service List Bullets */
 .branch-info ul {
     list-style: none;
-    padding-left: 90px;
-    margin: 0 0 8px 0;
+    padding-left: 1.5rem !important; 
+    margin-left: 0 !important;
 }
 
 .branch-info ul li:before {
@@ -146,23 +127,16 @@
     position: absolute;
     left: 0;
     color: #00898E;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.5rem;
 }
 
 .branch-info ul li {
     margin-bottom: 0.75rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #555;
     position: relative;
     padding-left: 1.5rem;
-}
-
-.branch-info ul li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #00898E;
-    font-weight: bold;
 }
 
 
