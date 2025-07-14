@@ -46,7 +46,7 @@
 }
 .branch-details-card {
     background: none !important; 
-    border-radius: 10px; 
+    border-radius: 10px;  
     padding: 20px; 
     margin: 20px; 
     display: flex; 
@@ -213,76 +213,202 @@
     max-width: 1100px;
 }
 
-/* Calendar Styles */
-.appointment-calendar {
-    background: #7fafad2a;
-    border-radius: 16px;
-    padding: 24px 32px;
-    width: 420px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-    position: relative;
-}
-
-
 .appointment-calendar h4 {
     color: #009ca6 !important;
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-weight: 700;
     margin-bottom: 10px;
     letter-spacing: 2px;
+    margin: 10px auto;
     text-align: center;
 }
 
-/* Month navigation alignment */
-.appointment-calendar > div:first-of-type {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Calendar container */
+#calendar {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
 }
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+
+/* Calendar header  */
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Month/year container */
+.fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0097a7;
+  margin: 0 15px;
+  padding: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+/* Month title */
+.fc .fc-toolbar-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0097a7;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Year display */
+.fc-year-select {
+  font-size: 1rem;
+  color: #666;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffffd3;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fc-year-select:hover {
+  border-color: #0097a7;
+  background-color: #e0f7f7;
+}
+
+.fc-year-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 151, 167, 0.2);
+}
+
+/* Navigation buttons container */
+.fc-toolbar-chunk {
+  display: flex;
+  align-items: center;
+}
+
+/* Previous button */
+.fc .fc-button-prev {
+  order: 1;
+  padding-right: 15px;
+}
+
+/* Next button */
+.fc .fc-button-next {
+  order: 3;
+  padding-left: 15px;
+}
+
+/* Navigation buttons */
+.fc .fc-button {
+  background: transparent !important;
+  border: none !important;
+  color: #0097a7 !important;
+  font-size: 1.2rem;
+  padding: 0;
+  line-height: 1;
+  min-width: 30px;
+  transition: all 0.2s;
+}
+
+.fc .fc-button:hover {
+  color: #007c91 !important;
+  transform: scale(1.1);
+}
+
+.fc .fc-button:disabled {
+  color: #b2dfdb !important;
+  opacity: 0.6;
+}
+
+/* Day headers */
+.fc .fc-col-header-cell {
+  width: 100%; 
+  padding: 8px 0;
+  text-align: center;
+  padding: 0.75rem 0;
+  color: #2e2e2e !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.fc .fc-col-header-cell-cushion {
+  text-decoration: none !important;
+}
+
+.fc .fc-col-header-cell,
+.fc .fc-daygrid-day {
+  width: calc(100% / 7); 
+  max-width: 120px; 
+}
+/* Day cells */
+.fc .fc-daygrid-day-frame {
+  height: 0;
+  padding-bottom: 60%;
+  position: relative;
+}
+
+.fc-daygrid-day {
+  background-color: #f7fdfdd3;
+  border: none !important;
+  transition: all 0.2s;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #e0f7f7;
+  transform: translateY(-2px);
 }
 
 
-#currentMonthYear {
-    font-weight: bold;
-    font-size: 1.2em;
-    flex-grow: 1;
-    text-align: center;
-    color: #00898E;
+/* Day numbers */
+.fc-daygrid-day-number {
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-right: 10px;
+  padding: 10px;
 }
 
-#prevMonth, #nextMonth {
-    position: static;
-    transform: none;
+/* Today's date */
+.fc-day-today {
+  background-color: #c8f5f5 !important;
+  position: relative;
 }
 
-.calendar-day {
-    cursor: pointer;
-    padding: 8px;
-    transition: all 0.2s;
+.fc-day-today .fc-daygrid-day-number {
+  color: #0097a7;
+  font-weight: 700;
 }
 
-.calendar-day:hover {
-    background-color: #e9ecef;
-    border-radius: 60%;
+/* Events */
+.fc-event {
+  background-color: #36b1b6;
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 3px 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.selected {
-    background-color: #7FAFAD !important;
-    color: white !important;
-    border-radius: 60%;
+.fc-event:hover {
+  background-color: #0097a7;
+  transform: translateY(-1px);
 }
 
-#timeSlots .form-check {
-    margin-bottom: 8px;
-}
-
-#timeSlots .form-check-input {
-    margin-top: 0.3em;
+/* Remove focus styles */
+.fc .fc-button:focus,
+.fc-event:focus {
+  box-shadow: none !important;
+  outline: none;
 }
 
 /* Information Card - now independent of calendar size */
@@ -291,8 +417,9 @@
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
     padding: 28px 32px;
-    width: 410px;
-    height: 600px;
+    width: 660px;
+    height: 526px;
+    margin-top: 6%;
     position: relative;
     align-self: flex-start;
     overflow-y: auto;  /* Allow vertical scrolling */
@@ -303,6 +430,17 @@
 .appointment-info .info-title {
     color: #009ca6 !important;
     font-size: 1.05em;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    text-align: center;
+    padding-bottom: 0;
+}
+
+.appointment-info h5,
+.appointment-info .info-title {
+    color: #009ca6 !important;
+    font-size: 0.9em;
     font-weight: 700;
     margin-bottom: 18px;
     letter-spacing: 1px;
