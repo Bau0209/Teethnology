@@ -93,32 +93,24 @@ body {
   min-height: 90px;
 }
 
-.donut-card {
-  height: 100%;
-  min-height: 190px !important;
-  width: 100%;
-  max-width: 780px !important; /*original 580px*/
-}
-
-
-.card-right .donut-card .card-body {
+.card-right  .card-body {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
 }
 
-.card-right .donut-card canvas {
+.card-right {
   max-width: 150px;
 }
 
-.card-right .donut-card ul {
+.card-right {
   margin: 0;
   padding-left: 1rem;
   font-size: 0.85rem;
 }
 
-.card-right .donut-card ul li {
+.card-right  {
   font-size: 0.9rem;
   padding-left: 1.2rem;
   position: relative;
@@ -163,30 +155,18 @@ body {
   padding: 0.3rem 0.9rem;
   font-size: 0.75rem;
 }
-.col-lg-8 h4{
-    color: #00898E !important;
-
-}
 
 /* Business Insight Card- original style*/
 .business-insight-card {
   background-color: #ffffff;
-  margin-top: 0; /*margin-top: 45px; -original style */
+  margin-top: 15%; 
   border-left: 4px solid #00898E;
   border-radius: 8px;
-  width: 100%;
   max-width: none;
   font-size: 0.95rem;
-  height: 76%; /* original 100%*/
-  display: flex;
-  flex-direction: column;
   justify-content: right;
-  /*added style*/
-  position: absolute;
-  right: 0;
-  top: 152px; /* Adjust this value based on your content height */
   width: 48%;
-  margin-top: 0;
+  height: 100%;
 }
 
 /* Ensure the chart card also stretches */

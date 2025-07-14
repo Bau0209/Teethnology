@@ -14,7 +14,7 @@
     <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.reports') }}">Revenue</a></li>
     <li class="nav-item"><a class="nav-link active" href="{{ url_for('owner.report_patients') }}">Patients</a></li>
     <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_marketing') }}">Marketing</a></li>
-    <!--<li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>-->
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('owner.report_inventory') }}">Inventory</a></li>
   </ul>
 
   <!-- Filters -->
@@ -113,36 +113,44 @@
     </div>
   </div>
 
-  <!-- Forecast & Insight -->
-  <div class="row mt-5 gx-4 gy-4">
-    <div class="col-lg-8">
-      <div class="d-flex flex-wrap gap-2 mb-2">
-        <h4>Forecasts</h4>
+<!-- Forecast Section -->
+<div class="row mt-5 gx-4 gy-4">
+  <div class="col-lg-9">  <!-- Changed from col-lg-8 to col-lg-9 -->
+    <div class="d-flex flex-wrap gap-2 mb-2">
+      <h4 style="color: #00898E; margin-left: 10px; font-size: 1.5rem;">Forcasts</h4>
+      <div class="d-flex flex-wrap gap-2 mb-3">
         <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+          <form method="get" action="{{ url_for('owner.reports') }}">
+            <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+              {% for y in range(current_year, current_year - 5, -1) %}
+                <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </form>
         </div>
         <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+          <button type="button" class="btn btn-outline-primary active">This Month</button>
         </div>
         <div class="btn-group btn-group-sm" role="group">
-          <button type="button" class="btn btn-outline-primary active">1 - 25</button>
-        </div>
-      </div>
-      <div class="card h-100">
-        <div class="card-header bg-white">
-          <h6 class="mb-0">Total # Appointments Actual vs Forecast</h6>
-        </div>
-        <div class="card-body">
-          <canvas id="patientsForecastChart" height="220"></canvas>
-        </div>
+          <button type="button" class="btn btn-outline-primary active">Today</button>
+        </div> 
       </div>
     </div>
-
-    <div class="col-lg-4">
-      <div class="card business-insight-card p-4">
+    <div class="card h-100">
+      <div class="card-header bg-white">
+        <h6 class="mb-0">Total Revenue Actual vs Forecast</h6>
+      </div>
+      <div class="card-body">
+        <canvas id="forecastChart" height="350px"></canvas>
+      </div>
+    </div>
+  </div>
+  <!-- Insight Card (20%) -->
+  <div class="col-lg-3 mb-4">  <!-- Changed from col-md-3 to col-lg-3 -->
+    <div class="card h-100 business-insight-card">  <!-- Added business-insight-card class -->
+      <div class="card-body">
         <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
-        <p><strong>Patients Report:</strong> You had 6 fewer patients this month compared to last month. Consider re-engaging inactive patients or running a follow-up campaign.</p>
-        <p><strong>Patients Forecast:</strong> Next month has fewer clinic days. Expect a possible decline in patient volume. Consider encouraging early bookings.</p>
+        <p class="small mb-0">{{ insight_text | safe }}</p>
       </div>
     </div>
   </div>
@@ -152,5 +160,6 @@
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ url_for('static', filename='js/o_report_patients.js') }}"></script>
+<script src="{{ url_for('static', filename='js/o_report.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 {% endblock %}
