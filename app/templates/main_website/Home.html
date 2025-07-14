@@ -18,22 +18,33 @@ Teethnology Patient Portal
 {% endblock %}
 
 {% block content %}
-<section id="welcome" class="container-fluid d-flex flex-column align-items-center justify-content-center text-center">
-    <div class="welcome-header mb-4">
-        <h1>JCS</h1>
-        <h2>Dental Clinic</h2>
-        <br>
-        <p>1721 Cavite St, Santa Cruz, Manila, 1014 Metro Manila</p>
-        
+<section id="welcome" class="container-fluid d-flex flex-row align-items-center justify-content-start text-center">
+    <div class="ai-character-container">
+        <img src="../../static/images/download (2).png" alt="AI">
     </div>
-    <div class="chat-input-row w-100 d-flex flex-column align-items-center">
+     <div class="chat-input-row d-flex flex-column align-items-start flex-grow-1">
+        <!-- Header that will disappear -->
+        <div class="welcome-header mb-3" id="welcome-header">
+            <h2>Ask me a Question</h2>
+        </div>
 
-       <!-- <div class="input-group">
-            <input type="text" class="form-control bg-transparent text-white" placeholder="Type Something...">
+        <!-- Conversation Container - initially hidden -->
+        <div id="chat-box-section" style="display: none; width: 100%; max-width: 990px;">
+            <div class="chat-container fa-border-none bg-transparent mb-3" 
+                 style="height: 400px; overflow-y: auto; padding: 15px;" 
+                 id="chat-messages">
+                <!-- Messages will go here -->
+            </div>
+        </div>
+        <div class="input-group">
+            <input type="text" class="form-control bg-transparent text-white" placeholder="Type Something..." id="user-input">
             <button class="mic-button" type="button">
                 <i class="fa-solid fa-microphone"></i>
             </button>
-        </div>-->
+            <button class="btn btn-primary" type="button" id="send-btn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
     </div>
 </section>
 
@@ -47,6 +58,7 @@ Teethnology Patient Portal
         <div class="branch-header text-center position-relative mb-5">
             <br>
             <h2 class="text-primary fw-bold display-5 mb-3">OUR CLINIC</h2>
+            <p>Visit us on our Clinic</p>
         </div>
         
         <!-- Content - Modified to align buttons and cards horizontally -->
@@ -188,8 +200,10 @@ Teethnology Patient Portal
       selectedCard.style.display = 'block';
     }
   }
-</script>
 
+  
+</script>
+<script src="{{ url_for('static', filename='js/chatbot_main.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
 
