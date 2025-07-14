@@ -7,7 +7,7 @@ body {
   background-color: none;
   min-height: 100vh;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 /* Nav Tabs */
@@ -167,6 +167,7 @@ body {
   justify-content: right;
   width: 48%;
   height: 100%;
+  min-height: 350px;
 }
 
 /* Ensure the chart card also stretches */
@@ -185,33 +186,10 @@ canvas {
   max-width: 100%;
 }
 
-
-/* Patients Tab Specific Styles */
-.patients{
-  background-color: none;
-  min-height: 100vh;
-  color: #333;
-  margin-bottom: 20px;
-
-}
-.patients .vr-divider {
-  width: 1px;
-  background-color: #ccc;
-  margin: 0 12px;
+.patients {
+  margin-bottom: 40px;
 }
 
-.patients-left,
-.patients-right {
-  flex: 0 0 auto;
-}
-
-.patients-left {
-  flex-grow: 1;
-}
-
-.patients-right {
-  min-width: 320px;
-}
 
 /* Ultra-wide Screens (≥1920px) */
 @media (min-width: 1920px) {
