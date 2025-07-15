@@ -1,0 +1,146 @@
+{% extends 'dashboard/staff_base.html' %}
+
+{% block title %}Dashboard - Teethnology{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_branches.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-top">
+  <!-- Left Column -->
+    <div class="dashboard-left">
+        <div class="card welcome-card">
+            <h2>Welcome Back, Eddielyn</h2>
+        </div>
+        <!-- Appointments Today -->
+        <div class="card info-card appointments-today-card">
+            <i class="fas fa-calendar-day calendar-icon"></i>
+            <div class="appointments-today-content">
+              <h2>Appointments Today</h2>
+              <div class="appointments-count">{{ appointments_today|length }}</div>
+          </div>
+        </div>
+        <div class="card info-card birthday-today-card">
+            <i class="fas fa-birthday-cake birthday cake"></i>
+            <div class="appointments-today-content">
+              <h2>Birthday Today</h2>
+              <div class="birthday-count"></div>
+          </div>
+        </div>
+    </div>
+
+  <!-- Middle Column -->
+  <div class="dashboard-center card">
+    <h3>PATIENTS TOMORROW</h3>
+
+    <hr>
+    <div class="patient-info">
+      {% if appointments_tomorrow %}
+        {% for a in appointments_tomorrow %}
+          <div class="patient-item">
+            <strong>{{ a.patient.patient_full_name }}</strong><br>
+            {{ a.appointment_type }}<br>
+            {{ a.patient.contact_number }}<br>
+            {{ a.patient.email }}
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="patient-item">
+          No appointments for tomorrow.
+        </div>
+      {% endif %}
+    </div>
+
+    <button class="send-reminders">Send Reminders</button>
+  </div>
+
+  <!-- Right Column -->
+  <div class="dashboard-right card appointment-requests">
+    <h3>APPOINTMENT REQUESTS</h3>
+    <div class="appointment-requests-controls">
+    </div>
+    <hr>
+    <a href="" class="view-all">View All</a>
+    <div class="request-list">
+      {% if appointment_requests %}
+        {% for req in appointment_requests %}
+          <div class="request-item">
+            <div class="request-info">
+              <strong>{{ req.appointment_sched.strftime('%m-%d-%Y') }}</strong><br>
+              {{ req.patient.patient_full_name }}<br>
+              {{ req.appointment_type }}
+            </div>
+            <div class="actions">
+              <button class="accept"><a href="" class="view-all">View More</a></button>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="request-item">
+          No pending appointment requests.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  </div>
+    
+  Calendar Section
+  <section class="calendar-card">
+      <div class="calendar-panel">
+          <div id="calendar"></div>
+          <div class="calendar-details-panel">
+            <div class="calendar-details-header">
+                <select name="branch" class="branch-select">
+                    <option value="manila">Manila Branch</option>
+                    <option value="quezon">Quezon Branch</option>
+                </select>
+            </div>
+            <hr>
+            <ul class="calendar-details-list">
+                <li class="calendar-appointment">
+                    <div class="appt-info">
+                        <span class="appt-time">10:30am - 11:30am</span>
+                        <div>
+                            <span class="appt-dot"></span>
+                            <span class="appt-type"><b>Patient Checkup</b></span>
+                        </div>
+                    </div>
+                    <a href="" class="appt-link">View Details</a>
+                </li>
+                <li class="calendar-appointment">
+                    <div class="appt-info">
+                        <span class="appt-time">11:30am - 12:30pm</span>
+                        <div>
+                            <span class="appt-dot"></span>
+                            <span class="appt-type"><b>Bleaching</b></span>
+                        </div>
+                    </div>
+                    <a href="" class="appt-link">View Details</a>
+                </li>
+                <li class="calendar-appointment">
+                    <div class="appt-info">
+                        <span class="appt-time">1:00pm - 2:30pm</span>
+                        <div>
+                            <span class="appt-dot"></span>
+                            <span class="appt-type"><b>Patient Checkup</b></span>
+                        </div>
+                    </div>
+                    <a href="" class="appt-link">View Details</a>
+                </li>
+            </ul>
+        </div>
+      </div>      
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
+{% endblock %}

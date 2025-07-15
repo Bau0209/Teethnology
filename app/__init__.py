@@ -26,11 +26,12 @@ def create_app():
     db.init_app(app)
     
     # Import blueprints from views
-    from app.views import main, owner, staff, login
+    from app.views import main, owner, staff, login, dashboard
 
     app.register_blueprint(main)
     app.register_blueprint(owner, url_prefix='/owner')
     app.register_blueprint(staff, url_prefix='/staff')
-    app.register_blueprint(login, url_prefix='/login')    
+    app.register_blueprint(login, url_prefix='/login')     
+    app.register_blueprint(dashboard, url_prefix='/dashboard')   
 
     return app
