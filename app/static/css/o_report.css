@@ -49,8 +49,6 @@ body {
 
 .card-right {
   order: 1;
-  /*flex: 0 0 35%;
-  max-width: 100%; - remove temporary*/
   display: flex;
   flex-direction: column;
   position: relative;
@@ -117,11 +115,7 @@ body {
   text-align: left;
   margin-bottom: 0.3rem;
 }
-.vr-divider {
-  width: 1px;
-  background-color: #ccc;
-  margin: 0 12px;
-}
+
 
 /* Revenue Summary Text */
 .text-muted {
@@ -165,7 +159,7 @@ body {
   max-width: none;
   font-size: 0.95rem;
   justify-content: right;
-  width: 48%;
+  width: 45%;
   height: 100%;
   min-height: 350px;
 }

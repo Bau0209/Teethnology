@@ -1148,10 +1148,10 @@ def report_patients():
 @owner.route('/report_marketing')    
 @role_required('owner')
 def report_marketing():
-    return render_template('/owner/o_rep_marketing.html')
+    return render_template('/owner/o_rep_marketing.html', current_year=datetime.now().year)
 
 @owner.route('/report_inventory') 
 @role_required('owner')   
 def report_inventory():
-    return render_template('/owner/o_rep_inventory.html')
+    return render_template('/owner/o_rep_inventory.html', current_year=datetime.now().year)
 

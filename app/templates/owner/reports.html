@@ -49,7 +49,7 @@
 </div>
 <hr>
 <!-- Revenue Filters -->
-      <div class="d-flex flex-wrap gap-2 mb-3">
+      <div class="d-flex flex-wrap gap-2 mb-4">
         <div class="btn-group btn-group-sm" role="group">
           <form method="get" action="{{ url_for('owner.reports') }}">
             <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
@@ -66,9 +66,9 @@
           <button type="button" class="btn btn-outline-primary active">Today</button>
         </div> 
       </div>
-      <div class="row">
-      <!-- Chart Card (80%) -->
-      <div class="row gx-4">
+  <div class="row">
+    <!-- Chart Card (80%) -->
+    <div class="row gx-4">
     <!-- Monthly Revenue Per Year -->
     <div class="col-md-6 mb-4">
       <div class="card h-100">
@@ -80,14 +80,14 @@
           </div>
         </div>
         <div class="card-body">
-          <canvas id="revenueByServiceChart"></canvas>
+          <canvas id="revenueByServiceChart" style="width: 100%; height: 350px;"></canvas>
         </div>
       </div>
     </div>
 
     <!-- Monthly Revenue by Service -->
     <div class="col-md-6 mb-4">
-      <div class="card h-100">
+      <div class="card h-100" style="width: 780px;">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
           <h6 class="mb-0">Monthly Revenue by Service</h6>
           <small class="text-muted">Top earning services stacked per month</small>
@@ -104,7 +104,7 @@
 <div class="row mt-3 gx-4 gy-4">
   <div class="col-lg-9">  <!-- Changed from col-lg-8 to col-lg-9 -->
     <div class="d-flex flex-wrap gap-2 mb-2">
-      <h4 style="color: #00898E; margin-left: 10px; font-size: 1.5rem;">Forcasts</h4>
+      <h4 style="color: #00898E; margin-left: 10px; font-size: 1.5rem; font-weight: 700;">Forcasts</h4>
       <div class="d-flex flex-wrap gap-2 mb-3">
         <div class="btn-group btn-group-sm" role="group">
           <form method="get" action="{{ url_for('owner.reports') }}">
