@@ -29,6 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add dateClick handler
       dateClick: function(info) {
         const selectedDate = info.dateStr;
+
+        // ✅ Skip if the clicked date is in the past
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // remove time for accurate comparison
+        const clickedDate = new Date(selectedDate);
+        
+        if (clickedDate < today) {
+          return; // ⛔ Do nothing for past dates
+        }
+
         const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
           weekday: 'long',
           year: 'numeric',

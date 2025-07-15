@@ -141,7 +141,7 @@
 
 
 /* Appointment Section */
-#appointment {
+#appointment { 
     width: 100%;
     background: url('../../static/images/BG\ IN\ CALENDAR.jpg') center/cover no-repeat;
     height: 100vh;
@@ -183,8 +183,8 @@
     gap: 40px;
     align-items: flex-start;
     justify-content: center;
+    max-width: 660px !important;
     width: 100%;
-    max-width: 1100px;
 }
 
 .appointment-calendar h4 {
@@ -383,6 +383,12 @@
 .fc-event:focus {
   box-shadow: none !important;
   outline: none;
+}
+
+.fc-day-past {
+  pointer-events: none;
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* Information Card - now independent of calendar size */
