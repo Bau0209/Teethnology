@@ -1,0 +1,82 @@
+<div class="modal fade" id="addBranchModal" tabindex="-1" aria-labelledby="addBranchModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBranchModalLabel">ADD BRANCH</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="branchForm" method="POST" action="{{ url_for('dashboard.add_branch') }}" enctype="multipart/form-data">
+                <div class="modal-body" style="padding: 20px; margin: 10px;">
+                    <div class="form-columns">
+                        <div class="form-left">
+                                <div class="mb-3">
+                                    <label for="branchName" class="form-label"><strong>Branch Name :</strong></label>
+                                    <input type="text" class="form-control" id="branchName" name="branch_name" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Services :</strong></label>
+                                    <small class="form-text text-muted">Hold down Ctrl (Windows) or Command (Mac) to select multiple options.</small>
+                                    <select class="form-select" name="services[]" multiple required>
+                                        <option value="Preventive Dentistry">Preventive Dentistry</option>
+                                        <option value="Intervention Dentistry">Intervention Dentistry</option>
+                                        <option value="Coroneric Dentistry">Coroneric Dentistry</option>
+                                        <option value="Pediatric Dentistry">Pediatric Dentistry</option>
+                                        <option value="Orthodontics">Orthodontics</option>
+                                        <option value="Periodontics">Periodontics</option>
+                                        <option value="Oral and Nutritional">Oral and Nutritional</option>
+                                        <option value="Sedation Dentistry">Sedation Dentistry</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="chiefDentist" class="form-label"><strong>Chief Dentist :</strong></label>
+                                    <input type="text" class="form-control" id="chiefDentist" name="chief_dentist" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="contact" class="form-label"><strong>Contact :</strong></label>
+                                    <input type="text" class="form-control" id="contact" name="contact" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="fullAddress" class="form-label"><strong>Full Address</strong></label>
+                                    <textarea class="form-control" id="fullAddress" name="full_address" rows="2" required></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label"><strong>Description</strong></label>
+                                    <textarea class="form-control" id="description" name="description" rows="2" required></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Clinic Hours</strong></label>
+                                    <div class="d-flex align-items-center">
+                                        <input type="time" class="form-control time-input me-2" id="openTime" name="open_time" required>
+                                        <span>To</span>
+                                        <input type="time" class="form-control time-input ms-2" id="closeTime" name="close_time" required>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <div class="form-right">
+                            <div class="upload-container">
+                                <input type="file" id="imageUpload" name="image" accept="image/*" style="display: none;" required>
+                                <div class="btn-upload" onclick="document.getElementById('imageUpload').click()">
+                                    Click to upload image
+                                </div>
+                                <img id="imagePreview" class="image-preview mt-2" alt="Preview">
+                                <label class="form-label"><strong>Upload Image</strong></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" class="btn btn-add" form="branchForm">ADD</button>
+            </div>
+        </div>
+    </div>
+</div>

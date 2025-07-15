@@ -1,19 +1,18 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for
 from app.utils.auth import role_required
 from app.utils.branch_handler import get_first_branch_images, parse_time_str, branch_exists, save_branch_image
 from app.models import MainWeb, Branch, ClinicBranchImage
+from app.views.dashboard import dashboard
 from app import db
 import os
-
-branch = Blueprint('branch', __name__)
 
 #For image upload in branches
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@branch.route('/branches')
-@role_required('owner')
+@dashboard.route('/branches')
+# @role_required('owner')
 def branches():
     main_web = MainWeb.query.first()
     branches = Branch.query.all()
@@ -22,14 +21,14 @@ def branches():
     branch_images = get_first_branch_images()
     
     return render_template(
-        '/owner/branches.html',
+        '/dashboard/branches.html',
         branches=branches,
         main_web=main_web,
         branch_images=branch_images
     )
 
-@branch.route('/branches/add', methods=['POST'])
-@role_required('owner')
+@dashboard.route('/branches/add', methods=['POST'])
+# @role_required('owner')
 def add_branch():
     branch_name = request.form.get('branch_name')
     full_address = request.form.get('full_address')
@@ -67,15 +66,15 @@ def add_branch():
     flash('Branch successfully added!', 'success')
     return redirect(url_for('owner.branches'))
 
-@branch.route('/branch_info/<int:branch_id>')
-@role_required('owner')
+@dashboard.route('/branch_info/<int:branch_id>')
+# @role_required('owner')
 def branch_info(branch_id):
     branch = Branch.query.get_or_404(branch_id)
     branch_images = ClinicBranchImage.query.filter_by(branch_id=branch_id).all()
-    return render_template('/owner/o_branch_info.html', branch=branch, branch_images=branch_images)
+    return render_template('/dashboard/branch_info.html', branch=branch, branch_images=branch_images)
 
-@branch.route('/branch/<int:branch_id>/add-image', methods=['POST'])
-@role_required('owner')
+@dashboard.route('/branch/<int:branch_id>/add-image', methods=['POST'])
+# @role_required('owner')
 def add_branch_image(branch_id):
     file = request.files.get('image')
     if not file or file.filename == '':
@@ -90,8 +89,8 @@ def add_branch_image(branch_id):
 
     return redirect(request.referrer)
 
-@branch.route('/branch/<int:image_id>/delete-image', methods=['POST'])
-@role_required('owner')
+@dashboard.route('/branch/<int:image_id>/delete-image', methods=['POST'])
+# @role_required('owner')
 def delete_branch_image(image_id):
     image = ClinicBranchImage.query.get(image_id)
     if image:
@@ -107,8 +106,8 @@ def delete_branch_image(image_id):
 
     return redirect(request.referrer)
 
-@branch.route('/branch/<int:branch_id>/edit', methods=['POST'])
-@role_required('owner')
+@dashboard.route('/branch/<int:branch_id>/edit', methods=['POST'])
+# @role_required('owner')
 def edit_branch(branch_id):
     branch = Branch.query.get_or_404(branch_id)
 
