@@ -5,7 +5,7 @@
 {% block extra_css %}
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/o_branches.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/staff.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -25,10 +25,10 @@
           </div>
         </div>
         <div class="card info-card birthday-today-card">
-            <i class="fas fa-birthday-cake birthday cake"></i>
-            <div class="appointments-today-content">
+            <i class="fas fa-birthday-cake birthday-cake"></i>
+            <div class="birthday-today-content">
               <h2>Birthday Today</h2>
-              <div class="birthday-count"></div>
+              <div class="birthday-count">{{ birthday_today|length }}</div>
           </div>
         </div>
     </div>
@@ -89,58 +89,60 @@
 
   </div>
     
-  Calendar Section
+  <!--Calendar Section-->
   <section class="calendar-card">
-      <div class="calendar-panel">
-          <div id="calendar"></div>
-          <div class="calendar-details-panel">
-            <div class="calendar-details-header">
-                <select name="branch" class="branch-select">
-                    <option value="manila">Manila Branch</option>
-                    <option value="quezon">Quezon Branch</option>
-                </select>
-            </div>
-            <hr>
-            <ul class="calendar-details-list">
-                <li class="calendar-appointment">
-                    <div class="appt-info">
-                        <span class="appt-time">10:30am - 11:30am</span>
-                        <div>
-                            <span class="appt-dot"></span>
-                            <span class="appt-type"><b>Patient Checkup</b></span>
-                        </div>
-                    </div>
-                    <a href="" class="appt-link">View Details</a>
-                </li>
-                <li class="calendar-appointment">
-                    <div class="appt-info">
-                        <span class="appt-time">11:30am - 12:30pm</span>
-                        <div>
-                            <span class="appt-dot"></span>
-                            <span class="appt-type"><b>Bleaching</b></span>
-                        </div>
-                    </div>
-                    <a href="" class="appt-link">View Details</a>
-                </li>
-                <li class="calendar-appointment">
-                    <div class="appt-info">
-                        <span class="appt-time">1:00pm - 2:30pm</span>
-                        <div>
-                            <span class="appt-dot"></span>
-                            <span class="appt-type"><b>Patient Checkup</b></span>
-                        </div>
-                    </div>
-                    <a href="" class="appt-link">View Details</a>
-                </li>
-            </ul>
+    <div class="calendar-panel">
+      <h4 class="text-primary fw-bold mb-3 mt-2">APPOINTMENTS</h4>
+       <div id="calendar"></div>
+    </div>
+    
+      <div class="appointments-sidebar">
+        <div class="status-legend">
+          <div class="status-item">
+            <span class="status-dot done"></span>
+            <span>Done</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot in-progress"></span>
+            <span>In Progress</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot not-started"></span>
+            <span>Not Started</span>
+          </div>
         </div>
-      </div>      
-  </section>
+
+        <div class="appointments-list">
+          <div class="appointment-item">
+            <div class="appointment-time">10:56am - 11:36am</div>
+            <div class="appointment-name">INTENT NAME</div>
+            <a href="{{ url_for('dashboard.appointments') }}" class="view-details">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
+ <script>
+      const appointmentData = [
+        {
+          appointment_id: 1,
+          date: '2025-07-16',
+          time: '10:00am - 11:00am',
+          patient_name: 'Juan Dela Cruz',
+          patient_type: 'New',
+          contact: '09123456789',
+          email: 'juan@example.com',
+          status: 'pending'
+        },
+  
+      ];
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
-<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/staff.js') }}"></script>
 {% endblock %}
