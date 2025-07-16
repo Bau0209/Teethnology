@@ -80,10 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
               item.classList.add('not-started');
             }
 
+            const finalUrl = appointmentDetailUrl.replace('__ID__', a.appointment_id);
             item.innerHTML = `
               <div class="appointment-time">${a.time}</div>
               <div class="appointment-name">${a.patient_name}</div>
-              <a href="/dashboard/appointments/${a.appointment_id}" class="view-details">View Details</a>
+              <a href="${finalUrl}" class="view-details">View Details</a>
             `;
             appointmentsListEl.appendChild(item);
           });

@@ -114,9 +114,7 @@
 
         <div class="appointments-list">
           <div class="appointment-item">
-            <div class="appointment-time">10:56am - 11:36am</div>
-            <div class="appointment-name">INTENT NAME</div>
-            <a href="{{ url_for('dashboard.appointments') }}" class="view-details">View Details</a>
+            <!--js implementation-->
           </div>
         </div>
       </div>
@@ -127,6 +125,7 @@
 
 {% block extra_js %}
  <script>
+   const appointmentDetailUrl = "{{ url_for('dashboard.appointments', id='__ID__') }}";
       const appointmentData = [
         {
           appointment_id: 1,
