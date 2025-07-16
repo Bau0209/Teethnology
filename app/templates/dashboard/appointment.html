@@ -1,0 +1,148 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Teethnology Appointment{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_appointment_req.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="appointments-card calendar-view">
+    <div class="appointments-header calendar-header">
+        <div>
+            <a href="{{ url_for('dashboard.appointments') }}" class="calendar-tab active">Appointment Calendar</a>
+            <a href="{{ url_for('dashboard.appointment_req') }}" class="calendar-tab">Appointment Request</a>
+        </div>
+        <div>
+            {% if access_level == 'owner' %}
+                <form method="get" action="{{ url_for('dashboard.appointments') }}">
+                    <select name="branch" class="calendar-branch-icon" onchange="this.form.submit()">
+                        <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                        {% for branch in branches %}
+                            <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                                {{ branch.branch_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="calendar-container">
+    
+        <div id="calendar"></div>
+    </div>
+        <!-- Right Side Modal -->
+        <div class="modal fade right" id="appointmentsModal" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-side" style="max-width: 640px;">
+                <div class="modal-content" style="max-height: 85vh;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Appointment Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-date">
+                        <span id="appointment-date"></span>
+                    </div>                     
+                    <div class="modal-body">
+                        <!-- Appointment items will be inserted here dynamically by JS -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complete Procedure Modal -->
+    <div class="modal fade" id="completeProcedureModal" tabindex="-1" aria-labelledby="completeProcedureLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form id="completeProcedureForm" method="POST" action="/dashboard/appointment/complete" enctype="multipart/form-data">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="completeProcedureLabel">Complete Procedure & Transaction</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+            <input type="hidden" name="appointment_id" id="complete-appointment-id">
+
+            <div class="mb-3">
+                <label><strong>Treatment Procedure</strong></label>
+                <input type="text" name="treatment_procedure" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Tooth Area</strong></label>
+                <input type="text" name="tooth_area" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Provider</strong></label>
+                <input type="text" name="provider" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Treatment Plan</strong></label>
+                <textarea name="treatment_plan" class="form-control" rows="2"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Fee</strong></label>
+                <input type="number" name="fee" class="form-control" required>
+            </div>
+
+            <hr>
+
+            <div class="mb-3">
+                <label><strong>Payment Method</strong></label>
+                <select name="payment_method" class="form-select" required>
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+                <option value="GCash">GCash</option>
+                <option value="Maya">Maya</option>
+                <option value="Insurance">Insurance</option>
+                <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Total Amount Paid</strong></label>
+                <input type="number" step="0.01" name="total_amount_paid" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label><strong>Receipt Image</strong></label>
+                <input type="file" name="receipt" class="form-control">
+            </div>
+            </div>
+
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+
+<script>
+  const dynamicEvents = {{ events | safe }};
+  const appointmentData = {{ appointment_data | safe }};
+</script>
+
+{% include 'dashboard/components/form_modal.html' %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
+<script src="{{ url_for('static', filename='js/o_appointment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+{% endblock %}

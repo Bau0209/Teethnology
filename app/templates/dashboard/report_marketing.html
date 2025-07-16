@@ -1,0 +1,104 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Revenue Tab Dashboard{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_report.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4 revenue">
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item"><a class="nav-link " href="{{ url_for('dashboard.reports') }}">Revenue</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_patients') }}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.report_marketing') }}">Marketing</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_inventory') }}">Inventory</a></li>
+  </ul>
+
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-2 mb-4">
+    <form method="get" action="{{ url_for('dashboard.reports') }}" class="me-2">
+      <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+        {% for y in range(current_year, current_year - 5, -1) %}
+          <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+      </select>
+    </form>
+    <button class="btn btn-outline-primary btn-sm active">This Month</button>
+    <button class="btn btn-outline-primary btn-sm active">Today</button>
+  </div>
+
+<div class="row">
+    <!-- Chart Card (80%) -->
+    <div class="row gx-4">
+    <!-- Popular Services By age and Gender -->
+    <div class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center bg-white">
+          <h6 class="mb-0">Popular Services By age and Gender</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="popularServiceChart" style="width: 100%; height: 350px;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patients By Age -->
+    <div class="col-md-6 mb-4">
+      <div class="card h-100" style="width: 780px;">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+          <h6 class="mb-0">Patients By Age</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="patientByAgedonutChart" style="width: 100%; height: 350px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+  <!-- Service Usage Trend Section -->
+   <div class="row mt-3 gx-4 gy-4">
+    <div class="col-lg-8">
+      <div class="d-flex flex-wrap gap-2 mb-2">
+        <h4 style="color: #00898E; margin-left: 10px; font-size: 1.5rem; font-weight: 700;">Forcasts</h4>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">2025 - 2025</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">JUN - JUN</button>
+        </div>
+        <div class="btn-group btn-group-sm" role="group">
+          <button type="button" class="btn btn-outline-primary active">1 - 25</button>
+        </div>
+      </div>
+      <div class="card h-100">
+        <div class="card-header bg-white">
+          <h6 class="mb-0">Service Usage Trend</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="forecastChart" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Insight -->
+     <div class="col-lg-3 mb-4">  <!-- Changed from col-md-3 to col-lg-3 -->
+      <div class="card h-100 business-insight-card" style="width: 500px;">  <!-- Added business-insight-card class -->
+        <div class="card-body">
+          <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
+          <p class="small mb-0">{{ insight_text | safe }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/o_report.js') }}"></script>
+{% endblock %}

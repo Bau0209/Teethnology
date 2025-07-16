@@ -1,0 +1,112 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}TEETHNOLOGY - Inventory (Sterilization){% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_inventory.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="branch-dropdown">
+    <select class="form-select" onchange="location = this.value;">
+        {% for branch in branches %}
+        <option value="{{ url_for('dashboard.inventory', branch_id=branch.id) }}"
+                {% if branch.id == current_branch %}selected{% endif %}>
+            {{ branch.name }}
+        </option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="inventory-container">
+    <!-- Inventory Tabs -->
+    <div class="inventory-tabs">
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link " href="{{ url_for('dashboard.inventory') }}">Consumables</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_equipment') }}">Equipments</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory_sterilization') }}">Sterilization</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_lab_material') }}">Lab Materials</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_medication') }}">Medications</a></li>
+        </ul>
+    </div>
+
+    <!-- Search and Add -->
+    <div class="search-container my-3">
+        <form action="{{ url_for('dashboard.inventory_sterilization') }}" method="GET">
+            <div class="search-bar-container d-flex align-items-center">
+                <input type="text" class="form-control" name="q" placeholder="Search sterilization items..." 
+                       value="{{ request.args.get('q', '') }}" id="searchInput">
+                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addSterilizationModal">
+                    ADD
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Sterilization Table -->
+    <div class="inventory-table">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Exp. Status</th>
+                    <th>Last Restock</th>
+                    <th>Storage Location</th>
+                    <th>Stock Status</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in sterilization_items %}
+                <tr>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }} {{ item.unit }}</td>
+                    <td class="{{ 'text-danger' if item.is_expired else '' }}">
+                        {{ item.exp_date|format_date }}
+                        {% if item.is_expired %}
+                        <span class="badge bg-danger ms-1">Expired</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.last_restock|format_date }}</td>
+                    <td>{{ item.location }}</td>
+                    <td>
+                        <span class="badge bg-{{ 'danger' if item.quantity < item.min_stock else 'success' }}">
+                            {{ 'Low Stock' if item.quantity < item.min_stock else 'In Stock' }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#restockModal-{{ item.id }}">
+                            Restock
+                        </button>
+                    </td>
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#sterilizationDetailsModal-{{ item.id }}">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% for item in sterilization %}
+    {% include 'dashboard/components/inventory_full_details_modal.html'%}
+{% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/o_inventory.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
