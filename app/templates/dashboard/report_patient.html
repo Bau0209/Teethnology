@@ -1,0 +1,136 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Patients Tab Dashboard{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_report.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4 patients">
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.reports') }}">Revenue</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.report_patients') }}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_marketing') }}">Marketing</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_inventory') }}">Inventory</a></li>
+  </ul>
+
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <form method="get" action="{{ url_for('dashboard.reports') }}" class="me-2">
+      <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+        {% for y in range(current_year, current_year - 5, -1) %}
+          <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+      </select>
+    </form>
+    <button class="btn btn-outline-primary btn-sm active">This Month</button>
+    <button class="btn btn-outline-primary btn-sm active">Today</button>
+  </div>
+
+  <!-- Top Section: Two-column layout -->
+  <div class="row g-4">
+    <!-- Left Column: Stats + Line Chart -->
+    <div class="col-lg-5">
+      <div class="row g-3 mb-2">
+        {% set metrics = [
+          ('Appointments', 256),
+          ('New Patients', 125),
+          ('Returning', 129),
+          ('Inactive Patients', 28)
+        ] %}
+        {% for label, value in metrics %}
+        <div class="col-6">
+          <div class="card text-center p-3">
+            <h6 class="text-muted">{{ label }}</h6>
+            <h2 class="text-success">{{ value }}</h2>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="card mt-3">
+        <div class="card-header bg-white"><h6 class="mb-0">New and Returning Patients by Appointments</h6></div>
+        <div class="card-body"><canvas id="patientsLineChart" height="250"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Right Column: Monthly Snapshot + Pie Chart -->
+    <div class="col-lg-7" style="margin-top: -30px;">
+      <h5 class="text-muted mb-3">This Month</h5>
+      <div class="row g-3 mb-3">
+        {% set month_metrics = [
+          ('New Patients', 23),
+          ('Growth Rate', '1%'),
+          ('Returning Patients', 24),
+          ('3m Inactive Patients', 40),
+          ('Growth Rate', '1%'),
+          ('Returning Patients', 24)
+        ] %}
+        {% for label, value in month_metrics %}
+        <div class="col-md-4">
+          <div class="card text-center p-3 h-100">
+            <h6 class="text-muted">{{ label }}</h6>
+            <h4 class="mb-0">{{ value }}</h4>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="card">
+        <div class="card-header bg-white"><h6 class="mb-0">Top Patient Source</h6></div>
+        <div class="card-body">
+          <canvas id="patientSourceChart" height="150" ></canvas>
+          <ul class="list-unstyled mt-3 text-center small">
+            <li>Walk-In - 30%</li>
+            <li>Referral - 20%</li>
+            <li>Facebook - 10%</li>
+            <li>Others - 40%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- Forecast Section -->
+  <div class="row mt-3 gx-4 gy-4">
+    <div class="col-lg-9">
+      <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+        <h5 style="color: #00898E; margin-left: 10px; font-size: 1.5rem; font-weight: 700;">Forecasts</h5>
+        <form method="get" action="{{ url_for('dashboard.reports') }}">
+          <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
+            {% for y in range(current_year, current_year - 5, -1) %}
+              <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </form>
+        <button class="btn btn-outline-primary btn-sm active">This Month</button>
+        <button class="btn btn-outline-primary btn-sm active">Today</button>
+      </div>
+      <div class="card h-100">
+        <div class="card-header bg-white"><h6 class="mb-0">Total # Appointments Actual vs Forecast</h6></div>
+        <div class="card-body">
+          <canvas id="forecastChart" height="350"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- Insight Card (20%) -->
+    <div class="col-lg-3 mb-4">  <!-- Changed from col-md-3 to col-lg-3 -->
+      <div class="card h-100 business-insight-card">  <!-- Added business-insight-card class -->
+        <div class="card-body">
+          <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
+          <p class="small mb-0">{{ insight_text | safe }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/o_report.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+{% endblock %}

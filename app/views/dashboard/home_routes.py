@@ -2,14 +2,12 @@ from flask import render_template, request, redirect, url_for, flash, session
 from datetime import date, timedelta
 
 from app.views.dashboard import dashboard
-from app.utils.auth import role_required
 from app.models import Branch, MainWeb, Appointments
 from app.utils.appointment_handler import get_appointments_by_date, get_pending_appointments
 from app.utils.insights import generate_business_insight
 from app import db
 
 @dashboard.route('/owner_home')
-# @role_required('owner')
 def owner_home():
     today = date.today()
     tomorrow = today + timedelta(days=1)
@@ -37,7 +35,6 @@ def owner_home():
     )
     
 @dashboard.route('/staff_home')
-# @role_required('staff')
 def staff_home():
     today = date.today()
     tomorrow = today + timedelta(days=1)
@@ -81,7 +78,6 @@ def staff_home():
     )
     
 @dashboard.route('/update-main-website', methods=['POST'])
-# @role_required('owner')
 def update_main_website():
     main_web = MainWeb.query.first()
     if not main_web:

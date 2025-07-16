@@ -1,0 +1,104 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Transactions | Teethnology{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_transactions.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row">         
+        <!-- Transactions Table Section -->
+        <div class="transaction-container">
+                <!-- Branch Tabs -->
+                <ul class="nav nav-tabs" id="transactionTabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard.transactions') }}">Transactions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard.balance_record') }}">Balance Record</a>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <!-- Search Bar -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group"> 
+                                <input type="text" class="form-control" placeholder="Search transactions...">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                            
+                    <!-- Transactions Table -->
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Receipt No.</th>
+                                    <th>Procedure ID</th>
+                                    <th>Patient</th>
+                                    <th>Date/Time</th>
+                                    <th>Total Amound Paid</th>
+                                    <th>Payment Method</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if transactions %}
+                                    {% for txn in transactions %}
+                                    <tr>
+                                        <td>{{ txn.receipt_number }}</td>
+                                        <td>{{ txn.procedure_id }}</td>
+                                        <td>
+                                            <div class="patient-info">
+                                                <h6 class="mb-1">{{ txn.procedure.patient.patient_full_name }} </h6>
+                                                <small class="text-muted">{{ txn.procedure.patient.contact_number }}</small>
+                                            </div>
+                                        </td>
+                                        <td>{{ txn.transaction_datetime.strftime('%Y-%m-%d %I:%M %p') }}</td>
+                                        <td>{{ txn.total_amount_paid }}</td>
+                                        <td>{{ txn.payment_method }}</td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#receiptModal">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No transactions found.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Add Transaction Button -->
+                <!-- <div class="d-grid">
+                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#patientModal">Add Transaction</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'dashboard/components/transaction_full_details.html' %}
+{% include 'dashboard/components/balance_full_details.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/o_transaction.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+{% endblock %}

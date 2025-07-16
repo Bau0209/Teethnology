@@ -1,5 +1,5 @@
 function handleAccept(id) {
-  fetch(`/owner/appointments/${id}/status`, {
+  fetch(`/dashboard/appointments/${id}/status`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ function handleAccept(id) {
 }
 
 function handleReject(id) {
-  fetch(`/owner/appointments/${id}/status`, {
+  fetch(`/dashboard/appointments/${id}/status`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function handleComplete(appointmentId) {
 
 
 function handleCancel(appointmentId) {
-  fetch(`/owner/procedures/${appointmentId}/status`, {
+  fetch(`/dashboard/procedures/${appointmentId}/status`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
