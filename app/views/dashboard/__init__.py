@@ -23,5 +23,6 @@ from . import (
     employee_routes, 
     inventory_routes,
     transaction_routes,
-    report_routes
+    report_routes, 
+    accounts_routes
 )
