@@ -24,5 +24,6 @@ from . import (
     inventory_routes,
     transaction_routes,
     report_routes, 
-    accounts_routes
+    accounts_routes,
+    security_routes
 )
