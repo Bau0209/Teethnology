@@ -4,38 +4,21 @@
 
 {% block extra_css %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-  .profile-card {
-    border: 1px solid #d1e7dd;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #f8fdfb;
-  }
-  .profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    object-fit: cover;
-  }
-  .section-title {
-    color: #007b83;
-    font-weight: 600;
-    margin-top: 20px;
-  }
-  input:disabled {
-    background-color: #f8f9fa !important;
-  }
-</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account.css') }}">
 {% endblock %}
 
 {% block content %}
 <div>
   {% if access_level == 'owner' %}
-     <div class="container mt-4">
+    <div class="container bg-white mt-4 p-5">
+       <a href="{{ url_for('dashboard.owner_home') }}" class="back-btn">
+        <i class="fas fa-chevron-left"></i> 
+      </a>
     <div class="profile-card p-4">
       <div class="row align-items-center mb-3">
         <div class="col-auto">
-          <img src="https://via.placeholder.com/100" class="profile-img" alt="Profile Picture">
+          <img src="{{ employee.profile_pic }}" alt="Profile Image" class="profile-img">
         </div>
         <div class="col">
           <h5>{{ user.name }}</h5>
@@ -71,10 +54,6 @@
       <h6 class="section-title">Professional Background</h6>
       <div class="row g-3">
         <div class="col-md-4">
-          <label class="form-label">Licensed Number:</label>
-          <input type="text" class="form-control" value="{{ user.license_number }}" disabled>
-        </div>
-        <div class="col-md-4">
           <label class="form-label">Department / Service Offered:</label>
           <input type="text" class="form-control" value="{{ user.department }}" disabled>
         </div>
@@ -86,32 +65,62 @@
     </div>
   </div>
   {% elif access_level == 'staff' %}
-    <div class="container mt-4">
+    <div class="container bg-white mt-4 p-5 h-100">
+      <a href="{{ url_for('dashboard.staff_home') }}" class="back-btn">
+        <i class="fas fa-chevron-left"></i> 
+      </a>
       <div class="profile-card p-4">
         <div class="row align-items-center mb-3">
           <div class="col-auto">
-            <img src="https://via.placeholder.com/100" class="profile-img" alt="Profile Picture">
+            <img src="{{ employee.profile_pic }}" alt="Profile Image" class="profile-img">
           </div>
-          <div class="col">
-            <h5>{{ user.name }}</h5>
-            <p class="text-muted">{{ user.contact }}</p>
+        </div>
+      </div>
+        <div class="col">
+            <h5>{{ employee.full_name }}</h5>
+            <p class="text-muted">{{ employee.content_number }}</p>
           </div>
           <div class="col text-end">
-            <button id="editBtn" class="btn btn-teal btn-sm" onclick="enableEdit()">Edit</button>
+            <button id="editBtn" class="editbtn" onclick="enableEdit()">Edit</button>
             </div>
-        </div>
-
-        <!-- Display limited or different fields -->
-        <h6 class="section-title">Staff Info</h6>
+      <hr>
+      <!-- Display limited or different fields -->
+      <!-- PERSONAL BACKGROUND -->
+      <h6 class="section-title">Personal Background</h6>
         <div class="row g-3">
-          <div class="col-md-6">
+          <div class="col-md-4">
+            <label class="form-label">Age:</label>
+            <input type="text" class="form-control" value="{{ employee.age }}" disabled>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Gender:</label>
+            <input type="text" class="form-control" value="{{ employee.sex }}" disabled>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Birthday:</label>
+            <input type="date" class="form-control" value="{{ employee.birthday }}" disabled>
+          </div>
+          <div class="col-md-4">
             <label class="form-label">Email:</label>
-            <input type="email" class="form-control" value="{{ user.email }}" disabled>
+            <input type="email" class="form-control" value="{{ employee.email }}" disabled>
           </div>
-          <div class="col-md-6">
-            <label class="form-label">Branch:</label>
-            <input type="text" class="form-control" value="{{ user.branch }}" disabled>
-          </div>
+        </div>
+      
+      <hr>
+      <!-- PROFESSIONAL BACKGROUND -->
+      <h6 class="section-title">Professional Background</h6>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Licensed Number:</label>
+          <input type="text" class="form-control" value="{{ employee.license_number }}" disabled>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Department / Service Offered:</label>
+          <input type="text" class="form-control" value="{{ employee.department }}" disabled>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Shift Schedule:</label>
+          <input type="text" class="form-control" value="{{ employee.shift_hours }}" disabled>
         </div>
       </div>
     </div>
@@ -140,4 +149,5 @@
     // Optional: Add fetch() or form submission here if needed
   }
 </script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 {% endblock %}
