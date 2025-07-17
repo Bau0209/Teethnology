@@ -21,21 +21,22 @@ def account_page():
 
     user_data = {
         'name': f"{employee.first_name} {employee.middle_name or ''} {employee.last_name}",
-        'contact': employee.contact_no,
+        'contact': employee.contact_number,
         'email': account.email,
         'access_level': account.access_level,
         'age': employee.age,
-        'gender': employee.gender,
-        'birthday': employee.birth_date,
+        'gender': employee.sex,
+        'birthday': employee.birthdate, 
         'branch': employee.branch.branch_name if employee.branch else "N/A",
         'date_hired': employee.date_hired,
         'license_number': employee.license_number,
         'department': employee.department,
-        'shift_schedule': employee.shift_schedule
+        'shift_schedule': employee.shift_hours
     }
 
     return render_template(
         'dashboard/account.html',
         access_level=session.get('access_level'),
-        user=user_data
+        user=user_data,
+        employee=employee
     )
