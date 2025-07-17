@@ -27,7 +27,18 @@ body {
     width: 100%;
     margin: 0 auto;
 }
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.card-header h4 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00898E;
+}
 .submit-btn{
     width: 50%;
     height: 50px;

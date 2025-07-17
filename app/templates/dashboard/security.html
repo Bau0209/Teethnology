@@ -13,6 +13,9 @@
 <div class="container py-5">
     <div class="card shadow">
         <div class="card-header bg-white">
+            <a href="{{ url_for('dashboard.owner_home') }}" class="back-btn">
+                <i class="fas fa-chevron-left"></i> 
+            </a>
             <h4 class="mb-0">Password</h4>
         </div>
         <div class="card-body">
@@ -40,7 +43,7 @@
                     <label for="confirmPassword" class="form-label">Confirm New Password</label>
                     <input type="password" class="form-control" id="confirmPassword">
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Change Password</button>
+                <button type="submit" class="submit-btn">Change Password</button>
             </form>
         </div>
     </div>
@@ -49,6 +52,9 @@
      <div class="container py-5">
     <div class="card shadow">
         <div class="card-header bg-white">
+            <a href="{{ url_for('dashboard.staff_home') }}" class="back-btn">
+                <i class="fas fa-chevron-left"></i> 
+            </a>
             <h4 class="mb-0">Password</h4>
         </div>
         <div class="card-body">
