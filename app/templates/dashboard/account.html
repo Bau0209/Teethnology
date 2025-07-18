@@ -11,10 +11,13 @@
 {% block content %}
 <div>
   {% if access_level == 'owner' %}
-    <div class="container bg-white mt-4 p-5 h-100">
-      <a href="{{ url_for('dashboard.owner_home') }}" class="back-btn">
-        <i class="fas fa-chevron-left"></i> 
-      </a>
+    <div class="container bg-white mt-4 p-5 h-100 w-100">
+      <div class="card-header bg-white">
+        <a href="{{ url_for('dashboard.owner_home') }}" class="back-btn">
+          <i class="fas fa-chevron-left"></i> 
+        </a>
+        <h4 class="mb-0">Account Profile</h4>
+      </div>
       <div class="profile-card p-4">
         <div class="row align-items-center mb-3">
           <div class="col-auto">
@@ -75,9 +78,12 @@
           </div>
   {% elif access_level == 'staff' %}
     <div class="container bg-white mt-4 p-5 h-100">
-      <a href="{{ url_for('dashboard.staff_home') }}" class="back-btn">
-        <i class="fas fa-chevron-left"></i> 
-      </a>
+      <div class="card-header bg-white">
+        <a href="{{ url_for('dashboard.staff_home') }}" class="back-btn">
+          <i class="fas fa-chevron-left"></i> 
+        </a>
+        <h4 class="mb-0">Account Profile</h4>
+      </div>
       <div class="profile-card p-4">
         <div class="row align-items-center mb-3">
           <div class="col-auto">
