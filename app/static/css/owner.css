@@ -176,7 +176,8 @@ body {
 }
 
 .voice-assistant {
-  margin-top: auto;
+  margin-top: 10px;
+  height: 25%;
   padding: 10px 0;
   text-align: center;
 }
@@ -186,19 +187,20 @@ body {
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
+  width: 70px;
+  height: 70px;
   font-size: 2rem;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   margin-bottom: auto;
+  margin-top: 10px;
 }
 
 .voice-assistant span {
   display: block;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   color: #0097a7;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .voice-assistant::after {
@@ -206,7 +208,7 @@ body {
   display: block;
   color: #1de9b6;
   font-size: 0.95rem;
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 /* Main content area */
