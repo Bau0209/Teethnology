@@ -8,21 +8,29 @@
 {% endblock %}
 
 {% block content %}
-<div class="branch-overview-container my-3">
-    <div class="branch-dropdown">
-        <select class="form-select">
-            <option>Manila Branch</option>
-            <option>Quezon City Branch</option>
-        </select>
-    </div>
+<div class="branch-dropdown">
+    {% if access_level == 'owner' %}
+        <form method="get" action="{{ url_for('dashboard.inventory_equipment') }}">
+            <select name="branch" class="form-select" onchange="this.form.submit()">
+                <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                {% for branch in branches %}
+                    <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                        {{ branch.branch_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
 </div>
+
 
 <div class="inventory-container">
     <!-- Inventory Tabs -->
     <div class="inventory-tabs">
         <ul class="nav nav-tabs">
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory') }}">Consumables</a></li>
-            <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory_equipment') }}">Equipment</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory') }}">All</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_consumable') }}">Consumables</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory_equipment') }}">Equipments</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_sterilization') }}">Sterilization</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_lab_material') }}">Lab Materials</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_medication') }}">Medications</a></li>
@@ -45,9 +53,10 @@
                 <tr>
                     <th>Serial No.</th>
                     <th>Name</th>
-                    <th>City</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
                     <th>Model</th>
-                    <th>Last Main.</th>
+                    <th>Last Maintenance</th>
                     <th>Storage Location</th>
                     <th>Condition</th>
                     <th>Action</th>
@@ -55,21 +64,22 @@
                 </tr>
             </thead>
             <tbody>
-                {% for equipment in equipment_list %}
+                {% for equipment in inventory_items %}
                 <tr>
-                    <td>{{ equipment.serial_no }}</td>
-                    <td>{{ equipment.name }}</td>
-                    <td>{{ equipment.city }}</td>
-                    <td>{{ equipment.model }}</td>
-                    <td>{{ equipment.last_maintenance }}</td>
+                    <td>{{ equipment.item_id }}</td>
+                    <td>{{ equipment.item_name }}</td>                    
+                    <td>{{ equipment.quantity | int }}</td>                 
+                    <td>{{ equipment.quantity_unit }}</td>
+                    <td>{{ equipment.equipment_info.model }}</td>
+                    <td>{{ equipment.equipment_info.last_maintenance }}</td>
                     <td>{{ equipment.storage_location }}</td>
                     <td>
                         <span class="badge bg-{{ 'success' if equipment.condition == 'Working' else 'warning text-dark' }}">
-                            {{ equipment.condition }}
+                            {{ equipment.equipment_info.equipment_condition }}
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-primary">Request Now</button>
+                        <button class="btn btn-sm btn-primary">Request</button>
                     </td>
                     <td>
                         <a href="#" data-bs-toggle="modal" data-bs-target="#equipmentDetailsModal-{{ equipment.id }}">

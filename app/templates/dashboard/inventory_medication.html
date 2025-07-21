@@ -9,22 +9,28 @@
 
 {% block content %}
 <div class="branch-dropdown">
-    <select class="form-select" onchange="location = this.value;">
-        {% for branch in branches %}
-        <option value="{{ url_for('dashboard.inventory', branch_id=branch.id) }}"
-                {% if branch.id == current_branch %}selected{% endif %}>
-            {{ branch.name }}
-        </option>
-        {% endfor %}
-    </select>
+    {% if access_level == 'owner' %}
+        <form method="get" action="{{ url_for('dashboard.inventory_medication') }}">
+            <select name="branch" class="form-select" onchange="this.form.submit()">
+                <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                {% for branch in branches %}
+                    <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                        {{ branch.branch_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
 </div>
+
 
 <div class="inventory-container">
     <!-- Inventory Tabs -->
     <div class="inventory-tabs">
         <ul class="nav nav-tabs">
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory') }}">Consumables</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_equipment') }}">Equipment</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory') }}">All</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_consumable') }}">Consumables</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_equipment') }}">Equipments</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_sterilization') }}">Sterilization</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_lab_material') }}">Lab Materials</a></li>
             <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory_medication') }}">Medications</a></li>
