@@ -41,9 +41,7 @@
             <div class="search-bar-container d-flex align-items-center">
                 <input type="text" class="search-bar" name="q" placeholder="Search sterilization items..." 
                        value="{{ request.args.get('q', '') }}" id="searchInput">
-                <button type="button" class="filter-btn ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
-                    <i class="fa fa-filter"></i>
-                </button>
+                <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>
                 <button type="button" class="add-btn " data-bs-toggle="modal" data-bs-target="#addSterilizationModal">
                     ADD
                 </button>

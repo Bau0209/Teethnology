@@ -50,7 +50,7 @@
     <div class="toolbar my-3 d-flex align-items-center">
         <input type="text" class="search-bar" placeholder="Search bar" id="searchInput" value="{{ request.args.get('search', '') }}">
         <div id="searchResults"></div>
-        <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>       
+        <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>
         <button type="button" class="add-btn" id="addPatientBtn" data-bs-toggle="modal" data-bs-target="#patientinfoModal">Add</button>
     </div>
 
@@ -97,6 +97,7 @@
 <script>
     alert("Error: {{ error_message }}");
 </script>
+
 {% endif %}
 
 
@@ -129,4 +130,69 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const filterBtn = document.querySelector('.filter-btn');
+
+    if (filterBtn) {
+        // Create dropdown element
+        const dropdown = document.createElement('div');
+        dropdown.classList.add('dropdown-menu');
+        dropdown.style.position = 'absolute';
+        dropdown.style.display = 'none';
+        dropdown.style.zIndex = '9999';
+        dropdown.innerHTML = `
+            <a class="dropdown-item" href="#" id="sortAZ">Sort by A-Z</a>
+            <a class="dropdown-item" href="#" id="sortAge">Sort by Age</a>
+        `;
+        document.body.appendChild(dropdown);
+
+        // Toggle dropdown position on click
+        filterBtn.addEventListener('click', function (e) {
+            const rect = filterBtn.getBoundingClientRect();
+            dropdown.style.left = `${rect.left + window.scrollX}px`;
+            dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!filterBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Sort A-Z
+        dropdown.querySelector('#sortAZ').addEventListener('click', function (e) {
+            e.preventDefault();
+            const tbody = document.querySelector('.patients-table tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const nameA = a.children[2].textContent.trim().toLowerCase();
+                const nameB = b.children[2].textContent.trim().toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+            rows.forEach(row => tbody.appendChild(row));
+            dropdown.style.display = 'none';
+        });
+
+        // Sort by Age
+        dropdown.querySelector('#sortAge').addEventListener('click', function (e) {
+            e.preventDefault();
+            const tbody = document.querySelector('.patients-table tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const ageA = parseInt(a.children[3].textContent.trim());
+                const ageB = parseInt(b.children[3].textContent.trim());
+                return ageA - ageB;
+            });
+            rows.forEach(row => tbody.appendChild(row));
+            dropdown.style.display = 'none';
+        });
+    } else {
+        console.warn("No element with class '.filter-btn' found.");
+    }
+});
+</script>
+
 {% endblock %}
