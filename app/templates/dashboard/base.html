@@ -31,7 +31,7 @@
                     <div class="user-dropdown" id="userDropdownMenu">
                         <div class="user-dropdown-links">
                             <a href="{{ url_for('dashboard.account_page') }}">ACCOUNT</a>
-                            <a href="#">SECURITY</a>
+                            <a href="{{ url_for('dashboard.security') }}">SECURITY</a>
                         </div>
                         <form action="{{ url_for('login.logout') }}" method="get">
                             <button type="submit" class="logout-btn">Logout</button>
@@ -43,7 +43,7 @@
                     <div class="user-dropdown" id="userDropdownMenu">
                         <div class="user-dropdown-links">
                             <a href="{{ url_for('dashboard.account_page') }}">ACCOUNT</a>
-                            <a href="#">SECURITY</a>
+                            <a href="{{ url_for('dashboard.security') }}">SECURITY</a>
                         </div>
                         <form action="{{ url_for('login.logout') }}" method="get">
                             <button type="submit" class="logout-btn">Logout</button>
@@ -80,6 +80,11 @@
                         {% endif %}
                     </ul>
                 </nav>
+                <hr>
+                <div class="voice-assistant">
+                    <span>TAIK TO OUR <br>VOICE ASSISTANT</span>
+                    <button><i class="fa fa-microphone"></i></button>
+                </div>
             </aside>
 
             <main class="main-content">
