@@ -27,8 +27,8 @@
     <!-- Inventory Category Tabs -->
     <div class="inventory-tabs">
         <ul class="nav nav-tabs">
-            <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory') }}">All</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_consumable') }}">Consumables</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory') }}">All</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory_consumable') }}">Consumables</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_equipment') }}">Equipments</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_sterilization') }}">Sterilization</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_lab_material') }}">Lab Materials</a></li>
@@ -58,9 +58,9 @@
                 <tr>
                     <th>Item Id</th>
                     <th>Name</th>
-                    <th>Category</th>
                     <th>Quantity</th>
                     <th>Unit</th>
+                    <th>Last Restock</th>
                     <th>Storage Location</th>
                     <th>Status</th>
                     <th>Restock</th>
@@ -71,39 +71,17 @@
                 {% for item in inventory_items %}
                 <tr>
                     <td>{{ item.item_id }}</td>
-                    <td>{{ item.item_name }}</td>                    
-                    <td>{{ item.category.category_name }}</td>
+                    <td>{{ item.item_name }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.quantity_unit }}</td>
+                    <td>{{ item.consumable_info.last_restock.strftime('%B %d, %Y') if item.consumable_info and item.consumable_info.last_restock else 'N/A' }}</td>
                     <td>{{ item.storage_location }}</td>
                     <td>
-                        {% if item.equipment_info %}
-                            <span class="badge bg-info">
-                                {{ item.equipment_info.equipment_condition or 'Unknown Condition' }}
-                            </span>
-                        
-                        {% elif item.consumable_info %}
+                        {% if item.consumable_info %}
                             {% set min_stock = item.consumable_info.minimum_stock %}
                             <span class="badge bg-{{ 'danger' if item.quantity < min_stock else 'success' }}">
                                 {{ 'Low Stock' if item.quantity < min_stock else 'In Stock' }}
                             </span>
-
-                        {% elif item.sterilization_info %}
-                            {% set min_stock = item.sterilization_info.minimum_stock_level %}
-                            <span class="badge bg-{{ 'danger' if item.quantity < min_stock else 'success' }}">
-                                {{ 'Low Stock' if item.quantity < min_stock else 'In Stock' }}
-                            </span>
-
-                        {% elif item.medication_info %}
-                            <span class="badge bg-{{ 'danger' if item.medication_info.stock_status == 'low stock' else 'success' }}">
-                                {{ item.medication_info.stock_status|capitalize }}
-                            </span>
-
-                        {% elif item.lab_material_info %}
-                            <span class="badge bg-{{ 'danger' if item.lab_material_info.stock_status == 'low stock' else 'success' }}">
-                                {{ item.lab_material_info.stock_status|capitalize }}
-                            </span>
-
                         {% else %}
                             <span class="badge bg-secondary">N/A</span>
                         {% endif %}
