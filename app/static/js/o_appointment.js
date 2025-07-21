@@ -259,3 +259,37 @@ document.addEventListener('DOMContentLoaded', function () {
     subtree: true
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  const searchInput = document.querySelector('.input-group input');
+  const searchBtn = document.querySelector('.input-group button');
+
+  function filterAppointments() {
+    const query = searchInput.value.toLowerCase().trim();
+    const requests = document.querySelectorAll('.request-table');
+
+    requests.forEach(request => {
+      const nameDiv = request.querySelector('.request-patient b')?.nextSibling;
+      const patientName = nameDiv?.textContent?.toLowerCase().trim() || '';
+
+      if (patientName.includes(query)) {
+        request.style.display = '';
+      } else {
+        request.style.display = 'none';
+      }
+    });
+  }
+
+  // On Enter key press in search input
+  searchInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      filterAppointments();
+    }
+  });
+
+  // On click of search button
+  searchBtn.addEventListener('click', function () {
+    filterAppointments();
+  });
+});

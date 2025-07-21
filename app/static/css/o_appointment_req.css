@@ -30,7 +30,7 @@ body {
   background: #f7fdfd;
   margin-right: 30px;
   font-size: 1.2rem;
-  text-decoration: none;
+  text-decoration: none; 
   font-weight: 700;
   cursor: pointer;
   padding: 8px 0;
@@ -47,6 +47,38 @@ body {
   font-size: medium;
   outline: none;
   margin-left: 15px;
+}
+.search-bar {
+    margin-bottom: 20px;
+    justify-content: flex-end !important; 
+}
+
+.input-group {
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-left: auto;
+    margin-top: 20px;
+    margin-right: 25px;
+}
+
+.input-group .form-control {
+    border-right: none;
+    height: 40px;
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.input-group .btn-outline-secondary {
+    border-left: none !important;
+    background-color: white;
+    height: 40px;
+}
+.input-group .btn-outline-secondary:hover {
+    background-color: #0096a7d8;
 }
 
 /* Calendar container */

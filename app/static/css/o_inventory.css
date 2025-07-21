@@ -82,21 +82,17 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Toolbar container */
-.toolbar {
-    background: none;
-    box-shadow: none;
-    padding: 0 0 1rem 0;
-    margin-bottom: 0.5rem;
-    display: flex; 
-    justify-content:flex-end;
-}
-
-.toolbar .row {
-    align-items: center;
-}
-
 /* Search bar and toolbar buttons */
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
+    width: auto;
+}
+
+.search-bar-container {
+    justify-content: flex-end;
+}
 .search-bar {
     padding: 8px 16px;
     border: none;
@@ -104,13 +100,16 @@ body {
     background: #fff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     font-size: 1rem;
-    width: 100%;
-    max-width: 420px;
+    min-width: 420px;
     outline: none;
     margin-right: 0;
     margin-bottom: 10px; 
 }
-
+.search-container form {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 .filter-btn,.add-btn {
     border: none;
     background: #1de9b6;
@@ -121,8 +120,8 @@ body {
     cursor: pointer;
     transition: background 0.2s;
     display: inline-flex;
-    align-items: flex-end;
-    margin-left: 0;
+    align-items: flex-start;
+    margin-left: 10px;
 
 }
 

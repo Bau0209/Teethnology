@@ -12,7 +12,7 @@ def transactions():
 def balance_record():
     # Get all procedures
     procedures = Procedures.query.all()
-    balance_data = []
+    balance_data = [] 
 
     for proc in procedures:
         total_fee = proc.fee

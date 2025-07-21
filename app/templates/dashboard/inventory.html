@@ -37,18 +37,19 @@
     </div>
 
     <!-- Search, Filter, Add --> 
-    <div class="toolbar my-3 d-flex align-items-center">
-        <input type="text" class="search-bar" placeholder="Search bar" id="searchInput">
-        <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>
-        <div class="dropdown ms-2">
-            <button class="add-btn dropdown-toggle" type="button" id="addDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                ADD
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="addDropdown">
-                <li><a class="dropdown-item" href="#" data-action="scan">Scan</a></li>
-                <li><a class="dropdown-item" href="#" data-action="form">Form</a></li>
-            </ul>
-        </div>
+     <div class="search-container my-3">
+        <form action="{{ url_for('dashboard.inventory') }}" method="GET">
+            <div class="search-bar-container d-flex align-items-center">
+                <input type="text" class="search-bar" name="q" placeholder="Search consumables..." 
+                       value="{{ request.args.get('q', '') }}" id="searchInput">
+                <button type="button" class="filter-btn ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <button type="button" class="add-btn" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
+                    ADD
+                </button>
+            </div>
+        </form>
     </div>
 
     <!-- Inventory Table -->
