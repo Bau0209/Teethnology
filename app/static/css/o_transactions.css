@@ -161,6 +161,7 @@ body {
 .input-group {
     width: 100%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
 }
 
 .input-group .form-control {
@@ -196,6 +197,34 @@ body {
 .input-group .btn-outline-secondary:hover .fa-search,
 .input-group .btn-outline-secondary:hover .fa-filter {
     color: #00796b !important; 
+}
+/* Custom filter dropdown container */
+#customFilterDropdown {
+  position: absolute;
+  top: 100%; /* Place directly below the input group */
+  left: 80%;
+  margin-top: 0.25rem;
+  display: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1050;
+}
+
+#customFilterDropdown button {
+  font-size: 0.8rem;
+  color: #000;
+  text-align: left;
+  padding: 6px 12px;
+  border: none;
+  background: none;
+  width: 100%;
+}
+
+#customFilterDropdown button:hover {
+  background-color: #f8f9fa;
 }
 
 /* ============== BUTTONS ============== */
