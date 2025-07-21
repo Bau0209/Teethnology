@@ -11,64 +11,79 @@
 {% block content %}
 <div>
   {% if access_level == 'owner' %}
-    <div class="container bg-white mt-4 p-5">
-       <a href="{{ url_for('dashboard.owner_home') }}" class="back-btn">
-        <i class="fas fa-chevron-left"></i> 
-      </a>
-    <div class="profile-card p-4">
-      <div class="row align-items-center mb-3">
-        <div class="col-auto">
-          <img src="{{ employee.profile_pic }}" alt="Profile Image" class="profile-img">
+    <div class="container bg-white mt-4 p-5 h-100 w-100">
+      <div class="card-header bg-white">
+        <a href="{{ url_for('dashboard.owner_home') }}" class="back-btn">
+          <i class="fas fa-chevron-left"></i> 
+        </a>
+        <h4 class="mb-0">Account Profile</h4>
+      </div>
+      <div class="profile-card p-4">
+        <div class="row align-items-center mb-3">
+          <div class="col-auto">
+            <img src="{{ employee.profile_pic }}" alt="Profile Image" class="profile-img">
+          </div>
         </div>
+      </div>
         <div class="col">
-          <h5>{{ user.name }}</h5>
-          <p class="text-muted">{{ user.contact }}</p>
-        </div>
-        <div class="col text-end">
-          <button id="editBtn" class="btn btn-teal btn-sm" onclick="enableEdit()">Edit</button>
-        </div>
-      </div>
-      <hr>
-      <!-- PERSONAL BACKGROUND -->
-      <h6 class="section-title">Personal Background</h6>
-      <div class="row g-3">
-        <div class="col-md-4">
-          <label class="form-label">Age:</label>
-          <input type="text" class="form-control" value="{{ user.age }}" disabled>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Gender:</label>
-          <input type="text" class="form-control" value="{{ user.gender }}" disabled>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Birthday:</label>
-          <input type="date" class="form-control" value="{{ user.birthday }}" disabled>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Email:</label>
-          <input type="email" class="form-control" value="{{ user.email }}" disabled>
-        </div>
-      </div>
-      <hr>
-      <!-- PROFESSIONAL BACKGROUND -->
-      <h6 class="section-title">Professional Background</h6>
-      <div class="row g-3">
-        <div class="col-md-4">
-          <label class="form-label">Department / Service Offered:</label>
-          <input type="text" class="form-control" value="{{ user.department }}" disabled>
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Shift Schedule:</label>
-          <input type="text" class="form-control" value="{{ user.shift_schedule }}" disabled>
-        </div>
-      </div>
-    </div>
-  </div>
+            <h5>{{ employee.full_name }}</h5>
+            <p class="text-muted">{{ employee.content_number }}</p>
+          </div>
+          <div class="col text-end">
+            <button id="editBtn" class="editbtn" onclick="enableEdit()">Edit</button>
+            </div>
+            <hr>
+            <!-- Display limited or different fields -->
+            <!-- PERSONAL BACKGROUND -->
+            <h6 class="section-title">Personal Background</h6>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label">Age:</label>
+                  <input type="text" class="form-control" value="{{ employee.age }}" disabled>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Gender:</label>
+                  <input type="text" class="form-control" value="{{ employee.sex }}" disabled>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Birthday:</label>
+                  <input type="date" class="form-control" value="{{ employee.birthday }}" disabled>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Email:</label>
+                  <input type="email" class="form-control" value="{{ employee.email }}" disabled>
+                </div>
+              </div>
+            <hr>
+            <!-- PROFESSIONAL BACKGROUND -->
+            <h6 class="section-title">Professional Background</h6>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Licensed Number:</label>
+                <input type="text" class="form-control" value="{{ employee.license_number }}" disabled>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Position</label>
+                <input type="text" class="form-control" value="{{ employee.position }}" disabled>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Department / Service Offered:</label>
+                <input type="text" class="form-control" value="{{ employee.department }}" disabled>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Shift Schedule:</label>
+                <input type="text" class="form-control" value="{{ employee.shift_hours }}" disabled>
+              </div>
+            </div>
+          </div>
   {% elif access_level == 'staff' %}
     <div class="container bg-white mt-4 p-5 h-100">
-      <a href="{{ url_for('dashboard.staff_home') }}" class="back-btn">
-        <i class="fas fa-chevron-left"></i> 
-      </a>
+      <div class="card-header bg-white">
+        <a href="{{ url_for('dashboard.staff_home') }}" class="back-btn">
+          <i class="fas fa-chevron-left"></i> 
+        </a>
+        <h4 class="mb-0">Account Profile</h4>
+      </div>
       <div class="profile-card p-4">
         <div class="row align-items-center mb-3">
           <div class="col-auto">
