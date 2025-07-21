@@ -21,7 +21,22 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('dashboard.balance_record') }}">Balance Record</a>
                     </li>
+                    <div class="branch-dropdown">
+                        {% if access_level == 'owner' %}
+                            <form method="get" action="{{ url_for('dashboard.transactions') }}">
+                                <select name="branch" class="form-select" onchange="this.form.submit()">
+                                    <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                                    {% for branch in branches %}
+                                        <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                                            {{ branch.branch_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        {% endif %}
+                    </div>
                 </ul>
+                
                 <div class="card-body">
                     <!-- Search Bar -->
                     <div class="row mb-3">

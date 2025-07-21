@@ -9,14 +9,18 @@
 
 {% block content %}
 <div class="branch-dropdown">
-    <select class="form-select" onchange="location = this.value;">
-        {% for branch in branches %}
-        <option value="{{ url_for('dashboard.inventory', branch_id=branch.id) }}"
-                {% if branch.id == current_branch %}selected{% endif %}>
-            {{ branch.name }}
-        </option>
-        {% endfor %}
-    </select>
+    {% if access_level == 'owner' %}
+        <form method="get" action="{{ url_for('dashboard.appointments') }}">
+            <select name="branch" class="form-select" onchange="this.form.submit()">
+                <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                {% for branch in branches %}
+                    <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                        {{ branch.branch_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
 </div>
 
 <div class="inventory-container">
@@ -35,12 +39,12 @@
     <div class="search-container my-3">
         <form action="{{ url_for('dashboard.inventory_medication') }}" method="GET">
             <div class="search-bar-container d-flex align-items-center">
-                <input type="text" class="form-control" name="q" placeholder="Search medications..." 
+                <input type="text" class="search-bar" name="q" placeholder="Search medications..." 
                        value="{{ request.args.get('q', '') }}" id="searchInput">
-                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <button type="button" class="filter-btn ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
                     <i class="fa fa-filter"></i>
                 </button>
-                <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
+                <button type="button" class="add-btn" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
                     ADD
                 </button>
             </div>
@@ -70,12 +74,12 @@
                     <td>{{ med.name }}</td>
                     <td>{{ med.dosage_form }}</td>
                     <td class="{{ 'text-danger' if med.is_expired else '' }}">
-                        {{ med.exp_date|format_date }}
+                        {{ med.exp_date.strftime('%Y-%m-%d') }}
                         {% if med.is_expired %}
                         <span class="badge bg-danger">Expired</span>
                         {% endif %}
                     </td>
-                    <td>{{ med.last_status|format_date }}</td>
+                    <td>{{ med.last_status.strftime('%Y-%m-%d') }}</td>
                     <td>{{ med.location }}</td>
                     <td>
                         <span class="badge bg-{{ 'danger' if med.quantity < med.min_stock else 'success' }}">

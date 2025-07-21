@@ -8,13 +8,19 @@
 {% endblock %}
 
 {% block content %}
-<div class="branch-overview-container my-3">
-    <div class="branch-dropdown">
-        <select class="form-select">
-            <option>Manila Branch</option>
-            <option>Quezon City Branch</option>
-        </select>
-    </div>
+<div class="branch-dropdown">
+    {% if access_level == 'owner' %}
+        <form method="get" action="{{ url_for('dashboard.appointments') }}">
+            <select name="branch" class="form-select" onchange="this.form.submit()">
+                <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                {% for branch in branches %}
+                    <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                        {{ branch.branch_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
 </div>
 
 <div class="inventory-container">
@@ -31,11 +37,18 @@
 
     <!-- Search and Add -->
     <div class="search-container my-3">
-        <div class="search-bar-container d-flex align-items-center">
-            <input type="text" class="form-control" placeholder="Search bar" id="searchInput">
-            <button class="btn btn-outline-secondary ms-2" title="Filter"><i class="fa fa-filter"></i></button>
-            <button class="btn btn-primary ms-2" type="button">ADD</button>
-        </div>
+        <form action="{{ url_for('dashboard.inventory_equipment') }}" method="GET">
+            <div class="search-bar-container d-flex align-items-center">
+                <input type="text" class="search-bar" name="q" placeholder="Search equipment..." 
+                       value="{{ request.args.get('q', '') }}" id="searchInput">
+                <button type="button" class="filter-btn ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <button type="button" class="add-btn" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
+                    ADD
+                </button>
+            </div>
+        </form>
     </div>
 
     <!-- Equipment Inventory Table -->

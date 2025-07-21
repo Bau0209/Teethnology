@@ -29,10 +29,15 @@
             {% endif %}
         </div>
     </div>
-
+    <div class="input-group"> 
+        <input type="text" class="form-control" placeholder="Search transactions...">
+        <button class="btn btn-outline-secondary" type="button">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
     <div class="request-table-container">
         {% for request in appointments %}
-            <div class="request-table">
+            <div class="request-table mt-4">
                 <div class="request-details">
                     <div class="request-section-title">Appointment Details</div>
                         <div><b>Date:</b> {{ request.appointment_sched.strftime('%B %d, %Y') }}</div>

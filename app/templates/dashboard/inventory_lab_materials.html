@@ -7,16 +7,20 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 {% endblock %}
 
-{% block content %}
+{% block content %} 
 <div class="branch-dropdown">
-    <select class="form-select" onchange="location = this.value;">
-        {% for branch in branches %}
-        <option value="{{ url_for('dashboard.inventory', branch_id=branch.id) }}"
-                {% if branch.id == current_branch %}selected{% endif %}>
-            {{ branch.name }}
-        </option>
-        {% endfor %}
-    </select>
+    {% if access_level == 'owner' %}
+        <form method="get" action="{{ url_for('dashboard.appointments') }}">
+            <select name="branch" class="form-select" onchange="this.form.submit()">
+                <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                {% for branch in branches %}
+                    <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                        {{ branch.branch_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
 </div>
 
 <div class="inventory-container">
@@ -33,14 +37,14 @@
 
     <!-- Search and Add -->
     <div class="search-container my-3">
-        <form action="{{ url_for('dashboard.inventory_sterilization') }}" method="GET">
+        <form action="{{ url_for('dashboard.inventory_lab_materials') }}" method="GET">
             <div class="search-bar-container d-flex align-items-center">
-                <input type="text" class="form-control" name="q" placeholder="Search sterilization items..." 
+                <input type="text" class="search-bar" name="q" placeholder="Search lab materials items..." 
                        value="{{ request.args.get('q', '') }}" id="searchInput">
-                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <button type="button" class="filter-btn ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
                     <i class="fa fa-filter"></i>
                 </button>
-                <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addSterilizationModal">
+                <button type="button" class="add-btn" data-bs-toggle="modal" data-bs-target="#addlabMaterialModal">
                     ADD
                 </button>
             </div>
@@ -64,18 +68,18 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in sterilization_items %}
+                {% for item in lab_materials_items %}
                 <tr>
                     <td>{{ item.code }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.quantity }} {{ item.unit }}</td>
                     <td class="{{ 'text-danger' if item.is_expired else '' }}">
-                        {{ item.exp_date|format_date }}
+                        {{ item.exp_date.strftime('%Y-%m-%d') }}
                         {% if item.is_expired %}
                         <span class="badge bg-danger ms-1">Expired</span>
                         {% endif %}
                     </td>
-                    <td>{{ item.last_restock|format_date }}</td>
+                    <td>{{ item.last_restock.strftime('%Y-%m-%d') }}</td>
                     <td>{{ item.location }}</td>
                     <td>
                         <span class="badge bg-{{ 'danger' if item.quantity < item.min_stock else 'success' }}">
@@ -90,7 +94,7 @@
                         </button>
                     </td>
                     <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#sterilizationDetailsModal-{{ item.id }}">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#labMaterialsDetailsModal-{{ item.id }}">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </td>
