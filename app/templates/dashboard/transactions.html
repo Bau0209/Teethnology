@@ -21,22 +21,40 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('dashboard.balance_record') }}">Balance Record</a>
                     </li>
+                    <div class="branch-dropdown">
+                        {% if access_level == 'owner' %}
+                            <form method="get" action="{{ url_for('dashboard.transactions') }}">
+                                <select name="branch" class="form-select" onchange="this.form.submit()">
+                                    <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                                    {% for branch in branches %}
+                                        <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                                            {{ branch.branch_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        {% endif %}
+                    </div>
                 </ul>
+                
                 <div class="card-body">
                     <!-- Search Bar -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="input-group"> 
-                                <input type="text" class="form-control" placeholder="Search transactions...">
-                                <button class="btn btn-outline-secondary" type="button">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
-                                    <i class="fa fa-filter"></i>
-                                </button>
-                            </div>
+                    <!-- Search Bar -->
+                <div class="row mb-3">
+                    <div class="col-md-6 position-relative"> <!-- Add position-relative here -->
+                        <div class="input-group"> 
+                            <input type="text" class="form-control" placeholder="Search transactions...">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                <i class="fa fa-filter"></i>
+                            </button>
                         </div>
+                        <!-- Moved inside relative container -->
+                        <div id="customFilterDropdown"></div>
                     </div>
+                </div>
                             
                     <!-- Transactions Table -->
                     <div class="table-responsive">

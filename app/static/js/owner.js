@@ -140,4 +140,23 @@ function initDynamicFeatures() {
 
 }
 
+// Archive button functiongi
+document.addEventListener('DOMContentLoaded', function () {
+    const archiveBtn = document.querySelector('.branch-info-archive-btn');
+
+    if (archiveBtn) {
+        archiveBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const confirmArchive = confirm("Are you sure you want to archive this branch?");
+            if (confirmArchive) {
+                const currentUrl = window.location.href;
+                const match = currentUrl.match(/\/branches\/(\d+)/);
+                if (match) {
+                    const branchId = match[1];
+                    window.location.href = `/branches/${branchId}/archive`;
+                }
+            }
+        });
+    }
+});
 

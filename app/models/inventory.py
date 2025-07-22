@@ -66,6 +66,7 @@ class InventoryLabMaterial(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey('inventory_items.item_id'), primary_key=True)
     expiration_date = db.Column(db.Date)
     last_restock = db.Column(db.Date)
+    minimum_stock = db.Column(db.Float)
     stock_status = db.Column(db.Enum('in stock', 'low stock', 'out of stock'), default='in stock')
 
     item = db.relationship('InventoryItem', backref=db.backref('lab_material_info', uselist=False), lazy=True)
@@ -79,6 +80,7 @@ class InventoryMedication(db.Model):
     last_restock = db.Column(db.Date)
     strength = db.Column(db.String(100))
     batch_number = db.Column(db.String(100))
+    minimum_stock = db.Column(db.Float)
     stock_status = db.Column(db.Enum('in stock', 'low stock', 'out of stock'), default='in stock')
 
     item = db.relationship('InventoryItem', backref=db.backref('medication_info', uselist=False), lazy=True)

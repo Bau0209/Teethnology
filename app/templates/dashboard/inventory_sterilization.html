@@ -40,12 +40,10 @@
     <div class="search-container my-3">
         <form action="{{ url_for('dashboard.inventory_sterilization') }}" method="GET">
             <div class="search-bar-container d-flex align-items-center">
-                <input type="text" class="form-control" name="q" placeholder="Search sterilization items..." 
+                <input type="text" class="search-bar" name="q" placeholder="Search sterilization items..." 
                        value="{{ request.args.get('q', '') }}" id="searchInput">
-                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
-                    <i class="fa fa-filter"></i>
-                </button>
-                <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addSterilizationModal">
+                <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>
+                <button type="button" class="add-btn " data-bs-toggle="modal" data-bs-target="#addSterilizationModal">
                     ADD
                 </button>
             </div>
@@ -57,10 +55,10 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Item Code</th>
+                    <th>Item Id</th>
                     <th>Name</th>
                     <th>Quantity</th>
-                    <th>Exp. Status</th>
+                    <th>Exp. Date</th>
                     <th>Last Restock</th>
                     <th>Storage Location</th>
                     <th>Stock Status</th>
@@ -69,23 +67,23 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in sterilization_items %}
+                {% for item in inventory_items %}
                 <tr>
-                    <td>{{ item.code }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.quantity }} {{ item.unit }}</td>
-                    <td class="{{ 'text-danger' if item.is_expired else '' }}">
-                        {{ item.exp_date|format_date }}
-                        {% if item.is_expired %}
-                        <span class="badge bg-danger ms-1">Expired</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ item.last_restock|format_date }}</td>
-                    <td>{{ item.location }}</td>
+                    <td>{{ item.item_id }}</td>
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.quantity | int }} {{ item.quantity_unit or '' }}</td>
+                    <td>{{ item.sterilization_info.expiration_date.strftime('%B %d, %Y') if item.sterilization_info and item.sterilization_info.last_restock else 'N/A' }}
+                    <td>{{ item.sterilization_info.last_restock.strftime('%B %d, %Y') if item.sterilization_info and item.sterilization_info.last_restock else 'N/A' }}</td>
+                    <td>{{ item.storage_location }}</td>
                     <td>
-                        <span class="badge bg-{{ 'danger' if item.quantity < item.min_stock else 'success' }}">
-                            {{ 'Low Stock' if item.quantity < item.min_stock else 'In Stock' }}
-                        </span>
+                        {% if item.sterilization_info %}
+                            {% set minimum_stock_level = item.sterilization_info.minimum_stock_level %}
+                            <span class="badge bg-{{ 'danger' if item.quantity < minimum_stock_level else 'success' }}">
+                                {{ 'Low Stock' if item.quantity < minimum_stock_level else 'In Stock' }}
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary">N/A</span>
+                        {% endif %}
                     </td>
                     <td>
                         <button class="btn btn-sm btn-primary" 
