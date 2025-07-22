@@ -109,7 +109,7 @@ CREATE TABLE `appointments` (
 
 LOCK TABLES `appointments` WRITE;
 /*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
-INSERT INTO `appointments` VALUES (1,1,1,0,'2024-01-15 09:00:00',NULL,'Tooth Extraction','approved','2024-01-10 08:00:00','2024-01-12 14:00:00','Dr. Reyes'),(2,1,1,1,'2024-03-10 10:30:00',NULL,'Oral Prophylaxis','approved','2024-03-05 11:00:00','2024-03-07 09:00:00','Dr. Reyes'),(3,1,2,0,'2024-02-25 11:00:00',NULL,'Dental Filling','approved','2024-02-20 13:00:00','2024-02-22 10:00:00','Dr. Santos'),(4,2,3,0,'2024-04-12 14:00:00',NULL,'Root Canal Therapy (Session 1)','approved','2024-04-07 09:30:00','2024-04-10 16:00:00','Dr. Tan'),(5,2,3,1,'2024-05-05 10:00:00',NULL,'Temporary Crown Placement','approved','2024-05-01 12:00:00','2024-05-03 14:00:00','Dr. Tan'),(6,2,4,0,'2024-01-10 09:00:00',NULL,'Orthodontic Consultation','approved','2024-01-05 08:00:00','2024-01-08 12:00:00','Dr. Garcia'),(7,2,4,1,'2024-02-05 10:00:00',NULL,'Braces Installation','approved','2024-01-30 13:00:00','2024-02-02 15:00:00','Dr. Garcia'),(8,2,4,1,'2024-03-05 10:00:00',NULL,'Braces Adjustment (Month 1)','approved','2024-03-01 09:30:00','2024-03-03 16:00:00','Dr. Garcia'),(9,2,4,1,'2024-04-05 10:00:00',NULL,'Braces Adjustment (Month 2)','approved','2024-04-01 11:00:00','2024-04-03 13:00:00','Dr. Garcia'),(10,2,4,1,'2024-05-04 10:00:00',NULL,'Braces Adjustment (Month 3)','approved','2024-05-01 11:00:00','2024-05-03 13:00:00','Dr. Garcia'),(11,2,4,1,'2024-06-05 10:00:00',NULL,'Braces Adjustment (Month 4)','approved','2024-06-01 11:00:00','2024-06-03 13:00:00','Dr. Garcia'),(12,1,5,0,'2025-07-31 16:00:00','2025-07-30 18:00:00','Tooth Extraction','pending','2025-07-01 14:28:01',NULL,NULL),(24,1,2,1,'2025-07-23 16:30:00',NULL,'Consultation','approved','2025-07-02 06:26:05',NULL,NULL),(26,1,1,1,'2025-07-30 10:30:00',NULL,'Tooth Extraction','approved','2025-07-02 09:31:20',NULL,NULL),(29,2,3,1,'2025-07-10 16:00:00',NULL,'Tooth Extraction','approved','2025-07-03 02:09:44',NULL,NULL),(44,1,26,1,'2025-06-10 09:00:00','2025-06-11 11:00:00','Follow-up Cleaning','approved','2025-07-05 01:13:57','2025-07-05 01:13:57','Dr. Ortega'),(45,1,27,1,'2025-03-15 14:00:00','2025-03-16 10:00:00','Wisdom Tooth Removal','approved','2025-07-05 01:19:20','2025-07-05 01:19:20','Dr. Mendoza'),(46,1,28,1,'2025-05-22 13:30:00','2025-05-23 09:00:00','Filling Replacement','approved','2025-07-05 01:22:58','2025-07-05 01:22:58','Dr. Tan'),(47,1,29,0,'2025-04-12 15:00:00','2025-04-13 10:00:00','Tooth Bonding','approved','2025-07-05 01:24:43','2025-07-05 01:24:43','Dr. Cruz'),(48,1,30,1,'2025-07-01 10:00:00','2025-06-19 14:00:00','Filling Procedure','approved','2025-07-05 01:24:57','2025-07-05 01:24:57','Dr. Velasquez'),(49,1,31,1,'2025-08-08 11:00:00','2025-08-09 13:00:00','Internal Bleaching','pending','2025-07-05 01:26:51','2025-07-05 01:26:51','Dr. Carreon'),(50,1,32,1,'2025-09-12 10:30:00','2025-09-13 14:30:00','Root Canal Therapy','approved','2025-07-05 01:26:58','2025-07-05 01:26:58','Dr. Trinidad'),(51,1,33,1,'2025-10-02 15:00:00','2025-10-03 13:00:00','Wisdom Tooth Extraction','approved','2025-07-05 01:31:20','2025-07-05 01:31:20','Dr. Fabian'),(52,1,34,1,'2025-10-22 09:30:00','2025-10-23 10:30:00','Deep Cleaning','pending','2025-07-05 01:36:12','2025-07-05 01:36:12','Dr. Yulo'),(55,1,35,1,'2025-11-10 14:00:00','2025-11-11 10:00:00','Crown Preparation','approved','2025-07-05 01:39:18','2025-07-05 01:39:18','Dr. Valencia'),(56,1,36,1,'2025-09-28 10:30:00','2025-09-29 08:30:00','Desensitizing Treatment','pending','2025-07-05 01:40:14','2025-07-05 01:40:14','Dr. Santos'),(57,1,37,1,'2025-08-02 15:00:00','2025-08-03 13:00:00','Occlusal Adjustment','approved','2025-07-05 01:40:36','2025-07-05 01:40:36','Dr. Lim'),(58,1,39,0,'2025-01-18 13:30:00','2025-01-19 10:00:00','Tooth Filling','approved','2025-01-05 00:00:00','2025-01-06 00:00:00','Dr. Beltran'),(60,1,40,0,'2025-02-14 11:00:00','2025-02-15 09:00:00','Extraction Consultation','approved','2025-02-01 00:00:00','2025-02-03 00:00:00','Dr. Gomez'),(61,1,41,0,'2025-07-04 11:30:00','2025-07-03 15:00:00','Root Canal Therapy','approved','2025-07-05 10:29:57','2025-07-05 10:29:57','Dr. Lopez'),(62,2,44,0,'2025-07-05 10:00:00','2025-07-06 14:00:00','Cosmetic Bonding','approved','2025-07-05 10:46:26','2025-07-05 10:46:26','Dr. Tan'),(64,2,45,0,'2025-08-07 11:00:00',NULL,'Tooth Extraction','approved','2025-07-05 02:54:36',NULL,NULL),(65,1,46,0,'2025-07-05 12:49:00',NULL,'Consultation','approved','2025-07-05 04:49:48',NULL,NULL),(66,1,46,1,'2025-07-06 01:00:00',NULL,'Brace Adjustment','approved','2025-07-05 05:05:56',NULL,NULL),(67,1,47,0,'2025-07-17 13:30:00','2025-07-24 15:30:00','consultation','pending','2025-07-14 05:21:39',NULL,NULL),(68,1,1,1,'2025-07-23 17:00:00',NULL,'Consultation','pending','2025-07-14 06:17:24',NULL,NULL),(69,1,1,1,'2025-07-21 16:00:00',NULL,'Consultation','pending','2025-07-14 06:38:17',NULL,NULL),(70,1,1,1,'2025-07-14 17:00:00',NULL,'Consultation','pending','2025-07-14 06:40:56',NULL,NULL);
+INSERT INTO `appointments` VALUES (1,1,1,0,'2024-01-15 09:00:00',NULL,'Tooth Extraction','approved','2024-01-10 08:00:00','2024-01-12 14:00:00','Dr. Reyes'),(2,1,1,1,'2024-03-10 10:30:00',NULL,'Oral Prophylaxis','approved','2024-03-05 11:00:00','2024-03-07 09:00:00','Dr. Reyes'),(3,1,2,0,'2024-02-25 11:00:00',NULL,'Dental Filling','approved','2024-02-20 13:00:00','2024-02-22 10:00:00','Dr. Santos'),(4,2,3,0,'2024-04-12 14:00:00',NULL,'Root Canal Therapy (Session 1)','approved','2024-04-07 09:30:00','2024-04-10 16:00:00','Dr. Tan'),(5,2,3,1,'2024-05-05 10:00:00',NULL,'Temporary Crown Placement','approved','2024-05-01 12:00:00','2024-05-03 14:00:00','Dr. Tan'),(6,2,4,0,'2024-01-10 09:00:00',NULL,'Orthodontic Consultation','approved','2024-01-05 08:00:00','2024-01-08 12:00:00','Dr. Garcia'),(7,2,4,1,'2024-02-05 10:00:00',NULL,'Braces Installation','approved','2024-01-30 13:00:00','2024-02-02 15:00:00','Dr. Garcia'),(8,2,4,1,'2024-03-05 10:00:00',NULL,'Braces Adjustment (Month 1)','approved','2024-03-01 09:30:00','2024-03-03 16:00:00','Dr. Garcia'),(9,2,4,1,'2024-04-05 10:00:00',NULL,'Braces Adjustment (Month 2)','approved','2024-04-01 11:00:00','2024-04-03 13:00:00','Dr. Garcia'),(10,2,4,1,'2024-05-04 10:00:00',NULL,'Braces Adjustment (Month 3)','approved','2024-05-01 11:00:00','2024-05-03 13:00:00','Dr. Garcia'),(11,2,4,1,'2024-06-05 10:00:00',NULL,'Braces Adjustment (Month 4)','approved','2024-06-01 11:00:00','2024-06-03 13:00:00','Dr. Garcia'),(12,1,5,0,'2025-07-31 16:00:00','2025-07-30 18:00:00','Tooth Extraction','pending','2025-07-01 14:28:01',NULL,NULL),(24,1,2,1,'2025-07-23 16:30:00',NULL,'Consultation','approved','2025-07-02 06:26:05',NULL,NULL),(26,1,1,1,'2025-07-30 10:30:00',NULL,'Tooth Extraction','approved','2025-07-02 09:31:20',NULL,NULL),(29,2,3,1,'2025-07-10 16:00:00',NULL,'Tooth Extraction','approved','2025-07-03 02:09:44',NULL,NULL),(44,1,26,1,'2025-06-10 09:00:00','2025-06-11 11:00:00','Follow-up Cleaning','approved','2025-07-05 01:13:57','2025-07-05 01:13:57','Dr. Ortega'),(45,1,27,1,'2025-03-15 14:00:00','2025-03-16 10:00:00','Wisdom Tooth Removal','approved','2025-07-05 01:19:20','2025-07-05 01:19:20','Dr. Mendoza'),(46,1,28,1,'2025-05-22 13:30:00','2025-05-23 09:00:00','Filling Replacement','approved','2025-07-05 01:22:58','2025-07-05 01:22:58','Dr. Tan'),(47,1,29,0,'2025-04-12 15:00:00','2025-04-13 10:00:00','Tooth Bonding','approved','2025-07-05 01:24:43','2025-07-05 01:24:43','Dr. Cruz'),(48,1,30,1,'2025-07-01 10:00:00','2025-06-19 14:00:00','Filling Procedure','approved','2025-07-05 01:24:57','2025-07-05 01:24:57','Dr. Velasquez'),(49,1,31,1,'2025-08-08 11:00:00','2025-08-09 13:00:00','Internal Bleaching','pending','2025-07-05 01:26:51','2025-07-05 01:26:51','Dr. Carreon'),(50,1,32,1,'2025-09-12 10:30:00','2025-09-13 14:30:00','Root Canal Therapy','approved','2025-07-05 01:26:58','2025-07-05 01:26:58','Dr. Trinidad'),(51,1,33,1,'2025-10-02 15:00:00','2025-10-03 13:00:00','Wisdom Tooth Extraction','approved','2025-07-05 01:31:20','2025-07-05 01:31:20','Dr. Fabian'),(52,1,34,1,'2025-10-22 09:30:00','2025-10-23 10:30:00','Deep Cleaning','pending','2025-07-05 01:36:12','2025-07-05 01:36:12','Dr. Yulo'),(55,1,35,1,'2025-11-10 14:00:00','2025-11-11 10:00:00','Crown Preparation','approved','2025-07-05 01:39:18','2025-07-05 01:39:18','Dr. Valencia'),(56,1,36,1,'2025-09-28 10:30:00','2025-09-29 08:30:00','Desensitizing Treatment','pending','2025-07-05 01:40:14','2025-07-05 01:40:14','Dr. Santos'),(57,1,37,1,'2025-08-02 15:00:00','2025-08-03 13:00:00','Occlusal Adjustment','approved','2025-07-05 01:40:36','2025-07-05 01:40:36','Dr. Lim'),(58,1,39,0,'2025-01-18 13:30:00','2025-01-19 10:00:00','Tooth Filling','approved','2025-01-05 00:00:00','2025-01-06 00:00:00','Dr. Beltran'),(60,1,40,0,'2025-02-14 11:00:00','2025-02-15 09:00:00','Extraction Consultation','approved','2025-02-01 00:00:00','2025-02-03 00:00:00','Dr. Gomez'),(61,1,41,0,'2025-07-04 11:30:00','2025-07-03 15:00:00','Root Canal Therapy','approved','2025-07-05 10:29:57','2025-07-05 10:29:57','Dr. Lopez'),(62,2,44,0,'2025-07-05 10:00:00','2025-07-06 14:00:00','Cosmetic Bonding','approved','2025-07-05 10:46:26','2025-07-05 10:46:26','Dr. Tan'),(64,2,45,0,'2025-08-07 11:00:00',NULL,'Tooth Extraction','approved','2025-07-05 02:54:36',NULL,NULL),(65,1,46,0,'2025-07-05 12:49:00',NULL,'Consultation','approved','2025-07-05 04:49:48',NULL,NULL),(66,1,46,1,'2025-07-06 01:00:00',NULL,'Brace Adjustment','approved','2025-07-05 05:05:56',NULL,NULL),(67,1,47,0,'2025-07-17 13:30:00','2025-07-24 15:30:00','consultation','approved','2025-07-14 05:21:39',NULL,NULL),(68,1,1,1,'2025-07-23 17:00:00',NULL,'Consultation','pending','2025-07-14 06:17:24',NULL,NULL),(69,1,1,1,'2025-07-21 16:00:00',NULL,'Consultation','approved','2025-07-14 06:38:17',NULL,NULL),(70,1,1,1,'2025-07-14 17:00:00',NULL,'Consultation','approved','2025-07-14 06:40:56',NULL,NULL);
 /*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +131,7 @@ CREATE TABLE `branch` (
   `clinic_close_hour` time NOT NULL,
   `services` text NOT NULL,
   PRIMARY KEY (`branch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `clinic_branch_images` (
   PRIMARY KEY (`image_id`),
   KEY `branch_id` (`branch_id`),
   CONSTRAINT `clinic_branch_images_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `clinic_branch_images` (
 
 LOCK TABLES `clinic_branch_images` WRITE;
 /*!40000 ALTER TABLE `clinic_branch_images` DISABLE KEYS */;
-INSERT INTO `clinic_branch_images` VALUES (1,'uploads/branches/manila1.jpg',1),(2,'uploads/branches/quezoncity1.jpg',2),(5,'uploads/branches/494361512_1898900354194506_7671129708134362962_n.jpg',1);
+INSERT INTO `clinic_branch_images` VALUES (1,'uploads/branches/manila1.jpg',1),(2,'uploads/branches/quezoncity1.jpg',2);
 /*!40000 ALTER TABLE `clinic_branch_images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,8 +318,214 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (1,1,'John','A.','Doe','1990-05-15','m','09171234567','john.doe@example.com','active','2024-01-10','Owner','Dental','PRC1234567','Monday, Wednesday, Friday','08:00 AM - 05:00 PM'),(2,2,'Sammy','B.','Versoza','1990-06-15','f','09472834','sam.versoza@gmail.com','active','2024-01-10','Dentist','Dental','PRC1234568','Monday, Wednesday, Friday','08:00 AM - 06:00 PM');
+INSERT INTO `employees` VALUES (1,1,'John','A.','Doe','1990-05-15','m','09171234567','john.doe@example.com','active','2024-01-10','Owner','Dental','PRC1234567','Monday, Wednesday, Friday','08:00 AM - 05:00 PM'),(2,2,'Sam','B.','Versoza','1990-06-15','f','09472834','sam.versoza@gmail.com','active','2024-01-10','Dentist','Dental','PRC1234568','Monday, Wednesday, Friday','08:00 AM - 06:00 PM');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_category`
+--
+
+DROP TABLE IF EXISTS `inventory_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory_category` (
+  `category_id` int NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(100) NOT NULL COMMENT 'Consumables, Equipment, etc.',
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_category`
+--
+
+LOCK TABLES `inventory_category` WRITE;
+/*!40000 ALTER TABLE `inventory_category` DISABLE KEYS */;
+INSERT INTO `inventory_category` VALUES (1,'Equipment'),(2,'Consumables'),(3,'Sterilization'),(4,'Lab Materials'),(5,'Medications');
+/*!40000 ALTER TABLE `inventory_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_consumables`
+--
+
+DROP TABLE IF EXISTS `inventory_consumables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory_consumables` (
+  `item_id` int NOT NULL,
+  `expiration_date` date DEFAULT NULL,
+  `last_restock` date DEFAULT NULL,
+  `minimum_stock` float DEFAULT NULL,
+  `stock_status` enum('in stock','low stock','out of stock') DEFAULT 'in stock',
+  PRIMARY KEY (`item_id`),
+  CONSTRAINT `fk_cons_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_consumables`
+--
+
+LOCK TABLES `inventory_consumables` WRITE;
+/*!40000 ALTER TABLE `inventory_consumables` DISABLE KEYS */;
+INSERT INTO `inventory_consumables` VALUES (4,'2025-12-31','2025-07-01',100,'in stock');
+/*!40000 ALTER TABLE `inventory_consumables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_equipments`
+--
+
+DROP TABLE IF EXISTS `inventory_equipments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory_equipments` (
+  `item_id` int NOT NULL,
+  `last_maintenance` date DEFAULT NULL,
+  `model` varchar(100) DEFAULT NULL,
+  `warranty_info` varchar(255) DEFAULT NULL,
+  `date_acquired` date DEFAULT NULL,
+  `equipment_condition` varchar(100) DEFAULT NULL COMMENT 'damaged, working, etc.',
+  PRIMARY KEY (`item_id`),
+  CONSTRAINT `fk_eq_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_equipments`
+--
+
+LOCK TABLES `inventory_equipments` WRITE;
+/*!40000 ALTER TABLE `inventory_equipments` DISABLE KEYS */;
+INSERT INTO `inventory_equipments` VALUES (5,'2025-06-01','DCX-3000','3-year warranty','2023-01-15','working');
+/*!40000 ALTER TABLE `inventory_equipments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_items`
+--
+
+DROP TABLE IF EXISTS `inventory_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory_items` (
+  `item_id` int NOT NULL AUTO_INCREMENT,
+  `branch_id` int NOT NULL,
+  `category_id` int NOT NULL,
+  `item_name` varchar(255) NOT NULL,
+  `quantity` float NOT NULL,
+  `quantity_unit` varchar(50) NOT NULL COMMENT 'ml, pcs, box, etc.',
+  `storage_location` varchar(255) DEFAULT NULL,
+  `cost_per_unit` float NOT NULL,
+  `total_value` float NOT NULL,
+  `supplier_name` varchar(255) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`item_id`),
+  KEY `fk_inventory_category` (`category_id`),
+  KEY `fk_branch` (`branch_id`),
+  CONSTRAINT `fk_branch` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`),
+  CONSTRAINT `fk_inventory_category` FOREIGN KEY (`category_id`) REFERENCES `inventory_category` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_items`
+--
+
+LOCK TABLES `inventory_items` WRITE;
+/*!40000 ALTER TABLE `inventory_items` DISABLE KEYS */;
+INSERT INTO `inventory_items` VALUES (1,1,5,'Amoxicillin 500mg',100,'capsules','Pharmacy Shelf A',1.5,150,'PharmaLife','Antibiotic'),(2,1,4,'X-ray Film',95,'pcs','Lab Drawer 1',3,600,'Dental Imaging Corp.','For dental radiography'),(3,1,3,'Sterile Gloves',100,'pairs','Sterilization Room',5,500,'SafeTouch Ltd.','Used in procedures'),(4,1,2,'Cotton Rolls',500,'pcs','Cabinet B2',0.5,250,'MedSupply Co.','Used for oral absorption'),(5,1,1,'Dental Chair',2,'unit','Room A1',50000,100000,'DentalSupplies Inc.','Fully reclining dental chair');
+/*!40000 ALTER TABLE `inventory_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_lab_materials`
+--
+
+DROP TABLE IF EXISTS `inventory_lab_materials`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory_lab_materials` (
+  `item_id` int NOT NULL,
+  `expiration_date` date DEFAULT NULL,
+  `last_restock` date DEFAULT NULL,
+  `stock_status` enum('in stock','low stock','out of stock') DEFAULT 'in stock',
+  `minimum_stock` float DEFAULT NULL,
+  PRIMARY KEY (`item_id`),
+  CONSTRAINT `fk_lab_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_lab_materials`
+--
+
+LOCK TABLES `inventory_lab_materials` WRITE;
+/*!40000 ALTER TABLE `inventory_lab_materials` DISABLE KEYS */;
+INSERT INTO `inventory_lab_materials` VALUES (2,'2026-01-10','2025-07-10','in stock',100);
+/*!40000 ALTER TABLE `inventory_lab_materials` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_medications`
+--
+
+DROP TABLE IF EXISTS `inventory_medications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory_medications` (
+  `item_id` int NOT NULL,
+  `dosage_form` varchar(100) DEFAULT NULL,
+  `expiration_date` date DEFAULT NULL,
+  `last_restock` date DEFAULT NULL,
+  `strength` varchar(100) DEFAULT NULL,
+  `batch_number` varchar(100) DEFAULT NULL,
+  `stock_status` enum('in stock','low stock','out of stock') DEFAULT 'in stock',
+  `minimum_stock` float DEFAULT NULL,
+  PRIMARY KEY (`item_id`),
+  CONSTRAINT `fk_med_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_medications`
+--
+
+LOCK TABLES `inventory_medications` WRITE;
+/*!40000 ALTER TABLE `inventory_medications` DISABLE KEYS */;
+INSERT INTO `inventory_medications` VALUES (1,'Capsule','2026-06-30','2025-07-01','500mg','AMX-2307-B','in stock',90);
+/*!40000 ALTER TABLE `inventory_medications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventory_sterilization`
+--
+
+DROP TABLE IF EXISTS `inventory_sterilization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventory_sterilization` (
+  `item_id` int NOT NULL,
+  `expiration_date` date DEFAULT NULL,
+  `last_restock` date DEFAULT NULL,
+  `minimum_stock_level` float DEFAULT NULL,
+  `size` varchar(100) DEFAULT NULL,
+  `stock_status` enum('in stock','low stock','out of stock') DEFAULT 'in stock',
+  PRIMARY KEY (`item_id`),
+  CONSTRAINT `fk_ster_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_sterilization`
+--
+
+LOCK TABLES `inventory_sterilization` WRITE;
+/*!40000 ALTER TABLE `inventory_sterilization` DISABLE KEYS */;
+INSERT INTO `inventory_sterilization` VALUES (3,'2025-09-30','2025-06-15',50,'Medium','low stock');
+/*!40000 ALTER TABLE `inventory_sterilization` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -395,7 +601,7 @@ CREATE TABLE `patient_info` (
 
 LOCK TABLES `patient_info` WRITE;
 /*!40000 ALTER TABLE `patient_info` DISABLE KEYS */;
-INSERT INTO `patient_info` VALUES (1,1,'Juana','Santos','Dela Cruz','1990-05-15','M','09171234567','juan.dc@example.com','123 Mabuhay St.','Barangay Uno','Manila','Metro Manila','Philippines','Dentures','Engineer','02-1234567',NULL,NULL,NULL,'None','Friend','Dr. Reyes',NULL,NULL),(2,1,'Maria','Luisa','Reyes','1985-08-22','F','09179876543','maria.reyes@example.com','456 Maligaya Ave.','Barangay Dos','Manila','Metro Manila','Philippines','Braces','Teacher','02-7654321','Lola','Cruz','Reyes','Retired','','None',NULL,NULL),(3,2,'Carlos','David','Santos','1992-02-10','M','09172345678','carlos.santos@example.com','789 Payapa Blvd.','Barangay Tres','Quezon City','Metro Manila','Philippines','Tooth ache','Designer','02-5566778',NULL,NULL,NULL,NULL,'Online Ad','Dr. Tan','2022-12-15',NULL),(4,2,'Angela','Marie','Lopez','1996-11-05','F','09173456789','angela.lopez@example.com','321 Tahimik Lane','Barangay Cuatro','Quezon City','Metro Manila','Philippines','Tooth ache','Student',NULL,'Anna','Grace','Lopez','Nurse','School','None',NULL,NULL),(5,1,'Samantha','Reyes','Bautista','2004-02-09','F','09501055477','ejbautista0209@gmail.com','129 Hello lane','Baranggay 567','Pasay City','Metro Manila','Philippines','Tooth ache','','None',NULL,NULL,NULL,'None','None','None',NULL,NULL),(26,1,'Sofia','Luisa','Velasco','1990-04-12','F','09185551123','sofia.velasco@example.com','456 Peace St','Barangay Dos','Smile City','ProvinceY','Philippines','Routine cleaning and whitening','Bank Teller','5554321',NULL,NULL,NULL,'Nurse','TV Ad','Dr. Enriquez',NULL,NULL),(27,1,'Enrico','Dela','Cruz','1988-11-05','M','09189997777','enrico.cruz@example.com','789 Smile Ave','Barangay Tres','Bright City','ProvinceZ','Philippines','Tooth extraction pain','Software Developer','8800555','Carla','Reyes','Cruz','Accountant','Online Ad','Dr. Felix','2023-10-10',NULL),(28,1,'Carmela','Ramos','Flores','1992-02-18','F','09181230098','carmela.flores@example.com','123 Rosewood St','Barangay Cuatro','Toothville','ProvinceA','Philippines','Pain in upper molar','Marketing Specialist','4412345','Angela','Ramos','Flores','Businesswoman','Facebook Ad','Dr. Ignacio','2023-08-22',NULL),(29,1,'Lorenzo','Manuel','Santos','1987-09-01','M','09181231122','lorenzo.santos@example.com','88 Dental Blvd','Barangay Cinco','Whitesmile City','ProvinceB','Philippines','Chipped front tooth','Architect','2345098','Elena','Martinez','Santos','Civil Engineer','Billboard','Dr. Robles','2023-11-12',NULL),(30,1,'Bianca','Morales','Reyes','1993-12-25','F','09173445566','bianca.reyes@example.com','201 Bright Smile St','Barangay Seis','Tooth City','ProvinceC','Philippines','Large cavity with sensitivity','Pharmacist','0998822','Cristina','Morales','Reyes','Lab Technician','Sibling','Dr. Gomez','2023-07-05',NULL),(31,1,'Nathaniel','Jose','Del Rosario','1985-07-15','M','09179998888','nathaniel.delrosario@example.com','502 Mint Lane','Barangay Siete','Dentalia','ProvinceD','Philippines','Discoloration on front tooth','Sales Manager','1239876','Consuelo','Santos','Del Rosario','Entrepreneur','Friend','Dr. Abad','2022-10-01',NULL),(32,1,'Clarisse','Anne','Gonzales','1997-06-27','F','09181112233','clarisse.gonzales@example.com','701 Smile Heights','Barangay Ocho','Pearl City','ProvinceE','Philippines','Tooth pain while chewing','Law Student','0202044','Veronica','Ramos','Gonzales','Lawyer','TikTok Ad','Dr. Mercado','2024-01-10',NULL),(33,1,'Elijah','Cruz','Manalo','2000-03-22','M','09182224444','elijah.manalo@example.com','888 Smile Drive','Barangay Nueve','Molar City','ProvinceF','Philippines','Wisdom tooth pain','Software Engineer','09003456','Liza','Reyes','Manalo','Nurse','Colleague','Dr. Fabian','2023-06-01',NULL),(34,1,'Kerbi','Elaine','Reyes','1998-12-04','F','09179992233','bianca.reyes@example.com','102 Blossom St','Barangay Trece','Toothville','ProvinceJ','Philippines','Mild gum bleeding while brushing','Marketing Analyst','0312123','Angela','Domingo','Reyes','Accountant','Company Wellness Program','Dr. Yulo','2024-10-01',NULL),(35,1,'Rafael','Domingo','Bautista','1989-09-18','M','09181234567','rafael.bautista@example.com','45 Smile Ave','Barangay Catorce','Bright City','ProvinceK','Philippines','Cracked molar','Architect','0221122','Isabel','Dela Cruz','Bautista','Engineer','Workmate','Dr. Valencia','2023-03-15',NULL),(36,1,'Rafael','Domingo','Bautista','1989-09-18','M','09181234567','rafael.bautista@example.com','45 Smile Ave','Barangay Catorce','Bright City','ProvinceK','Philippines','Cracked molar','Architect','0221122','Isabel','Dela Cruz','Bautista','Engineer','Workmate','Dr. Valencia','2023-03-15',NULL),(37,1,'Andrea','Mae','Cruz','2001-03-07','F','09181239876','andrea.cruz@example.com','908 Dental St','Barangay Quince','Gumtown','ProvinceL','Philippines','Tooth sensitivity to cold','Medical Technologist','0321987','Luz','Navarro','Cruz','Pharmacist','Poster Ad','Dr. Santos','2024-04-20',NULL),(38,1,'Louie','Enrique','Navarro','1990-11-30','M','09189998888','louie.navarro@example.com','17 Ortho Street','Barangay Diecisiete','Crownsville','ProvinceM','Philippines','Bite misalignment','Chef','0456789','Victoria','Lopez','Navarro','Restaurateur','YouTube Ad','Dr. Lim','2023-08-05',NULL),(39,1,'Julian','Rey','Santos','1993-05-15','M','09187776655','julian.santos@example.com','87 Dental Way','Barangay Uno','Happyville','ProvinceN','Philippines','Cavity pain in upper molar','IT Consultant','0345567','Gloria','De Vera','Santos','Teacher','Company Ad','Dr. Beltran','2023-09-20',NULL),(40,1,'Mikaella','Dionne','Chua','1997-02-22','F','09182345678','mika.chua@example.com','55 Serenity Lane','Barangay Dos','Tooth City','ProvinceO','Philippines','Wisdom tooth discomfort','Copywriter','0332211','Lilian','Tan','Chua','Editor','Friend','Dr. Gomez','2023-12-01',NULL),(41,1,'Miguel','Antonio','Santos','1985-05-14','M','09178887766','miguel.santos@example.com','812 Healthy Smile Ave','Barangay Uno','Tooth City','ProvinceA','Philippines','Severe toothache and swelling','Engineer','09176543210','Jose','Ramos','Santos','Electrician','Friend','Dr. Tan','2022-11-30',NULL),(44,2,'Andrea','Lopez','Reyes','1992-09-21','F','09171234567','andrea.reyes@example.com','45 Smile Corner','Barangay Dos','Tooth City','ProvinceB','Philippines','Chipped front tooth due to accident','Teacher','09334567890','Maria','Santos','Lopez','Nurse','Online Ad','Dr. Chan','2024-06-15',NULL),(45,2,'Marielle','','Modesto','2004-06-25','F','9876543222','marielle.modesto@gmail.com','123 mariellehouse','Barangay Dos','Manila','Metro Manila','Philippines','Tooth Extraction',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(46,1,'Eddielyn','Calano','Bautista','2005-02-09','F','9501055477','ejbautista0209@gmail.com','123 Mabuhay St.','Balara','Quezon City','Metro Manila','Philippines','Consultation',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(47,1,'sadssadads','dasadsa','dsadsad','2025-06-11','M','777-888-9996','bautistaeddielynjoy0209@gmail.com','ds','sdads','dsasaddsa','sdasd','Philippines','consultation',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `patient_info` VALUES (1,1,'Juan','Santos','Dela Cruz','1990-05-15','M','09171234567','juan.dc@example.com','123 Mabuhay St.','Barangay Uno','Manila','Metro Manila','Philippines','Dentures','Engineer','02-1234567',NULL,NULL,NULL,'None','Friend','Dr. Reyes',NULL,NULL),(2,1,'Maria','Luisa','Reyes','1985-08-22','F','09179876543','maria.reyes@example.com','456 Maligaya Ave.','Barangay Dos','Manila','Metro Manila','Philippines','Braces','Teacher','02-7654321','Lola','Cruz','Reyes','Retired','','None',NULL,NULL),(3,2,'Carlos','David','Santos','1992-02-10','M','09172345678','carlos.santos@example.com','789 Payapa Blvd.','Barangay Tres','Quezon City','Metro Manila','Philippines','Tooth ache','Designer','02-5566778',NULL,NULL,NULL,NULL,'Online Ad','Dr. Tan','2022-12-15',NULL),(4,2,'Angela','Marie','Lopez','1996-11-05','F','09173456789','angela.lopez@example.com','321 Tahimik Lane','Barangay Cuatro','Quezon City','Metro Manila','Philippines','Tooth ache','Student',NULL,'Anna','Grace','Lopez','Nurse','School','None',NULL,NULL),(5,1,'Samantha','Reyes','Bautista','2004-02-09','F','09501055477','ejbautista0209@gmail.com','129 Hello lane','Baranggay 567','Pasay City','Metro Manila','Philippines','Tooth ache','','None',NULL,NULL,NULL,'None','None','None',NULL,NULL),(26,1,'Sofia','Luisa','Velasco','1990-04-12','F','09185551123','sofia.velasco@example.com','456 Peace St','Barangay Dos','Smile City','ProvinceY','Philippines','Routine cleaning and whitening','Bank Teller','5554321',NULL,NULL,NULL,'Nurse','TV Ad','Dr. Enriquez',NULL,NULL),(27,1,'Enrico','Dela','Cruz','1988-11-05','M','09189997777','enrico.cruz@example.com','789 Smile Ave','Barangay Tres','Bright City','ProvinceZ','Philippines','Tooth extraction pain','Software Developer','8800555','Carla','Reyes','Cruz','Accountant','Online Ad','Dr. Felix','2023-10-10',NULL),(28,1,'Carmela','Ramos','Flores','1992-02-18','F','09181230098','carmela.flores@example.com','123 Rosewood St','Barangay Cuatro','Toothville','ProvinceA','Philippines','Pain in upper molar','Marketing Specialist','4412345','Angela','Ramos','Flores','Businesswoman','Facebook Ad','Dr. Ignacio','2023-08-22',NULL),(29,1,'Lorenzo','Manuel','Santos','1987-09-01','M','09181231122','lorenzo.santos@example.com','88 Dental Blvd','Barangay Cinco','Whitesmile City','ProvinceB','Philippines','Chipped front tooth','Architect','2345098','Elena','Martinez','Santos','Civil Engineer','Billboard','Dr. Robles','2023-11-12',NULL),(30,1,'Bianca','Morales','Reyes','1993-12-25','F','09173445566','bianca.reyes@example.com','201 Bright Smile St','Barangay Seis','Tooth City','ProvinceC','Philippines','Large cavity with sensitivity','Pharmacist','0998822','Cristina','Morales','Reyes','Lab Technician','Sibling','Dr. Gomez','2023-07-05',NULL),(31,1,'Nathaniel','Jose','Del Rosario','1985-07-15','M','09179998888','nathaniel.delrosario@example.com','502 Mint Lane','Barangay Siete','Dentalia','ProvinceD','Philippines','Discoloration on front tooth','Sales Manager','1239876','Consuelo','Santos','Del Rosario','Entrepreneur','Friend','Dr. Abad','2022-10-01',NULL),(32,1,'Clarisse','Anne','Gonzales','1997-06-27','F','09181112233','clarisse.gonzales@example.com','701 Smile Heights','Barangay Ocho','Pearl City','ProvinceE','Philippines','Tooth pain while chewing','Law Student','0202044','Veronica','Ramos','Gonzales','Lawyer','TikTok Ad','Dr. Mercado','2024-01-10',NULL),(33,1,'Elijah','Cruz','Manalo','2000-03-22','M','09182224444','elijah.manalo@example.com','888 Smile Drive','Barangay Nueve','Molar City','ProvinceF','Philippines','Wisdom tooth pain','Software Engineer','09003456','Liza','Reyes','Manalo','Nurse','Colleague','Dr. Fabian','2023-06-01',NULL),(34,1,'Kerbi','Elaine','Reyes','1998-12-04','F','09179992233','bianca.reyes@example.com','102 Blossom St','Barangay Trece','Toothville','ProvinceJ','Philippines','Mild gum bleeding while brushing','Marketing Analyst','0312123','Angela','Domingo','Reyes','Accountant','Company Wellness Program','Dr. Yulo','2024-10-01',NULL),(35,1,'Rafael','Domingo','Bautista','1989-09-18','M','09181234567','rafael.bautista@example.com','45 Smile Ave','Barangay Catorce','Bright City','ProvinceK','Philippines','Cracked molar','Architect','0221122','Isabel','Dela Cruz','Bautista','Engineer','Workmate','Dr. Valencia','2023-03-15',NULL),(36,1,'Rafael','Domingo','Bautista','1989-09-18','M','09181234567','rafael.bautista@example.com','45 Smile Ave','Barangay Catorce','Bright City','ProvinceK','Philippines','Cracked molar','Architect','0221122','Isabel','Dela Cruz','Bautista','Engineer','Workmate','Dr. Valencia','2023-03-15',NULL),(37,1,'Andrea','Mae','Cruz','2001-03-07','F','09181239876','andrea.cruz@example.com','908 Dental St','Barangay Quince','Gumtown','ProvinceL','Philippines','Tooth sensitivity to cold','Medical Technologist','0321987','Luz','Navarro','Cruz','Pharmacist','Poster Ad','Dr. Santos','2024-04-20',NULL),(38,1,'Louie','Enrique','Navarro','1990-11-30','M','09189998888','louie.navarro@example.com','17 Ortho Street','Barangay Diecisiete','Crownsville','ProvinceM','Philippines','Bite misalignment','Chef','0456789','Victoria','Lopez','Navarro','Restaurateur','YouTube Ad','Dr. Lim','2023-08-05',NULL),(39,1,'Julian','Rey','Santos','1993-05-15','M','09187776655','julian.santos@example.com','87 Dental Way','Barangay Uno','Happyville','ProvinceN','Philippines','Cavity pain in upper molar','IT Consultant','0345567','Gloria','De Vera','Santos','Teacher','Company Ad','Dr. Beltran','2023-09-20',NULL),(40,1,'Mikaella','Dionne','Chua','1997-02-22','F','09182345678','mika.chua@example.com','55 Serenity Lane','Barangay Dos','Tooth City','ProvinceO','Philippines','Wisdom tooth discomfort','Copywriter','0332211','Lilian','Tan','Chua','Editor','Friend','Dr. Gomez','2023-12-01',NULL),(41,1,'Miguel','Antonio','Santos','1985-05-14','M','09178887766','miguel.santos@example.com','812 Healthy Smile Ave','Barangay Uno','Tooth City','ProvinceA','Philippines','Severe toothache and swelling','Engineer','09176543210','Jose','Ramos','Santos','Electrician','Friend','Dr. Tan','2022-11-30',NULL),(44,2,'Andrea','Lopez','Reyes','1992-09-21','F','09171234567','andrea.reyes@example.com','45 Smile Corner','Barangay Dos','Tooth City','ProvinceB','Philippines','Chipped front tooth due to accident','Teacher','09334567890','Maria','Santos','Lopez','Nurse','Online Ad','Dr. Chan','2024-06-15',NULL),(45,2,'Marielle','','Modesto','2004-06-25','F','9876543222','marielle.modesto@gmail.com','123 mariellehouse','Barangay Dos','Manila','Metro Manila','Philippines','Tooth Extraction',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(46,1,'Eddielyn','Calano','Bautista','2005-02-09','F','9501055477','ejbautista0209@gmail.com','123 Mabuhay St.','Balara','Quezon City','Metro Manila','Philippines','Consultation',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(47,1,'sadssadads','dasadsa','dsadsad','2025-06-11','M','777-888-9996','bautistaeddielynjoy0209@gmail.com','ds','sdads','dsasaddsa','sdasd','Philippines','consultation',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `patient_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -469,7 +675,7 @@ CREATE TABLE `procedure_history` (
   CONSTRAINT `fk_procedure_appointment` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`appointment_id`) ON DELETE SET NULL,
   CONSTRAINT `procedure_history_appointment_id_fkey` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`appointment_id`) ON DELETE CASCADE,
   CONSTRAINT `procedure_history_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient_info` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,7 +684,7 @@ CREATE TABLE `procedure_history` (
 
 LOCK TABLES `procedure_history` WRITE;
 /*!40000 ALTER TABLE `procedure_history` DISABLE KEYS */;
-INSERT INTO `procedure_history` VALUES (1,1,1,'2024-01-15','Tooth Extraction','28','Dr. Reyes','Remove decayed upper right wisdom tooth',1500,'Completed','Procedure completed without complications'),(2,1,2,'2024-03-10','Oral Prophylaxis','Full','Dr. Reyes','Routine cleaning and polish',800,'Completed','Advised 6-month follow-up'),(3,2,3,'2024-02-25','Dental Filling','14','Dr. Santos','Composite filling due to cavity',1200,'Completed','Patient felt sensitivity post-procedure'),(4,3,4,'2024-04-12','Root Canal Therapy','36','Dr. Tan','RCT due to pulp infection, 3-session plan',4500,'Ongoing','Session 1 completed; next in 2 weeks'),(5,3,5,'2024-05-05','Temporary Crown Placement','36','Dr. Tan','Placed temporary crown after RCT',2000,'Completed','Permanent crown scheduled next month'),(6,4,6,'2024-01-10','Orthodontic Consultation','Full','Dr. Garcia','Assessment for braces. Took impressions and X-rays.',0,'Completed','Braces recommended; patient agreed to start treatment'),(7,4,7,'2024-02-05','Braces Installation','Full','Dr. Garcia','Installed metal braces. Discussed oral care and monthly visits.',45000,'Ongoing','Patient tolerated procedure well'),(8,4,8,'2024-03-05','Braces Adjustment','Full','Dr. Garcia','Tightened brackets, replaced elastic bands.',0,'Completed','Minor discomfort reported'),(9,4,9,'2024-04-05','Braces Adjustment','Full','Dr. Garcia','Adjusted archwire, checked teeth movement progress.',0,'Completed','Slight improvement in alignment observed'),(10,4,10,'2024-05-04','Braces Adjustment','Full','Dr. Garcia','Replaced wires and elastics, minor repositioning done.',0,'Completed','Patient doing well with hygiene'),(11,4,11,'2024-06-05','Braces Adjustment','Full','Dr. Garcia','Final monthly adjustment for phase 1. Scheduled retainer fitting.',0,'Completed','Brackets to be removed next session'),(40,26,44,'2024-07-10','Scaling and Polishing','Upper Arch','Dr. Ortega','Review in 6 months',1200,'Completed','Tartar buildup removed successfully'),(41,27,45,'2025-03-15','Wisdom Tooth Extraction','32','Dr. Mendoza','Soft diet 3 days, pain meds prescribed',2500,'Completed','Extraction successful with minimal bleeding'),(42,28,46,'2025-05-22','Tooth Filling Replacement','14','Dr. Tan','Monitor sensitivity, avoid sweets for 2 weeks',1800,'Completed','Silver filling replaced with composite resin'),(43,29,47,'2025-04-12','Composite Bonding','11','Dr. Cruz','Avoid hard food for 1 week',2000,'Completed','Small chip repaired with bonding resin'),(44,30,48,'2025-06-18','Tooth Filling - Composite Resin','30','Dr. Velasquez','Re-evaluate in 1 month',1700,'Completed','Deep cavity restored successfully'),(54,39,58,'2025-01-18','Composite Filling','26','Dr. Beltran','Observe for any post-op sensitivity',1500,'Completed','Cavity cleaned and filled with composite resin'),(56,40,60,'2025-07-05','Tooth Filling','36','Dr. Garcia','Monitor sensitivity, avoid sweets for 2 weeks',1800,'completed','Recorded via modal'),(60,41,61,'2025-07-04','Root Canal Therapy','14','Dr. Lopez','Crown placement in next visit',5500,'Completed','Cleaned and sealed root canals'),(61,45,64,'2025-07-05','Tooth Extraction','12','Dr. Garcia','Tooth Extracted at 12',1000,'completed','Recorded via modal'),(62,46,65,'2025-07-05','Brace ','Full','Dr. Garcia','Braces',45000,'completed','Recorded via modal');
+INSERT INTO `procedure_history` VALUES (1,1,1,'2024-01-15','Tooth Extraction','28','Dr. Reyes','Remove decayed upper right wisdom tooth',1500,'Completed','Procedure completed without complications'),(2,1,2,'2024-03-10','Oral Prophylaxis','Full','Dr. Reyes','Routine cleaning and polish',800,'Completed','Advised 6-month follow-up'),(3,2,3,'2024-02-25','Dental Filling','14','Dr. Santos','Composite filling due to cavity',1200,'Completed','Patient felt sensitivity post-procedure'),(4,3,4,'2024-04-12','Root Canal Therapy','36','Dr. Tan','RCT due to pulp infection, 3-session plan',4500,'Ongoing','Session 1 completed; next in 2 weeks'),(5,3,5,'2024-05-05','Temporary Crown Placement','36','Dr. Tan','Placed temporary crown after RCT',2000,'Completed','Permanent crown scheduled next month'),(6,4,6,'2024-01-10','Orthodontic Consultation','Full','Dr. Garcia','Assessment for braces. Took impressions and X-rays.',0,'Completed','Braces recommended; patient agreed to start treatment'),(7,4,7,'2024-02-05','Braces Installation','Full','Dr. Garcia','Installed metal braces. Discussed oral care and monthly visits.',45000,'Ongoing','Patient tolerated procedure well'),(8,4,8,'2024-03-05','Braces Adjustment','Full','Dr. Garcia','Tightened brackets, replaced elastic bands.',0,'Completed','Minor discomfort reported'),(9,4,9,'2024-04-05','Braces Adjustment','Full','Dr. Garcia','Adjusted archwire, checked teeth movement progress.',0,'Completed','Slight improvement in alignment observed'),(10,4,10,'2024-05-04','Braces Adjustment','Full','Dr. Garcia','Replaced wires and elastics, minor repositioning done.',0,'Completed','Patient doing well with hygiene'),(11,4,11,'2024-06-05','Braces Adjustment','Full','Dr. Garcia','Final monthly adjustment for phase 1. Scheduled retainer fitting.',0,'Completed','Brackets to be removed next session'),(40,26,44,'2024-07-10','Scaling and Polishing','Upper Arch','Dr. Ortega','Review in 6 months',1200,'Completed','Tartar buildup removed successfully'),(41,27,45,'2025-03-15','Wisdom Tooth Extraction','32','Dr. Mendoza','Soft diet 3 days, pain meds prescribed',2500,'Completed','Extraction successful with minimal bleeding'),(42,28,46,'2025-05-22','Tooth Filling Replacement','14','Dr. Tan','Monitor sensitivity, avoid sweets for 2 weeks',1800,'Completed','Silver filling replaced with composite resin'),(43,29,47,'2025-04-12','Composite Bonding','11','Dr. Cruz','Avoid hard food for 1 week',2000,'Completed','Small chip repaired with bonding resin'),(44,30,48,'2025-06-18','Tooth Filling - Composite Resin','30','Dr. Velasquez','Re-evaluate in 1 month',1700,'Completed','Deep cavity restored successfully'),(54,39,58,'2025-01-18','Composite Filling','26','Dr. Beltran','Observe for any post-op sensitivity',1500,'Completed','Cavity cleaned and filled with composite resin'),(56,40,60,'2025-07-05','Tooth Filling','36','Dr. Garcia','Monitor sensitivity, avoid sweets for 2 weeks',1800,'completed','Recorded via modal'),(60,41,61,'2025-07-04','Root Canal Therapy','14','Dr. Lopez','Crown placement in next visit',5500,'Completed','Cleaned and sealed root canals'),(61,45,64,'2025-07-05','Tooth Extraction','12','Dr. Garcia','Tooth Extracted at 12',1000,'completed','Recorded via modal'),(62,46,65,'2025-07-05','Brace ','Full','Dr. Garcia','Braces',45000,'completed','Recorded via modal'),(63,44,62,'2025-07-15','asdasdds','12','Dr. Garcia','sdadsasadsa',1200,'completed','Recorded via modal');
 /*!40000 ALTER TABLE `procedure_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,7 +708,7 @@ CREATE TABLE `transactions` (
   PRIMARY KEY (`transaction_id`),
   KEY `procedure_id` (`procedure_id`),
   CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`procedure_id`) REFERENCES `procedure_history` (`procedure_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -511,7 +717,7 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,1,'RCPT-1001','Cash','2024-01-15 00:00:00','Dr. Reyes','Tooth Extraction',1500.00,NULL),(2,2,'RCPT-1002','Cash','2024-03-10 00:00:00','Dr. Reyes','Oral Prophylaxis',800.00,NULL),(3,3,'RCPT-1003','Cash','2025-07-01 00:00:00','Dr. Santos','Dental Filling',1209.00,NULL),(4,4,'RCPT-1004','Cash','2024-04-12 00:00:00','Dr. Tan','Root Canal Therapy (Session 1)',4500.00,NULL),(5,5,'RCPT-1005','Cash','2024-05-05 00:00:00','Dr. Tan','Temporary Crown Placement',2000.00,NULL),(6,6,'RCPT-1006','Cash','2024-01-10 00:00:00','Dr. Garcia','Orthodontic Consultation',0.00,NULL),(7,7,'RCPT-1007','Cash','2024-02-05 00:00:00','Dr. Garcia','Braces Installation',10000.00,NULL),(8,8,'RCPT-1008','Cash','2024-03-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 1)',1500.00,NULL),(9,9,'RCPT-1009','Cash','2024-04-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 2)',1500.00,NULL),(10,10,'RCPT-1010','Cash','2024-05-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 3)',1500.00,NULL),(11,11,'RCPT-1011','Cash','2025-07-01 00:00:00','Dr. Garcia','Braces Adjustment (Month 4)',1500.00,NULL),(18,40,'RCPT-000012','Card','2024-07-10 09:30:00','Dr. Ortega','Scaling and Polishing - Upper Arch',1200.00,NULL),(20,41,'RCPT-000013','GCash','2025-03-15 14:45:00','Dr. Mendoza','Wisdom Tooth Extraction - Tooth 32',2500.00,NULL),(21,42,'RCPT-000014','Cash','2025-05-22 14:15:00','Dr. Tan','Tooth Filling Replacement - Tooth 14',1800.00,NULL),(22,43,'RCPT-000015','Card','2025-04-12 15:30:00','Dr. Cruz','Composite Bonding - Tooth 11',2000.00,NULL),(23,44,'RCPT-000016','Cash','2025-06-18 10:40:00','Dr. Velasquez','Tooth Filling - Tooth 30',1700.00,NULL),(33,54,'RCPT-000026','Cash','2025-01-18 14:10:00','Dr. Beltran','Composite Filling - Tooth 26',1500.00,NULL),(34,56,'AUTO-20250705015519','Card','2025-02-14 11:00:00','Dr. Garcia','Tooth Filling',1800.00,NULL),(36,60,'RCPT-000017','GCash','2025-07-04 12:15:00','Dr. Lopez','Root Canal Therapy - Tooth 14',5500.00,NULL),(37,60,'RCPT-000018','Cash','2025-07-05 11:00:00','Dr. Tan','Cosmetic Bonding - Tooth 11',3000.00,NULL),(38,61,'AUTO-20250705105657','Cash','2025-07-05 10:56:57','Dr. Garcia','Tooth Extraction',1000.00,NULL),(39,62,'AUTO-20250705130248','Cash','2025-07-05 13:02:48','Dr. Garcia','Brace ',1000.00,NULL);
+INSERT INTO `transactions` VALUES (1,1,'RCPT-1001','Cash','2024-01-15 00:00:00','Dr. Reyes','Tooth Extraction',1500.00,NULL),(2,2,'RCPT-1002','Cash','2024-03-10 00:00:00','Dr. Reyes','Oral Prophylaxis',800.00,NULL),(3,3,'RCPT-1003','Cash','2025-07-01 00:00:00','Dr. Santos','Dental Filling',1209.00,NULL),(4,4,'RCPT-1004','Cash','2024-04-12 00:00:00','Dr. Tan','Root Canal Therapy (Session 1)',4500.00,NULL),(5,5,'RCPT-1005','Cash','2024-05-05 00:00:00','Dr. Tan','Temporary Crown Placement',2000.00,NULL),(6,6,'RCPT-1006','Cash','2024-01-10 00:00:00','Dr. Garcia','Orthodontic Consultation',0.00,NULL),(7,7,'RCPT-1007','Cash','2024-02-05 00:00:00','Dr. Garcia','Braces Installation',10000.00,NULL),(8,8,'RCPT-1008','Cash','2024-03-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 1)',1500.00,NULL),(9,9,'RCPT-1009','Cash','2024-04-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 2)',1500.00,NULL),(10,10,'RCPT-1010','Cash','2024-05-05 00:00:00','Dr. Garcia','Braces Adjustment (Month 3)',1500.00,NULL),(11,11,'RCPT-1011','Cash','2025-07-01 00:00:00','Dr. Garcia','Braces Adjustment (Month 4)',1500.00,NULL),(18,40,'RCPT-000012','Card','2024-07-10 09:30:00','Dr. Ortega','Scaling and Polishing - Upper Arch',1200.00,NULL),(20,41,'RCPT-000013','GCash','2025-03-15 14:45:00','Dr. Mendoza','Wisdom Tooth Extraction - Tooth 32',2500.00,NULL),(21,42,'RCPT-000014','Cash','2025-05-22 14:15:00','Dr. Tan','Tooth Filling Replacement - Tooth 14',1800.00,NULL),(22,43,'RCPT-000015','Card','2025-04-12 15:30:00','Dr. Cruz','Composite Bonding - Tooth 11',2000.00,NULL),(23,44,'RCPT-000016','Cash','2025-06-18 10:40:00','Dr. Velasquez','Tooth Filling - Tooth 30',1700.00,NULL),(33,54,'RCPT-000026','Cash','2025-01-18 14:10:00','Dr. Beltran','Composite Filling - Tooth 26',1500.00,NULL),(34,56,'AUTO-20250705015519','Card','2025-02-14 11:00:00','Dr. Garcia','Tooth Filling',1800.00,NULL),(36,60,'RCPT-000017','GCash','2025-07-04 12:15:00','Dr. Lopez','Root Canal Therapy - Tooth 14',5500.00,NULL),(37,60,'RCPT-000018','Cash','2025-07-05 11:00:00','Dr. Tan','Cosmetic Bonding - Tooth 11',3000.00,NULL),(38,61,'AUTO-20250705105657','Cash','2025-07-05 10:56:57','Dr. Garcia','Tooth Extraction',1000.00,NULL),(39,62,'AUTO-20250705130248','Cash','2025-07-05 13:02:48','Dr. Garcia','Brace ',1000.00,NULL),(40,63,'AUTO-20250715172521','Cash','2025-07-15 17:25:21','Dr. Garcia','asdasdds',1200.00,NULL);
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -524,4 +730,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-14 15:39:08
+-- Dump completed on 2025-07-22 12:53:47

@@ -10,7 +10,7 @@
 {% block content %}
 <div class="branch-dropdown">
     {% if access_level == 'owner' %}
-        <form method="get" action="{{ url_for('dashboard.inventory') }}">
+        <form method="get" action="{{ url_for('dashboard.inventory_consumable') }}">
             <select name="branch" class="form-select" onchange="this.form.submit()">
                 <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
                 {% for branch in branches %}
@@ -59,7 +59,7 @@
                     <th>Item Id</th>
                     <th>Name</th>
                     <th>Quantity</th>
-                    <th>Unit</th>
+                    <th>Exp. Date</th>
                     <th>Last Restock</th>
                     <th>Storage Location</th>
                     <th>Status</th>
@@ -72,8 +72,8 @@
                 <tr>
                     <td>{{ item.item_id }}</td>
                     <td>{{ item.item_name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.quantity_unit }}</td>
+                    <td>{{ item.quantity | int }} {{ item.quantity_unit or '' }}</td>
+                    <td>{{ item.consumable_info.expiration_date.strftime('%B %d, %Y') if item.consumable_info and item.consumable_info.last_restock else 'N/A' }}</td>
                     <td>{{ item.consumable_info.last_restock.strftime('%B %d, %Y') if item.consumable_info and item.consumable_info.last_restock else 'N/A' }}</td>
                     <td>{{ item.storage_location }}</td>
                     <td>

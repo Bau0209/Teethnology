@@ -7,7 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 {% endblock %}
 
-{% block content %}
+{% block content %} 
 <div class="branch-dropdown">
     {% if access_level == 'owner' %}
         <form method="get" action="{{ url_for('dashboard.inventory_lab_material') }}">
@@ -39,14 +39,12 @@
 
     <!-- Search and Add -->
     <div class="search-container my-3">
-        <form action="{{ url_for('dashboard.inventory_sterilization') }}" method="GET">
+        <form action="{{ url_for('dashboard.inventory_lab_material') }}" method="GET">
             <div class="search-bar-container d-flex align-items-center">
-                <input type="text" class="form-control" name="q" placeholder="Search sterilization items..." 
+                <input type="text" class="search-bar" name="q" placeholder="Search lab materials items..." 
                        value="{{ request.args.get('q', '') }}" id="searchInput">
-                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
-                    <i class="fa fa-filter"></i>
-                </button>
-                <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#addSterilizationModal">
+                <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>
+                <button type="button" class="add-btn" data-bs-toggle="modal" data-bs-target="#addlabMaterialModal">
                     ADD
                 </button>
             </div>
@@ -58,10 +56,10 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Item Code</th>
+                    <th>Item Id</th>
                     <th>Name</th>
                     <th>Quantity</th>
-                    <th>Exp. Status</th>
+                    <th>Exp. Date</th>
                     <th>Last Restock</th>
                     <th>Storage Location</th>
                     <th>Stock Status</th>
@@ -70,23 +68,23 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in sterilization_items %}
+                {% for item in inventory_items %}
                 <tr>
-                    <td>{{ item.code }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.quantity }} {{ item.unit }}</td>
-                    <td class="{{ 'text-danger' if item.is_expired else '' }}">
-                        {{ item.exp_date|format_date }}
-                        {% if item.is_expired %}
-                        <span class="badge bg-danger ms-1">Expired</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ item.last_restock|format_date }}</td>
-                    <td>{{ item.location }}</td>
+                    <td>{{ item.item_id }}</td>
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.quantity | int }} {{ item.quantity_unit or '' }}</td>
+                    <td>{{ item.lab_material_info.expiration_date.strftime('%B %d, %Y') if item.lab_material_info and item.lab_material_info.last_restock else 'N/A' }}
+                    <td>{{ item.lab_material_info.last_restock.strftime('%B %d, %Y') if item.lab_material_info and item.lab_material_info.last_restock else 'N/A' }}</td>
+                    <td>{{ item.storage_location }}</td>
                     <td>
-                        <span class="badge bg-{{ 'danger' if item.quantity < item.min_stock else 'success' }}">
-                            {{ 'Low Stock' if item.quantity < item.min_stock else 'In Stock' }}
-                        </span>
+                        {% if item.lab_material_info %}
+                            {% set minimum_stock = item.lab_material_info.minimum_stock %}
+                            <span class="badge bg-{{ 'danger' if item.quantity < minimum_stock else 'success' }}">
+                                {{ 'Low Stock' if item.quantity < minimum_stock else 'In Stock' }}
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary">N/A</span>
+                        {% endif %}
                     </td>
                     <td>
                         <button class="btn btn-sm btn-primary" 
@@ -96,7 +94,7 @@
                         </button>
                     </td>
                     <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#sterilizationDetailsModal-{{ item.id }}">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#labMaterialsDetailsModal-{{ item.id }}">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </td>
@@ -115,4 +113,89 @@
 <script src="{{ url_for('static', filename='js/o_inventory.js') }}"></script>
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const filterBtn = document.querySelector('.filter-btn');
+
+    if (filterBtn) {
+        // Create dropdown element
+        const dropdown = document.createElement('div');
+        dropdown.classList.add('dropdown-menu');
+        dropdown.style.position = 'absolute';
+        dropdown.style.display = 'none';
+        dropdown.style.zIndex = '9999';
+        dropdown.innerHTML = `
+            <a class="dropdown-item" href="#" id="sortAZ">Sort by A-Z</a>
+            <a class="dropdown-item" href="#" id="lowStock">Low Stock</a>
+            <a class="dropdown-item" href="#" id="outOfStock">Out of Stock</a>
+            <a class="dropdown-item" href="#" id="expired">Expired</a>
+        `;
+        document.body.appendChild(dropdown);
+
+        // Toggle dropdown position on click
+        filterBtn.addEventListener('click', function (e) {
+            const rect = filterBtn.getBoundingClientRect();
+            dropdown.style.left = `${rect.left + window.scrollX}px`;
+            dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Hide dropdown on outside click
+        document.addEventListener('click', function (e) {
+            if (!filterBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Sort by A-Z
+        dropdown.querySelector('#sortAZ').addEventListener('click', function (e) {
+            e.preventDefault();
+            const tbody = document.querySelector('.patients-table tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const nameA = a.children[2].textContent.trim().toLowerCase();
+                const nameB = b.children[2].textContent.trim().toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+            rows.forEach(row => tbody.appendChild(row));
+            dropdown.style.display = 'none';
+        });
+
+        // Low Stock filter (assumes data-stock or cell contains "low")
+        dropdown.querySelector('#lowStock').addEventListener('click', function (e) {
+            e.preventDefault();
+            const rows = document.querySelectorAll('.patients-table tbody tr');
+            rows.forEach(row => {
+                const stockCell = row.dataset.stock || row.textContent.toLowerCase();
+                row.style.display = stockCell.includes('low') ? '' : 'none';
+            });
+            dropdown.style.display = 'none';
+        });
+
+        // Out of Stock filter (assumes data-stock or cell contains "out")
+        dropdown.querySelector('#outOfStock').addEventListener('click', function (e) {
+            e.preventDefault();
+            const rows = document.querySelectorAll('.patients-table tbody tr');
+            rows.forEach(row => {
+                const stockCell = row.dataset.stock || row.textContent.toLowerCase();
+                row.style.display = stockCell.includes('out of stock') ? '' : 'none';
+            });
+            dropdown.style.display = 'none';
+        });
+
+        // Expired filter (assumes data-expired or cell contains "expired")
+        dropdown.querySelector('#expired').addEventListener('click', function (e) {
+            e.preventDefault();
+            const rows = document.querySelectorAll('.patients-table tbody tr');
+            rows.forEach(row => {
+                const expCell = row.dataset.expired || row.textContent.toLowerCase();
+                row.style.display = expCell.includes('expired') ? '' : 'none';
+            });
+            dropdown.style.display = 'none';
+        });
+    } else {
+        console.warn("No element with class '.filter-btn' found.");
+    }
+});
+</script>
 {% endblock %}
