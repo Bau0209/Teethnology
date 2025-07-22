@@ -360,7 +360,31 @@ body {
 #equipmentRestockModal .btn-close-white {
   filter: invert(1);
 }
+#addEquipmentModal .modal-header {
+  background-color: #0d6efd;
+}
 
+#addEquipmentModal .form-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+#addEquipmentModal .modal-body {
+  padding: 1.5rem;
+}
+.modal-header {
+  background-color: #00898E !important;
+  color: white;
+}
+.form-label {
+  font-weight: 500;
+}
+.modal-body {
+   padding: 20px;
+ }
+.form-group {
+  margin-bottom: 15px;
+}
 /* Responsive adjustments */
 @media (min-width: 1920px) {
   .inventory-container {

@@ -1,0 +1,78 @@
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">ADD ITEMS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="itemName" class="form-label">Item Name:</label>
+                                <input type="text" class="form-control" id="itemName">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="category" class="form-label">Category:</label>
+                                <input type="text" class="form-control" id="category">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="quantityInStock" class="form-label">Quantity in Stock:</label>
+                                <input type="number" class="form-control" id="quantityInStock">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="expirationStatus" class="form-label">Expiration Status:</label>
+                                <input type="text" class="form-control" id="expirationStatus">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="minimumStockLevel" class="form-label">Minimum Stock Level:</label>
+                                <input type="number" class="form-control" id="minimumStockLevel">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="size" class="form-label">Size:</label>
+                                <input type="text" class="form-control" id="size">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="description" class="form-label">Description:</label>
+                                <textarea class="form-control" id="description" rows="1"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="storageLocation" class="form-label">Storage Location:</label>
+                                <input type="text" class="form-control" id="storageLocation">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="supplierName" class="form-label">Supplier Name:</label>
+                                <input type="text" class="form-control" id="supplierName">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastRestocked" class="form-label">Last Restocked:</label>
+                                <input type="date" class="form-control" id="lastRestocked">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="totalValue" class="form-label">Total Value:</label>
+                                <input type="text" class="form-control" id="totalValue">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add Item</button>
+            </div>
+        </div>
+    </div>
+</div>

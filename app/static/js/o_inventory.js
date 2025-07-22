@@ -1,170 +1,153 @@
 document.addEventListener('DOMContentLoaded', function() {
-  
-  /**
-   * Makes API calls and handles responses
-   * @param {string} url - API endpoint
-   * @param {string} method - HTTP method (GET, POST, etc.)
-   * @param {object} data - Request payload
-   */
-  function makeApiCall(url, method = 'GET', data = null) {
-    const options = {
-      method,
-      headers: { 'Content-Type': 'application/json' }
+    // Initialize the main add item modal
+    const initAddItemModal = () => {
+        const addModalEl = document.getElementById('addItemModal');
+        if (!addModalEl) return;
+        
+        const addModal = new bootstrap.Modal(addModalEl, {
+            focus: true,
+            keyboard: true
+        });
+
+        // Handle add button clicks
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.add-btn')) {
+                e.preventDefault();
+                addModal.show();
+            }
+        });
+
+        // Fix for aria-hidden warning
+        addModalEl.addEventListener('shown.bs.modal', function() {
+            const closeBtn = addModalEl.querySelector('.btn-close');
+            if (closeBtn) closeBtn.focus();
+        });
     };
-    
-    if (data) {
-      options.body = JSON.stringify(data);
-    }
-    
-    return fetch(url, options)
-      .then(handleResponse)
-      .catch(handleError);
-  }
 
-  /**
-   * Shows a Bootstrap toast notification
-   * @param {string} message - Notification text
-   * @param {string} type - success/error/warning/info
-   */
-  function showToast(message, type = 'success') {
-    const toastEl = document.getElementById('toastNotification');
-    const toast = new bootstrap.Toast(toastEl);
-    
-    // Set toast content and classes
-    toastEl.querySelector('.toast-body').textContent = message;
-    toastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'bg-info');
-    toastEl.classList.add(`bg-${type}`);
-    
-    toast.show();
-  }
+    // Handle detail modals with proper error handling
+    const initDetailModals = () => {
+        document.addEventListener('click', function(e) {
+            const viewTrigger = e.target.closest('a[data-bs-target^="#fullDetailsModal"]');
+            if (!viewTrigger) return;
+            
+            e.preventDefault();
+            const modalId = viewTrigger.getAttribute('data-bs-target');
+            const modalEl = document.querySelector(modalId);
+            
+            if (!modalEl) {
+                console.error(`Modal ${modalId} not found in DOM`);
+                return;
+            }
 
-  /**
-   * Toggles loading state for buttons
-   * @param {HTMLElement} button - Button element
-   * @param {boolean} isLoading - Loading state
-   */
-  function toggleLoading(button, isLoading) {
-    if (isLoading) {
-      button.setAttribute('data-original-text', button.textContent);
-      button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
-      button.disabled = true;
-    } else {
-      button.textContent = button.getAttribute('data-original-text');
-      button.disabled = false;
-    }
-  }
+            // Initialize modal if not already initialized
+            let modal = bootstrap.Modal.getInstance(modalEl);
+            if (!modal) {
+                modal = new bootstrap.Modal(modalEl, {
+                    focus: true,
+                    keyboard: true
+                });
+            }
 
-  /**
-   * Initializes all modal triggers
-   */
-  function initModals() {
-    // Equipment Details Modal
-    document.querySelectorAll('[data-bs-toggle="modal"]').forEach(link => {
-      link.addEventListener('click', handleModalTrigger);
-    });
-
-    // Chevron-right button for showing both modals
-    document.querySelectorAll('.bi-chevron-right').forEach(button => {
-      button.addEventListener('click', showBothModals);
-    });
-
-    // Restock modals
-    document.querySelectorAll('.btn-sm.btn-primary').forEach(button => {
-      if (button.textContent.trim() === 'Request Now') {
-        button.addEventListener('click', initEquipmentRestockModal);
-      } else if (button.textContent.trim() === 'Restock') {
-        button.addEventListener('click', initGeneralRestockModal);
-      }
-    });
-  }
-
-  /**
-   * Shows both equipment and inventory modals
-   */
-  function showBothModals() {
-    const equipmentModal = new bootstrap.Modal(document.getElementById('o_in_eq_full_details'));
-    const inventoryModal = new bootstrap.Modal(document.getElementById('o_in_full_details_modal'));
-    
-    equipmentModal.show();
-    inventoryModal.show();
-    
-    // Optional: Load data for both modals
-    loadEquipmentDetails();
-    loadInventoryDetails();
-  }
-
-  /**
-   * Handles modal trigger click events
-   */
-  function handleModalTrigger(event) {
-    const target = this.getAttribute('data-bs-target');
-    if (!target) return;
-    
-    const itemId = target.split('-').pop();
-    const isEquipment = target.includes('equipmentDetailsModal');
-    
-    if (isEquipment) {
-      loadEquipmentDetails(itemId);
-    } else {
-      loadItemDetails(itemId);
-    }
-  }
-
-  /**
-   * Loads equipment details via API
-   */
-  function loadEquipmentDetails(itemId) {
-    // makeApiCall(`/api/equipment/${itemId}`)
-    //   .then(data => populateEquipmentModal(data));
-    console.log(`Loading equipment details for ID: ${itemId}`);
-  }
-
-  /**
-   * Loads inventory details via API
-   */
-  function loadInventoryDetails(itemId) {
-    // makeApiCall(`/api/inventory/${itemId}`)
-    //   .then(data => populateInventoryModal(data));
-    console.log(`Loading inventory details for ID: ${itemId}`);
-  }
-
-  /**
-   * Handles API response
-   */
-  function handleResponse(response) {
-    if (!response.ok) {
-      return response.json().then(err => Promise.reject(err));
-    }
-    return response.json();
-  }
-  
-  /**
-   * Handles errors from API calls
-   */
-  function handleError(error) {
-    console.error('API Error:', error);
-    showToast(error.message || 'An error occurred', 'error');
-    throw error;
-  }
-
-  /**
-   * Formats date to local string
-   */
-  function formatDate(dateString) {
-    return new Date(dateString).toLocaleDateString();
-  }
-
-  /**
-   * Debounce function for search inputs
-   */
-  function debounce(func, wait) {
-    let timeout;
-    return function(...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), wait);
+            modal.show();
+        });
     };
-  }
 
-  // Initialize all modal functionality
-  initModals();
+    // Initialize both modal systems
+    initAddItemModal();
+    initDetailModals();
+
+    // Performance optimization to prevent forced reflows
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            // Any layout-sensitive operations
+        }, 250);
+    });
+});
+
+//function for filter
+document.addEventListener('DOMContentLoaded', function () {
+    const filterBtn = document.querySelector('.filter-btn');
+
+    if (filterBtn) {
+        // Create dropdown element (unchanged)
+        const dropdown = document.createElement('div');
+        dropdown.classList.add('dropdown-menu');
+        dropdown.style.position = 'absolute';
+        dropdown.style.display = 'none';
+        dropdown.style.zIndex = '9999';
+        dropdown.innerHTML = `
+            <a class="dropdown-item" href="#" id="sortAZ">Sort by A-Z</a>
+            <a class="dropdown-item" href="#" id="lowStock">Low Stock</a>
+            <a class="dropdown-item" href="#" id="outOfStock">Out of Stock</a>
+            <a class="dropdown-item" href="#" id="expired">Expired</a>
+        `;
+        document.body.appendChild(dropdown);
+
+        // Toggle dropdown position on click (FIXED: Added e.preventDefault())
+        filterBtn.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default form submission
+            const rect = filterBtn.getBoundingClientRect();
+            dropdown.style.left = `${rect.left + window.scrollX}px`;
+            dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Hide dropdown on outside click (unchanged)
+        document.addEventListener('click', function (e) {
+            if (!filterBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Sort by A-Z (unchanged)
+        dropdown.querySelector('#sortAZ').addEventListener('click', function (e) {
+            e.preventDefault();
+            const tbody = document.querySelector('.patients-table tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+                const nameA = a.children[2].textContent.trim().toLowerCase();
+                const nameB = b.children[2].textContent.trim().toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+            rows.forEach(row => tbody.appendChild(row));
+            dropdown.style.display = 'none';
+        });
+
+        // Low Stock filter (unchanged)
+        dropdown.querySelector('#lowStock').addEventListener('click', function (e) {
+            e.preventDefault();
+            const rows = document.querySelectorAll('.patients-table tbody tr');
+            rows.forEach(row => {
+                const stockCell = row.dataset.stock || row.textContent.toLowerCase();
+                row.style.display = stockCell.includes('low') ? '' : 'none';
+            });
+            dropdown.style.display = 'none';
+        });
+
+        // Out of Stock filter (unchanged)
+        dropdown.querySelector('#outOfStock').addEventListener('click', function (e) {
+            e.preventDefault();
+            const rows = document.querySelectorAll('.patients-table tbody tr');
+            rows.forEach(row => {
+                const stockCell = row.dataset.stock || row.textContent.toLowerCase();
+                row.style.display = stockCell.includes('out of stock') ? '' : 'none';
+            });
+            dropdown.style.display = 'none';
+        });
+
+        // Expired filter (unchanged)
+        dropdown.querySelector('#expired').addEventListener('click', function (e) {
+            e.preventDefault();
+            const rows = document.querySelectorAll('.patients-table tbody tr');
+            rows.forEach(row => {
+                const expCell = row.dataset.expired || row.textContent.toLowerCase();
+                row.style.display = expCell.includes('expired') ? '' : 'none';
+            });
+            dropdown.style.display = 'none';
+        });
+    } else {
+        console.warn("No element with class '.filter-btn' found.");
+    }
 });
