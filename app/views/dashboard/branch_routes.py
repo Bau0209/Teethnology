@@ -63,6 +63,7 @@ def add_branch():
     flash('Branch successfully added!', 'success')
     return redirect(url_for('dashboard.branches'))
 
+
 @dashboard.route('/branch_info/<int:branch_id>')
 def branch_info(branch_id):
     branch = Branch.query.get_or_404(branch_id)

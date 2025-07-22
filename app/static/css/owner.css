@@ -221,6 +221,34 @@ body {
   transition: margin-left 0.3s ease;
   overflow-y: auto
 }
+.breadcrumb-container {
+    padding: 10px 15px;
+    margin: 0 0 20px 0;
+    font-size: 14px;
+}
+
+.breadcrumb-container a {
+    color: #3b82f6;
+    text-decoration: none;
+    padding: 2px 5px;
+    border-radius: 3px;
+    transition: all 0.2s;
+}
+
+.breadcrumb-container a:hover {
+    background: #eef2ff;
+    text-decoration: none;
+}
+
+.breadcrumb-container .separator {
+    margin: 0 5px;
+    color: #9ca3af;
+}
+
+.breadcrumb-container .current {
+    font-weight: 500;
+    padding: 2px 5px;
+}
 
 .dashboard-top {
   display: grid;

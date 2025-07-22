@@ -140,7 +140,7 @@ function initDynamicFeatures() {
 
 }
 
-// Archive button functiongi
+// Archive button function
 document.addEventListener('DOMContentLoaded', function () {
     const archiveBtn = document.querySelector('.branch-info-archive-btn');
 
