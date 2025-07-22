@@ -9,10 +9,9 @@
 {% endblock %}
 
 {% block content %}
+<!-- Hidden element for branch name -->
+<div data-branch-name="{{ branch.branch_name }}" style="display: none;"></div>
 <div class="branch-info-card">
-    <a href="{{ url_for('dashboard.branches') }}" class="back-btn" style="text-decoration: none; color: #00898E; font-size: 1rem; font-weight: 700;">
-        <i class="fas fa-chevron-left"></i> Back to Branches
-      </a>
     <!-- Slider + Thumbnails -->
     <div class="branch-info-image-row">
         <div class="branch-info-image-slider position-relative">
