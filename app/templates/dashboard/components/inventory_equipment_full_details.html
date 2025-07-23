@@ -1,4 +1,4 @@
-<div class="modal fade" id="equipmentDetailsModal-{{ item.id }}" tabindex="-1" aria-labelledby="equipmentDetailsModalLabel" aria-hidden="true">
+<div class="modal fade" id="equipmentDetailsModal-{{ item.item_id }}" tabindex="-1" aria-labelledby="equipmentDetailsModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -9,8 +9,7 @@
         <div class="container-fluid">
           <div class="row mb-3">
             <div class="col-md-12">
-              <h4 class="item-code">{{ item.serial_no }}</h4>
-              <span class="badge bg-{{ 'success' if item.status == 'Active' else 'warning' }}">{{ item.status }}</span>
+              <h4 class="item-code" style="font-size: 1.2rem; color: #00898E; font-weight: 700;">{{ item.item_id }}</h4>
             </div>
           </div>
           
@@ -18,19 +17,19 @@
             <div class="col-md-6">
               <div class="detail-item mb-3">
                 <label class="detail-label">Equipment Name:</label>
-                <span class="detail-value">{{ item.name }}</span>
+                <span class="detail-value">{{ item.item_name }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Category:</label>
-                <span class="detail-value">{{ item.category }}</span>
+                <span class="detail-value" id="restockCategory">{{ item.category.category_name if item and item.category else '' }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Quantity:</label>
-                <span class="detail-value">{{ item.quantity }}</span>
+                <span class="detail-value">{{ item.quantity | int }} {{ item.quantity_unit or '' }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Model:</label>
-                <span class="detail-value">{{ item.model }}</span>
+                <span class="detail-value">{{ item.equipment_info.model }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Warranty Info:</label>
@@ -47,15 +46,11 @@
             <div class="col-md-6">
               <div class="detail-item mb-3">
                 <label class="detail-label">Condition:</label>
-                <span class="detail-value">
-                  <span class="badge bg-{{ 'success' if item.condition == 'Good' else 'danger' }}">
-                    {{ item.condition }}
-                  </span>
-                </span>
+                 <span class="detail-value">{{ item.equipment_info.equipment_condition }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Storage Location:</label>
-                <span class="detail-value">{{ item.location }}</span>
+                <span class="detail-value">{{ item.storage_location }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Supplier:</label>
@@ -63,12 +58,7 @@
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Last Maintenance:</label>
-                <span class="detail-value {{ 'text-danger' if item.maintenance_overdue else '' }}">
-                  {{ item.last_maintenance|format_date }}
-                  {% if item.maintenance_overdue %}
-                    <span class="badge bg-danger ms-1">Overdue</span>
-                  {% endif %}
-                </span>
+                <span class="detail-value ">{{ item.equipment_info.last_maintenance }}</span>
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Acquired:</label>
@@ -76,7 +66,9 @@
               </div>
               <div class="detail-item mb-3">
                 <label class="detail-label">Total Value:</label>
-                <span class="detail-value">${{ "%0.2f"|format(item.value) }}</span>
+                <span class="detail-value">
+                  ₱{{ "%.2f"|format(item.value|default(0, true)) }}
+                </span>
               </div>
             </div>
           </div>
@@ -84,9 +76,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" 
-                onclick="handleEquipmentAction('maintenance', '{{ item.id }}')">
-          Request Maintenance
+        <button type="button" class="btn btn-primary" style="background-color: #f02d2dc5;"
+                onclick="handleItemAction('archive', '{{ item.id }}')">
+          Archive
         </button>
       </div>
     </div>

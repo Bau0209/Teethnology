@@ -1,0 +1,71 @@
+<div class="modal fade" id="restockModal-{{ item.item_id }}" tabindex="-1" aria-labelledby="restockModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="restockForm" method="post">
+        <div class="modal-header">
+          <h5 class="modal-title" id="restockModalLabel">Restock Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Item Name:</label>
+                  <span class="detail-value" id="restockItemName">{{ item.item_name if item else '' }}</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Item Code:</label>
+                  <span class="detail-valuet" id="restockItemCode">{{ item.item_id if item else '' }}</span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                  <label class="form-label me-3 mb-0">Quantity Input:</label>
+                  <div class="input-group" style="width: 120px;">
+                    <button class="btn btn-outline-secondary" type="button" id="decrementQty">-</button>
+                    <input type="number" class="form-control text-center" id="restockQuantity" name="quantity" value="1" min="1" style="max-width: 60px;">
+                    <button class="btn btn-outline-secondary" type="button" id="incrementQty">+</button>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Category:</label>
+                  <span class="detail-value" id="restockCategory">{{ item.category.category_name  }}</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Current Stock:</label>
+                  <span class="detail-value" id="restockCurrentStock">{{ item.quantity | int }} {{ item.quantity_unit or '' }}</span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Expiration Date:</label>
+                    <input type="date" class="form-control" id="restockExpirationDate" name="expiration_date"
+                            value="{{ expiration.strftime('%Y-%m-%d') if expiration else '' }}">
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Restock Date:</label>
+                  <input type="date" class="form-control" id="restockDate" name="restock_date" value="{{ current_date if current_date else '' }}">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-end">
+          <button type="submit" class="btn" style="background-color: #009688; color: #fff;">Restock</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  // Simple increment/decrement for quantity input
+  document.addEventListener('DOMContentLoaded', function() {
+    const qtyInput = document.getElementById('restockQuantity');
+    document.getElementById('decrementQty').onclick = function() {
+      if (qtyInput.value > 1) qtyInput.value--;
+    };
+    document.getElementById('incrementQty').onclick = function() {
+      qtyInput.value++;
+    };
+  });
+</script>
