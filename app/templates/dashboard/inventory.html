@@ -107,12 +107,29 @@
                         {% endif %}
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-primary">Restock</button>
+                         {% if item.equipment_info %}
+                            <!-- Show Request Button (for Equipment) -->
+                            <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#restockEquipmentModal-{{ item.item_id }}">
+                                Request
+                            </a> 
+                            {% else %}
+                            <!-- Show Restock Button (for Medication/Supply) -->
+                            <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#restockModal-{{ item.item_id }}">
+                                Restock
+                            </a>
+                        {% endif %}
                     </td>
                     <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#fullDetailsModal-{{ item.item_id }}">
-                            <i class="fa fa-chevron-right"></i>
-                        </a>
+                        <a href="#"
+                            data-bs-toggle="modal"
+                            {% if item.equipment_info %}
+                                data-bs-target="#equipmentDetailsModal-{{ item.item_id }}"
+                            {% else %}
+                                data-bs-target="#fullDetailsModal-{{ item.item_id }}"
+                            {% endif %}
+                            >
+                                <i class="fa fa-chevron-right"></i>
+                            </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -121,8 +138,19 @@
     </div>
 </div>
 {% include 'dashboard/components/add_inventory_items.html' %}
-{% for item in inventory %}
-    {% include 'dashboard/components/inventory_full_details_modal.html'%}
+{% for item in inventory_items %}
+    {% if item.equipment_info %}
+        {% include 'dashboard/components/inventory_equipment_full_details.html' %}
+    {% else %}
+        {% include 'dashboard/components/inventory_full_details_modal.html' %}
+    {% endif %}
+{% endfor %}
+{% for item in inventory_items %}
+    {% if item.equipment_info %}
+        {% include 'dashboard/components/request_equipment_modal.html' %}
+    {% else %}
+        {% include 'dashboard/components/restock_modal.html' %}
+    {% endif %}
 {% endfor %}
 {% endblock %}
 

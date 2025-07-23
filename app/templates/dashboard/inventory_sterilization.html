@@ -86,14 +86,12 @@
                         {% endif %}
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-primary" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#restockModal-{{ item.id }}">
-                            Restock
-                        </button>
+                        <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#restockModal-{{ item.item_id }}">
+                             Restock
+                        </a>
                     </td>
                     <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#sterilizationDetailsModal-{{ item.id }}">
+                         <a href="#" data-bs-toggle="modal" data-bs-target="#fullDetailsModal-{{ item.item_id }}">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </td>
@@ -104,9 +102,12 @@
     </div>
 </div>
 {% include 'dashboard/components/add_inventory_items.html' %}
-{% for item in sterilization %}
-    {% include 'dashboard/components/inventory_full_details_modal.html'%}
+{% for item in inventory_items %}
+    {% include 'dashboard/components/inventory_full_details_modal.html' %}
 {% endfor %}
+{% for item in inventory_items %}
+    {% include 'dashboard/components/restock_modal.html' %}
+{% endfor %} 
 {% endblock %}
 
 {% block extra_js %}

@@ -82,13 +82,16 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-primary">Request</button>
+                        <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#restockEquipmentModal-{{ equipment.item_id }}">
+                            Request
+                        </a>
                     </td>
                     <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#equipmentDetailsModal-{{ equipment.id }}">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#equipmentDetailsModal-{{ equipment.item_id }}">
                             <i class="fa fa-chevron-right"></i>
                         </a>
                     </td>
+
                 </tr>
                 {% endfor %}
             </tbody>
@@ -96,8 +99,11 @@
     </div>
 </div>
 {% include 'dashboard/components/add_inventory_equipment.html' %}
-{% for item in equipment %}
-    {% include 'dashboard/components/inventory_equipment_full_details.html'%}
+{% for item in inventory_items %}
+    {% include 'dashboard/components/inventory_equipment_full_details.html' %}
+{% endfor %}
+{% for item in inventory_items %}
+    {% include 'dashboard/components/request_equipment_modal.html' %}
 {% endfor %}
 {% endblock %}
 
