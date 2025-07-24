@@ -130,3 +130,52 @@ window.addEventListener('unload', function () {
     const style = document.getElementById('modal-fix-styles');
     if (style) style.remove();
 });
+
+
+
+// function for Export and Print button in balance full details modal 
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('paymentHistoryModal');
+
+    // Use IDs if available; fallback to button text
+    const exportPdfBtn = modal.querySelector('button.btn-outline-primary');
+    const printBtn = modal.querySelector('button.btn-outline-success');
+
+    // PDF Export using jsPDF
+    exportPdfBtn.addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('l', 'pt', 'a4'); // landscape, points, A4
+
+        // Get table content
+        const table = modal.querySelector('table');
+        doc.autoTable({ html: table });
+
+        doc.save('payment-history.pdf');
+    });
+
+    // Print
+    printBtn.addEventListener('click', function () {
+        const printContent = modal.querySelector('.modal-body').innerHTML;
+        const win = window.open('', '', 'width=1024,height=768');
+        win.document.write(`
+            <html>
+                <head>
+                    <title>Print - Payment History</title>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+                    <style>
+                        body { padding: 20px; font-size: 12px; }
+                        table { width: 100%; border-collapse: collapse; }
+                    </style>
+                </head>
+                <body>
+                    <h4>Payment History / Transaction Log</h4>
+                    ${printContent}
+                </body>
+            </html>
+        `);
+        win.document.close();
+        win.focus();
+        win.print();
+        win.close();
+    });
+});
