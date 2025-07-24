@@ -119,15 +119,6 @@ body {
     text-align: center;
 }
 
-/* ============== CHART ============== */
-#revenueChart {
-    width: 100% !important;
-    height: 243px !important;
-    margin-top: 20px;
-    margin: 0;
-}
-
-
 /* ============== TABLE STYLES ============== */
 .table {
     margin-top: 20px;
@@ -317,6 +308,11 @@ body {
 .d-grid .btn-primary.btn-lg .fa-plus {
     font-size: 0.9rem !important;
     margin-right: 5px !important;
+}
+
+.modal-header {
+  background-color: #00898E !important;
+  color: white;
 }
 
 /* ============== RESPONSIVE ADJUSTMENTS ============== */

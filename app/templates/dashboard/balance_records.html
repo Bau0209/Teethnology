@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 {% endblock %}
-
+ 
 {% block content %}
 <div class="container-fluid px-4">
     <div class="row">  
@@ -81,7 +81,7 @@
                             <td>₱{{ '{:,.2f}'.format(record.amount_paid) }}</td>
                             <td>₱{{ '{:,.2f}'.format(record.remaining) }}</td>
                             <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#receiptModal">
+                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#paymentHistoryModal">
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </td>
@@ -106,6 +106,8 @@
 
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <script src="{{ url_for('static', filename='js/o_transaction.js') }}"></script>
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 {% endblock %}
