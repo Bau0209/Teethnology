@@ -29,3 +29,8 @@ def balance_record():
             })
 
     return render_template('/dashboard/balance_records.html', balance_data=balance_data)
+
+@dashboard.route('/patient/<int:patient_id>/payment-history')
+def payment_history(patient_id):
+    balance_data = Procedures.query.filter_by(patient_id=patient_id).all()
+    return render_template("your_template.html", balance_data=balance_data)
