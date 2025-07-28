@@ -151,3 +151,96 @@ document.addEventListener('DOMContentLoaded', function () {
         console.warn("No element with class '.filter-btn' found.");
     }
 });
+
+ // Simple increment/decrement for quantity input
+  document.addEventListener('DOMContentLoaded', function() {
+    const qtyInput = document.getElementById('restockQuantity');
+    document.getElementById('decrementQty').onclick = function() {
+      if (qtyInput.value > 1) qtyInput.value--;
+    };
+    document.getElementById('incrementQty').onclick = function() {
+      qtyInput.value++;
+    };
+  });
+
+  // Function to handle the restock modal
+function handleRestock(event, itemId) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    fetch(`/dashboard/restock/${itemId}`, {  // Note the /dashboard/ prefix
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json',
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Close modal
+            const modalEl = document.getElementById(`restockModal-${itemId}`);
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+            
+            // Update table row
+            updateTableRow(itemId, data);
+            
+            // Show success message
+            showToast('Item restocked successfully!');
+            
+            // Redirect back to the original tab
+            if (data.current_tab) {
+                const tabLink = document.querySelector(`.nav-tabs .nav-link[href="#${data.current_tab}"]`);
+                if (tabLink) {
+                    new bootstrap.Tab(tabLink).show();
+                }
+            }
+        } else {
+            alert(`Error: ${data.message}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while restocking the item');
+    });
+}
+
+function updateTableRow(itemId, data) {
+    const row = document.querySelector(`tr[data-item-id="${itemId}"]`);
+    if (!row) return;
+    
+    // Update quantity
+    const quantityCell = row.querySelector('.quantity-cell');
+    if (quantityCell) {
+        quantityCell.textContent = `${data.new_quantity} ${data.quantity_unit || ''}`;
+    }
+    
+    // Update status
+    const statusCell = row.querySelector('.status-cell');
+    if (statusCell) {
+        const badge = statusCell.querySelector('.badge');
+        if (badge) {
+            badge.className = `badge bg-${data.is_low_stock ? 'danger' : 'success'}`;
+            badge.textContent = data.is_low_stock ? 'Low Stock' : 'In Stock';
+        }
+    }
+    
+    // Update dates
+    const restockDateCell = row.querySelector('.restock-date-cell');
+    if (restockDateCell && data.last_restock_date) {
+        restockDateCell.textContent = formatDate(data.last_restock_date);
+    }
+    
+    const expDateCell = row.querySelector('.expiration-date-cell');
+    if (expDateCell && data.expiration_date) {
+        expDateCell.textContent = formatDate(data.expiration_date);
+    }
+}

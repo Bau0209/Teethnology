@@ -11,7 +11,7 @@
 {% block content %}
 <div class="container-fluid px-4">
     <div class="row">         
-        <!-- Transactions Table Section -->
+        <!-- Transactions Table Section --> 
         <div class="transaction-container">
                 <!-- Branch Tabs -->
                 <ul class="nav nav-tabs" id="transactionTabs">
@@ -86,7 +86,7 @@
                                         <td>{{ txn.total_amount_paid }}</td>
                                         <td>{{ txn.payment_method }}</td>
                                         <td class="text-end">
-                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#receiptModal">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#receiptModal{{ txn.id }}">
                                                 <i class="fa fa-chevron-right"></i>
                                             </button>
                                         </td>
@@ -101,17 +101,13 @@
                         </table>
                     </div>
                 </div>
-                
-                <!-- Add Transaction Button -->
-                <!-- <div class="d-grid">
-                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#patientModal">Add Transaction</button>
-                </div> -->
             </div>
         </div>
     </div>
 </div>
+{% for txn in transactions %}
 {% include 'dashboard/components/transaction_full_details.html' %}
-{% include 'dashboard/components/balance_full_details.html' %}
+{% endfor %}
 
 {% endblock %}
 
