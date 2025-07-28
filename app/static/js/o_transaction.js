@@ -131,17 +131,15 @@ window.addEventListener('unload', function () {
     if (style) style.remove();
 });
 
-
-
-// function for Export and Print button in balance full details modal 
+// --- Export and Print in Payment History Modal ---
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('paymentHistoryModal');
+    if (!modal) return; // ✅ Fix applied here to prevent TypeError
 
-    // Use IDs if available; fallback to button text
-    const exportPdfBtn = modal.querySelector('button.btn-outline-primary');
-    const printBtn = modal.querySelector('button.btn-outline-success');
+    const exportPdfBtn = modal.querySelector('#exportBtn');
+    const printBtn = modal.querySelector('#printBtn');
 
-    // PDF Export using jsPDF
+
     exportPdfBtn.addEventListener('click', function () {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('l', 'pt', 'a4'); // landscape, points, A4
@@ -153,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function () {
         doc.save('payment-history.pdf');
     });
 
-    // Print
     printBtn.addEventListener('click', function () {
         const printContent = modal.querySelector('.modal-body').innerHTML;
         const win = window.open('', '', 'width=1024,height=768');

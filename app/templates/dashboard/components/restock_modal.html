@@ -1,7 +1,7 @@
 <div class="modal fade" id="restockModal-{{ item.item_id }}" tabindex="-1" aria-labelledby="restockModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form id="restockForm" method="post">
+      <form id="restockForm-{{ item.item_id }}" method="POST" onsubmit="handleRestock(event, '{{ item.item_id }}')">
         <div class="modal-header">
           <h5 class="modal-title" id="restockModalLabel">Restock Item</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -10,6 +10,7 @@
           <div class="container-fluid">
             <div class="row mb-3">
               <div class="col-md-6">
+                 <input type="hidden" name="current_tab" value="{{ request.path.split('_')[-1] if '_' in request.path else 'inventory' }}">
                 <div class="mb-3">
                   <label class="form-label">Item Name:</label>
                   <span class="detail-value" id="restockItemName">{{ item.item_name if item else '' }}</span>
@@ -57,15 +58,4 @@
     </div>
   </div>
 </div>
-<script>
-  // Simple increment/decrement for quantity input
-  document.addEventListener('DOMContentLoaded', function() {
-    const qtyInput = document.getElementById('restockQuantity');
-    document.getElementById('decrementQty').onclick = function() {
-      if (qtyInput.value > 1) qtyInput.value--;
-    };
-    document.getElementById('incrementQty').onclick = function() {
-      qtyInput.value++;
-    };
-  });
-</script>
+<script src="{{ url_for('static', filename='js/o_inventoy.js') }}"></script>

@@ -1,8 +1,8 @@
-<div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+<div class="modal fade" id="receiptModal{{ txn.id }}" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="receiptModalLabel">Receipt Number</h5>
+                <h5 class="modal-title" id="receiptModalLabel">{{ txn.receipt_number }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -12,84 +12,86 @@
                             <h6>Patient Information</h6>
                             <div class="mb-3">
                                 <label class="form-label">Patient Name:</label>
-                                <input type="text" class="form-control" placeholder="Enter patient name" readonly>
+                                <span  class="form-control" id="patientName">{{ txn.procedure.patient.patient_full_name }}</span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Patient ID:</label>
-                                <input type="text" class="form-control" placeholder="Enter patient name" readonly>
+                                <span  class="form-control" id="patientId">{{ txn.procedure.patient.patient_id }}</span>
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Contact Number:</label>
-                                <input type="tel" class="form-control" placeholder="Enter contact number" readonly>
+                                <span class="form-control" id="contactNumber">{{ txn.procedure.patient.contact_number }}</span>
                             </div>
-                           <div class="mb-3">
+                            <div class="mb-3">
                                 <label class="form-label">Branch Location:</label>
-                                <input type="tel" class="form-control" placeholder="Enter contact number" readonly>
+                                <span  class="form-control" id="branchlo">{{ txn.procedure.patient.branch.branch_name }}</span>
                             </div>
                         </div>
                     </div>
-                    
+                    <hr>
                     <div class="row mb-3">
-                        <div class="col-md-4">
-                             <h6>Billing history:</h6>
-                            <div class="mb-3">
-                                <label class="form-label">Details name:</label>
-                                <input type="text" class="form-control" placeholder="Enter details" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Date of previous appointment:</label>
-                                <input type="date" class="form-control" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Balance:</label>
-                                <input type="text" class="form-control" placeholder="Enter balance" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">Payment Method:</label>
-                                <select class="form-select">
-                                    <option selected>Select payment method</option>
-                                    <option>Cash</option>
-                                    <option>Credit Card</option>
-                                    <option>Insurance</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">Status:</label>
-                                <select class="form-select">
-                                    <option selected>Select status</option>
-                                    <option>Active</option>
-                                    <option>Inactive</option>
-                                    <option>Pending</option>
-                                </select>
-                            </div>
+                        <div class="col-md-12">
+                            <h6>Billing history:</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Dentist name:</label>
+                                        <span class="form-control" id="dentistName">{{ txn.procedure.provider }}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Date of previous appointment:</label>
+                                        <span class="form-control" id="previousAppointmentDate">{{ txn.transaction_datetime.strftime('%Y-%m-%d') }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Balance:</label>
+                                        <span class="form-control" id="balance">
+                                            {{ txn.remaining if txn.procedure and txn.remaining is not none else '0.00' }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Total Amount Paid:</label>
+                                        <span class="form-control" id="totalAmountPaid">{{ txn.total_amount_paid }}</span>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Payment Method:</label>
+                                        <select class="form-select" disabled>
+                                            <option {{ 'selected' if txn.payment_method == 'Cash' }}>Cash</option>
+                                            <option {{ 'selected' if txn.payment_method == 'Credit Card' }}>Credit Card</option>
+                                            <option {{ 'selected' if txn.payment_method == 'Insurance' }}>Insurance</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status:</label>
+                                        <select class="form-select" disabled>
+                                            <option {{ 'selected' if txn.status == 'Active' }}>Active</option>
+                                            <option {{ 'selected' if txn.status == 'Inactive' }}>Inactive</option>
+                                            <option {{ 'selected' if txn.status == 'Pending' }}>Pending</option>
+                                        </select>
+                                    </div>
+                                </div>
                         </div>
                     </div>
+                </div>
+
                     
                     <div class="mb-3">
                         <label class="form-label">Service Details:</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter service details"></textarea>
+                        <span class="form-control" rows="3" readonly>{{ txn.service_details }}</span>
                     </div>
-                    
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Prior Estimation:</label>
-                                <input type="text" class="form-control" placeholder="Enter prior estimation" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Total Amount Paid:</label>
-                                <input type="text" class="form-control" placeholder="Enter total amount paid" readonly>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
