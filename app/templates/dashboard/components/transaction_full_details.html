@@ -8,15 +8,19 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row mb-3">
+                        <h6>Patient Information</h6>
                         <div class="col-md-6">
-                            <h6>Patient Information</h6>
+                            <div class="mb-3">
+                                <label class="form-label">Patient ID:</label>
+                                <span  class="form-control" id="patientId">{{ txn.procedure.patient.patient_id }}</span>
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label">Patient Name:</label>
                                 <span  class="form-control" id="patientName">{{ txn.procedure.patient.patient_full_name }}</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Patient ID:</label>
-                                <span  class="form-control" id="patientId">{{ txn.procedure.patient.patient_id }}</span>
+                                <label class="form-label">Branch Location:</label>
+                                <span  class="form-control" id="branchlo">{{ txn.procedure.patient.branch.branch_name }}</span>
                             </div>
                         </div>
                         
@@ -26,8 +30,8 @@
                                 <span class="form-control" id="contactNumber">{{ txn.procedure.patient.contact_number }}</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Branch Location:</label>
-                                <span  class="form-control" id="branchlo">{{ txn.procedure.patient.branch.branch_name }}</span>
+                                <label class="form-label">Email:</label>
+                                <span class="form-control" id="email">{{ txn.procedure.patient.email }}</span>
                             </div>
                         </div>
                     </div>
