@@ -25,10 +25,7 @@ def balance_record():
                 'last_visit': proc.procedure_date,
                 'total_fee': total_fee,
                 'amount_paid': payments,
-                'remaining': remaining,
-                'receipt_number': proc.receipt_number,
-                'payment_method': proc.payment_method,
-                
+                'remaining': remaining
             })
 
     return render_template('/dashboard/balance_records.html', balance_data=balance_data)
