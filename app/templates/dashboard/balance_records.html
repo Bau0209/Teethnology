@@ -37,20 +37,22 @@
                 </ul>
             
             <div class="card-body">
-                <!-- Search Bar -->
+                    <!-- Search Bar -->
                 <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search transactions...">
-                                <button class="btn btn-outline-secondary" type="button">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
-                                    <i class="fa fa-filter"></i>
-                                </button>
-                            </div>
+                    <div class="col-md-6 position-relative"> 
+                        <div class="input-group"> 
+                            <input type="text" class="form-control" placeholder="Search transactions...">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary ms-2" title="Filter" data-bs-toggle="modal" data-bs-target="#filterModal">
+                                <i class="fa fa-filter"></i>
+                            </button>
                         </div>
+                        <!-- Moved inside relative container -->
+                        <div id="customFilterDropdown"></div>
                     </div>
+                </div>
                 
                 <!-- Balance Records Cards -->
                 <div class="row">
@@ -69,7 +71,7 @@
                             </thead>
                             <tbody>
                             {% for record in balance_data %}
-                            <tr>
+                            <tr data-patient-id="{{ record.id }}">
                                 <td>
                                 <div class="patient-info">
                                     <h6 class="mb-1">{{ record.patient.patient_full_name }}</h6>
@@ -81,9 +83,9 @@
                                 <td>₱{{ '{:,.2f}'.format(record.amount_paid) }}</td>
                                 <td>₱{{ '{:,.2f}'.format(record.remaining) }}</td>
                                 <td class="text-end">
-                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#paymentHistoryModal{{ record.patient_id }}">
+                                    <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"data-bs-target="#paymentHistoryModal{{ record.patient.patient_id }}">
                                         <i class="fa fa-chevron-right"></i>
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -102,9 +104,9 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url_for('static', filename='js/o_transaction.js') }}"></script>
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 {% endblock %}

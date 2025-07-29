@@ -1,4 +1,4 @@
-<div class="modal fade" id="paymentHistoryModal{{ record.patient_id }}" tabindex="-1" aria-labelledby="paymentHistoryModalLabel" aria-hidden="true">
+<div class="modal fade" id="paymentHistoryModal{{ record.patient.patient_id }}" tabindex="-1" aria-labelledby="paymentHistoryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,25 +11,45 @@
                     <table class="table table-bordered table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>Reference Number</th>
-                                <th>Service Description</th>
-                                <th>Amount Paid</th>
-                                <th>Payment Method</th>
-                                <th>Processed By</th>
-                                <th>Last Visit</th>
-                                <th>Remaining Balance</th>
-                                <th>Status</th>
+                                <th scope="col">Patient ID</th>
+                                <th scope="col">Reference Number</th>
+                                <th scope="col">Service Description</th>
+                                <th scope="col">Amount Paid</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Processed By</th>
+                                <th scope="col">Last Visit</th>
+                                <th scope="col">Remaining Balance</th>
+                                <th scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for payment in record.patient.payments %}
                             <tr>
-
-                                <td>{{ record.patient.paymentsreceipt_number }}</td>
-                                <td>{{ record.treatment_procedure }}</td>
+                                <td>{{ record.patient.patient_id }}</td>
+                                <td>{{ record.receipt_number }}</td>
+                                <td>
+                                    {% if record.treatment_procedure %}
+                                        {{ record.treatment_procedure }}
+                                    {% else %}
+                                        {% if record.patient.procedures %}
+                                        {{ record.patient.procedures[0].treatment_procedure }}
+                                        {% else %}
+                                        N/A
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
                                 <td>₱{{ '{:,.2f}'.format(record.amount_paid) }}</td>
                                 <td>{{ record.payment_method }}</td>
-                                <td>{{ record.provider }}</td>
+                                <td>
+                                    {% if record.provider %}
+                                        {{ record.provider }}
+                                    {% else %}
+                                        {% if record.patient.procedures %}
+                                        {{ record.patient.procedures[0].provider }}
+                                        {% else %}
+                                        Not specified
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
                                 <td>{{ record.last_visit.strftime('%Y-%m-%d') }}</td>
                                 <td>₱{{ '{:,.2f}'.format(record.remaining) }}</td>
                                 <td>
@@ -42,15 +62,15 @@
                                     {% endif %}
                                 </td>
                             </tr>
-                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn" style="background-color: #e57373;" data-bs-dismiss="modal">Close</button>
-                <button id="exportBtn" class="btn btn-outline" style="border: none; background-color: #00898edc; color: aliceblue;">Export PDF</button>
+                <button type="button" class="btn btn" style="background-color: #e57373;" data-bs-dismiss="modal">Close</button>
+                <!-- Optional: Export or Print -->
+                <button id="exportBtn" class="btn btn-outline"  style="border: none; background-color: #00898edc; color: aliceblue;">Export PDF</button>
                 <button id="printBtn" class="btn btn-outline-success" style="border: none; background-color: #00898E; color: aliceblue;">Print</button>
             </div>
         </div>
