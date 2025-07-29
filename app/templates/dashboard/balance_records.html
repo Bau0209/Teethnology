@@ -61,32 +61,30 @@
                         <table class="table table-hover align-middle">
                             <thead>
                                 <tr>
-                                    <th>Patient</th>                                
+                                    <th>Patient ID</th>   
+                                    <th>Patient</th>  
+                                    <th>Email</th>                                   
                                     <th>Last Visit</th>
                                     <th>Total Balance</th>
                                     <th>Amount Paid</th>
                                     <th>Remaining Balance</th>
-                                    <th class="text-end">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for record in balance_data %}
                             <tr data-patient-id="{{ record.id }}">
+                                <td>{{ record.patient.patient_id }}</td>
                                 <td>
                                 <div class="patient-info">
                                     <h6 class="mb-1">{{ record.patient.patient_full_name }}</h6>
                                     <small class="text-muted">{{ record.patient.contact_number }}</small>
                                 </div>
                                 </td>
+                                <td>{{ record.patient.email }}</td>
                                 <td>{{ record.last_visit.strftime('%Y-%m-%d') }}</td>
                                 <td>₱{{ '{:,.2f}'.format(record.total_fee) }}</td>
                                 <td>₱{{ '{:,.2f}'.format(record.amount_paid) }}</td>
                                 <td>₱{{ '{:,.2f}'.format(record.remaining) }}</td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"data-bs-target="#paymentHistoryModal{{ record.patient.patient_id }}">
-                                        <i class="fa fa-chevron-right"></i>
-                                    </a>
-                                </td>
                             </tr>
                             {% endfor %}
                             </tbody>
