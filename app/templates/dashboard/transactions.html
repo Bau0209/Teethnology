@@ -39,9 +39,8 @@
                 
                 <div class="card-body">
                     <!-- Search Bar -->
-                    <!-- Search Bar -->
                 <div class="row mb-3">
-                    <div class="col-md-6 position-relative"> <!-- Add position-relative here -->
+                    <div class="col-md-6 position-relative"> 
                         <div class="input-group"> 
                             <input type="text" class="form-control" placeholder="Search transactions...">
                             <button class="btn btn-outline-secondary" type="button">
@@ -74,7 +73,7 @@
                                 {% if transactions %}
                                     {% for txn in transactions %}
                                     <tr>
-                                        <td>{{ txn.receipt_number }}</td>
+                                        <td>{{ txn.receipt_number }}</td> 
                                         <td>{{ txn.procedure_id }}</td>
                                         <td>
                                             <div class="patient-info">

@@ -49,9 +49,7 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">Balance:</label>
-                                        <span class="form-control" id="balance">
-                                            {{ txn.remaining if txn.procedure and txn.remaining is not none else '0.00' }}
-                                        </span>
+                                        <span class="form-control" id="balance">₱{{ '{:,.2f}'.format(txn.remaining or 0) }}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -89,7 +87,7 @@
                     
                     <div class="mb-3">
                         <label class="form-label">Service Details:</label>
-                        <span class="form-control" rows="3" readonly>{{ txn.service_details }}</span>
+                        <span class="form-control" rows="3" readonly>{{ txn.procedure.treatment_procedure }}</span>
                     </div>
                         
                     </div>
