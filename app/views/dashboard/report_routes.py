@@ -6,6 +6,13 @@ from collections import defaultdict
 from app.views.dashboard import dashboard
 from app.models import Transactions, Procedures
 from app import db
+from .report_datas import (
+    get_today_revenue,
+    get_monthly_revenue,
+    # get_monthly_appointments,
+    get_appointments_count,
+    moving_average_forecast
+)
 
 @dashboard.route('/reports')    
 def reports():
@@ -14,54 +21,17 @@ def reports():
     current_month = now.month
     current_year = now.year
     selected_year = request.args.get('year', type=int) or current_year
-    
-    # Today's Revenue
-    today = date.today()
-    today_revenue = db.session.query(
-        func.sum(Transactions.total_amount_paid)
-    ).filter(
-        func.date(Transactions.transaction_datetime) == today
-    ).scalar() or 0
-
-    # Revenue per month (for chart)
-    revenue_data = db.session.query(
-        extract('month', Transactions.transaction_datetime).label('month'),
-        func.sum(Transactions.total_amount_paid).label('total')
-    ).filter(
-        extract('year', Transactions.transaction_datetime) == selected_year
-    ).group_by(
-        extract('month', Transactions.transaction_datetime)
-    ).order_by(
-        extract('month', Transactions.transaction_datetime)
-    ).all()
-    
-    unchangable_revenue_data = db.session.query(
-        extract('month', Transactions.transaction_datetime).label('month'),
-        func.sum(Transactions.total_amount_paid).label('total')
-    ).filter(
-        extract('year', Transactions.transaction_datetime) == current_year
-    ).group_by(
-        extract('month', Transactions.transaction_datetime)
-    ).order_by(
-        extract('month', Transactions.transaction_datetime)
-    ).all()
+    monthly_revenue = get_monthly_revenue(selected_year)
+    # monthly_appointments = get_monthly_appointments(selected_year)
+    today_revenue = get_today_revenue()
+    current_month_revenue = monthly_revenue[current_month - 1]
+    forecast_values = moving_average_forecast(monthly_revenue, window=5)
 
     months = ['January', 'February', 'March', 'April', 'May', 'June',
               'July', 'August', 'September', 'October', 'November', 'December']
-    values = [0] * 12
 
-    for month, total in unchangable_revenue_data:
-        values[int(month) - 1] = float(total)
 
-    # Current month revenue
-    current_revenue = values[current_month - 1]
-
-    # Appointments this month
-    from app.models import Appointments  # Replace with your actual model
-    appointments_this_month = db.session.query(func.count(Appointments.appointment_id))\
-        .filter(extract('month', Appointments.appointment_sched) == current_month)\
-        .filter(extract('year', Appointments.appointment_sched) == current_year)\
-        .scalar()
+    appointments_this_month = get_appointments_count(current_month)
 
     # Top earning services
     service_month_data = db.session.query(
@@ -108,9 +78,9 @@ def reports():
 
     # Insight 2: Revenue performance
     revenue_insight = ["<strong>Revenues:</strong>"]
-    if current_revenue < 10000:
+    if current_month_revenue < 10000:
         revenue_insight.append("Revenue is below ₱10,000. Review pricing or promote top services.")
-    elif current_revenue < 20000:
+    elif current_month_revenue < 20000:
         revenue_insight.append("Revenue is fair. Highlight best-sellers to boost earnings.")
     else:
         revenue_insight.append("Strong revenue this month! Keep up the momentum.")
@@ -141,9 +111,11 @@ def reports():
     return render_template('/dashboard/reports.html',
                            labels=months,
                            today_revenue=today_revenue,
-                           values=values,
-                           total_revenue=sum(values),
-                           current_revenue=current_revenue,
+                           values=monthly_revenue,
+                        #    total_appointments=sum(monthly_appointments),
+                           total_revenue=sum(monthly_revenue),
+                           forecast_values=forecast_values,
+                           current_month_revenue=current_month_revenue,
                            selected_year=selected_year,
                            current_year=current_year,
                            appointments_count=appointments_this_month,

@@ -26,10 +26,6 @@ def balance_record():
                 'total_fee': total_fee,
                 'amount_paid': payments,
                 'remaining': remaining
-<<<<<<< HEAD
-=======
-                
->>>>>>> 265a993660d0572bbea3ff26c5f623881281e66d
             })
 
     return render_template('/dashboard/balance_records.html', balance_data=balance_data)
