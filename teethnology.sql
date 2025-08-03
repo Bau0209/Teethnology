@@ -1,1 +1,1 @@
-SELECT * FROM teethnology.archived_patients;
+SELECT * FROM teethnology.archive;
