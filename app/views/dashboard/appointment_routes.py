@@ -8,7 +8,7 @@ from app.models import Procedures
 from app import db
 
 from app.views.dashboard import dashboard
-from app.models import Appointments, Branch, Transactions, PatientsInfo, ArchivedPatientsInfo, ArchivedAppointments
+from app.models import Appointments, Branch, Transactions, PatientsInfo
 
 @dashboard.route('/appointments')
 def appointments():
@@ -281,68 +281,3 @@ def complete_appointment():
     flash("Procedure and transaction successfully saved!", "success")
     return redirect(url_for('dashboard.appointments'))
 
-@dashboard.route('/reject_appointment/<int:appointment_id>', methods=['POST'])
-def reject_appointment(appointment_id):
-    # Fetch the appointment
-    appointment = Appointments.query.get_or_404(appointment_id)
-
-    # Move to archive table
-    archived = ArchivedAppointments(
-        branch_id=appointment.branch_id,
-        patient_id=appointment.patient_id,
-        appointment_sched=appointment.appointment_sched,
-        alternative_sched=appointment.alternative_sched,
-        appointment_type=appointment.appointment_type,
-        appointment_status='rejected',
-        request_date=appointment.request_date,
-        approval_date=datetime.utcnow(),
-        approved_by=session.get('user_name'),
-        returning_patient=appointment.returning_patient
-    )
-    db.session.add(archived)
-    db.session.delete(appointment)
-    db.session.commit()
-
-    return redirect(url_for('dashboard.appointments'))
-
-@dashboard.route('/cancel_appointment/<int:appointment_id>', methods=['POST'])
-def cancel_and_archive_appointment(appointment_id):
-    try:
-        data = request.get_json()
-        appointment = Appointments.query.get(appointment_id)
-        
-        if not appointment:
-            return jsonify({
-                'success': False,
-                'message': 'Appointment not found'
-            }), 404
-
-        # Create archived record
-        archived_appt = ArchivedAppointments(
-            original_id=appointment.appointment_id,
-            patient_id=appointment.patient_id,
-            appointment_date=appointment.appointment_sched,
-            appointment_type=appointment.appointment_type,
-            status='cancelled',
-            cancelled_by=data.get('cancelled_by', 'system'),
-            cancelled_at=datetime.utcnow()
-        )
-        
-        db.session.add(archived_appt)
-        
-        # Delete original appointment
-        db.session.delete(appointment)
-        db.session.commit()
-        
-        return jsonify({
-            'success': True,
-            'message': 'Appointment cancelled and archived'
-        })
-        
-    except Exception as e:
-        db.session.rollback()
-        current_app.logger.error(f"Cancellation error: {str(e)}")
-        return jsonify({
-            'success': False,
-            'message': f'Cancellation failed: {str(e)}'
-        }), 500

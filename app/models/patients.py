@@ -57,31 +57,3 @@ class PatientsInfo(db.Model):
         
         return None
     
-class ArchivedPatientsInfo(db.Model):
-    __tablename__ = 'archived_patients'
-
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(255), nullable=False)
-    middle_name = db.Column(db.String(255))
-    last_name = db.Column(db.String(255), nullable=False)
-    birthdate = db.Column(db.Date, nullable=False)
-    sex = db.Column(db.String(1), nullable=False)
-    contact_number = db.Column(db.String(15), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
-    address_line1 = db.Column(db.String(255), nullable=False)
-    baranggay = db.Column(db.String(255), nullable=False)
-    city = db.Column(db.String(255), nullable=False)
-    province = db.Column(db.String(255), nullable=False)
-    country = db.Column(db.String(255), nullable=False)
-    initial_consultation_reason = db.Column(db.Text, nullable=False)
-    occupation = db.Column(db.String(255))
-    office_number = db.Column(db.String(255))
-    guardian_first_name = db.Column(db.String(255))
-    guardian_middle_name = db.Column(db.String(255))
-    guardian_last_name = db.Column(db.String(255))
-    guardian_occupation = db.Column(db.String(255))
-    reffered_by = db.Column(db.String(255))
-    previous_dentist = db.Column(db.String(255))
-    last_dental_visit = db.Column(db.Date)
-    image_link = db.Column(db.Text)
-archived_at = db.Column(db.DateTime, default=datetime.utcnow)

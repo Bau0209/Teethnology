@@ -494,4 +494,5 @@ document.addEventListener('DOMContentLoaded', function () {
       bsModal.show();
     }
   });
+  
 });
