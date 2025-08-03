@@ -1,7 +1,7 @@
-from flask import request, render_template, redirect, flash, url_for, session
+from flask import request, render_template, redirect, flash, url_for, session, jsonify
 
 from app import db
-from app.models import Branch, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures
+from app.models import Branch, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, ArchivedPatientsInfo
 from app.views.dashboard import dashboard
 from datetime import datetime, date
 
@@ -324,3 +324,21 @@ def patient_dental_rec(patient_id):
         '/dashboard/dental_record.html', 
         patient=patient, 
         dental_record=dental_record)
+
+@dashboard.route('/archive/patient/<int:patient_id>', methods=['POST'])
+def archive_patient(patient_id):
+    patient = PatientsInfo.query.get_or_404(patient_id)
+
+    # Create archived record (assuming same schema)
+    archived = ArchivedPatientsInfo(
+        id=patient.id,
+        name=patient.name,
+        birthdate=patient.birthdate,
+        email=patient.email,
+        archived_at=datetime.utcnow()
+    )
+    db.session.add(archived)
+    db.session.delete(patient)  # Remove from active table
+    db.session.commit()
+
+    return jsonify({'success': True})
