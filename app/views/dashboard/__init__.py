@@ -37,5 +37,6 @@ from . import (
     transaction_routes,
     report_routes, 
     accounts_routes,
-    security_routes
+    security_routes,
+    archive_function
 )
