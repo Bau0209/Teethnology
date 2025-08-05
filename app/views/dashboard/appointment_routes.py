@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 
 import json, os
 
-from app.models import Procedures
+from app.models import Procedures, Appointments
 from app import db
 
 from app.views.dashboard import dashboard
@@ -29,7 +29,7 @@ def appointments():
     events = [
         {
             'title': f"{a.patient.patient_full_name} - {a.appointment_type}",
-            'start': a.appointment_sched.strftime('%Y-%m-%d'),
+            'start': a.appointment_date.strftime('%Y-%m-%d'),
             'color': (
                 "#228ad9" if a.procedures and a.procedures[0].procedure_status and 
                 a.procedures[0].procedure_status.lower() == 'completed'
@@ -45,14 +45,12 @@ def appointments():
         {
             'appointment_id': a.appointment_id,
             'status': a.appointment_status,
-            'time': a.appointment_sched.strftime('%I:%M %p'),
+            'time': a.appointment_date.strftime('%I:%M %p'),
             'reason': a.appointment_type,
             'patient_name': a.patient.patient_full_name,
             'patient_type': 'Returning Patient' if a.returning_patient else 'New Patient',
             'contact': a.patient.contact_number,
-            'email': a.patient.email,
-            'alternative_sched': a.alternative_sched.strftime('%Y-%m-%d %I:%M %p') if a.alternative_sched else None,
-            'date': a.appointment_sched.strftime('%Y-%m-%d'),
+            'email': a.patient.email,'date': a.appointment_date.strftime('%Y-%m-%d'),
             'procedure_status': (
                 a.procedures[0].procedure_status.lower()
                 if a.procedures and a.procedures[0].procedure_status
@@ -75,16 +73,15 @@ def appointments():
 def appointment_req():
     selected_branch = request.args.get('branch', 'all')
     
-    appointments = Appointments.query.filter_by(appointment_status='Pending').order_by(Appointments.appointment_sched.asc()).all()
+    appointments = Appointments.query.filter_by(appointment_status='Pending').order_by(Appointments.appointment_date.asc()).all()
 
     if selected_branch != 'all':
-        appointments = appointments.filter_by(branch_id=selected_branch).order_by(Appointments.appointment_sched.asc()).all()
+        appointments = appointments.filter_by(branch_id=selected_branch).order_by(Appointments.appointment_date.asc()).all()
 
     appointment_data = [
         {
-            'date': a.appointment_sched.strftime('%Y-%m-%d'),
-            'time': a.appointment_sched.strftime('%I:%M %p'),
-            'alternative_sched': a.alternative_sched.strftime('%Y-%m-%d %H:%M') if a.alternative_sched else None,
+            'date': a.appointment_date.strftime('%Y-%m-%d'),
+            'time': a.appointment_date.strftime('%I:%M %p'),        
             'reason': a.appointment_type,
             'patient_name': a.patient.patient_full_name,
             'patient_type': 'Returning Patient' if a.returning_patient else 'New Patient',
@@ -281,3 +278,11 @@ def complete_appointment():
     flash("Procedure and transaction successfully saved!", "success")
     return redirect(url_for('dashboard.appointments'))
 
+@dashboard.route('/cancel_appointment/<int:id>', methods=['POST'])
+def cancel_appointment(id):
+    appointment = db.session.query(Appointments).get(id)
+    if appointment:
+        appointment.status = 'cancelled'
+        db.session.commit()  # This is critical!
+        return jsonify(success=True)
+    return jsonify(success=False, message="Appointment not found"), 404
