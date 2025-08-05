@@ -9,8 +9,8 @@ class Appointments(db.Model):
     branch_id = db.Column(db.Integer, db.ForeignKey('branch.branch_id'), nullable=False)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient_info.patient_id'), nullable=False)
 
-    appointment_sched = db.Column(db.DateTime, nullable=False)
-    alternative_sched = db.Column(db.DateTime)
+    appointment_date = db.Column(db.Date, nullable=False)
+    appointment_time = db.Column(db.Time, nullable=False)
 
     appointment_type = db.Column(db.String(100), nullable=False)
     appointment_status = db.Column(db.Enum('pending', 'approved', 'cancelled'), nullable=False, default='pending')

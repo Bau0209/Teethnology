@@ -14,7 +14,7 @@
   <!-- Left Column -->
     <div class="dashboard-left">
         <div class="card welcome-card">
-            <h2>Welcome Back, Eddielyn</h2>
+            <h2>Welcome Back, Sam</h2>
         </div>
         <!-- Appointments Today -->
         <div class="card info-card appointments-today-card">
@@ -70,7 +70,7 @@
         {% for req in appointment_requests %}
           <div class="request-item">
             <div class="request-info">
-              <strong>{{ req.appointment_sched.strftime('%m-%d-%Y') }}</strong><br>
+              <strong>{{ req.appointment_date.strftime('%m-%d-%Y') }}</strong><br>
               {{ req.patient.patient_full_name }}<br>
               {{ req.appointment_type }}
             </div>
