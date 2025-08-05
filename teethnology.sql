@@ -1,1 +1,1 @@
-SELECT * FROM teethnology.archive;
+SELECT * FROM teethnology.archive; 
