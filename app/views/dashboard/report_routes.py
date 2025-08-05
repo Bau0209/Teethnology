@@ -9,27 +9,25 @@ from app import db
 from .report_datas import (
     get_today_revenue,
     get_monthly_revenue,
-    # get_monthly_appointments,
     get_appointments_count,
     moving_average_forecast
 )
 
 @dashboard.route('/reports')    
 def reports():
-    # Get current and last month
+    # Get current and last month dates
     now = datetime.now()
     current_month = now.month
     current_year = now.year
     selected_year = request.args.get('year', type=int) or current_year
+    
     monthly_revenue = get_monthly_revenue(selected_year)
-    # monthly_appointments = get_monthly_appointments(selected_year)
     today_revenue = get_today_revenue()
     current_month_revenue = monthly_revenue[current_month - 1]
     forecast_values = moving_average_forecast(monthly_revenue, window=5)
 
     months = ['January', 'February', 'March', 'April', 'May', 'June',
               'July', 'August', 'September', 'October', 'November', 'December']
-
 
     appointments_this_month = get_appointments_count(current_month)
 
@@ -112,7 +110,6 @@ def reports():
                            labels=months,
                            today_revenue=today_revenue,
                            values=monthly_revenue,
-                        #    total_appointments=sum(monthly_appointments),
                            total_revenue=sum(monthly_revenue),
                            forecast_values=forecast_values,
                            current_month_revenue=current_month_revenue,

@@ -25,24 +25,9 @@ def get_monthly_revenue(year):
     
     return values
 
-# I might put this on the patients report tab
-# def get_monthly_appointments(year):
-#     data = db.session.query(
-#         extract('month', Appointments.appointment_sched).label('month'),
-#         func.count(Appointments.appointment_id).label('count')
-#     ).filter(
-#         extract('year', Appointments.appointment_sched) == year
-#     ).group_by('month').order_by('month').all()
-    
-#     values = [0] * 12
-#     for month, count in data:
-#         values[int(month) - 1] = count
-
-#     return values
-
 def get_appointments_count(month):
     return db.session.query(func.count(Appointments.appointment_id))\
-        .filter(extract('month', Appointments.appointment_sched) == month)\
+        .filter(extract('month', Appointments.appointment_date) == month)\
         .scalar()
         
 def moving_average_forecast(values, window):
