@@ -42,6 +42,9 @@ def archive_and_delete(record_id, table_name, user):
         )
         
         db.session.add(archived_record)
+        print(f"[ARCHIVE] Archiving {table_name} ID {record_id} by {user}")
+        print(f"[ARCHIVE] Data: {json.dumps(record_data)}")
+
         
         # 4. Delete original record
         db.session.delete(record)
@@ -50,5 +53,6 @@ def archive_and_delete(record_id, table_name, user):
         return True, "Record archived successfully"
     
     except Exception as e:
+        print(f"[ARCHIVE ERROR] {e}")
         db.session.rollback()
         return False, f"Error archiving record: {str(e)}"
