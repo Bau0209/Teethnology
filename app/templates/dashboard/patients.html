@@ -74,7 +74,7 @@
                 {% for patient in patients %}
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td>{{ '{:03d}'.format(patient.patient_id) }}</td>
+                    <td>{{ patient.patient_id }}</td>
                     <td>{{ patient.patient_full_name }}</td>
                     <td>{{ patient.age }}</td>
                     <td>{{ patient.sex }}</td>
