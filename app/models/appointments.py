@@ -26,4 +26,3 @@ class Appointments(db.Model):
     branch = db.relationship('Branch', backref=db.backref('appointments', lazy=True))
     patient = db.relationship('PatientsInfo', backref=db.backref('appointments', lazy=True))
 
-
