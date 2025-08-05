@@ -102,7 +102,7 @@
         {% for req in appointment_requests %}
           <div class="request-item">
             <div class="request-info">
-              <h5><strong>{{ req.appointment_sched.strftime('%B %d, %Y at %I:%M %p') }}</strong></h5>
+              <h5><strong>{{ req.appointment_date.strftime('%B %d, %Y at %I:%M %p') }}</strong></h5>
               Patient Name: {{ req.patient.patient_full_name.upper() }}<br>
               Appointment Type: {{ req.appointment_type }}
             </div>

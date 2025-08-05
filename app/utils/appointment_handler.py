@@ -7,12 +7,12 @@ from datetime import datetime, timedelta
 def safe_input(key):
     return request.form.get(key, '').strip()
 
-def create_appointment(branch_id, patient_id, preferred, alternative, appointment_type, returning):
+def create_appointment(branch_id, patient_id, date, time, appointment_type, returning):
     appointment = Appointments(
         branch_id=branch_id,
         patient_id=patient_id,
-        appointment_sched=preferred,
-        alternative_sched=alternative,
+        appointment_date=date,
+        appointment_time=time,
         appointment_type=appointment_type,
         appointment_status='pending',
         returning_patient=returning
@@ -40,23 +40,21 @@ def handle_appointment_form(template_path):
         raw_gender = safe_input('sex').lower()
         sex = 'M' if raw_gender == 'male' else 'F' if raw_gender == 'female' else None
 
-        # Parse dates safely
+        # Parse appointment_date and appointment_time safely
         try:
-            preferred_sched = datetime.fromisoformat(request.form.get('preferred'))
-        except ValueError:
-            flash("Invalid preferred date format.", "danger")
+            date_str = request.form.get('appointment_date')
+            time_str = request.form.get('appointment_time')
+            appointment_sched = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M:%S")
+        except Exception as e:
+            flash("Invalid appointment date or time format.", "danger")
             return redirect(request.referrer)
 
-        try:
-            alternative_sched = datetime.fromisoformat(request.form.get('alternative')) if request.form.get('alternative') else None
-        except ValueError:
-            flash("Invalid alternative date format.", "danger")
-            return redirect(request.referrer)
-        
-        if check_schedule_conflict(branch_id, preferred_sched):
+        if check_schedule_conflict(branch_id, appointment_sched):
             flash("This time slot is already booked. Please choose a different schedule.", "warning")
             return redirect(request.referrer)
-        
+
+        appointment_type = request.form.get('appointment_type')
+
         if is_returning:
             # Validate returning patient by ID and name
             patient_id = int(request.form.get('patient_id'))
@@ -65,16 +63,14 @@ def handle_appointment_form(template_path):
                 flash("Invalid Patient ID or Name. Please try again.", "danger")
                 flash(f"Entered ID: {patient_id}", "danger")
                 flash(f"Entered Name: {first_name.title()} {last_name.title()}", "danger")
-
                 if patient:
                     flash(f"DB Name: {patient.first_name.title()} {patient.last_name.title()}", "danger")
                 else:
                     flash("No patient found with that ID.", "danger")
-
                 return redirect(request.referrer)
 
             # Create appointment for returning patient
-            create_appointment(branch_id, patient.patient_id, preferred_sched, alternative_sched, request.form.get('appointment_type'), returning=True)
+            create_appointment(branch_id, patient.patient_id, date_str, time_str, appointment_type, returning=True)
             flash("Appointment booked successfully for returning patient.", "success")
             return redirect(request.referrer)
 
@@ -94,13 +90,13 @@ def handle_appointment_form(template_path):
                 city=safe_input('city'),
                 province=safe_input('province'),
                 country=safe_input('country'),
-                initial_consultation_reason=request.form.get('appointment_type')
+                initial_consultation_reason=appointment_type
             )
             db.session.add(new_patient)
             db.session.commit()
 
             # Create appointment for new patient
-            create_appointment(branch_id, new_patient.patient_id, preferred_sched, alternative_sched, request.form.get('appointment_type'), returning=False)
+            create_appointment(branch_id, new_patient.patient_id, date_str, time_str, appointment_type, returning=False)
             flash("Appointment booked successfully for new patient.", "success")
             return redirect(request.referrer)
 
@@ -109,7 +105,7 @@ def handle_appointment_form(template_path):
 #--------------------
 #Dashboard data
 def get_appointments_by_date(target_date, branch_id=None):
-    query = Appointments.query.filter(db.func.date(Appointments.appointment_sched) == target_date)
+    query = Appointments.query.filter(db.func.date(Appointments.appointment_date) == target_date)
     if branch_id:
         query = query.filter(Appointments.branch_id == branch_id)
     return query.all()
@@ -118,4 +114,4 @@ def get_pending_appointments(branch_id=None):
     query = Appointments.query.filter_by(appointment_status='pending')
     if branch_id:
         query = query.filter(Appointments.branch_id == branch_id)
-    return query.order_by(Appointments.appointment_sched.asc()).all()
+    return query.order_by(Appointments.appointment_date.asc()).all()

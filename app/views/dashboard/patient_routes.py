@@ -193,7 +193,7 @@ def add_patient():
             selected_branch='all'
         )
  
-@dashboard.route('/edit_patient/<int:patient_id>', methods=['GET', 'POST'])
+@dashboard.route('/edit_patient/<patient_id>', methods=['GET', 'POST'])
 def edit_patient(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     patient_medical_info = PatientMedicalInfo.query.get(patient_id)
@@ -297,7 +297,7 @@ def edit_patient(patient_id):
         current_date=datetime.today().date()
     )
 
-@dashboard.route('/patient_info/<int:patient_id>')   
+@dashboard.route('/patient_info/<patient_id>')
 def patient_info(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id) 
     patient_medical_info = PatientMedicalInfo.query.get(patient_id) 
@@ -310,13 +310,13 @@ def patient_info(patient_id):
         dental_info=dental_info
     )
 
-@dashboard.route('/patient_procedure/<int:patient_id>') 
+@dashboard.route('/patient_procedure/<patient_id>') 
 def patient_procedure(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     procedures = Procedures.query.filter_by(patient_id=patient_id)
     return render_template('/dashboard/procedure.html',patient=patient, procedures=procedures)
 
-@dashboard.route('/patient_dental_rec/<int:patient_id>')   
+@dashboard.route('/patient_dental_rec/<patient_id>')   
 def patient_dental_rec(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
     dental_record = DentalInfo.query.filter_by(patient_id=patient_id)

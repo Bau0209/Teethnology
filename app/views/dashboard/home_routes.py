@@ -44,19 +44,19 @@ def staff_home():
 
     if selected_branch == 'all':
         appointments_today = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == today
+            db.func.date(Appointments.appointment_date) == today
         ).all()
         appointments_tomorrow = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == tomorrow
+            db.func.date(Appointments.appointment_date) == tomorrow
         ).all()
         appointment_requests = Appointments.query.filter_by(appointment_status='pending').all()
     else:
         appointments_today = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == today,
+            db.func.date(Appointments.appointment_date) == today,
             Appointments.branch_id == int(selected_branch)
         ).all()
         appointments_tomorrow = Appointments.query.filter(
-            db.func.date(Appointments.appointment_sched) == tomorrow,
+            db.func.date(Appointments.appointment_date) == tomorrow,
             Appointments.branch_id == int(selected_branch)
         ).all()
         appointment_requests = Appointments.query.filter_by(
