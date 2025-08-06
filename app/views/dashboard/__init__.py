@@ -1,4 +1,5 @@
 from flask import Blueprint, session, current_app
+from ...utils import archive_function
 from app.utils.auth import restrict_roles
 from datetime import datetime
 
@@ -37,6 +38,5 @@ from . import (
     transaction_routes,
     report_routes, 
     accounts_routes,
-    security_routes,
-    archive_function
+    security_routes
 )
