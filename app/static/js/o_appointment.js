@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" id="btnConfirmReject">Yes</button>
+            <button id="btnConfirmReject" class="btn btn-danger">Confirm Reject</button>
           </div>
         </div>
       </div>
@@ -335,6 +335,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let rejectId = null;
   let rejectCard = null;
 
+  // Attach event listener to all Reject buttons
   document.querySelectorAll('button.btn-danger.btn-sm').forEach(btn => {
     if (btn.textContent.trim() === 'Reject') {
       const originalOnClick = btn.getAttribute('onclick');
@@ -342,50 +343,58 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!match) return;
 
       const id = parseInt(match[0]);
-      btn.removeAttribute('onclick');
+      btn.removeAttribute('onclick'); // remove inline event
 
       btn.addEventListener('click', function () {
         rejectId = id;
-        rejectCard = btn.closest('.request-table');
+        rejectCard = btn.closest('.request-table') || btn.closest('.appointment-item');
         rejectModal.show();
       });
     }
   });
 
-document.getElementById('btnConfirmReject').addEventListener('click', function () {
-  if (!rejectId) return;
+  // Confirm Reject button inside the modal
+  document.getElementById('btnConfirmReject').addEventListener('click', function () {
+    if (!rejectId) return;
 
-  fetch(`/dashboard/appointments/${rejectId}/status`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ status: 'cancelled', allowWithoutProcedure: true }), //  ensures rejection proceeds
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        alert('Appointment rejected!');
-        if (rejectCard) rejectCard.remove();
-
-        // Remove the appointment item from the list
-        const appointmentItems = document.querySelectorAll('.appointment-item');
-        appointmentItems.forEach(item => {
-          if (item.innerHTML.includes(`handleReject(${rejectId})`)) {
-            item.remove();
-          }
-        });
-      } else {
-        alert(data.message);
-      }
-      rejectModal.hide();
+    fetch(`/dashboard/appointments/${rejectId}/status`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'cancelled', allowWithoutProcedure: true }),
     })
-    .catch(err => {
-      alert('An error occurred. Please try again.');
-      console.error(err);
-      rejectModal.hide();
-    });
-});
-});
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('Appointment rejected and archived.');
 
+          // Remove card or list item
+          if (rejectCard) rejectCard.remove();
+
+          // Optionally remove matching appointment from DOM
+          const appointmentItems = document.querySelectorAll('.appointment-item');
+          appointmentItems.forEach(item => {
+            if (item.dataset.appointmentId == rejectId) {
+              item.remove();
+            }
+          });
+
+        } else {
+          alert(data.message || 'Failed to reject the appointment.');
+        }
+
+        rejectModal.hide();
+        rejectId = null;
+        rejectCard = null;
+      })
+      .catch(err => {
+        alert('An error occurred while rejecting the appointment.');
+        console.error(err);
+        rejectModal.hide();
+        rejectId = null;
+        rejectCard = null;
+      });
+  });
+});
 
 // Handles cancel appointment confirmation
 document.addEventListener('DOMContentLoaded', function () {

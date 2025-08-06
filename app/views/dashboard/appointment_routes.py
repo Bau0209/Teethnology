@@ -8,7 +8,8 @@ from app.models import Procedures, Appointments
 from app import db
 
 from app.views.dashboard import dashboard
-from app.models import Appointments, Branch, Transactions, PatientsInfo
+from app.models import Appointments, Branch, Transactions, PatientsInfo, Archive
+from app.utils.archive_function import archive_and_delete
 
 @dashboard.route('/appointments')
 def appointments():
@@ -190,11 +191,7 @@ def update_appointment_status(appointment_id):
     data = request.get_json()
     status = data.get('status')
 
-    appointment = Appointments.query.get_or_404(appointment_id)
-    appointment.status = status
-    db.session.commit()
-    return jsonify(success=True)
-
+    # Validate status
     if status not in ['approved', 'cancelled', 'completed']:
         return jsonify({'success': False, 'message': 'Invalid status'}), 400
 
@@ -205,19 +202,64 @@ def update_appointment_status(appointment_id):
     # Update appointment status
     appointment.appointment_status = status
 
-    # Also update procedure_status if it's 'completed' or 'cancelled'
+    # Update procedures (if any)
     if status in ['completed', 'cancelled']:
         procedures = Procedures.query.filter_by(appointment_id=appointment_id).all()
+
         if not procedures and not data.get('allowWithoutProcedure', False):
             return jsonify({'success': False, 'message': 'No procedure records found for this appointment'}), 404
 
         for proc in procedures:
             proc.procedure_status = status
 
-    db.session.commit()
+    # Handle archiving & deleting patient if cancelled
+    if status == 'cancelled':
+        try:
+            patient = PatientsInfo.query.get(appointment.patient_id)
+
+            if patient:
+                try:
+                    # Ensure patient has a serializable dict method
+                    if hasattr(patient, 'as_dict'):
+                        archived_data = Archive(
+                            original_id=patient.id,
+                            table_name='patients',
+                            archived_data=json.dumps(patient.as_dict()),  # Ensure it's JSON serializable
+                            archived_by=session.get('user', 'admin'),
+                            timestamp=datetime.utcnow()
+                        )
+                        db.session.add(archived_data)
+                        db.session.delete(patient)
+                    else:
+                        return jsonify({'success': False, 'message': 'Cannot archive: patient.as_dict() missing'}), 500
+
+                except Exception as archive_inner_err:
+                    db.session.rollback()
+                    print(f"[Archive Error] Could not serialize or archive: {archive_inner_err}")
+                    return jsonify({
+                        'success': False,
+                        'message': 'Archiving patient failed.',
+                        'error': str(archive_inner_err)
+                    }), 500
+
+        except Exception as outer_err:
+            db.session.rollback()
+            print(f"[Outer Error] Archiving logic failed: {outer_err}")
+            return jsonify({
+                'success': False,
+                'message': 'Error occurred while archiving patient data.',
+                'error': str(outer_err)
+            }), 500
+
+    try:
+        db.session.commit()
+    except Exception as commit_err:
+        db.session.rollback()
+        print(f"[Commit Error] {commit_err}")
+        return jsonify({'success': False, 'message': 'Error saving changes.', 'error': str(commit_err)}), 500
 
     return jsonify({'success': True, 'message': 'Status updated successfully'})
-
+    
 @dashboard.route('/appointment/complete', methods=['POST'])
 def complete_appointment():
     appointment_id = request.form.get('appointment_id')
@@ -286,3 +328,22 @@ def cancel_appointment(id):
         db.session.commit()  # This is critical!
         return jsonify(success=True)
     return jsonify(success=False, message="Appointment not found"), 404
+
+@dashboard.route('/patients/<int:patient_id>/archive', methods=['POST'])
+def archive_patient(patient_id):
+    patient = PatientsInfo.query.get(patient_id)
+    if not patient:
+        return jsonify({'success': False, 'message': 'Patient not found'}), 404
+
+    archive_record = Archive(
+        original_id=patient.id,
+        table_name='patients',
+        archived_data=json.dumps(patient.as_dict()),
+        archived_by=session.get('user', 'admin'),
+        timestamp=datetime.utcnow()
+    )
+
+    db.session.add(archive_record)
+    db.session.delete(patient)
+    db.session.commit()
+    return jsonify({'success': True})
