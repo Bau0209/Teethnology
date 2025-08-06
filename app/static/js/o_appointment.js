@@ -93,6 +93,7 @@ function handleCancel(appointmentId) {
   });
 }
 
+
 document.addEventListener('DOMContentLoaded', function () {
   // =====================
   // FullCalendar Setup
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
           buttonsHTML = `
             <div class="d-flex gap-2 mt-3">
               <button class="btn btn-success btn-sm" onclick="handleAccept(${a.appointment_id})">Accept</button>
-              <button class="btn btn-danger btn-sm" onclick="handleReject(${a.appointment_id})">Reject</button>
+              <button class="btn btn-danger btn-sm reject-btn" data-appointment-id="${a.appointment_id}">Reject</button>
             </div>
           `;
         } else {
@@ -335,8 +336,27 @@ document.addEventListener('DOMContentLoaded', function () {
   let rejectId = null;
   let rejectCard = null;
 
-  // Attach event listener to all Reject buttons
-  document.querySelectorAll('button.btn-danger.btn-sm').forEach(btn => {
+  // Handle dynamic reject button click
+  document.body.addEventListener('click', function (e) {
+    if (e.target.classList.contains('reject-btn')) {
+      rejectId = e.target.dataset.appointmentId;
+      rejectCard = e.target.closest('.appointment-item');
+
+      const appointmentModal = bootstrap.Modal.getInstance(document.getElementById('appointmentsModal'));
+
+      if (appointmentModal) {
+        appointmentModal.hide();
+        document.getElementById('appointmentsModal').addEventListener('hidden.bs.modal', function onHidden() {
+          document.getElementById('appointmentsModal').removeEventListener('hidden.bs.modal', onHidden);
+          rejectModal.show();
+        });
+      } else {
+        rejectModal.show();
+      }
+    }
+  });
+
+   document.querySelectorAll('button.btn-danger.btn-sm').forEach(btn => {
     if (btn.textContent.trim() === 'Reject') {
       const originalOnClick = btn.getAttribute('onclick');
       const match = originalOnClick?.match(/\d+/);
@@ -353,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Confirm Reject button inside the modal
+  // Confirm reject action
   document.getElementById('btnConfirmReject').addEventListener('click', function () {
     if (!rejectId) return;
 
@@ -366,22 +386,10 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(data => {
         if (data.success) {
           alert('Appointment rejected and archived.');
-
-          // Remove card or list item
           if (rejectCard) rejectCard.remove();
-
-          // Optionally remove matching appointment from DOM
-          const appointmentItems = document.querySelectorAll('.appointment-item');
-          appointmentItems.forEach(item => {
-            if (item.dataset.appointmentId == rejectId) {
-              item.remove();
-            }
-          });
-
         } else {
           alert(data.message || 'Failed to reject the appointment.');
         }
-
         rejectModal.hide();
         rejectId = null;
         rejectCard = null;
@@ -503,5 +511,34 @@ document.addEventListener('DOMContentLoaded', function () {
       bsModal.show();
     }
   });
-  
 });
+
+// Handles reschedule appointment confirmation
+function handleReschedule(appointmentId) {
+  // Hide the current appointment details modal
+  const appointmentModalEl = document.getElementById('appointmentsModal');
+  const appointmentModal = bootstrap.Modal.getInstance(appointmentModalEl);
+  if (appointmentModal) {
+    appointmentModal.hide();
+
+    // After modal is hidden, open the Book Appointment modal
+    appointmentModalEl.addEventListener('hidden.bs.modal', function onHidden() {
+      appointmentModalEl.removeEventListener('hidden.bs.modal', onHidden);
+
+      const bookModalEl = document.getElementById('addAppointmentModal');
+      const bookModal = new bootstrap.Modal(bookModalEl);
+      bookModal.show();
+
+      // Optional: Pre-fill appointment ID if needed
+      const hiddenIdField = document.getElementById('reschedule-appointment-id');
+      if (hiddenIdField) {
+        hiddenIdField.value = appointmentId;
+      }
+    });
+  } else {
+    // Fallback: Just open the form directly
+    const bookModalEl = document.getElementById('addAppointmentModal');
+    const bookModal = new bootstrap.Modal(bookModalEl);
+    bookModal.show();
+  }
+}

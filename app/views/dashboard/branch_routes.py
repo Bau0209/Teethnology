@@ -1,6 +1,7 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, jsonify
 from app.utils.branch_handler import get_first_branch_images, parse_time_str, branch_exists, save_branch_image
 from app.models import MainWeb, Branch, ClinicBranchImage
+from app.utils.archive_function import archive_and_delete
 from app.views.dashboard import dashboard
 from app import db
 import os
