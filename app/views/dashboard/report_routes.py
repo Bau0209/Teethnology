@@ -42,15 +42,21 @@ def report_patients():
     current_month = today.month
     selected_year = request.args.get('report_revenue_selected_year', type=int) or today.year
     patients_data = get_patients_data(selected_year, current_month)
+    print(patients_data['popular_services_by_age_bracket'])
     
     return render_template('/dashboard/report_patient.html',
+                           months_labels=patients_data['months'],
+                           service_labels=patients_data['services'],
+                           values=patients_data['monthly_appointments'],
+                           new_returning_stacked_datasets=patients_data['new_returning_datasets'],
+                           forecast_values=patients_data['forecast_values'],
+                           popular_service_by_age=patients_data['popular_services_by_age_bracket'],
                            current_year=today.year,
                            selected_year=selected_year,
                            current_month_new_patient = patients_data['monthly_new_patients'][current_month - 1],
                            current_month_returning_patient = patients_data['monthly_returning_patients'][current_month - 1],
                            current_month_appointment=patients_data['monthly_appointments'][current_month - 1])
                         
-
 @dashboard.route('/report_marketing')    
 def report_marketing():
     return render_template('/dashboard/report_marketing.html', current_year=datetime.today().year)

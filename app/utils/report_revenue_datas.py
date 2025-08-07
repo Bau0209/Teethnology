@@ -5,6 +5,9 @@ from sqlalchemy import func, extract
 
 from app.models import Transactions, Appointments, Procedures
 
+months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+
 def get_today_revenue():
     today = date.today()
     return db.session.query(func.sum(Transactions.total_amount_paid))\
@@ -69,9 +72,6 @@ def prepare_chart_datasets(service_month_data):
     return stacked_datasets
 
 def get_report_data(selected_year, current_month):
-    months = ['January', 'February', 'March', 'April', 'May', 'June',
-              'July', 'August', 'September', 'October', 'November', 'December']
-
     monthly_revenue = get_monthly_revenue(selected_year)
     today_revenue = get_today_revenue()
     service_month_data = get_service_month_data(selected_year)
