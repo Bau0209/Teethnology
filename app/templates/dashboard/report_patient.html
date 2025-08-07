@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="container-fluid p-4 patients">
-  <!-- Tabs -->
+  <!-- Navigation Tabs -->
   <ul class="nav nav-tabs mb-4">
     <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.reports') }}">Revenue</a></li>
     <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.report_patients') }}">Patients</a></li>
@@ -20,64 +20,50 @@
 
   <!-- Filters -->
   <div class="d-flex flex-wrap gap-2 mb-3">
-    <form method="get" action="{{ url_for('dashboard.reports') }}" class="me-2">
-      <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
-        {% for y in range(current_year, current_year - 5, -1) %}
-          <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
-        {% endfor %}
-      </select>
-    </form>
     <button class="btn btn-outline-primary btn-sm active">This Month</button>
     <button class="btn btn-outline-primary btn-sm active">Today</button>
   </div>
 
   <!-- Top Section: Two-column layout -->
+  <h5 class="text-muted mb-3">This Month</h5>
   <div class="row g-4">
-    <!-- Left Column: Stats + Line Chart -->
-    <div class="col-lg-5">
-      <div class="row g-3 mb-2">
-        {% set metrics = [
-          ('Appointments', 256),
-          ('New Patients', 125),
-          ('Returning', 129),
-          ('Inactive Patients', 28)
-        ] %}
-        {% for label, value in metrics %}
-        <div class="col-6">
-          <div class="card text-center p-3">
-            <h6 class="text-muted">{{ label }}</h6>
-            <h2 class="text-success">{{ value }}</h2>
+    <!-- Top Summary Section -->
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="row g-3">     
+          <!-- Revenue Cards -->
+          <div class="col-4">
+            <div class="card p-3 text-center">
+              <h3 class="text-muted d-block">This Month's Appointments</h3>
+              <h1 style="color:rgb(32, 178, 115)">{{ current_month_appointment }}</h1>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card p-3 text-center">
+              <h3 class="text-muted d-block">This Month's New Patient</h3>
+              <h1 style="color:rgb(32, 178, 115)">{{ current_month_new_patient }}</h1>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="card p-3 text-center">
+              <h3 class="text-muted d-block">This Month's Returning Patient</h3>
+              <h1 style="color:rgb(32, 178, 115)">{{ current_month_returning_patient }}</h1>
+            </div>
           </div>
         </div>
-        {% endfor %}
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-4"> 
       <div class="card mt-3">
         <div class="card-header bg-white"><h6 class="mb-0">New and Returning Patients by Appointments</h6></div>
         <div class="card-body"><canvas id="patientsLineChart" height="250"></canvas></div>
       </div>
     </div>
-
     <!-- Right Column: Monthly Snapshot + Pie Chart -->
-    <div class="col-lg-7" style="margin-top: -30px;">
-      <h5 class="text-muted mb-3">This Month</h5>
-      <div class="row g-3 mb-3">
-        {% set month_metrics = [
-          ('New Patients', 23),
-          ('Growth Rate', '1%'),
-          ('Returning Patients', 24),
-          ('3m Inactive Patients', 40),
-          ('Growth Rate', '1%'),
-          ('Returning Patients', 24)
-        ] %}
-        {% for label, value in month_metrics %}
-        <div class="col-md-4">
-          <div class="card text-center p-3 h-100">
-            <h6 class="text-muted">{{ label }}</h6>
-            <h4 class="mb-0">{{ value }}</h4>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
+    <div class="col-md-6 mb-4">
       <div class="card">
         <div class="card-header bg-white"><h6 class="mb-0">Top Patient Source</h6></div>
         <div class="card-body">
@@ -98,9 +84,9 @@
     <div class="col-lg-9">
       <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
         <h5 style="color: #00898E; margin-left: 10px; font-size: 1.5rem; font-weight: 700;">Forecasts</h5>
-        <form method="get" action="{{ url_for('dashboard.reports') }}">
-          <select name="year" class="form-select form-select-sm" onchange="this.form.submit()">
-            {% for y in range(current_year, current_year - 5, -1) %}
+        <form method="get" action="{{ url_for('dashboard.report_patients') }}">
+          <select name="report_revenue_selected_year" class="form-select form-select-sm" onchange="this.form.submit()">
+            {% for y in range(current_year, current_year - 10, -1) %}
               <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
             {% endfor %}
           </select>
