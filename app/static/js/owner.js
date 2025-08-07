@@ -142,21 +142,85 @@ function initDynamicFeatures() {
 
 // Archive button function
 document.addEventListener('DOMContentLoaded', function () {
-    const archiveBtn = document.querySelector('.branch-info-archive-btn');
+    // Inject modal HTML
+    const archiveConfirmModalHTML = `
+        <div class="modal fade" id="archiveConfirmModal" tabindex="-1" aria-labelledby="archiveConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #00898E; color: white;">
+                        <h5 class="modal-title" id="archiveConfirmModalLabel">Archive Branch Info</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to archive this branch?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmArchiveBtn">Yes, archive</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', archiveConfirmModalHTML);
 
+    let branchIdToArchive = null;
+
+    const archiveBtn = document.querySelector('.branch-info-archive-btn');
     if (archiveBtn) {
         archiveBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            const confirmArchive = confirm("Are you sure you want to archive this branch?");
-            if (confirmArchive) {
-                const currentUrl = window.location.href;
-                const match = currentUrl.match(/\/branches\/(\d+)/);
-                if (match) {
-                    const branchId = match[1];
-                    window.location.href = `/branches/${branchId}/archive`;
+
+            const currentUrl = window.location.href;
+            const match = currentUrl.match(/branches\/(\d+)/) || currentUrl.match(/\/(\d+)(?!.*\/)/);
+            console.log("Current URL:", currentUrl);
+            console.log("Match result:", match);
+
+            if (match && match[1]) {
+                branchIdToArchive = match[1];
+
+                const modalElement = document.getElementById('archiveConfirmModal');
+                if (modalElement) {
+                    const archiveModal = new bootstrap.Modal(modalElement);
+                    archiveModal.show();
+                } else {
+                    console.error('Modal element not found in DOM.');
                 }
+            } else {
+                console.error('Branch ID not found in URL.');
             }
         });
     }
+
+    document.body.addEventListener('click', function (e) {
+        if (e.target && e.target.id === 'confirmArchiveBtn') {
+            if (branchIdToArchive) {
+                fetch(`/branches/${branchIdToArchive}/archive`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})  // You can add additional data if needed
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Redirect to the branches tab/page
+                        window.location.href = '/dashboard/branches';
+                    } else {
+                        return response.json().then(data => {
+                            throw new Error(data.message || 'Failed to archive branch');
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error archiving branch:', error);
+                    alert('Failed to archive branch. Please try again.');
+                });
+            } else {
+                console.error('No branch ID set for archiving.');
+            }
+        }
+    });
 });
+
 

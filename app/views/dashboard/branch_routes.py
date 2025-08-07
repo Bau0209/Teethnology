@@ -118,3 +118,12 @@ def edit_branch(branch_id):
     db.session.commit()
     flash('Branch information updated successfully.', 'success')
     return redirect(url_for('dashboard.branch_info', branch_id=branch_id))
+
+@dashboard.route('/branches/<int:branch_id>/archive', methods=['POST'])
+def archive_branch(branch_id):
+    user = session.get('user', 'admin')  # Adjust to your session key
+    success, message = archive_and_delete(branch_id, 'branches', user)
+    if success:
+        return jsonify({'message': 'Branch archived successfully'}), 200
+    else:
+        return jsonify({'message': message}), 400
