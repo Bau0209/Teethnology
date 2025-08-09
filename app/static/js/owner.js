@@ -140,7 +140,7 @@ function initDynamicFeatures() {
 
 }
 
-// Archive button function
+// Archive button function for branches
 document.addEventListener('DOMContentLoaded', function () {
     // Inject modal HTML
     const archiveConfirmModalHTML = `
@@ -224,3 +224,25 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// Archive button function for patients
+let archiveRecordId = null;
+
+function showArchiveModal(id) {
+    archiveRecordId = id;
+    const modal = new bootstrap.Modal(document.getElementById('archiveConfirmModal'));
+    modal.show();
+}
+
+function confirmArchive() {
+    fetch(`/patients/${archiveRecordId}/archive`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: 'admin' }) // pass user if needed
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        location.reload(); // refresh to update list
+    })
+    .catch(err => console.error(err));
+}

@@ -1,7 +1,8 @@
 from flask import request, render_template, redirect, flash, url_for, session, jsonify
 
 from app import db
-from app.models import Branch, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures
+from app.models import Branch, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Archive
+from app.utils.archive_function import archive_and_delete
 from app.views.dashboard import dashboard
 from datetime import datetime, date
 
@@ -324,3 +325,47 @@ def patient_dental_rec(patient_id):
         '/dashboard/dental_record.html', 
         patient=patient, 
         dental_record=dental_record)
+
+#added route for archive function
+@dashboard.route('/archive_patient_record/<int:patient_id>', methods=['POST'])
+def archive_patient_record(patient_id):
+    try:
+        # Get all related records
+        patient = PatientsInfo.query.get_or_404(patient_id)
+        medical_info = PatientMedicalInfo.query.filter_by(patient_id=patient_id).first()
+        dental_records = DentalInfo.query.filter_by(patient_id=patient_id).all()
+        
+        # Create archive entry
+        archived_record = Archive(
+            original_id=patient.patient_id,
+            table_name='patient_record',
+            data={
+                'patient_info': patient.as_dict(),
+                'medical_info': medical_info.as_dict() if medical_info else None,
+                'dental_records': [record.as_dict() for record in dental_records]
+            },
+            archived_by=session.get('username', 'system'),
+            archived_at=datetime.utcnow()
+        )
+        db.session.add(archived_record)
+        
+        # Delete original records
+        if medical_info:
+            db.session.delete(medical_info)
+        for record in dental_records:
+            db.session.delete(record)
+        db.session.delete(patient)
+        
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Patient record archived successfully'
+        })
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            'success': False,
+            'message': f'Error archiving patient record: {str(e)}'
+        }), 500

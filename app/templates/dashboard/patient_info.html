@@ -421,7 +421,9 @@
                             </ol>
                             
                             <div class="d-flex justify-content-end mt-4">
-                                <button class="btn-danger">Archive</button>
+                                <button class="btn btn-danger" onclick="showArchiveModal('{{ patient.patient_id }}', 'dental')">
+                                    Archive Dental History
+                                </button>
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </div>
@@ -429,6 +431,7 @@
                 </form>
             </div>
         </div>
+    {% include 'dashboard/components/archive_modal.html' %}
     {% endblock %}
 
 {% block extra_js %}
