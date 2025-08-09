@@ -8,19 +8,21 @@ def archive_and_delete(record_id, table_name, user):
     try:
         if table_name == 'patients':
             record = PatientsInfo.query.get(record_id)
+        elif table_name == 'branches':
+            record = Branch.query.get(record_id)
         else:
             return False, 'Unsupported table'
 
         if not record:
             return False, 'Record not found'
 
-        # Archive model should match your DB table
+        # Match Archive model's columns
         archive_record = Archive(
             original_id=record.id,
             table_name=table_name,
-            archived_data=json.dumps(record.as_dict()),  # You need to define as_dict() in your model
+            data=json.dumps(record.as_dict()),  # Ensure as_dict() exists in model
             archived_by=user,
-            timestamp=datetime.utcnow()
+            archived_at=datetime.utcnow()
         )
 
         db.session.add(archive_record)
