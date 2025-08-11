@@ -1,7 +1,6 @@
 from flask import render_template, request
-from datetime import datetime, date
-from sqlalchemy import extract, func
-from collections import defaultdict
+from datetime import datetime
+import subprocess
 
 from app.views.dashboard import dashboard
 from app.models import Transactions, Procedures
@@ -32,7 +31,6 @@ def reports():
                            current_month_revenue=revenue_data['current_month_revenue'],
                            selected_year=selected_year,
                            current_year=today.year,
-                           appointments_count=patients_data['monthly_appointments'][current_month - 1],
                            stacked_datasets=revenue_data['stacked_datasets'],
                            insight_text=revenue_insights)
 
@@ -42,7 +40,6 @@ def report_patients():
     current_month = today.month
     selected_year = request.args.get('report_revenue_selected_year', type=int) or today.year
     patients_data = get_patients_data(selected_year, current_month)
-    print(patients_data['popular_services_by_age_bracket'])
     
     return render_template('/dashboard/report_patient.html',
                            months_labels=patients_data['months'],
