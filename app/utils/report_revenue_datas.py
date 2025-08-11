@@ -81,7 +81,7 @@ def get_report_data(selected_year, current_month):
         'months': months,
         'monthly_revenue': monthly_revenue,
         'today_revenue': today_revenue,
-        'current_month_revenue': monthly_revenue[current_month - 1],
+        'current_month_revenue': get_monthly_revenue(date.today().year)[current_month - 1],
         'service_month_data': service_month_data,
         'stacked_datasets': stacked_datasets,
         'forecast_values': moving_average_forecast(monthly_revenue, window=5)

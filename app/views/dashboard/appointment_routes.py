@@ -188,6 +188,8 @@ def form():
 
 @dashboard.route('/appointments/<int:appointment_id>/status', methods=['POST'])
 def update_appointment_status(appointment_id):
+    print("RAW DATA:", request.data)
+    print("HEADERS:", dict(request.headers))
     data = request.get_json()
     status = data.get('status')
 
@@ -222,7 +224,7 @@ def update_appointment_status(appointment_id):
                     # Ensure patient has a serializable dict method
                     if hasattr(patient, 'as_dict'):
                         archived_data = Archive(
-                            original_id=patient.id,
+                            original_id=patient.patient_id,
                             table_name='patients',
                             archived_data=json.dumps(patient.as_dict()),  # Ensure it's JSON serializable
                             archived_by=session.get('user', 'admin'),
@@ -336,9 +338,9 @@ def archive_patient(patient_id):
         return jsonify({'success': False, 'message': 'Patient not found'}), 404
 
     archive_record = Archive(
-        original_id=patient.id,
+        original_id=patient.patient_id,
         table_name='patients',
-        archived_data=json.dumps(patient.as_dict()),
+        archived_data=json.dumps(patient.as_dict(), default=str),
         archived_by=session.get('user', 'admin'),
         timestamp=datetime.utcnow()
     )
