@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Archive button function for patients
+// Archive button function for patients and dental records
 let archiveRecordId = null;
 
 function showArchiveModal(id) {

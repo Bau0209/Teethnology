@@ -13,6 +13,11 @@ from ...utils.report_patients_datas import (
     get_report_data as get_patients_data
 )
 
+from ...utils.report_marketing_data import (
+    get_report_data as get_marketing_data,
+)
+
+
 @dashboard.route('/reports')    
 def reports():
     today = datetime.now()
@@ -53,10 +58,18 @@ def report_patients():
                            current_month_new_patient = patients_data['monthly_new_patients'][current_month - 1],
                            current_month_returning_patient = patients_data['monthly_returning_patients'][current_month - 1],
                            current_month_appointment=patients_data['monthly_appointments'][current_month - 1])
-                        
-@dashboard.route('/report_marketing')    
+
+@dashboard.route('/report_marketing')
 def report_marketing():
-    return render_template('/dashboard/report_marketing.html', current_year=datetime.today().year)
+    selected_year = datetime.today().year
+    current_month = datetime.today().month
+    report_data = get_marketing_data(selected_year, current_month)
+
+    return render_template('/dashboard/report_marketing.html',
+                            current_year=selected_year,
+                            popular_service_by_age=report_data['popular_services_by_age_bracket'],
+                            popular_service_by_gender=report_data['popular_services_by_gender'])
+
 
 @dashboard.route('/report_inventory') 
 def report_inventory():
