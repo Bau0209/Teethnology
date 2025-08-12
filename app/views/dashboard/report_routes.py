@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, g
 from datetime import datetime
 import subprocess
 
@@ -16,7 +16,9 @@ from ...utils.report_patients_datas import (
 from ...utils.report_marketing_data import (
     get_report_data as get_marketing_data,
 )
-
+from ...utils.report_inventory_data import (
+    get_inventory_report_data as get_inventory_data,
+)
 
 @dashboard.route('/reports')    
 def reports():
@@ -73,6 +75,15 @@ def report_marketing():
 
 @dashboard.route('/report_inventory') 
 def report_inventory():
-    return render_template('/dashboard/report_inventory.html', current_year=datetime.today().year)
-
+    selected_branch = g.get('selected_branch', 'all')
+    data = get_inventory_data(selected_branch)
+    return render_template(
+        'dashboard/report_inventory.html',
+        low_stock=data['low_stock'],
+        out_of_stock=data['out_of_stock'],
+        expired=data['expired'],
+        inventory_report_data=data,
+        current_year=datetime.now().year,  
+        selected_year=datetime.now().year
+    )
 
