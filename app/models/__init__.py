@@ -10,7 +10,6 @@ from .transactions import Transactions
 from .dental_info import DentalInfo
 from .main_website import MainWeb
 from .inventory import (
-    InventoryCategory, 
     InventoryItem, 
     InventoryEquipment,
     InventoryConsumable,

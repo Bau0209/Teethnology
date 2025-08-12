@@ -52,7 +52,7 @@
               {% if appointments_today %}
                 {% for a in appointments_today %}
                     <h5><strong>Patient: {{ a.patient.patient_full_name.upper() }}</strong></h5>
-                    Time: {{ a.appointment_sched.strftime('%I:%M %p') }} <br>
+                    Time: {{ a.appointment_time.strftime('%I:%M %p') }} <br>
                     Appointment Type: {{ a.appointment_type }} <br> 
                     Contact #: {{ a.patient.contact_number }} <br> 
                     Email: {{ a.patient.email }}              

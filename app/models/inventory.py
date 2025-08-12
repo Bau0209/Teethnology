@@ -1,18 +1,12 @@
 from app import db
 
-class InventoryCategory(db.Model):
-    __tablename__ = 'inventory_category'
-
-    category_id = db.Column(db.Integer, primary_key=True)
-    category_name = db.Column(db.String(100), nullable=False)
-
 class InventoryItem(db.Model):
     __tablename__ = 'inventory_items'
 
     item_id = db.Column(db.Integer, primary_key=True)
     branch_id = db.Column(db.Integer, db.ForeignKey('branch.branch_id'), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('inventory_category.category_id'), nullable=False)
     
+    category = db.Column(db.String(20), nullable=False)
     item_name = db.Column(db.String(255), nullable=False)
     quantity = db.Column(db.Float, nullable=False)
     quantity_unit = db.Column(db.String(50), nullable=False)
@@ -23,7 +17,6 @@ class InventoryItem(db.Model):
     description = db.Column(db.Text)
 
     branch = db.relationship('Branch', backref='inventory_items', lazy=True)
-    category = db.relationship('InventoryCategory', backref='items', lazy=True)
 
 class InventoryConsumable(db.Model):
     __tablename__ = 'inventory_consumables'
