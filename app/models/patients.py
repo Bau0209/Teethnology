@@ -57,6 +57,13 @@ class PatientsInfo(db.Model):
         
         return None
     def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}   
+        result = {}
+        for c in self.__table__.columns:
+            value = getattr(self, c.name)
+            if isinstance(value, (date, datetime)):
+                value = value.strftime('%Y-%m-%d %H:%M:%S') if isinstance(value, datetime) else value.strftime('%Y-%m-%d')
+            result[c.name] = value
+        return result
+
 
     

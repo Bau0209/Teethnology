@@ -227,8 +227,7 @@ def update_appointment_status(appointment_id):
                             original_id=patient.patient_id,
                             table_name='patients',
                             archived_data=json.dumps(patient.as_dict()),  # Ensure it's JSON serializable
-                            archived_by=session.get('user', 'admin'),
-                            timestamp=datetime.utcnow()
+                            archived_by=session.get('user', 'admin')
                         )
                         db.session.add(archived_data)
                         db.session.delete(patient)
@@ -261,7 +260,7 @@ def update_appointment_status(appointment_id):
         return jsonify({'success': False, 'message': 'Error saving changes.', 'error': str(commit_err)}), 500
 
     return jsonify({'success': True, 'message': 'Status updated successfully'})
-    
+
 @dashboard.route('/appointment/complete', methods=['POST'])
 def complete_appointment():
     appointment_id = request.form.get('appointment_id')
@@ -317,10 +316,16 @@ def complete_appointment():
         transaction_image_link=receipt_path
     )
     db.session.add(transaction)
+
+    # ✅ Update procedure_history status
+    procedure_history = Procedures.query.filter_by(appointment_id=appointment.appointment_id).first()
+    if procedure_history:
+        procedure_history.procedure_status = 'completed'
+
     db.session.commit()
 
-    flash("Procedure and transaction successfully saved!", "success")
-    return redirect(url_for('dashboard.appointments'))
+    flash("Procedure, transaction, and procedure history updated!", "success")
+    return redirect(url_for('dashboard.appointments', success=1))
 
 @dashboard.route('/cancel_appointment/<int:id>', methods=['POST'])
 def cancel_appointment(id):
