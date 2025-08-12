@@ -350,29 +350,6 @@ INSERT INTO `employees` VALUES (1,1,'John','A.','Doe','1990-05-15','m','09171234
 UNLOCK TABLES;
 
 --
--- Table structure for table `inventory_category`
---
-
-DROP TABLE IF EXISTS `inventory_category`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `inventory_category` (
-  `category_id` int NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(100) NOT NULL COMMENT 'Consumables, Equipment, etc.',
-  PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `inventory_category`
---
-
-LOCK TABLES `inventory_category` WRITE;
-/*!40000 ALTER TABLE `inventory_category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `inventory_category` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `inventory_consumables`
 --
 
@@ -380,13 +357,14 @@ DROP TABLE IF EXISTS `inventory_consumables`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventory_consumables` (
-  `item_id` int NOT NULL,
+  `item_id` varchar(10) NOT NULL,
   `expiration_date` date DEFAULT NULL,
   `last_restock` date DEFAULT NULL,
   `minimum_stock` float DEFAULT NULL,
   `stock_status` enum('in stock','low stock','out of stock') DEFAULT 'in stock',
   PRIMARY KEY (`item_id`),
-  CONSTRAINT `fk_cons_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`)
+  CONSTRAINT `fk_coms_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`),
+  CONSTRAINT `fk_consumables_item` FOREIGN KEY (`item_id`) REFERENCES `inventory_items` (`item_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -396,6 +374,7 @@ CREATE TABLE `inventory_consumables` (
 
 LOCK TABLES `inventory_consumables` WRITE;
 /*!40000 ALTER TABLE `inventory_consumables` DISABLE KEYS */;
+INSERT INTO `inventory_consumables` VALUES ('001-HF-55','2025-10-16','2025-07-02',23,'low stock'),('003-NZ-72','2026-03-06','2025-06-15',8,'in stock'),('005-YW-75','2025-11-17','2025-08-09',14,'in stock'),('067-LG-19','2026-01-13','2025-07-08',18,'low stock'),('150-TB-84','2025-08-21','2025-06-23',8,'in stock'),('189-PW-51','2026-03-02','2025-06-23',15,'low stock');
 /*!40000 ALTER TABLE `inventory_consumables` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,7 +386,7 @@ DROP TABLE IF EXISTS `inventory_equipments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventory_equipments` (
-  `item_id` int NOT NULL,
+  `item_id` varchar(10) NOT NULL,
   `last_maintenance` date DEFAULT NULL,
   `model` varchar(100) DEFAULT NULL,
   `warranty_info` varchar(255) DEFAULT NULL,
@@ -424,6 +403,7 @@ CREATE TABLE `inventory_equipments` (
 
 LOCK TABLES `inventory_equipments` WRITE;
 /*!40000 ALTER TABLE `inventory_equipments` DISABLE KEYS */;
+INSERT INTO `inventory_equipments` VALUES ('006-IO-44','2025-04-13','Model-542','2 year warranty','2021-06-04','Poor'),('007-GS-06','2025-02-08','Model-219','1 year warranty','2024-04-12','Poor'),('025-XJ-08','2024-09-22','Model-668','2 year warranty','2022-10-23','Good'),('041-EY-19','2024-08-22','Model-890','2 year warranty','2022-01-22','Excellent'),('069-XK-06','2025-01-04','Model-623','1 year warranty','2021-12-24','Good'),('072-WX-07','2025-01-12','Model-871','2 year warranty','2025-01-19','Poor');
 /*!40000 ALTER TABLE `inventory_equipments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -435,22 +415,21 @@ DROP TABLE IF EXISTS `inventory_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventory_items` (
-  `item_id` int NOT NULL AUTO_INCREMENT,
+  `item_id` varchar(10) NOT NULL,
   `branch_id` int NOT NULL,
-  `category_id` int NOT NULL,
-  `item_name` varchar(255) NOT NULL,
-  `quantity` float NOT NULL,
-  `quantity_unit` varchar(50) NOT NULL COMMENT 'ml, pcs, box, etc.',
+  `category` varchar(20) DEFAULT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
+  `quantity` float DEFAULT NULL,
+  `quantity_unit` varchar(50) DEFAULT NULL COMMENT 'ml, pcs, box, etc.',
   `storage_location` varchar(255) DEFAULT NULL,
-  `cost_per_unit` float NOT NULL,
-  `total_value` float NOT NULL,
+  `cost_per_unit` float DEFAULT NULL,
+  `total_value` float DEFAULT NULL,
   `supplier_name` varchar(255) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`item_id`),
-  KEY `fk_inventory_category` (`category_id`),
+  KEY `fk_inventory_category` (`category`),
   KEY `fk_branch` (`branch_id`),
-  CONSTRAINT `fk_branch` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`),
-  CONSTRAINT `fk_inventory_category` FOREIGN KEY (`category_id`) REFERENCES `inventory_category` (`category_id`)
+  CONSTRAINT `fk_branch` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -460,6 +439,7 @@ CREATE TABLE `inventory_items` (
 
 LOCK TABLES `inventory_items` WRITE;
 /*!40000 ALTER TABLE `inventory_items` DISABLE KEYS */;
+INSERT INTO `inventory_items` VALUES ('001-HF-55',1,'Consumables','Face Masks',111,'pcs','Cabinet 3',8.16,767.04,'Best Deals Inc.','Description here'),('003-NZ-72',2,'Consumables','Face Masks',53,'pcs','Cabinet 3',5.94,380.16,'Global Imports','Description here'),('005-UY-51',2,'Lab Materials','Microscope Slides',45,'sets','Cabinet 4',103.28,3511.52,'Best Deals Inc.','Description here'),('005-YW-75',1,'Consumables','Syringes',99,'pcs','Cabinet 4',2.17,342.86,'XYZ Company','Description here'),('006-IO-44',1,'Equipment','X-Ray Machine',1,'units','Cabinet 4',31317.5,156588,'Best Deals Inc.','Description here'),('007-GS-06',2,'Equipment','X-Ray Machine',1,'units','Cabinet 3',29024.8,145124,'XYZ Company','Description here'),('007-UD-72',1,'Medications','Ibuprofen',62,'tablets','Cabinet 3',18.47,480.22,'Best Deals Inc.','Description here'),('008-AA-88',1,'Lab Materials','Microscope Slides',27,'sets','Cabinet 1',195.94,7445.72,'ABC Suppliers','Description here'),('011-NX-45',1,'Sterilization','Sterilization Pouch',11,'pcs','Cabinet 2',679.9,5439.2,'ABC Suppliers','Description here'),('022-XE-33',2,'Sterilization','Sterilization Pouch',25,'pcs','Cabinet 4',689.92,4829.44,'XYZ Company','Description here'),('025-XJ-08',1,'Equipment','ECG Monitor',5,'units','Cabinet 4',28613.5,28613.5,'Global Imports','Description here'),('030-ME-55',1,'Lab Materials','Petri Dishes',47,'sets','Cabinet 1',174.59,1745.9,'XYZ Company','Description here'),('033-SE-55',1,'Medications','Antibiotic Ointment',34,'tablets','Cabinet 1',3.06,146.88,'Global Imports','Description here'),('039-GX-40',2,'Sterilization','Autoclave',38,'pcs','Cabinet 1',1047.29,13614.8,'XYZ Company','Description here'),('041-EY-19',2,'Equipment','ECG Monitor',2,'units','Cabinet 4',34117.3,102352,'XYZ Company','Description here'),('041-KS-13',2,'Medications','Antibiotic Ointment',93,'tablets','Cabinet 4',4.53,221.97,'Best Deals Inc.','Description here'),('058-OC-57',1,'Medications','Paracetamol',118,'tablets','Cabinet 2',13.66,683,'XYZ Company','Description here'),('067-LG-19',2,'Consumables','Syringes',65,'pcs','Cabinet 2',3.85,211.75,'Best Deals Inc.','Description here'),('069-XK-06',1,'Equipment','Defibrillator',2,'units','Cabinet 1',15438.9,30877.9,'Global Imports','Description here'),('070-FG-65',2,'Sterilization','Ultrasonic Cleaner',45,'pcs','Cabinet 4',1775.84,19534.2,'Best Deals Inc.','Description here'),('070-RE-74',2,'Lab Materials','Test Tubes',42,'sets','Cabinet 4',133.53,2537.07,'Best Deals Inc.','Description here'),('072-WX-07',2,'Equipment','Defibrillator',2,'units','Cabinet 3',15467.6,77337.9,'Global Imports','Description here'),('075-GI-90',2,'Medications','Paracetamol',63,'tablets','Cabinet 4',15.76,929.84,'ABC Suppliers','Description here'),('075-US-94',1,'Sterilization','Autoclave',32,'pcs','Cabinet 1',1018.48,8147.84,'ABC Suppliers','Description here'),('096-JL-54',1,'Lab Materials','Test Tubes',11,'sets','Cabinet 1',141.57,2831.4,'Best Deals Inc.','Description here'),('116-RN-72',1,'Sterilization','Ultrasonic Cleaner',20,'pcs','Cabinet 2',1935.98,23231.8,'Global Imports','Description here'),('146-EO-50',2,'Lab Materials','Petri Dishes',34,'sets','Cabinet 1',176.1,6515.7,'XYZ Company','Description here'),('150-TB-84',2,'Consumables','Gloves',63,'pcs','Cabinet 1',2.73,207.48,'Best Deals Inc.','Description here'),('179-TZ-14',2,'Medications','Ibuprofen',93,'tablets','Cabinet 4',14.8,1332,'XYZ Company','Description here'),('189-PW-51',1,'Consumables','Gloves',133,'pcs','Cabinet 2',6.95,1230.15,'Global Imports','Description here');
 /*!40000 ALTER TABLE `inventory_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -471,7 +451,7 @@ DROP TABLE IF EXISTS `inventory_lab_materials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventory_lab_materials` (
-  `item_id` int NOT NULL,
+  `item_id` varchar(10) NOT NULL,
   `expiration_date` date DEFAULT NULL,
   `last_restock` date DEFAULT NULL,
   `stock_status` enum('in stock','low stock','out of stock') DEFAULT 'in stock',
@@ -487,6 +467,7 @@ CREATE TABLE `inventory_lab_materials` (
 
 LOCK TABLES `inventory_lab_materials` WRITE;
 /*!40000 ALTER TABLE `inventory_lab_materials` DISABLE KEYS */;
+INSERT INTO `inventory_lab_materials` VALUES ('005-UY-51','2026-06-26','2025-07-14','in stock',25),('008-AA-88','2026-07-14','2025-06-24','in stock',29),('030-ME-55','2028-05-14','2024-08-19','in stock',32),('070-RE-74','2027-03-18','2024-10-12','in stock',36),('096-JL-54','2028-05-13','2025-01-28','low stock',28),('146-EO-50','2026-09-15','2025-05-25','out of stock',29);
 /*!40000 ALTER TABLE `inventory_lab_materials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -498,7 +479,7 @@ DROP TABLE IF EXISTS `inventory_medications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventory_medications` (
-  `item_id` int NOT NULL,
+  `item_id` varchar(10) NOT NULL,
   `dosage_form` varchar(100) DEFAULT NULL,
   `expiration_date` date DEFAULT NULL,
   `last_restock` date DEFAULT NULL,
@@ -517,6 +498,7 @@ CREATE TABLE `inventory_medications` (
 
 LOCK TABLES `inventory_medications` WRITE;
 /*!40000 ALTER TABLE `inventory_medications` DISABLE KEYS */;
+INSERT INTO `inventory_medications` VALUES ('007-UD-72','Syrup','2025-10-30','2025-03-27','320mg','BATCH-89005','in stock',41),('033-SE-55','Capsule','2025-12-28','2025-03-16','381mg','BATCH-38722','low stock',35),('041-KS-13','Tablet','2027-10-25','2025-06-13','234mg','BATCH-40072','low stock',21),('058-OC-57','Ointment','2026-11-04','2025-06-02','377mg','BATCH-62066','in stock',25),('075-GI-90','Capsule','2027-12-06','2025-06-30','451mg','BATCH-79331','low stock',27),('179-TZ-14','Injection','2027-02-12','2025-07-06','266mg','BATCH-13425','in stock',47);
 /*!40000 ALTER TABLE `inventory_medications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,7 +510,7 @@ DROP TABLE IF EXISTS `inventory_sterilization`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventory_sterilization` (
-  `item_id` int NOT NULL,
+  `item_id` varchar(10) NOT NULL,
   `expiration_date` date DEFAULT NULL,
   `last_restock` date DEFAULT NULL,
   `minimum_stock_level` float DEFAULT NULL,
@@ -545,6 +527,7 @@ CREATE TABLE `inventory_sterilization` (
 
 LOCK TABLES `inventory_sterilization` WRITE;
 /*!40000 ALTER TABLE `inventory_sterilization` DISABLE KEYS */;
+INSERT INTO `inventory_sterilization` VALUES ('011-NX-45','2026-08-16','2025-02-21',6,'Large','low stock'),('022-XE-33','2025-09-12','2025-03-26',15,'Medium','low stock'),('039-GX-40','2026-07-06','2025-03-26',11,'Medium','out of stock'),('070-FG-65','2027-07-22','2025-03-02',13,'Large','low stock'),('075-US-94','2026-11-03','2025-03-09',11,'Custom','in stock'),('116-RN-72','2026-06-12','2025-08-12',16,'Custom','out of stock');
 /*!40000 ALTER TABLE `inventory_sterilization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -572,7 +555,7 @@ CREATE TABLE `main_website` (
 
 LOCK TABLES `main_website` WRITE;
 /*!40000 ALTER TABLE `main_website` DISABLE KEYS */;
-INSERT INTO `main_website` VALUES (1,'JCS Dental Clinic','JCS Dental Clinic is committed to providing top-quality dental care with modern equipment and a caring team.','Preventive Dentistry,Intervention Dentistry,Coroneric Dentistry','JCSmilesclinic@gmail.com','+63 912 345 6789');
+INSERT INTO `main_website` VALUES (1,'JCS Dental Clinic','JCS Dental Clinic is committed to providing top-quality dental care with modern equipment and a caring team.','Preventive Dentistry,Intervention Dentistry,Coroneric Dentistry,Pediatric Dentistry,Orthodontics,Periodontics,Oral and Nutritional','JCSmilesclinic@gmail.com','+63 912 345 6789');
 /*!40000 ALTER TABLE `main_website` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -749,4 +732,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-05 21:22:15
+-- Dump completed on 2025-08-12 12:36:28
