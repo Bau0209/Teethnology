@@ -9,10 +9,6 @@ from app.models import (
     InventorySterilization
 )
 
-# If you have an AppointmentService or ServiceUsage table that links inventory usage to services,
-# replace the dummy logic for "Supply use per service" with real queries.
-# For now, it's simulated with random/sample values.
-
 def get_inventory_report_data(selected_branch="all"):
     today = date.today()
 
@@ -21,7 +17,7 @@ def get_inventory_report_data(selected_branch="all"):
     if selected_branch != "all":
         base_query = base_query.filter(InventoryItem.branch_id == selected_branch)
 
-    # Join with all categories that have stock_status
+    # Queries for each category
     consumable_query = db.session.query(InventoryConsumable).join(InventoryItem)
     medication_query = db.session.query(InventoryMedication).join(InventoryItem)
     lab_material_query = db.session.query(InventoryLabMaterial).join(InventoryItem)
@@ -55,19 +51,55 @@ def get_inventory_report_data(selected_branch="all"):
         sterilization_query.filter(InventorySterilization.expiration_date < today).count()
     )
 
-    # Inventory vs Consumption chart data
-    # Here, consumption is a placeholder — you should replace with your actual usage data
-    inventory_items = base_query.with_entities(InventoryItem.item_name, InventoryItem.quantity).all()
+    # Inventory vs Consumption - estimate consumption based on minimum stock
+    inventory_items = base_query.with_entities(
+        InventoryItem.item_name,
+        InventoryItem.quantity,
+        InventoryItem.category
+    ).all()
+
+    estimated_consumption = []
+    for item_name, quantity, category in inventory_items:
+        # Estimate usage: if minimum stock exists, assume it’s monthly usage
+        min_stock = 0
+        if category == "consumable":
+            c = InventoryConsumable.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
+            if c and c.minimum_stock:
+                min_stock = c.minimum_stock
+        elif category == "medication":
+            m = InventoryMedication.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
+            if m and m.minimum_stock:
+                min_stock = m.minimum_stock
+        elif category == "lab_material":
+            l = InventoryLabMaterial.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
+            if l and l.minimum_stock:
+                min_stock = l.minimum_stock
+        elif category == "sterilization":
+            s = InventorySterilization.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
+            if s and s.minimum_stock_level:
+                min_stock = s.minimum_stock_level
+
+        # If no min stock info, just use 30% of current quantity
+        if min_stock == 0:
+            estimated_consumption.append(round(quantity * 0.3, 2))
+        else:
+            estimated_consumption.append(round(min_stock, 2))
+
     inventory_vs_consumption = {
         "labels": [i[0] for i in inventory_items],
         "inventory": [i[1] for i in inventory_items],
-        "consumption": [round(i[1] * 0.4, 2) for i in inventory_items]  # Dummy 40% usage
+        "consumption": estimated_consumption
     }
 
-    # Supply use per service chart data (dummy example)
+    # Supply use per "service" - group by category instead
+    category_usage = {}
+    for (item_name, quantity, category), consumption in zip(inventory_items, estimated_consumption):
+        category_usage.setdefault(category, 0)
+        category_usage[category] += consumption
+
     supply_use_per_service = {
-        "labels": ["Cleaning", "Filling", "Extraction", "Braces", "Whitening"],
-        "data": [150, 90, 70, 40, 30]
+        "labels": list(category_usage.keys()),
+        "data": list(category_usage.values())
     }
 
     return {
@@ -77,4 +109,3 @@ def get_inventory_report_data(selected_branch="all"):
         "inventory_vs_consumption": inventory_vs_consumption,
         "supply_use_per_service": supply_use_per_service
     }
-
