@@ -125,8 +125,8 @@ def get_services():
     return [atype[0] for atype in appointment_types if atype[0]]
 
 
-def get_popular_services_by_age_bracket():
-    """Count popular services grouped by age brackets."""
+def get_new_vs_returning_by_age_bracket():
+    """Count new vs returning patients grouped by age brackets."""
     brackets = {
         '0-12': (0, 12),
         '13-19': (13, 19),
@@ -135,7 +135,7 @@ def get_popular_services_by_age_bracket():
         '51+': (51, 150)
     }
 
-    results = {bracket: defaultdict(int) for bracket in brackets}
+    results = {bracket: {'New Patients': 0, 'Returning Patients': 0} for bracket in brackets}
 
     appointments = db.session.query(Appointments, PatientsInfo).join(
         PatientsInfo, Appointments.patient_id == PatientsInfo.patient_id
@@ -153,55 +153,47 @@ def get_popular_services_by_age_bracket():
 
         for bracket, (min_age, max_age) in brackets.items():
             if min_age <= age <= max_age:
-                results[bracket][appointment.appointment_type] += 1
+                label = 'Returning Patients' if appointment.returning_patient else 'New Patients'
+                results[bracket][label] += 1
                 break
 
-    # Convert to {bracket: [(service, count), ...]}
-    return {
-        bracket: sorted(services.items(), key=lambda x: x[1], reverse=True)
-        for bracket, services in results.items()
-    }
+    return results
 
-
-def process_popular_services_by_age(raw_data):
-    """Format service data for Chart.js stacked bar input."""
-    all_services = set()
-    for service_list in raw_data.values():
-        for service, _ in service_list:
-            all_services.add(service)
-
-    all_services = sorted(all_services)
-    
+def process_new_vs_returning_by_age(raw_data):
+    """Format age-bracket patient data for Chart.js."""
+    labels = list(raw_data.keys())  # Age groups as labels
     datasets = []
-    for age_group, service_data in raw_data.items():
-        service_counts = {service: count for service, count in service_data}
-        data = [service_counts.get(service, 0) for service in all_services]
+
+    # Extract data for each category
+    for category, color in [('New Patients', "#ffae00"), ('Returning Patients', "#76a728")]:
+        data = [raw_data[bracket][category] for bracket in labels]
         datasets.append({
-            'label': age_group,
-            'data': data
+            'label': category,
+            'data': data,
+            'backgroundColor': color
         })
 
     return {
-        'labels': all_services,
+        'labels': labels,
         'datasets': datasets
     }
 
 
 def get_report_data(selected_year, current_month):
-    """Build full report dictionary for frontend use."""
     services = get_services()
     monthly_appointment = get_monthly_appointment_count(selected_year)
     patient_month_data = get_monthly_new_and_returning_data(selected_year)
     new_returning_datasets = prepare_new_vs_returning_datasets(patient_month_data)
 
-    # Assuming months is defined globally or elsewhere
     return {
-        'months': months,  # Make sure 'months' is defined elsewhere
+        'months': months,
         'services': services,
         'monthly_appointments': monthly_appointment,
         'monthly_new_patients': get_monthly_new_or_returning_patients(selected_year, is_returning='0'),
         'monthly_returning_patients': get_monthly_new_or_returning_patients(selected_year, is_returning='1'),
         'new_returning_datasets': new_returning_datasets,
         'forecast_values': moving_average_forecast(monthly_appointment, window=5),
-        'popular_services_by_age_bracket': process_popular_services_by_age(get_popular_services_by_age_bracket())
+        'new_vs_returning_by_age': process_new_vs_returning_by_age(
+            get_new_vs_returning_by_age_bracket()
+        )
     }
