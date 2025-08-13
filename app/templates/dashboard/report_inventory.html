@@ -11,13 +11,33 @@
 <div class="container-fluid p-4 revenue">
   <!-- Navigation Tabs -->
   <ul class="nav nav-tabs mb-4">
-    <li class="nav-item"><a class="nav-link " href="{{ url_for('dashboard.reports') }}">Revenue</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_patients') }}">Patients</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_marketing') }}">Marketing</a></li>
-    <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.report_inventory') }}">Inventory</a></li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.endpoint == 'dashboard.reports' %}active{% endif %}"
+           href="{{ url_for('dashboard.reports', branch=selected_branch) }}">
+           Revenue
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.endpoint == 'dashboard.report_patients' %}active{% endif %}"
+           href="{{ url_for('dashboard.report_patients', branch=selected_branch) }}">
+           Patients
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.endpoint == 'dashboard.report_marketing' %}active{% endif %}"
+           href="{{ url_for('dashboard.report_marketing', branch=selected_branch) }}">
+           Marketing
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if request.endpoint == 'dashboard.report_inventory' %}active{% endif %}"
+           href="{{ url_for('dashboard.report_inventory', branch=selected_branch) }}">
+           Inventory
+        </a>
+    </li>
     <div class="branch-dropdown">
         {% if access_level == 'owner' %}
-            <form method="get" action="{{ url_for('dashboard.inventory_lab_material') }}">
+            <form method="get" action="{{ url_for('dashboard.report_inventory') }}">
                 <select name="branch" class="form-select" onchange="this.form.submit()">
                     <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
                     {% for branch in branches %}
