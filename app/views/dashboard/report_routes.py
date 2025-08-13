@@ -54,7 +54,8 @@ def report_patients():
                            values=patients_data['monthly_appointments'],
                            new_returning_stacked_datasets=patients_data['new_returning_datasets'],
                            forecast_values=patients_data['forecast_values'],
-                           new_vs_returning_by_age=patients_data['new_vs_returning_by_age'],  # updated key
+                           new_vs_returning_by_age=patients_data['new_vs_returning_by_age'],  
+                           forecast_chart_data=patients_data['forecast_chart_data'],  
                            current_year=today.year,
                            selected_year=selected_year,
                            current_month_new_patient=patients_data['monthly_new_patients'][current_month - 1],

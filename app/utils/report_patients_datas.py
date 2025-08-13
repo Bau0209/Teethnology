@@ -178,21 +178,47 @@ def process_new_vs_returning_by_age(raw_data):
         'datasets': datasets
     }
 
+def prepare_forecast_datasets(actual_values, forecast_values):
+    """Prepare dataset for actual vs forecast comparison chart."""
+    return {
+        'labels': months,
+        'datasets': [
+            {
+                'label': 'Actual Appointments',
+                'data': actual_values,
+                'borderColor': '#3e95cd',
+                'backgroundColor': 'rgba(62, 149, 205, 0.2)',
+                'fill': False,
+                'borderWidth': 2
+            },
+            {
+                'label': 'Forecasted Appointments',
+                'data': forecast_values,
+                'borderColor': '#ff6384',
+                'backgroundColor': 'rgba(255, 99, 132, 0.2)',
+                'borderWidth': 2,
+                'borderDash': [5, 5],
+                'fill': False
+            }
+        ]
+    }
 
 def get_report_data(selected_year, current_month):
     services = get_services()
     monthly_appointment = get_monthly_appointment_count(selected_year)
     patient_month_data = get_monthly_new_and_returning_data(selected_year)
     new_returning_datasets = prepare_new_vs_returning_datasets(patient_month_data)
+    forecast_values = moving_average_forecast(monthly_appointment, window=5)
 
-    return {
+    return { 
         'months': months,
         'services': services,
         'monthly_appointments': monthly_appointment,
         'monthly_new_patients': get_monthly_new_or_returning_patients(selected_year, is_returning='0'),
         'monthly_returning_patients': get_monthly_new_or_returning_patients(selected_year, is_returning='1'),
         'new_returning_datasets': new_returning_datasets,
-        'forecast_values': moving_average_forecast(monthly_appointment, window=5),
+        'forecast_values': forecast_values,
+        'forecast_chart_data': prepare_forecast_datasets(monthly_appointment, forecast_values),
         'new_vs_returning_by_age': process_new_vs_returning_by_age(
             get_new_vs_returning_by_age_bracket()
         )

@@ -63,4 +63,45 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    //forecast chart
+    function renderForecastChart() {
+    const forecastChartEl = document.getElementById('forecastChart');
+        if (!forecastChartEl || !window.chartData || !window.chartData.forecast_chart_data) return;
+
+        new Chart(forecastChartEl.getContext('2d'), {
+            type: 'line',
+            data: window.chartData.forecast_chart_data,
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.raw.toLocaleString()}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    renderForecastChart();
 });
