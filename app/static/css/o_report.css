@@ -23,6 +23,25 @@ body {
   font-weight: 500;
 }
 
+/* Position branch dropdown on the right */
+.branch-dropdown {
+  margin-left: auto;
+  display: inline-block;
+}
+
+.nav-tabs {
+  display: flex;
+  align-items: center;
+}
+
+.branch-dropdown form {
+  margin: 0;
+}
+
+.branch-dropdown select {
+  min-width: 150px;
+}
+
 /* Buttons for filters */
 .btn-outline-primary.active {
   background-color: #17a2b8;
