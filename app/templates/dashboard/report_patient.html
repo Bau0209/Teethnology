@@ -1,0 +1,129 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Patients Tab Dashboard{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_report.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4 patients">
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.reports') }}">Revenue</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.report_patients') }}">Patients</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_marketing') }}">Marketing</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.report_inventory') }}">Inventory</a></li>
+  </ul>
+
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <button class="btn btn-outline-primary btn-sm active">This Month</button>
+    <button class="btn btn-outline-primary btn-sm active">Today</button>
+  </div>
+
+  <!-- Top Section: Two-column layout -->
+  <h5 class="text-muted mb-3">This Month</h5>
+  <div class="row g-4">
+    <!-- Top Summary Section -->
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="row g-3">     
+          <!-- Revenue Cards -->
+          <div class="col-4">
+            <div class="card p-3 text-center">
+              <h3 class="text-muted d-block">This Month's Appointments</h3>
+              <h1 style="color:rgb(32, 178, 115)">{{ current_month_appointment }}</h1>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card p-3 text-center">
+              <h3 class="text-muted d-block">This Month's New Patient</h3>
+              <h1 style="color:rgb(32, 178, 115)">{{ current_month_new_patient }}</h1>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="card p-3 text-center">
+              <h3 class="text-muted d-block">This Month's Returning Patient</h3>
+              <h1 style="color:rgb(32, 178, 115)">{{ current_month_returning_patient }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-4"> 
+      <div class="card mt-3">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+          <h6 class="mb-0">New and Returning Patients by Appointments</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="newReturningPatientsBarStackedChart" style="width: 100%; height: 350px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card mt-3">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+          <h6 class="mb-0">Popular Services By Age</h6>
+        </div>        
+        <div class="card-body">
+          <canvas id="popularServicesPatientsBarStackedChart" style="width: 100%; height: 350px;" ></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- Forecast Section -->
+  <div class="row mt-3 gx-4 gy-4">
+    <div class="col-lg-9">
+      <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+        <h5 style="color: #00898E; margin-left: 10px; font-size: 1.5rem; font-weight: 700;">Forecasts</h5>
+        <form method="get" action="{{ url_for('dashboard.report_patients') }}">
+          <select name="report_revenue_selected_year" class="form-select form-select-sm" onchange="this.form.submit()">
+            {% for y in range(current_year, current_year - 10, -1) %}
+              <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+      <div class="card h-100">
+        <div class="card-header bg-white"><h6 class="mb-0">Total # Appointments Actual vs Forecast</h6></div>
+        <div class="card-body">
+          <canvas id="forecastChart" height="350"></canvas>
+        </div>
+      </div>
+    </div>
+    <!-- Insight Card (20%) -->
+    <div class="col-lg-3 mb-4">  <!-- Changed from col-md-3 to col-lg-3 -->
+      <div class="card h-100 business-insight-card">  <!-- Added business-insight-card class -->
+        <div class="card-body">
+          <h6 class="fw-semibold text-primary mb-3">📢 BUSINESS INSIGHT</h6>
+          <p class="small mb-0">{{ insight_text | safe }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/o_report_patients.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+<script>
+    window.chartData = {
+      months_labels: {{ months_labels | tojson }},
+      service_labels: {{ service_labels | tojson }},
+      values: {{ values | tojson }},
+      popular_service_by_age: {{ popular_service_by_age | tojson }},
+      new_returning_stacked_datasets: {{ new_returning_stacked_datasets | tojson }},
+      forecast_values: {{ forecast_values | tojson }}
+    };
+</script>
+{% endblock %}

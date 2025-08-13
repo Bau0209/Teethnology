@@ -1,0 +1,45 @@
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(forecast)
+library(tibble)
+
+df_raw <- read.csv("C:\\Users\\ejbau\\Downloads\\transactions.csv")
+
+df_clean <- df_raw %>%
+  mutate(
+    transaction_datetime = ymd_hms(transaction_datetime),
+    month = floor_date(transaction_datetime, "month")
+  )
+
+monthly_df <- df_clean %>%
+  group_by(month) %>%
+  summarise(total_revenue = sum(total_amount_paid), .groups = "drop") %>%
+  mutate(type = factor("Actual", levels = c("Actual", "Forecast")))
+
+revenue_ts <- ts(monthly_df$total_revenue, start = c(2020, 1), frequency = 12)
+fit_snaive <- snaive(revenue_ts, h = 6)
+
+forecast_df <- data.frame(
+  month = seq(from = max(monthly_df$month) %m+% months(1),
+              by = "1 month",
+              length.out = length(fit_snaive$mean)),
+  total_revenue = as.numeric(fit_snaive$mean),
+  type = factor("Forecast", levels = c("Actual", "Forecast"))
+)
+
+combined_df <- bind_rows(monthly_df, forecast_df)
+
+p <- ggplot(combined_df, aes(x = month, y = total_revenue, color = type)) +
+  geom_line(size = 1.2) +
+  scale_color_manual(values = c("Actual" = "blue", "Forecast" = "red")) +
+  labs(
+    title = "Monthly Revenue: Actual vs Forecast (Seasonal Naive)",
+    x = "Month",
+    y = "Revenue",
+    color = "Legend"
+  ) +
+  theme_minimal()
+
+# Save chart as PNG
+ggsave("static/forecast.png", plot = p, width = 8, height = 5)

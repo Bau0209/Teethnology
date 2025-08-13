@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Teethnology Dashboard{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owner.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/audio_equalizer.css') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <img src="{{ url_for('static', filename='images/teethnology.png') }}" alt="Teethnology Logo" class="topbar-logo">
+                <span class="topbar-title">TEETHNOLOGY</span>
+            </div>
+            <div class="topbar-right">
+                <span class="topbar-icon"><i class="fa fa-bell"></i></span>
+                <span class="topbar-icon"><i class="fa fa-user"></i></span>
+                {% if access_level == 'owner' %}
+                <span class="topbar-username" id="userDropdownBtn">USERNAME
+                    <div class="user-dropdown" id="userDropdownMenu">
+                        <div class="user-dropdown-links">
+                            <a href="{{ url_for('dashboard.account_page') }}">ACCOUNT</a>
+                            <a href="{{ url_for('dashboard.security') }}">SECURITY</a>
+                        </div>
+                        <form action="{{ url_for('login.logout') }}" method="get">
+                            <button type="submit" class="logout-btn">Logout</button>
+                        </form>
+                    </div>
+                </span>
+                {% elif access_level == 'staff' %}
+                <span class="topbar-username" id="userDropdownBtn">USERNAME
+                    <div class="user-dropdown" id="userDropdownMenu">
+                        <div class="user-dropdown-links">
+                            <a href="{{ url_for('dashboard.account_page') }}">ACCOUNT</a>
+                            <a href="{{ url_for('dashboard.security') }}">SECURITY</a>
+                        </div>
+                        <form action="{{ url_for('login.logout') }}" method="get">
+                            <button type="submit" class="logout-btn">Logout</button>
+                        </form>
+                    </div>
+                </span>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- Sidebar + Main Content -->
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        {% if access_level == 'owner' %}
+                            <li><a href="{{ url_for('dashboard.owner_home') }}"><i class="fa fa-tachometer"></i> Home</a></li>
+                        {% else %}
+                            <li><a href="{{ url_for('dashboard.staff_home') }}"><i class="fa fa-tachometer"></i> Home</a></li>
+                        {% endif %}
+
+                        {% if access_level == 'owner' %}
+                            <li><a href="{{ url_for('dashboard.branches') }}"><i class="fa fa-code-branch"></i> Branches</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('dashboard.appointments') }}"><i class="fa fa-calendar"></i> Appointments</a></li>
+                        <li><a href="{{ url_for('dashboard.patients') }}"><i class="fa fa-users"></i> Patients</a></li>
+                        {% if access_level == 'owner' %}
+                            <li><a href="{{ url_for('dashboard.employees') }}"><i class="fa fa-user-md"></i> Employees</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('dashboard.inventory') }}"><i class="fa fa-box"></i> Inventory</a></li>
+                        <li><a href="{{ url_for('dashboard.transactions') }}"><i class="fa fa-credit-card"></i> Transaction</a></li>
+                        {% if access_level == 'owner' %}
+                            <li><a href="{{ url_for('dashboard.reports') }}"><i class="fa fa-file-alt"></i> Reports</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                
+                <hr>
+                <div class="voice-assistant">
+                    <span>TAIK TO OUR <br>VOICE ASSISTANT</span>
+                    <button><i class="fa fa-microphone"></i></button>
+                </div>
+            </aside>
+            
+            <main class="main-content">
+                <!-- Dynamic Breadcrumbs (added section) -->
+                <div class="breadcrumb-container" id="breadcrumb-container">
+                    <!-- Breadcrumbs will be injected here by JavaScript -->
+                </div>
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Complete route mapping with parent-child relationships
+    const routeMap = {
+        // Home routes
+        'owner_home': { name: 'Home', url: '{{ url_for("dashboard.owner_home") }}' },
+        'staff_home': { name: 'Home', url: '{{ url_for("dashboard.staff_home") }}' },
+        
+        // Branches hierarchy
+        'branches': { name: 'Branches', url: '{{ url_for("dashboard.branches") }}' },
+        'branch_info': { name: 'Branch Info', parent: 'branches' },
+        
+        // Patients hierarchy
+        'patients': { name: 'Patients', url: '{{ url_for("dashboard.patients") }}' },
+        'patient_info': { name: 'Patient Info', parent: 'patients' },
+        'procedure_history': { name: 'Procedure History', parent: 'patient_info' },
+        'dental_record': { name: 'Dental Records', parent: 'procedure_history' },
+        
+        // Employees hierarchy
+        'employees': { name: 'Employees', url: '{{ url_for("dashboard.employees") }}' },
+        'basic_info': { name: 'Basic Info', parent: 'employees' },
+        'work_details': { name: 'Work Details', parent: 'employees' },
+        
+        // Inventory hierarchy
+        'inventory': { name: 'Inventory', url: '{{ url_for("dashboard.inventory") }}' },
+        'consumable': { name: 'Consumable', parent: 'inventory' },
+        'equipment': { name: 'Equipment', parent: 'inventory' },
+        'sterilization': { name: 'Sterilization', parent: 'inventory' },
+        'lab_materials': { name: 'Lab Materials', parent: 'inventory' },
+        'medication': { name: 'Medication', parent: 'inventory' },
+        
+        // Reports hierarchy
+        'reports': { name: 'Reports', url: '{{ url_for("dashboard.reports") }}' },
+        'revenue': { name: 'Revenue', parent: 'reports' },
+        'patients_report': { name: 'Patients', parent: 'reports' },
+        'marketing': { name: 'Marketing', parent: 'reports' },
+        'inventory_report': { name: 'Inventory', parent: 'reports' }
+    };
+
+    function updateBreadcrumbs() {
+        const path = window.location.pathname.split('/').filter(segment => segment && segment !== 'dashboard');
+        const breadcrumbContainer = document.getElementById('breadcrumb-container');
+        
+        let breadcrumbHtml = '';
+        const homeUrl = '{{ url_for("dashboard.owner_home") if access_level == "owner" else url_for("dashboard.staff_home") }}';
+        breadcrumbHtml += `<a href="${homeUrl}">Home</a>`;
+        
+        if (path.length > 0) {
+            breadcrumbHtml += '<span class="separator">></span>';
+        }
+        
+        // Track processed segments to handle dynamic IDs
+        const processedSegments = [];
+        
+        path.forEach((segment, index) => {
+            const isLast = index === path.length - 1;
+            let routeInfo = routeMap[segment] || { 
+                name: segment.replace(/_/g, ' ').replace(/(^|\s)\S/g, l => l.toUpperCase()),
+                parent: processedSegments[processedSegments.length - 1] || null
+            };
+            
+            // Handle numeric IDs (like patient/5)
+            if (!isNaN(segment) && processedSegments.length > 0) {
+                routeInfo = {
+                    name: routeMap[processedSegments[processedSegments.length - 1]]?.name + ' Details',
+                    parent: processedSegments[processedSegments.length - 1]
+                };
+            }
+            
+            processedSegments.push(segment);
+            
+            // Determine URL
+            let segmentUrl;
+            if (isLast) {
+                segmentUrl = '#';
+            } else if (routeInfo.url) {
+                segmentUrl = routeInfo.url;
+            } else if (routeInfo.parent) {
+                const parentRoute = routeMap[routeInfo.parent] || { url: `/${routeInfo.parent}` };
+                segmentUrl = parentRoute.url;
+            } else {
+                segmentUrl = homeUrl;
+            }
+            
+            breadcrumbHtml += isLast 
+                ? `<span class="current">${routeInfo.name}</span>`
+                : `<a href="${segmentUrl}">${routeInfo.name}</a>`;
+            
+            if (!isLast && index < path.length - 1) {
+                breadcrumbHtml += '<span class="separator">></span>';
+            }
+        });
+        
+        breadcrumbContainer.innerHTML = breadcrumbHtml;
+    }
+
+    // Initial load
+    updateBreadcrumbs();
+    
+    // Update when navigating
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('a') && !e.target.closest('a').hasAttribute('target')) {
+            setTimeout(updateBreadcrumbs, 50);
+        }
+    });
+});
+</script>
+</body>
+</html>

@@ -24,12 +24,13 @@ def login_post():
     session['user_id'] = account.account_id
     session['email'] = account.email
     session['access_level'] = account.access_level
+    session['access_branch'] = account.employee.branch_id
     session.permanent = True
     
     if account.access_level == 'owner':
-        return redirect(url_for('owner.owner_home'))
+        return redirect(url_for('dashboard.owner_home'))
     elif account.access_level == 'staff':
-        return redirect(url_for('staff.staff_home'))
+        return redirect(url_for('dashboard.staff_home'))
     
     flash("Access level not recognized.", "error")
     return redirect(url_for('login.login_page'))

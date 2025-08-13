@@ -1,4 +1,4 @@
-{% extends 'dashboard/owner_base.html' %}
+{% extends 'dashboard/base.html' %}
 
 {% block title %}Dashboard - Teethnology{% endblock %}
 
@@ -35,7 +35,7 @@
           <div class="appointment-banner" style="display: flex; justify-content: space-between; align-items: center;">
             <div class="banner-text">
               <h2>Add appointment in<br>your schedule now</h2>      
-              <a href="/owner/appointments" class="banner-button">+ Add Appointment</a>
+              <a href="/dashboard/appointments" class="banner-button">+ Add Appointment</a>
             </div>
             <div class="banner-image">
               <img src="{{ url_for('static', filename='images/banner-doctors.png') }}" alt="Doctors Illustration"">
@@ -52,7 +52,7 @@
               {% if appointments_today %}
                 {% for a in appointments_today %}
                     <h5><strong>Patient: {{ a.patient.patient_full_name.upper() }}</strong></h5>
-                    Time: {{ a.appointment_sched.strftime('%I:%M %p') }} <br>
+                    Time: {{ a.appointment_time.strftime('%I:%M %p') }} <br>
                     Appointment Type: {{ a.appointment_type }} <br> 
                     Contact #: {{ a.patient.contact_number }} <br> 
                     Email: {{ a.patient.email }}              
@@ -96,18 +96,18 @@
     <div class="appointment-requests-controls">
     </div>
     <hr>
-    <a href="{{ url_for('owner.appointment_req') }}" class="view-all">View All</a>
+    <a href="{{ url_for('dashboard.appointment_req') }}" class="view-all">View All</a>
     <div class="request-list">
       {% if appointment_requests %}
         {% for req in appointment_requests %}
           <div class="request-item">
             <div class="request-info">
-              <h5><strong>{{ req.appointment_sched.strftime('%B %d, %Y at %I:%M %p') }}</strong></h5>
+              <h5><strong>{{ req.appointment_date.strftime('%B %d, %Y at %I:%M %p') }}</strong></h5>
               Patient Name: {{ req.patient.patient_full_name.upper() }}<br>
               Appointment Type: {{ req.appointment_type }}
             </div>
             <div class="actions">
-              <button class="accept"><a href="{{ url_for('owner.appointment_req') }}" class="view-all">View More</a></button>
+              <button class="accept"><a href="{{ url_for('dashboard.appointment_req') }}" class="view-all">View More</a></button>
             </div>
           </div>
         {% endfor %}
@@ -121,7 +121,7 @@
 
   </div>
 
-  <form method="POST" action="{{ url_for('owner.update_main_website') }}" style="width:100%; min-width: 1440px;"><!--adding the styles for alignments and appdev purposes-->
+  <form method="POST" action="{{ url_for('dashboard.update_main_website') }}" style="width:100%; min-width: 1440px;"><!--adding the styles for alignments and appdev purposes-->
         <div class="branches-info-card" style="max-width: 1690px;"> <!--adding the styles for alignments and appdev purposes-->
             <div class="branches-info-header">
                 <h2>WEBSITE INFORMATION</h2>

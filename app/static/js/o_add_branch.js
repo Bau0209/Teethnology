@@ -23,3 +23,15 @@
         const modal = bootstrap.Modal.getInstance(document.getElementById('addBranchModal'));
         modal.hide();
     });
+
+// Open the archive modal
+let archiveBranchId = null;
+
+// Call this when archive button is clicked
+function openArchiveModal(branchId) {
+  archiveBranchId = branchId;
+
+  const modal = new bootstrap.Modal(document.getElementById('archiveBranchModal'));
+  modal.show();
+}
+

@@ -1,0 +1,440 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Teethnology Patient Record{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_patient_info.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+ <div class="patients-table-container">
+      <table class="patients-table">
+        <tbody>
+           <tr>
+              <td><a href="{{ url_for('dashboard.patients') }}"><i class="fa fa-chevron-left"></i></a></td>
+                <td>{{ patient.patient_id }}</td>
+                <td>{{ patient.patient_full_name}}</td>
+                <td>{{ patient.age }}</td>
+                <td>{{ patient.sex }}</td>
+                <td>{{ patient.contact_number }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.branch.branch_name}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="patient-info-container">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
+            <li class="nav-item">
+                 <a class="nav-link active" href="{{ url_for('dashboard.patient_info', patient_id=patient.patient_id) }}" data-branch="patient_rec">Patient Info</a>
+            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard.patient_procedure', patient_id=patient.patient_id) }}" data-branch="procedure">Procedure History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard.patient_dental_rec', patient_id=patient.patient_id) }}" data-branch="dental_record">Dental Record</a>
+                    </li>
+                    <li>
+                </ul>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+     
+
+                <!-- Patient Info Tab Content -->
+                <form action="{{ url_for('dashboard.edit_patient', patient_id=patient.patient_id, form='patient_info') }}" method="post">
+                    <div class="tab-content pt-4" id="patientInfoContent">
+                        <div class="patient-info-section">
+                            <h2 class="section-title">Patient Information Record</h2>
+                                <div class="row mb-4">                                
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Last Name:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="last_name" value="{{ patient.last_name }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">First Name:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="first_name" value="{{ patient.first_name }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Middle Initial:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="middle_name" value="{{ patient.middle_name }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Birthdate:</label>
+                                            <div class="col-sm-8">
+                                                <input type="date" class="form-control" name="birthdate" value="{{ patient.birthdate }}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Age:</label>
+                                            <div class="col-sm-8">
+                                                <input type="number" class="form-control" value="{{ patient.age }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Sex:</label>
+                                            <div class="col-sm-8">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="sex" id="female" value="F" {% if patient.sex == 'F' %}checked{% endif %}>
+                                                    <label class="form-check-label" for="female">Female</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="sex" id="male" value="M" {% if patient.sex == 'M' %}checked{% endif %}>
+                                                    <label class="form-check-label" for="male">Male</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Address & Contact -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Address Line 1:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="address_line1" value="{{ patient.address_line1 }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3 address-indent">
+                                            <label class="col-sm-4 col-form-label">Barangay:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="baranggay" value="{{ patient.baranggay }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3 address-indent">
+                                            <label class="col-sm-4 col-form-label">City:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="city" value="{{ patient.city }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3 address-indent">
+                                            <label class="col-sm-4 col-form-label">Province:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="province" value="{{ patient.province }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3 address-indent">
+                                            <label class="col-sm-4 col-form-label">Country:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="country" value="{{ patient.country }}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Occupation:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="occupation" value="{{ patient.occupation }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Office No:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="office_number" value="{{ patient.office_number }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Contact No:</label>
+                                            <div class="col-sm-8">
+                                                <input type="tel" class="form-control" name="contact_number" value="{{ patient.contact_number }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Email:</label>
+                                            <div class="col-sm-8">
+                                                <input type="email" class="form-control" name="email" value="{{ patient.email }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Referred By:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="reffered_by" value="{{ patient.reffered_by }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Guardian Section -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Guardian Name:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="guardian_full_name"
+                                                    value="{{ patient.guardian_full_name }}" placeholder="For minors only">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label">Guardian Occupation:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="guardian_occupation" value="{{ patient.guardian_occupation }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Initial Reason for Dental Consultation:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="initial_consultation_reason" value="{{ patient.initial_consultation_reason }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="section-subtitle">Dental History</h3>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Previous Dentist:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="previous_dentist" value="{{ patient.previous_dentist }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-4 col-form-label">Last Dental Visit:</label>
+                                        <div class="col-sm-8">
+                                            <input type="date" class="form-control" name="last_dentist_visit" value="{{ patient.last_dentist_visit }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="section-subtitle">Medical History</h3>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-5 col-form-label">Physician's Name:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name = "physician_name" value="{{ patient_medical_info.physician_name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-5 col-form-label">Specialty, if applicable:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name = "physician_specialty" value="{{ patient_medical_info.physician_specialty }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-5 col-form-label">Office Address:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name = "office_address" value="{{ patient_medical_info.physician_office_address }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-5 col-form-label">Office Number:</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name = "office_number" value="{{ patient_medical_info.physician_office_number }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <ol class="medical-history-list">
+                            <li>
+                                Are you in good health?
+                                <strong>{{ "Yes" if patient_medical_info.in_good_health else "No" }}</strong>
+                            </li>
+                            <li>
+                                Are you under medical treatment now?
+                                <div class="sub-question">
+                                    If so, what is the condition being treated?
+                                    <strong>{{ patient_medical_info.medical_treatment_currently_undergoing or "None" }}</strong>
+                                </div>
+                            </li>
+                            <li>
+                                Have you ever had serious illness or surgical operation?
+                                <div class="sub-question">
+                                    What illness or operation? 
+                                    <strong>{{ patient_medical_info.recent_illness_or_surgical_operation or "None" }}</strong>
+                                </div>
+                                <div class="sub-question">
+                                    When was it? 
+                                    <strong>{{ patient_medical_info.when_illness_or__operation or "N/A" }}</strong>
+                                </div>
+                            </li>
+                            <li>
+                                Have you ever been hospitalized?
+                                <div class="sub-question">
+                                    If so, when and why?
+                                    <strong>{{ patient_medical_info.when_why_hospitalized or "No" }}</strong>
+                                </div>
+                            </li>
+                            <li>
+                                Are you taking any prescription/non-prescription Medication?
+                                <div class="sub-question">
+                                    If so, please specify:
+                                    <strong>{{ patient_medical_info.medications_currently_taking or "None" }}</strong>
+                                </div>
+                            </li>
+                            <li>
+                                Do you use tobacco products?
+                                <strong>{{ "Yes" if patient_medical_info.using_tabacco else "No" }}</strong>
+                            </li>
+                            <li>
+                                Do you use alcohol, cocaine or other dangerous drugs?
+                                <strong>{{ "Yes" if patient_medical_info.using_alcohol_cocaine_drugs else "No" }}</strong>
+                            </li>
+                            {% set allergies = (patient_medical_info.allergies or "").split(",") %}
+                                <li>
+                                    Are you allergic to any of the following:
+                                    <div class="checkbox-grid mt-2">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="allergy1" name="allergy" {% if "Local Anesthetic" in allergies %}checked{% endif %}>
+                                            <label for="allergy1">Local Anesthetic (ex. Lidocaine)</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="allergy2" name="allergy" {% if "Penicillin Antibiotics" in allergies %}checked{% endif %}>
+                                            <label for="allergy2">Penicillin Antibiotics</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="allergy3" name="allergy" {% if "Latex" in allergies %}checked{% endif %}>
+                                            <label for="allergy3">Latex</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="allergy4" name="allergy" {% if "Sulfa Drugs" in allergies %}checked{% endif %}>
+                                            <label for="allergy4">Sulfa Drugs</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="allergy5" name="allergy" {% if "Aspirin" in allergies %}checked{% endif %}>
+                                            <label for="allergy5">Aspirin</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="allergy6" name="allergy" {% if "Other" in allergies %}checked{% endif %}>
+                                            <label for="allergy6">Other:</label>
+                                            <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
+                                                value="{% for item in allergies if item not in ['Local Anesthetic', 'Penicillin Antibiotics', 'Latex', 'Sulfa Drugs', 'Aspirin'] %}{{ item }}{% endfor %}">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    Bleeding Time:
+                                    <strong>{{ patient_medical_info.bleeding_time }}</strong>
+                                    <div class="sub-question"></div>
+                                </li>
+                                <li>
+                                    For Women only
+                                    <div class="checkbox-grid mt-2">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="women1" name="is_pregnant"
+                                                {% if patient_medical_info.is_pregnant %}checked{% endif %}>
+                                            <label for="women1">Are you pregnant?</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="women2" name="is_nursing"
+                                                {% if patient_medical_info.is_nursing %}checked{% endif %}>
+                                            <label for="women2">Are you nursing?</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="women3" name="on_birth_control"
+                                                {% if patient_medical_info.on_birth_control %}checked{% endif %}>
+                                            <label for="women3">Are you taking birth control pills?</label>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    Blood Type:
+                                    <strong>{{ patient_medical_info.blood_type }}</strong>
+                                    <div class="sub-question"></div>
+                                </li>
+                                <li>
+                                    Blood Pressure:
+                                    <strong>{{ patient_medical_info.blood_pressure }}</strong>
+                                    <div class="sub-question"></div>
+                                </li>
+                                {% set illnesses = patient_medical_info.illness_checklist.split(',') if patient_medical_info.illness_checklist else [] %}
+
+                                <li>
+                                    Do you have or have had any of the following? Check which apply:
+                                    <div class="checkbox-grid mt-2">
+
+                                        {% set known_conditions = [
+                                            'AIDS', 'Anemia', 'Arthritis', 'Allergy', 'Angina Pectoris', 'Asthma', 'Blood Diseases',
+                                            'Bruises', 'Chest Pain', 'Blood Pressure', 'Cancer', 'Circulatory Disturbances', 'Diabetes',
+                                            'Drug Addiction', 'Fainting', 'Digestive', 'Epilepsy', 'Glaucoma', 'Headaches', 'Hepatitis',
+                                            'Kidney', 'Heart Trouble', 'Hives', 'Liver', 'Lung Trouble', 'Operation', 'Radiation Therapy',
+                                            'Nervousness', 'Pains', 'Rheumatic Fever', 'Scarlet Fever', 'Sickle Cell', 'Stomach Trouble',
+                                            'Sexually Transmitted Diseases', 'Sinus Trouble', 'Stroke', 'Swollen Ankles', 'Tumor',
+                                            'Venereal Disease', 'Thyroid Problem', 'Ulcer'
+                                        ] %}
+
+                                        {% set illnesses = patient_medical_info.illness_checklist.split(',') if patient_medical_info.illness_checklist else [] %}
+                                        {% set other_conditions = [] %}
+
+                                        {# Render checkboxes for known conditions #}
+                                        {% for cond in known_conditions %}
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="condition{{ loop.index }}" name="condition" value="{{ cond }}"
+                                                {% if cond in illnesses %}checked{% endif %}>
+                                            <label for="condition{{ loop.index }}">{{ cond }}</label>
+                                        </div>
+                                        {% endfor %}
+
+                                        {# Collect unknown conditions as "Other" #}
+                                        {% for item in illnesses %}
+                                            {% if item not in known_conditions %}
+                                                {% set _ = other_conditions.append(item.strip()) %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {# Display Other field #}
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="conditionOther" name="condition" value="Other"
+                                                {% if other_conditions %}checked{% endif %}>
+                                            <label for="conditionOther">Other:</label>
+                                            <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
+                                                name="other_condition" value="{{ other_conditions | join(', ') }}">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                            
+                            <div class="d-flex justify-content-end mt-4">
+                                <button class="btn btn-danger" onclick="showArchiveModal('{{ patient.patient_id }}', 'dental')">
+                                    Archive Dental History
+                                </button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% include 'dashboard/components/archive_modal.html' %}
+    {% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

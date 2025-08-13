@@ -1,0 +1,102 @@
+<div class="modal fade" id="receiptModal{{ txn.id }}" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="receiptModalLabel">{{ txn.receipt_number }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row mb-3">
+                        <h6>Patient Information</h6>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Patient ID:</label>
+                                <span  class="form-control" id="patientId">{{ txn.procedure.patient.patient_id }}</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Patient Name:</label>
+                                <span  class="form-control" id="patientName">{{ txn.procedure.patient.patient_full_name }}</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Branch Location:</label>
+                                <span  class="form-control" id="branchlo">{{ txn.procedure.patient.branch.branch_name }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Contact Number:</label>
+                                <span class="form-control" id="contactNumber">{{ txn.procedure.patient.contact_number }}</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email:</label>
+                                <span class="form-control" id="email">{{ txn.procedure.patient.email }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <h6>Billing history:</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Dentist name:</label>
+                                        <span class="form-control" id="dentistName">{{ txn.procedure.provider }}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Date of previous appointment:</label>
+                                        <span class="form-control" id="previousAppointmentDate">{{ txn.transaction_datetime.strftime('%Y-%m-%d') }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Balance:</label>
+                                        <span class="form-control" id="balance">₱{{ '{:,.2f}'.format(txn.remaining or 0) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Total Amount Paid:</label>
+                                        <span class="form-control" id="totalAmountPaid">{{ txn.total_amount_paid }}</span>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Payment Method:</label>
+                                        <select class="form-select" disabled>
+                                            <option {{ 'selected' if txn.payment_method == 'Cash' }}>Cash</option>
+                                            <option {{ 'selected' if txn.payment_method == 'Credit Card' }}>Credit Card</option>
+                                            <option {{ 'selected' if txn.payment_method == 'Insurance' }}>Insurance</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status:</label>
+                                        <select class="form-select" disabled>
+                                            <option {{ 'selected' if txn.status == 'Active' }}>Active</option>
+                                            <option {{ 'selected' if txn.status == 'Inactive' }}>Inactive</option>
+                                            <option {{ 'selected' if txn.status == 'Pending' }}>Pending</option>
+                                        </select>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Service Details:</label>
+                        <span class="form-control" rows="3" readonly>{{ txn.procedure.treatment_procedure }}</span>
+                    </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
