@@ -54,12 +54,13 @@ def report_patients():
                            values=patients_data['monthly_appointments'],
                            new_returning_stacked_datasets=patients_data['new_returning_datasets'],
                            forecast_values=patients_data['forecast_values'],
-                           popular_service_by_age=patients_data['popular_services_by_age_bracket'],
+                           new_vs_returning_by_age=patients_data['new_vs_returning_by_age'],  # updated key
                            current_year=today.year,
                            selected_year=selected_year,
-                           current_month_new_patient = patients_data['monthly_new_patients'][current_month - 1],
-                           current_month_returning_patient = patients_data['monthly_returning_patients'][current_month - 1],
+                           current_month_new_patient=patients_data['monthly_new_patients'][current_month - 1],
+                           current_month_returning_patient=patients_data['monthly_returning_patients'][current_month - 1],
                            current_month_appointment=patients_data['monthly_appointments'][current_month - 1])
+
 
 @dashboard.route('/report_marketing')
 def report_marketing():
