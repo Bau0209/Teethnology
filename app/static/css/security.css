@@ -1,0 +1,54 @@
+body {
+  background: rgba(157, 202, 202, 0.322) !important; 
+}
+.password-strength {
+    height: 5px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    width: 0;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.password-strength.weak {
+    background-color: #dc3545;
+    width: 25%;
+}
+
+.password-strength.medium {
+    background-color: #ffc107;
+    width: 65%;
+}
+
+.password-strength.strong {
+    background-color: #28a745;
+    width: 100%;
+}
+.card {
+    width: 100%;
+    margin: 0 auto;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00898E;
+}
+.submit-btn{
+    width: 50%;
+    height: 50px;
+    padding: 4px;
+    color: #fff;
+    background-color: #00898E;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    margin-left: 30vh;
+    border-radius: 5px;
+    align-items: flex-end;
+}

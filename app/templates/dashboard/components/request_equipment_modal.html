@@ -1,0 +1,74 @@
+<div class="modal fade" id="restockEquipmentModal-{{ item.item_id }}" tabindex="-1" aria-labelledby="restockEquipmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form id="restockEquipmentForm" method="post" enctype="multipart/form-data">
+        <div class="modal-header">
+          <h5 class="modal-title" id="restockEquipmentModalLabel">Restock Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Equipment Name:</label>
+                  <span class="detail-value">{{ item.item_name }}</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Equipment Code:</label>
+                  <span class="detail-value">{{ item.item_id }}</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Category:</label>
+                  <span class="detail-value" id="restockCategory">{{ item.category.category_name if item and item.category else '' }}</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Condition of Equipment:</label>
+                  <span class="detail-value">{{ item.equipment_info.equipment_condition }}</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Warranty Card:</label>
+                  <input type="file" class="form-control" id="warrantyCard" name="warranty_card" accept="application/pdf,image/*">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Supplier Name:</label>
+                  <span class="detail-value">{{ item.supplier }}</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Restock Date:</label>
+                  <input type="date" class="form-control" id="restockEquipmentDate" name="restock_date" value="{{ current_date if current_date else '' }}">
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                  <label class="form-label me-3 mb-0">Quantity Input:</label>
+                  <div class="input-group" style="width: 120px;">
+                    <button class="btn btn-outline-secondary" type="button" id="decrementEquipmentQty">-</button>
+                    <input type="number" class="form-control text-center" id="restockEquipmentQuantity" name="quantity" value="1" min="1" style="max-width: 60px;">
+                    <button class="btn btn-outline-secondary" type="button" id="incrementEquipmentQty">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-end">
+          <button type="button" class="btn" style="background-color: #00898eb4; color: #fff;">Upload Warranty card</button>
+          <button type="submit" class="btn" style="background-color: #00898E; color: #fff;">Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  // Increment/decrement for equipment quantity input
+  document.addEventListener('DOMContentLoaded', function() {
+    const qtyInput = document.getElementById('restockEquipmentQuantity');
+    document.getElementById('decrementEquipmentQty').onclick = function() {
+      if (qtyInput.value > 1) qtyInput.value--;
+    };
+    document.getElementById('incrementEquipmentQty').onclick = function() {
+      qtyInput.value++;
+    };
+  });
+</script>

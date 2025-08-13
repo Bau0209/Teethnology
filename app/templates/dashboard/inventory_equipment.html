@@ -1,0 +1,114 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}TEETHNOLOGY - Inventory (Equipment){% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/o_inventory.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="branch-dropdown">
+    {% if access_level == 'owner' %}
+        <form method="get" action="{{ url_for('dashboard.inventory_equipment') }}">
+            <select name="branch" class="form-select" onchange="this.form.submit()">
+                <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
+                {% for branch in branches %}
+                    <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
+                        {{ branch.branch_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
+</div>
+
+
+<div class="inventory-container">
+    <!-- Inventory Tabs -->
+    <div class="inventory-tabs">
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory') }}">All</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_consumable') }}">Consumables</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory_equipment') }}">Equipments</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_sterilization') }}">Sterilization</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_lab_material') }}">Lab Materials</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_medication') }}">Medications</a></li>
+        </ul>
+    </div>
+
+    <!-- Search and Add -->
+    <div class="search-container my-3">
+        <form action="{{ url_for('dashboard.inventory_equipment') }}" method="GET">
+            <div class="search-bar-container d-flex align-items-center">
+                <input type="text" class="search-bar" name="q" placeholder="Search equipment..." 
+                       value="{{ request.args.get('q', '') }}" id="searchInput">
+                <button class="filter-btn ms-2" title="Filter"><i class="fa fa-filter"></i></button>
+                <button type="button" class="add-btn" data-bs-toggle="modal" data-bs-target="#addEquipmentModal">
+                    ADD
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Equipment Inventory Table -->
+    <div class="inventory-table">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Item Id</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Model</th>
+                    <th>Last Maintenance</th>
+                    <th>Storage Location</th>
+                    <th>Condition</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipment in inventory_items %}
+                <tr>
+                    <td>{{ equipment.item_id }}</td>
+                    <td>{{ equipment.item_name }}</td>                    
+                    <td>{{ equipment.quantity | int }} {{ equipment.quantity_unit or '' }}</td>
+                    <td>{{ equipment.equipment_info.model }}</td>
+                    <td>{{ equipment.equipment_info.last_maintenance }}</td>
+                    <td>{{ equipment.storage_location }}</td>
+                    <td>
+                        <span class="badge bg-{{ 'success' if equipment.condition == 'Working' else 'warning text-dark' }}">
+                            {{ equipment.equipment_info.equipment_condition }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#restockEquipmentModal-{{ equipment.item_id }}">
+                            Request
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#equipmentDetailsModal-{{ equipment.item_id }}">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% include 'dashboard/components/add_inventory_equipment.html' %}
+{% for item in inventory_items %}
+    {% include 'dashboard/components/inventory_equipment_full_details.html' %}
+{% endfor %}
+{% for item in inventory_items %}
+    {% include 'dashboard/components/request_equipment_modal.html' %}
+{% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/o_inventory.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owner.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

@@ -25,8 +25,8 @@ def generate_business_insight():
     growth_rate = ((current_revenue - last_revenue) / last_revenue * 100) if last_revenue > 0 else 0
 
     appointments_this_month = db.session.query(func.count(Appointments.appointment_id))\
-        .filter(extract('month', Appointments.appointment_sched) == current_month)\
-        .filter(extract('year', Appointments.appointment_sched) == current_year)\
+        .filter(extract('month', Appointments.appointment_date) == current_month)\
+        .filter(extract('year', Appointments.appointment_date) == current_year)\
         .scalar()
 
     top_services = db.session.query(

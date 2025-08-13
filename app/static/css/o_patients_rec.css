@@ -126,6 +126,36 @@ body {
     align-items: center;
 }
 
+/* Custom filter dropdown container */
+#customFilterDropdown {
+  position: absolute;
+  top: 100%; /* Place directly below the input group */
+  left: 80%;
+  margin-top: 0.25rem;
+  display: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1050;
+}
+
+#customFilterDropdown button {
+  font-size: 0.8rem;
+  color: #000000;
+  text-align: left;
+  padding: 6px 12px;
+  border: none;
+  background: #00898E;
+  width: 100%;
+}
+
+#customFilterDropdown button:hover {
+  background-color: #00796b;
+}
+
+
 /* Table Card */
 #recordsContainer {
     background: #fff;
@@ -254,7 +284,7 @@ body {
 }
 
 .modal-title {
-    font-weight: 700;
+    font-weight: 700; 
     letter-spacing: 0.5px;
  
 }

@@ -1,0 +1,96 @@
+<div class="modal fade" id="fullDetailsModal-{{ item.item_id }}" tabindex="-1" aria-labelledby="fullDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fullDetailsModalLabel">Item Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row mb-3">
+            <div class="col-md-12">
+             <h4 class="item-code" style="font-size: 1.2rem; color: #00898E; font-weight: 700;">{{ item.item_id }}</h4>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="detail-item mb-3">
+                <label class="detail-label">Item Name:</label>
+                <span class="detail-value">{{ item.item_name  }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Category:</label>
+                <span class="detail-value" id="restockCategory">{{ item.category.category_name  }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Quantity in Stock:</label>
+                <span class="detail-value">{{ item.quantity | int }} {{ item.quantity_unit or '' }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Expiration Date:</label>
+                  {% set expiration = (
+                      item.consumable_info.expiration_date if item.consumable_info and item.consumable_info.expiration_date else
+                      item.lab_material_info.expiration_date if item.lab_material_info and item.lab_material_info.expiration_date else
+                      item.sterilization_info.expiration_date if item.sterilization_info and item.sterilization_info.expiration_date else
+                      item.medication_info.expiration_date if item.medication_info and item.medication_info.expiration_date else None
+                  ) %}
+                  <span class="detail-value">{{ expiration.strftime('%B %d, %Y') if expiration else 'N/A' }}</span>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="detail-item mb-3">
+                <label class="detail-label">Status:</label>
+                <span class="detail-value">
+                  <span class="badge bg-{{ 'danger' if item.quantity < (item.min_stock|default(0, true)) else 'success' }}">
+                    {{ 'Low Stock' if item.quantity < (item.min_stock|default(0, true)) else 'In Stock' }}
+                  </span>
+                </span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Description:</label>
+                <span class="detail-value">{{ item.description }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Storage Location:</label>
+                <span class="detail-value">{{ item.storage_location }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Supplier Name:</label>
+                <span class="detail-value">{{ item.supplier }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Last Restocked:</label>
+                    {% set restock = (
+                        item.consumable_info.last_restock if item.consumable_info and item.consumable_info.last_restock else
+                        item.lab_material_info.last_restock if item.lab_material_info and item.lab_material_info.last_restock else
+                        item.sterilization_info.last_restock if item.sterilization_info and item.sterilization_info.last_restock else
+                        item.medication_info.last_restock if item.medication_info and item.medication_info.last_restock else None
+                    ) %}
+                    <span class="detail-value">{{ restock.strftime('%B %d, %Y') if restock else 'N/A' }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Size:</label>
+                <span class="detail-value">{{ item.size }}</span>
+              </div>
+              <div class="detail-item mb-3">
+                <label class="detail-label">Total Value:</label>
+                <span class="detail-value">
+                   ₱{{ "%.2f"|format(item.value|default(0, true)) }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" style="background-color: #f02d2dc5;"
+                onclick="handleItemAction('archive', '{{ item.id }}')">
+          Archive
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

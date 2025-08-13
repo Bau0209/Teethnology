@@ -1,0 +1,78 @@
+<div class="modal fade" id="paymentHistoryModal{{ record.patient.patient_id }}" tabindex="-1" aria-labelledby="paymentHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentHistoryModalLabel">Payment History for {{ record.patient.patient_full_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Patient ID</th>
+                                <th scope="col">Reference Number</th>
+                                <th scope="col">Service Description</th>
+                                <th scope="col">Amount Paid</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Processed By</th>
+                                <th scope="col">Last Visit</th>
+                                <th scope="col">Remaining Balance</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ record.patient.patient_id }}</td>
+                                <td>{{ record.receipt_number }}</td>
+                                <td>
+                                    {% if record.treatment_procedure %}
+                                        {{ record.treatment_procedure }}
+                                    {% else %}
+                                        {% if record.patient.procedures %}
+                                        {{ record.patient.procedures[0].treatment_procedure }}
+                                        {% else %}
+                                        N/A
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>₱{{ '{:,.2f}'.format(record.amount_paid) }}</td>
+                                <td>{{ record.payment_method }}</td>
+                                <td>
+                                    {% if record.provider %}
+                                        {{ record.provider }}
+                                    {% else %}
+                                        {% if record.patient.procedures %}
+                                        {{ record.patient.procedures[0].provider }}
+                                        {% else %}
+                                        Not specified
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>{{ record.last_visit.strftime('%Y-%m-%d') }}</td>
+                                <td>₱{{ '{:,.2f}'.format(record.remaining) }}</td>
+                                <td>
+                                    {% if record.amount_paid >= record.remaining %}
+                                        <span class="badge bg-success">Completed</span>
+                                    {% elif record.amount_paid > 0 %}
+                                        <span class="badge bg-warning text-dark">Partial</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Pending</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn" style="background-color: #e57373;" data-bs-dismiss="modal">Close</button>
+                <!-- Optional: Export or Print -->
+                <button id="exportBtn" class="btn btn-outline"  style="border: none; background-color: #00898edc; color: aliceblue;">Export PDF</button>
+                <button id="printBtn" class="btn btn-outline-success" style="border: none; background-color: #00898E; color: aliceblue;">Print</button>
+            </div>
+        </div>
+    </div>
+</div>

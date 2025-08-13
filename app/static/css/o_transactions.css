@@ -8,7 +8,7 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 1.5rem;
 }
-
+ 
 .card-header h5.mb-0 {
     color: #00898E;
     font-weight: 700;
@@ -16,6 +16,33 @@ body {
     background-color: white;
     border-radius: 10px 10px 0 0 !important;
     padding: 1rem 1rem;
+}
+.nav-tabs {
+    position: relative;
+    padding-right: 250px; /* Space for the dropdown */
+}
+.branch-dropdown {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px;
+}
+
+.branch-dropdown .form-select {
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem;
+    height: 38px;
+    font-size: 0.875rem;
+    color: #495057;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.branch-dropdown .form-select:focus {
+    border-color: #00898E;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(0, 137, 142, 0.25);
 }
  
 /* ============== TRANSACTION CONTAINER ============== */
@@ -92,15 +119,6 @@ body {
     text-align: center;
 }
 
-/* ============== CHART ============== */
-#revenueChart {
-    width: 100% !important;
-    height: 243px !important;
-    margin-top: 20px;
-    margin: 0;
-}
-
-
 /* ============== TABLE STYLES ============== */
 .table {
     margin-top: 20px;
@@ -134,6 +152,7 @@ body {
 .input-group {
     width: 100%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
 }
 
 .input-group .form-control {
@@ -169,6 +188,34 @@ body {
 .input-group .btn-outline-secondary:hover .fa-search,
 .input-group .btn-outline-secondary:hover .fa-filter {
     color: #00796b !important; 
+}
+/* Custom filter dropdown container */
+#customFilterDropdown {
+  position: absolute;
+  top: 100%; /* Place directly below the input group */
+  left: 80%;
+  margin-top: 0.25rem;
+  display: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1050;
+}
+
+#customFilterDropdown button {
+  font-size: 0.8rem;
+  color: #000000;
+  text-align: left;
+  padding: 6px 12px;
+  border: none;
+  background: none;
+  width: 100%;
+}
+
+#customFilterDropdown button:hover {
+  background-color: #f8f9fa;
 }
 
 /* ============== BUTTONS ============== */
@@ -261,6 +308,11 @@ body {
 .d-grid .btn-primary.btn-lg .fa-plus {
     font-size: 0.9rem !important;
     margin-right: 5px !important;
+}
+
+.modal-header {
+  background-color: #00898E !important;
+  color: white;
 }
 
 /* ============== RESPONSIVE ADJUSTMENTS ============== */
