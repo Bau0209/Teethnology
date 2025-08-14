@@ -9,6 +9,8 @@ from .procedures import Procedures
 from .transactions import Transactions
 from .dental_info import DentalInfo
 from .main_website import MainWeb
+from .inventory_usage import InventoryUsage
+from .inventory_restock import InventoryRestock
 from .inventory import (
     InventoryItem, 
     InventoryEquipment,

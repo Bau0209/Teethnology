@@ -3,6 +3,8 @@ from app import db
 from sqlalchemy import func
 from app.models import (
     InventoryItem,
+    InventoryUsage,
+    InventoryRestock,
     InventoryConsumable,
     InventoryMedication,
     InventoryLabMaterial,
@@ -11,11 +13,6 @@ from app.models import (
 
 def get_inventory_report_data(selected_branch="all"):
     today = date.today()
-
-    # Base query
-    base_query = InventoryItem.query
-    if selected_branch != "all":
-        base_query = base_query.filter(InventoryItem.branch_id == selected_branch)
 
     # Queries for each category
     consumable_query = db.session.query(InventoryConsumable).join(InventoryItem)
@@ -51,51 +48,40 @@ def get_inventory_report_data(selected_branch="all"):
         sterilization_query.filter(InventorySterilization.expiration_date < today).count()
     )
 
-    # Inventory vs Consumption - estimate consumption based on minimum stock
-    inventory_items = base_query.with_entities(
-        InventoryItem.item_name,
-        InventoryItem.quantity,
-        InventoryItem.category
-    ).all()
+    # Main inventory data with usage and restock
+    inventory_data = (
+        db.session.query(
+            InventoryItem.item_name,
+            InventoryItem.quantity,
+            InventoryItem.category,
+            func.COALESCE(func.SUM(InventoryUsage.quantity_used), 0).label("total_usage"),
+            func.COALESCE(func.SUM(InventoryRestock.quantity_added), 0).label("total_restock")
+        )
+        .outerjoin(InventoryUsage, InventoryItem.item_id == InventoryUsage.inventory_item_id)
+        .outerjoin(InventoryRestock, InventoryItem.item_id == InventoryRestock.item_id)
+        .group_by(
+            InventoryItem.item_id,
+            InventoryItem.item_name,
+            InventoryItem.quantity,
+            InventoryItem.category
+        )
+        .all()
+    )
 
-    estimated_consumption = []
-    for item_name, quantity, category in inventory_items:
-        # Estimate usage: if minimum stock exists, assume it’s monthly usage
-        min_stock = 0
-        if category == "consumable":
-            c = InventoryConsumable.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
-            if c and c.minimum_stock:
-                min_stock = c.minimum_stock
-        elif category == "medication":
-            m = InventoryMedication.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
-            if m and m.minimum_stock:
-                min_stock = m.minimum_stock
-        elif category == "lab_material":
-            l = InventoryLabMaterial.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
-            if l and l.minimum_stock:
-                min_stock = l.minimum_stock
-        elif category == "sterilization":
-            s = InventorySterilization.query.join(InventoryItem).filter(InventoryItem.item_name == item_name).first()
-            if s and s.minimum_stock_level:
-                min_stock = s.minimum_stock_level
-
-        # If no min stock info, just use 30% of current quantity
-        if min_stock == 0:
-            estimated_consumption.append(round(quantity * 0.3, 2))
-        else:
-            estimated_consumption.append(round(min_stock, 2))
-
+    # Prepare chart/data output
     inventory_vs_consumption = {
-        "labels": [i[0] for i in inventory_items],
-        "inventory": [i[1] for i in inventory_items],
-        "consumption": estimated_consumption
+        "labels": [row.item_name for row in inventory_data],
+        "inventory": [float(row.quantity) for row in inventory_data],
+        "consumption": [float(row.total_usage) for row in inventory_data],
+        "restock": [float(row.total_restock) for row in inventory_data]
     }
 
-    # Supply use per "service" - group by category instead
+
+    # Group usage by category for supply per service
     category_usage = {}
-    for (item_name, quantity, category), consumption in zip(inventory_items, estimated_consumption):
-        category_usage.setdefault(category, 0)
-        category_usage[category] += consumption
+    for row in inventory_data:
+        category_usage.setdefault(row.category, 0)
+        category_usage[row.category] += float(row.total_usage)
 
     supply_use_per_service = {
         "labels": list(category_usage.keys()),

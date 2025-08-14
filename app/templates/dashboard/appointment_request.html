@@ -68,8 +68,8 @@
                         {{ request.patient.country }}
                     </div>                        
                     <div class="d-flex gap-2 mt-3">
-                        <button class="btn btn-success btn-sm" onclick="handleAccept({{ request.appointment_id }})">Accept</button>
-                        <button class="btn btn-danger btn-sm" onclick="handleReject({{ request.appointment_id }})">Reject</button>
+                        <button class="btn btn-success btn-sm" onclick="confirmAccept({{ request.appointment_id }})">Accept</button>
+                        <button class="btn btn-danger btn-sm" onclick="confirmReject({{ request.appointment_id }})">Reject</button>
                     </div>
                 </div>
             </div>
