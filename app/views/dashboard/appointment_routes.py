@@ -1,18 +1,23 @@
-from flask import request, render_template, session, jsonify, flash, redirect, url_for, current_app
+from flask import request, render_template, session, jsonify, flash, redirect, url_for
 from datetime import date, datetime
+from sqlalchemy import func
 from werkzeug.utils import secure_filename
 
+import traceback
 import json, os
 
 from app.models import Procedures, Appointments
 from app import db
 
 from app.views.dashboard import dashboard
-from app.models import Appointments, Branch, Transactions, PatientsInfo, Archive
-from app.utils.archive_function import archive_and_delete
+from app.models import Appointments, Branch, InventoryItem, PatientsInfo, Archive
+from app.utils import appointment_handler as ah
+from app.utils import procedure_handler as ph
+from app.utils import inventory_handler as ih
 
 @dashboard.route('/appointments')
 def appointments():
+    inventory_items = InventoryItem.query.filter(InventoryItem.category != 'Equipment').all()
     selected_branch = request.args.get('branch', 'all')
     appointment_id = request.args.get('appointment_id')
 
@@ -24,7 +29,7 @@ def appointments():
     if appointment_id:
         query = query.filter_by(appointment_id=appointment_id)
 
-    appointments = query.all()
+    appointments = query.filter(Appointments.appointment_status != 'cancelled').all()
     branches = Branch.query.all()
 
     events = [
@@ -44,9 +49,11 @@ def appointments():
 
     appointment_data = [
         {
+            'branch_id': a.branch.branch_id,
+            'branch_name': a.branch.branch_name,
             'appointment_id': a.appointment_id,
             'status': a.appointment_status,
-            'time': a.appointment_date.strftime('%I:%M %p'),
+            'time': a.appointment_time.strftime('%I:%M %p'),
             'reason': a.appointment_type,
             'patient_name': a.patient.patient_full_name,
             'patient_type': 'Returning Patient' if a.returning_patient else 'New Patient',
@@ -63,12 +70,29 @@ def appointments():
 
     return render_template(
         'dashboard/appointment.html',
+        inventory_items=inventory_items,
         branches=branches,
         appointments=appointments,
         selected_branch=selected_branch,
         events=json.dumps(events),
         appointment_data=json.dumps(appointment_data)
     )
+
+@dashboard.route("/appointment/inventory/<int:branch_id>")
+def get_inventory_by_branch(branch_id):
+    inventory_items = InventoryItem.query.filter(
+        InventoryItem.branch_id == branch_id,
+        func.lower(InventoryItem.category) != 'equipment'
+    ).all()
+
+    return jsonify([
+        {
+            "id": item.item_id,
+            "item_name": item.item_name,
+            "quantity_unit": item.quantity_unit
+        }
+        for item in inventory_items
+    ])
 
 @dashboard.route('/appointment_req')
 def appointment_req():
@@ -134,11 +158,14 @@ def form():
                 return redirect(request.referrer)
 
             # Create appointment
+            preferred_raw = request.form.get('preferred')
+            preferred_dt = datetime.fromisoformat(preferred_raw)
+            
             new_appointment = Appointments(
                 branch_id=branch_id,
                 patient_id=patient.patient_id,
-                appointment_sched=datetime.fromisoformat(request.form.get('preferred')),
-                alternative_sched=datetime.fromisoformat(request.form.get('alternative')) if request.form.get('alternative') else None,
+                appointment_date=preferred_dt.date(),
+                appointment_time=preferred_dt.time(),
                 appointment_type=request.form.get('appointment_type'),
                 appointment_status='pending',
                 returning_patient=True
@@ -151,6 +178,7 @@ def form():
         else:
             # Register new patient
             new_patient = PatientsInfo(
+                patient_id=ah.generate_patient_id(),
                 branch_id=branch_id,
                 first_name=request.form.get('first_name'),
                 middle_name=request.form.get('middle_name'),
@@ -170,11 +198,15 @@ def form():
             db.session.commit()
 
             # Create appointment
+            
+            preferred_raw = request.form.get('preferred')
+            preferred_dt = datetime.fromisoformat(preferred_raw)
+            
             new_appointment = Appointments(
                 branch_id=branch_id,
                 patient_id=new_patient.patient_id,
-                appointment_sched=datetime.fromisoformat(request.form.get('preferred')),
-                alternative_sched=datetime.fromisoformat(request.form.get('alternative')) if request.form.get('alternative') else None,
+                appointment_date=preferred_dt.date(),
+                appointment_time=preferred_dt.time(),
                 appointment_type=request.form.get('appointment_type'),
                 appointment_status='pending',
                 returning_patient=False
@@ -188,78 +220,49 @@ def form():
 
 @dashboard.route('/appointments/<int:appointment_id>/status', methods=['POST'])
 def update_appointment_status(appointment_id):
-    print("RAW DATA:", request.data)
-    print("HEADERS:", dict(request.headers))
-    data = request.get_json()
-    status = data.get('status')
-
-    # Validate status
-    if status not in ['approved', 'cancelled', 'completed']:
-        return jsonify({'success': False, 'message': 'Invalid status'}), 400
-
-    appointment = Appointments.query.get(appointment_id)
-    if not appointment:
-        return jsonify({'success': False, 'message': 'Appointment not found'}), 404
-
-    # Update appointment status
-    appointment.appointment_status = status
-
-    # Update procedures (if any)
-    if status in ['completed', 'cancelled']:
-        procedures = Procedures.query.filter_by(appointment_id=appointment_id).all()
-
-        if not procedures and not data.get('allowWithoutProcedure', False):
-            return jsonify({'success': False, 'message': 'No procedure records found for this appointment'}), 404
-
-        for proc in procedures:
-            proc.procedure_status = status
-
-    # Handle archiving & deleting patient if cancelled
-    if status == 'cancelled':
-        try:
-            patient = PatientsInfo.query.get(appointment.patient_id)
-
-            if patient:
-                try:
-                    # Ensure patient has a serializable dict method
-                    if hasattr(patient, 'as_dict'):
-                        archived_data = Archive(
-                            original_id=patient.patient_id,
-                            table_name='patients',
-                            archived_data=json.dumps(patient.as_dict()),  # Ensure it's JSON serializable
-                            archived_by=session.get('user', 'admin')
-                        )
-                        db.session.add(archived_data)
-                        db.session.delete(patient)
-                    else:
-                        return jsonify({'success': False, 'message': 'Cannot archive: patient.as_dict() missing'}), 500
-
-                except Exception as archive_inner_err:
-                    db.session.rollback()
-                    print(f"[Archive Error] Could not serialize or archive: {archive_inner_err}")
-                    return jsonify({
-                        'success': False,
-                        'message': 'Archiving patient failed.',
-                        'error': str(archive_inner_err)
-                    }), 500
-
-        except Exception as outer_err:
-            db.session.rollback()
-            print(f"[Outer Error] Archiving logic failed: {outer_err}")
-            return jsonify({
-                'success': False,
-                'message': 'Error occurred while archiving patient data.',
-                'error': str(outer_err)
-            }), 500
-
     try:
-        db.session.commit()
-    except Exception as commit_err:
-        db.session.rollback()
-        print(f"[Commit Error] {commit_err}")
-        return jsonify({'success': False, 'message': 'Error saving changes.', 'error': str(commit_err)}), 500
+        data = request.get_json()
+        status = data.get('status')
+        print(f"[DEBUG] Appointment ID: {appointment_id}, Status: {status}")
 
-    return jsonify({'success': True, 'message': 'Status updated successfully'})
+        # Validate status
+        if status not in ['approved', 'cancelled', 'completed']:
+            return jsonify({'success': False, 'message': 'Invalid status'}), 400
+
+        appointment = Appointments.query.get(appointment_id)
+        if not appointment:
+            return jsonify({'success': False, 'message': 'Appointment not found'}), 404
+
+        # Update appointment status
+        appointment.appointment_status = status
+
+        # Update procedures (if any)
+        if status == 'completed':
+            procedures = Procedures.query.filter_by(appointment_id=appointment_id).all()
+
+            if not procedures and not data.get('allowWithoutProcedure', False):
+                return jsonify({'success': False, 'message': 'No procedure records found for this appointment'}), 404
+
+            for proc in procedures:
+                proc.procedure_status = status
+
+        # Handle cancellation
+        if status == 'cancelled':
+            # Just mark as cancelled without touching patient data
+            appointment.appointment_status = 'cancelled'
+
+        try:
+            db.session.commit()
+        except Exception as commit_err:
+            db.session.rollback()
+            print(f"[Commit Error] {commit_err}")
+            return jsonify({'success': False, 'message': 'Error saving changes.', 'error': str(commit_err)}), 500
+
+        return jsonify({'success': True, 'message': 'Status updated successfully'})
+    except Exception as e:
+        print("[ERROR] Exception in update_appointment_status:", e)
+        traceback.print_exc()
+        return jsonify({'success': False, 'message': 'Internal Server Error', 'error': str(e)}), 500
 
 @dashboard.route('/appointment/complete', methods=['POST'])
 def complete_appointment():
@@ -273,57 +276,53 @@ def complete_appointment():
     total_paid = request.form.get('total_amount_paid')
     receipt_file = request.files.get('receipt')
 
-    # Get appointment and patient
-    appointment = Appointments.query.get(appointment_id)
+    appointment = ah.get_appointment(appointment_id)
     if not appointment:
-        flash("Appointment not found.", "error")
         return redirect(url_for('appointment.branches'))
 
     # Create procedure
-    procedure = Procedures(
-        patient_id=appointment.patient_id,
+    procedure = ph.create_procedure(
         appointment_id=appointment.appointment_id,
-        procedure_date=date.today(),
+        appointment_date=appointment.appointment_date,
         treatment_procedure=treatment_procedure,
         tooth_area=tooth_area,
         provider=provider,
         treatment_plan=treatment_plan,
-        fee=fee,
-        procedure_status='completed',
-        notes='Recorded via modal'
+        fee=fee
     )
-    db.session.add(procedure)
-    db.session.commit()
 
     # Handle receipt upload
-    receipt_path = None
-    if receipt_file and receipt_file.filename:
-        filename = secure_filename(receipt_file.filename)
-        upload_folder = os.path.join(current_app.root_path, 'static/uploads/receipts')
-        os.makedirs(upload_folder, exist_ok=True)
-        receipt_path = os.path.join('static/uploads/receipts', filename)
-        receipt_file.save(os.path.join(upload_folder, filename))
+    receipt_path = ah.save_receipt_file(receipt_file)
 
     # Create transaction
-    transaction = Transactions(
+    ph.create_transaction(
         procedure_id=procedure.procedure_id,
-        receipt_number=f"AUTO-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+        treatment_procedure=treatment_procedure,
+        provider=provider,
         payment_method=payment_method,
-        transaction_datetime=datetime.now(),
-        dentist_name=provider,
-        service_detail=treatment_procedure,
-        total_amount_paid=total_paid,
-        transaction_image_link=receipt_path
+        total_paid=total_paid,
+        receipt_path=receipt_path
     )
-    db.session.add(transaction)
 
-    # ✅ Update procedure_history status
-    procedure_history = Procedures.query.filter_by(appointment_id=appointment.appointment_id).first()
-    if procedure_history:
-        procedure_history.procedure_status = 'completed'
+    # Update procedure history
+    procedure_history = ah.mark_procedure_history_completed(appointment.appointment_id)
 
+    # Create Inventory Usage Records
+    for item_id_str, qty_str in request.form.items():
+        if item_id_str.startswith("quantity_used["):
+            # Extract the inventory_item_id from the key
+            inventory_item_id = item_id_str.split("[")[1].split("]")[0]
+            quantity_used = float(qty_str or 0)
+
+            if quantity_used > 0:  # only record if actually used
+                ih.create_inventory_usage_record(
+                    procedure_id=procedure.procedure_id,
+                    inventory_item_id=inventory_item_id,
+                    quantity_used=quantity_used
+                )
+
+    
     db.session.commit()
-
     flash("Procedure, transaction, and procedure history updated!", "success")
     return redirect(url_for('dashboard.appointments', success=1))
 

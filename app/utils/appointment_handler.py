@@ -1,11 +1,46 @@
-from flask import render_template, request, flash, redirect
-from app.models import Appointments, PatientsInfo
+from flask import render_template, request, flash, redirect, current_app
+from app.models import Appointments, PatientsInfo, Procedures
 from app import db
 from datetime import datetime, timedelta
+from werkzeug.utils import secure_filename
+import random, os
 
 #Appointment Booking functions
 def safe_input(key):
     return request.form.get(key, '').strip()
+
+def get_appointment(appointment_id):
+    appointment = Appointments.query.get(appointment_id)
+    if not appointment:
+        flash("Appointment not found.", "error")
+    return appointment
+
+def mark_procedure_history_completed(appointment_id):
+    procedure_history = Procedures.query.filter_by(appointment_id=appointment_id).first()
+    if procedure_history:
+        procedure_history.procedure_status = 'completed'
+        return procedure_history
+    return None
+
+def save_receipt_file(receipt_file):
+    if receipt_file and receipt_file.filename:
+        filename = secure_filename(receipt_file.filename)
+        upload_folder = os.path.join(current_app.root_path, 'static/uploads/receipts')
+        os.makedirs(upload_folder, exist_ok=True)
+        receipt_path = os.path.join('static/uploads/receipts', filename)
+        receipt_file.save(os.path.join(upload_folder, filename))
+        return receipt_path
+    return None
+
+def generate_patient_id():
+    while True:
+        # Generate something like 123-4567
+        pid = f"{random.randint(0, 999):03d}-{random.randint(0, 9999):04d}"
+        
+        # Check if it already exists
+        exists = PatientsInfo.query.filter_by(patient_id=pid).first()
+        if not exists:
+            return pid
 
 def create_appointment(branch_id, patient_id, date, time, appointment_type, returning):
     appointment = Appointments(
