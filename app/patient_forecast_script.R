@@ -1,117 +1,113 @@
-# Load required packages
 library(dplyr)
 library(lubridate)
 library(ggplot2)
 library(forecast)
 library(scales)
 
-# Read the CSV file with error handling
 tryCatch({
-  df <- read.csv("C:\\Users\\admin\\Downloads\\appointment\\appointments.csv", 
+
+  # Load CSV
+  df <- read.csv("C:\\Users\\admin\\Downloads\\appointment\\appointments.csv",
                  stringsAsFactors = FALSE)
-  
-  # Check if file loaded correctly
+
   if (nrow(df) == 0) stop("The file is empty")
-  
-  # Standardize column names (handle case differences, spaces, etc.)
+
+  # Standardize column names
   names(df) <- tolower(gsub("[^a-zA-Z0-9]", "_", names(df)))
-  
-  # Try common date column names if appointment_date doesn't exist
-  date_cols <- c("appointment_date", "date", "appointmentdate", "appt_date")
-  date_col_found <- FALSE
-  
-  for (col in date_cols) {
-    if (col %in% names(df)) {
-      df <- df %>% rename(appointment_date = !!col)
-      date_col_found <- TRUE
-      break
-    }
+
+  # Ensure appointment_date exists
+  if (!"appointment_date" %in% names(df)) {
+    stop("CSV must contain an 'appointment_date' column")
   }
-  
-  if (!date_col_found) stop("No recognizable date column found in the data")
-  
-  # Data cleaning and preparation with error handling
-  df_clean <- df %>%
-    mutate(
-      appointment_date = tryCatch(
-        {
-          # Try multiple date formats if ymd fails
-          parsed_date <- ymd(appointment_date)
-          if (all(is.na(parsed_date))) {
-            parsed_date <- mdy(appointment_date) # Try month-day-year format
-          }
-          if (all(is.na(parsed_date))) {
-            parsed_date <- dmy(appointment_date) # Try day-month-year format
-          }
-          parsed_date
-        },
-        error = function(e) {
-          stop("Failed to parse dates. Check date format in your data.")
-        }
-      ),
-      month = floor_date(appointment_date, "month")
-    ) %>%
-    filter(!is.na(appointment_date))
-  
-  # Check if we have enough data
-  if (nrow(df_clean) == 0) stop("No valid dates remaining after cleaning")
-  
-  # Create monthly summary of actual appointments
-  monthly_appointments <- df_clean %>%
+
+  # Parse appointment_date
+  df$appointment_date <- suppressWarnings(parse_date_time(
+    df$appointment_date,
+    orders = c("ymd", "mdy", "dmy", "Y/m/d", "m/d/Y", "d/m/Y",
+               "ymd HMS", "mdy HMS", "dmy HMS"),
+    tz = "UTC"
+  ))
+
+  if (all(is.na(df$appointment_date))) stop("Could not parse appointment_date values")
+  df$appointment_date <- as.Date(df$appointment_date)
+
+  # Monthly totals
+  monthly_appointments <- df %>%
+    filter(!is.na(appointment_date)) %>%
+    mutate(month = floor_date(appointment_date, "month")) %>%
     group_by(month) %>%
     summarise(total_appointments = n(), .groups = "drop") %>%
     mutate(type = factor("Actual", levels = c("Actual", "Forecast")))
-  
-  # Check if we have sufficient data for time series
-  if (nrow(monthly_appointments) < 12) {
-    warning("Less than 12 months of data available. Forecast may be unreliable.")
+
+  if (nrow(monthly_appointments) < 2) {
+    stop("Not enough data to forecast — at least 2 months required.")
   }
-  
-  # Convert to time series for forecasting
-  appointments_ts <- ts(monthly_appointments$total_appointments, 
-                        start = c(year(min(monthly_appointments$month)), 
-                                 month(min(monthly_appointments$month))), 
-                        frequency = 12)
-  
-  # Create forecast using seasonal naive method (6 months ahead)
-  fit_snaive <- snaive(appointments_ts, h = 6)
-  
-  # Prepare forecast data frame
+
+  # Time series
+  appointments_ts <- ts(
+    monthly_appointments$total_appointments,
+    start = c(year(min(monthly_appointments$month)),
+              month(min(monthly_appointments$month))),
+    frequency = 12
+  )
+
+  # Forecast using ARIMA
+  fit <- auto.arima(appointments_ts)
+  fc <- forecast(fit, h = 1)
+
+  # Next month forecast
   forecast_df <- data.frame(
-    month = seq(from = max(monthly_appointments$month) %m+% months(1),
-                by = "1 month",
-                length.out = length(fit_snaive$mean)),
-    total_appointments = as.numeric(fit_snaive$mean),
+    month = max(monthly_appointments$month) %m+% months(1),
+    total_appointments = as.numeric(fc$mean),
     type = factor("Forecast", levels = c("Actual", "Forecast"))
   )
-  
-  # Combine actual and forecast data
+
+  # Combine data
   combined_df <- bind_rows(monthly_appointments, forecast_df)
-  
-  # Create the visualization
-  p <- ggplot(combined_df, aes(x = month, y = total_appointments, color = type)) +
-    geom_line(size = 1.2) +
-    geom_point(size = 2) +
-    scale_color_manual(values = c("Actual" = "#1f77b4", "Forecast" = "#ff7f0e")) +
-    labs(
-      title = "Total Appointments: Actual vs Forecast",
-      subtitle = "Using Seasonal Naive Forecasting Method",
-      x = "Month",
-      y = "Number of Appointments",
-      color = "Type"
-    ) +
-    theme_minimal() +
-    theme(
-      plot.title = element_text(size = 16, face = "bold"),
-      plot.subtitle = element_text(size = 12),
-      legend.position = "bottom"
-    ) +
-    scale_y_continuous(labels = scales::comma) +
-    scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")
-  
-  # Display the plot
+
+  # Filter last 12 months + forecast month
+  last_month <- max(combined_df$month)
+  first_month <- last_month %m-% months(11)
+  combined_df <- combined_df %>%
+    filter(month >= first_month)
+
+  # Bar chart
+  p <- ggplot(combined_df, aes(x = month, y = total_appointments, fill = type)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  scale_fill_manual(values = c("Actual" = "#1f77b4", "Forecast" = "#ff7f0e")) +
+  labs(
+    title = "Total Appointments",
+    subtitle = paste0(
+      "Forecast for ", format(forecast_df$month, "%B %Y"),
+      ": ", round(forecast_df$total_appointments), " appointments"
+    ),
+    x = "Month",
+    y = "Number of Appointments",
+    fill = "Type"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      size = 9,          # 0.75rem ≈ 9pt
+      color = "#00898E", # title color
+      face = "bold"
+    ),
+    plot.subtitle = element_text(size = 9),
+    legend.position = "bottom",
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)
+  ) +
+  scale_y_continuous(labels = comma) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b")
+
+
   print(p)
-  
-  # Save the plot
-  ggsave("static/patient_forecast.png",
-       plot = p, width = 8, height = 5)
+
+  # Save to static folder
+  save_dir <- "C:\\Users\\admin\\Teethnology\\Teethnology\\app\\static"
+  dir.create(save_dir, showWarnings = FALSE, recursive = TRUE)
+  ggsave(file.path(save_dir, "appointments_forecast.png"),
+         plot = p, width = 7, height = 3.5, dpi = 150)
+
+}, error = function(e) {
+  message("Error: ", e$message)
+})

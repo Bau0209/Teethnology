@@ -39,7 +39,17 @@ p <- ggplot(combined_df, aes(x = month, y = total_revenue, color = type)) +
     y = "Revenue",
     color = "Legend"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      size = 9,            # 0.75rem equivalent
+      color = "#00898E"
+    )
+  )
+
+# Save chart as PNG
+ggsave("static/forecast.png", plot = p, width = 8, height = 5)
+
 
 # Save chart as PNG
 ggsave("static/forecast.png", plot = p, width = 8, height = 5)
