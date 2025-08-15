@@ -128,4 +128,18 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+
+  //function for the forecast chart to display in the dashboard
+  // Get the canvas element's parent
+  const canvas = document.getElementById("forecastChart");
+
+  // Create an <img> element
+  const img = document.createElement("img");
+  img.src = "/static/forecast.png"; // Path to your PNG
+  img.style.width = "100%";
+  img.style.height = "480px";
+
+  // Replace the canvas with the image
+  canvas.parentNode.replaceChild(img, canvas);
+
 });
