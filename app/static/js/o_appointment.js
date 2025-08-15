@@ -1,7 +1,14 @@
 // Confirmation function for reject
 window.confirmReject = function (appointmentId) {
   if (confirm("Are you sure you want to reject this appointment?")) {
-    handleReject(appointmentId);
+    handleCancel(appointmentId);
+  }
+};
+
+// Simple confirmation for cancel
+window.confirmCancel = function (appointmentId) {
+  if (confirm("Are you sure you want to cancel this appointment?")) {
+    handleCancel(appointmentId);
   }
 };
 
@@ -24,29 +31,6 @@ function handleAccept(id) {
   .then(data => {
     if (data.success) {
       alert('Appointment approved!');
-      location.reload();
-    } else {
-      alert(data.message);
-    }
-  })
-  .catch(err => {
-    alert('An error occurred. Please try again.');
-    console.error(err);
-  });
-}
-
-function handleReject(id) {
-  fetch(`/dashboard/appointments/${id}/status`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ status: 'cancelled' }),
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert('Appointment rejected!');
       location.reload();
     } else {
       alert(data.message);
@@ -92,42 +76,25 @@ function handleComplete(appointmentId, branchId) {
     });
 }
 
-function handleCancel(appointmentId) {
-  fetch(`/dashboard/cancel_appointment/${appointmentId}`, {
+function handleCancel(id) {
+  fetch(`/dashboard/cancel_appointment/${id}`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    }
+    headers: { 'Content-Type': 'application/json' },
   })
-  .then(res => {
-    if (!res.ok) {
-      throw new Error('Failed to cancel appointment');
-    }
-    return res.json();
-  })
+  .then(res => res.json())
   .then(data => {
     if (data.success) {
       alert('Appointment cancelled and archived!');
-      
-      // Remove the appointment card from UI without reload
-      const appointmentCard = document.querySelector(`[data-appointment-id="${appointmentId}"]`);
-      if (appointmentCard) {
-        appointmentCard.remove();
-      }
-      
-      // Close any open modals
-      const modal = bootstrap.Modal.getInstance(document.getElementById('appointmentsModal'));
-      if (modal) modal.hide();
+      location.reload();
     } else {
       alert(data.message || 'Failed to cancel appointment');
     }
   })
   .catch(err => {
-    alert(err.message || 'An error occurred during cancellation');
+    alert('An error occurred. Please try again.');
     console.error(err);
   });
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
   // =====================
@@ -192,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="d-flex gap-2 mt-3">
                 <button class="btn btn-primary btn-sm" onclick="handleComplete(${a.appointment_id}, ${a.branch_id})">Mark as Completed</button>
                 <button class="btn btn-warning btn-sm" onclick="handleReschedule(${a.appointment_id})">Reschedule</button>
-                <button class="btn btn-danger btn-sm" onclick="handleCancel(${a.appointment_id})">Cancel</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmCancel(${a.appointment_id})">Cancel</button>
               </div>
             `;
           }
@@ -339,116 +306,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // On click of search button
   searchBtn.addEventListener('click', function () {
     filterAppointments();
-  });
-});
-
-
-// Handles cancel appointment confirmation
-document.addEventListener('DOMContentLoaded', function () {
-  const cancelConfirmModalHTML = `
-    <div class="modal fade" id="cancelConfirmModal" tabindex="-1" aria-labelledby="cancelConfirmModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header" style="background: #00898E; color: white;">
-            <h5 class="modal-title">Confirm Cancellation</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            Are you sure you want to cancel this procedure?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-            <button type="button" class="btn btn-primary" id="btnSetNewAppointment">Set a New Appointment</button>
-            <button type="button" class="btn btn-danger" id="btnConfirmCancel">Yes, Cancel</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('beforeend', cancelConfirmModalHTML);
-
-  const cancelModal = new bootstrap.Modal(document.getElementById('cancelConfirmModal'));
-  let cancelId = null;
-
-  // Intercept Cancel buttons
-  const observer = new MutationObserver(() => {
-    document.querySelectorAll('button.btn-danger.btn-sm').forEach(btn => {
-      if (btn.textContent.trim() === 'Cancel' && !btn.dataset.bound) {
-        const originalOnClick = btn.getAttribute('onclick');
-        const match = originalOnClick?.match(/\d+/);
-        if (!match) return;
-
-        const id = parseInt(match[0]);
-        btn.removeAttribute('onclick');
-        btn.dataset.bound = 'true';
-
-        btn.addEventListener('click', function () {
-          cancelId = id;
-
-          // Hide the appointment details modal before showing confirmation
-          const appointmentModal = document.getElementById('appointmentsModal');
-          const bsApptModal = bootstrap.Modal.getInstance(appointmentModal);
-          if (bsApptModal) {
-            bsApptModal.hide();
-            appointmentModal.addEventListener('hidden.bs.modal', function onHidden() {
-              appointmentModal.removeEventListener('hidden.bs.modal', onHidden);
-              cancelModal.show();
-            });
-          } else {
-            cancelModal.show(); // fallback if no modal instance
-          }
-        });
-      }
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-
-  // Confirm cancel
-  document.getElementById('btnConfirmCancel').addEventListener('click', function() {
-  if (!cancelId) return;
-
-  fetch(`/dashboard/cancel_appointment/${cancelId}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  })
-  .then(res => {
-    if (!res.ok) throw new Error('Failed to cancel appointment');
-    return res.json();
-  })
-  .then(data => {
-    if (data.success) {
-      alert('Appointment cancelled and archived!');
-      
-      // Remove from UI
-      console.log('Removing element:', document.querySelector(`[data-appointment-id="${appointmentId}"]`));
-      
-      // Close modals
-      cancelModal.hide();
-      const appointmentModal = bootstrap.Modal.getInstance(
-        document.getElementById('appointmentsModal')
-      );
-      if (appointmentModal) appointmentModal.hide();
-    } else {
-      alert(data.message || 'Failed to cancel appointment');
-    }
-  })
-  .catch(err => {
-    alert(err.message || 'An error occurred. Please try again.');
-    console.error(err);
-    cancelModal.hide();
-  });
-});
-
-  // Set new appointment button logic
-  document.getElementById('btnSetNewAppointment').addEventListener('click', function () {
-    cancelModal.hide();
-
-    const formModal = document.getElementById('addAppointmentModal');
-    if (formModal) {
-      const bsModal = new bootstrap.Modal(formModal);
-      bsModal.show();
-    }
   });
 });
 

@@ -78,22 +78,6 @@ def appointments():
         appointment_data=json.dumps(appointment_data)
     )
 
-@dashboard.route("/appointment/inventory/<int:branch_id>")
-def get_inventory_by_branch(branch_id):
-    inventory_items = InventoryItem.query.filter(
-        InventoryItem.branch_id == branch_id,
-        func.lower(InventoryItem.category) != 'equipment'
-    ).all()
-
-    return jsonify([
-        {
-            "id": item.item_id,
-            "item_name": item.item_name,
-            "quantity_unit": item.quantity_unit
-        }
-        for item in inventory_items
-    ])
-
 @dashboard.route('/appointment_req')
 def appointment_req():
     selected_branch = request.args.get('branch', 'all')
@@ -218,6 +202,22 @@ def form():
 
     return render_template('/dashboard/appointment.html', branches=branches)
 
+@dashboard.route("/appointment/inventory/<int:branch_id>")
+def get_inventory_by_branch(branch_id):
+    inventory_items = InventoryItem.query.filter(
+        InventoryItem.branch_id == branch_id,
+        func.lower(InventoryItem.category) != 'equipment'
+    ).all()
+
+    return jsonify([
+        {
+            "id": item.item_id,
+            "item_name": item.item_name,
+            "quantity_unit": item.quantity_unit
+        }
+        for item in inventory_items
+    ])
+
 @dashboard.route('/appointments/<int:appointment_id>/status', methods=['POST'])
 def update_appointment_status(appointment_id):
     try:
@@ -245,11 +245,6 @@ def update_appointment_status(appointment_id):
 
             for proc in procedures:
                 proc.procedure_status = status
-
-        # Handle cancellation
-        if status == 'cancelled':
-            # Just mark as cancelled without touching patient data
-            appointment.appointment_status = 'cancelled'
 
         try:
             db.session.commit()
@@ -330,7 +325,7 @@ def complete_appointment():
 def cancel_appointment(id):
     appointment = db.session.query(Appointments).get(id)
     if appointment:
-        appointment.status = 'cancelled'
+        appointment.appointment_status = 'cancelled'
         db.session.commit()  # This is critical!
         return jsonify(success=True)
     return jsonify(success=False, message="Appointment not found"), 404

@@ -1,7 +1,7 @@
 from flask import request, render_template, redirect, flash, url_for, session, jsonify
 
 from app import db
-from app.models import Branch, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Archive
+from app.models import Appointments, Branch, PatientsInfo, PatientMedicalInfo, DentalInfo, Procedures, Archive
 from app.utils.archive_function import archive_and_delete
 from app.views.dashboard import dashboard
 from datetime import datetime, date
@@ -314,7 +314,12 @@ def patient_info(patient_id):
 @dashboard.route('/patient_procedure/<patient_id>') 
 def patient_procedure(patient_id):
     patient = PatientsInfo.query.get_or_404(patient_id)
-    procedures = Procedures.query.filter_by(patient_id=patient_id)
+    procedures = (
+        Procedures.query
+        .join(Appointments, Procedures.appointment_id == Appointments.appointment_id)
+        .filter(Appointments.patient_id == patient_id)
+        .all()
+    )
     return render_template('/dashboard/procedure.html',patient=patient, procedures=procedures)
 
 @dashboard.route('/patient_dental_rec/<patient_id>')   
