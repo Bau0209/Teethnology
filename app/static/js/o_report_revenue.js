@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const img = document.createElement("img");
   img.src = "/static/forecast.png"; // Path to your PNG
   img.style.width = "100%";
-  img.style.height = "480px";
+  img.style.height = "380px";
 
   // Replace the canvas with the image
   canvas.parentNode.replaceChild(img, canvas);
