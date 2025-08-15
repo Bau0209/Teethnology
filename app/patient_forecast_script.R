@@ -65,11 +65,10 @@ tryCatch({
   # Combine data
   combined_df <- bind_rows(monthly_appointments, forecast_df)
 
-  # Filter last 12 months + forecast month
-  last_month <- max(combined_df$month)
-  first_month <- last_month %m-% months(11)
+  # 🔹 Force January to December order for the x-axis
   combined_df <- combined_df %>%
-    filter(month >= first_month)
+    mutate(month_factor = factor(format(month, "%b"),
+                                 levels = month.abb, ordered = TRUE))
 
   # Bar chart
   p <- ggplot(combined_df, aes(x = month, y = total_appointments, fill = type)) +
@@ -87,18 +86,24 @@ tryCatch({
   ) +
   theme_minimal() +
   theme(
-    plot.title = element_text(
-      size = 9,          # 0.75rem ≈ 9pt
-      color = "#00898E", # title color
-      face = "bold"
-    ),
+    plot.title = element_text(size = 9, color = "#00898E", face = "bold"),
     plot.subtitle = element_text(size = 9),
     legend.position = "bottom",
     axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)
   ) +
   scale_y_continuous(labels = comma) +
-  scale_x_date(date_breaks = "1 month", date_labels = "%b")
-
+  scale_x_date(
+    breaks = seq(
+      as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")),
+      as.Date(paste0(format(Sys.Date(), "%Y"), "-12-01")),
+      by = "1 month"
+    ),
+    date_labels = "%b",
+    limits = c(
+      as.Date(paste0(format(Sys.Date(), "%Y"), "-01-01")),
+      as.Date(paste0(format(Sys.Date(), "%Y"), "-12-31"))
+    )
+  )
 
   print(p)
 
