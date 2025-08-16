@@ -7,7 +7,7 @@ library(scales)
 tryCatch({
 
   # Load CSV
-  df <- read.csv("C:\\Users\\admin\\Downloads\\appointment\\appointments.csv",
+  df <- read.csv("C:\\Users\\admin\\Downloads\\csv\\appointments.csv",
                  stringsAsFactors = FALSE)
 
   if (nrow(df) == 0) stop("The file is empty")
