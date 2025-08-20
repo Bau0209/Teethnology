@@ -14,6 +14,7 @@
         <div>
             <a href="{{ url_for('dashboard.appointments') }}" class="calendar-tab active">Appointment Calendar</a>
             <a href="{{ url_for('dashboard.appointment_req') }}" class="calendar-tab">Appointment Request</a>
+            <a href="{{ url_for('dashboard.appointment_archives') }}" class="calendar-tab">Appointment Archives</a>
         </div>
         <div>
             {% if access_level == 'owner' %}
@@ -58,108 +59,203 @@
 
     <!-- Complete Procedure Modal -->
     <div class="modal fade" id="completeProcedureModal" tabindex="-1" aria-labelledby="completeProcedureLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <form id="completeProcedureForm" method="POST" action="/dashboard/appointment/complete" enctype="multipart/form-data">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="completeProcedureLabel">Complete Procedure & Transaction</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <input type="hidden" name="appointment_id" id="complete-appointment-id">
-                <input type="hidden" name="appointment_date" id="complete-appointment-date">
-
-                <div class="mb-3">
-                    <label><strong>Treatment Procedure</strong></label>
-                    <input type="text" name="treatment_procedure" class="form-control" required>
+        <div class="modal-dialog modal-lg">
+            <form id="completeProcedureForm" method="POST" action="/dashboard/appointment/complete" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="completeProcedureLabel">Complete Procedure & Transaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="mb-3">
-                    <label><strong>Tooth Area</strong></label>
-                    <input type="text" name="tooth_area" class="form-control" required>
-                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="appointment_id" id="complete-appointment-id">
+                    <input type="hidden" name="appointment_date" id="complete-appointment-date">
 
-                <div class="mb-3">
-                    <label><strong>Provider</strong></label>
-                    <input type="text" name="provider" class="form-control" required>
-                </div>
+                    <div class="mb-3">
+                        <label><strong>Treatment Procedure</strong></label>
+                        <input type="text" name="treatment_procedure" class="form-control" required>
+                    </div>
 
-                <div class="mb-3">
-                    <label><strong>Treatment Plan</strong></label>
-                    <textarea name="treatment_plan" class="form-control" rows="2"></textarea>
-                </div>
+                    <div class="mb-3">
+                        <label><strong>Tooth Area</strong></label>
+                        <input type="text" name="tooth_area" class="form-control" required>
+                    </div>
 
-                <div class="mb-3">
-                    <label><strong>Fee</strong></label>
-                    <input type="number" name="fee" class="form-control" required>
-                </div>
+                    <div class="mb-3">
+                        <label><strong>Provider</strong></label>
+                        <input type="text" name="provider" class="form-control" required>
+                    </div>
 
-                <hr>
+                    <div class="mb-3">
+                        <label><strong>Treatment Plan</strong></label>
+                        <textarea name="treatment_plan" class="form-control" rows="2"></textarea>
+                    </div>
 
-                <div class="mb-3">
-                    <label><strong>Payment Method</strong></label>
-                    <select name="payment_method" class="form-select" required>
-                    <option value="Cash">Cash</option>
-                    <option value="Card">Card</option>
-                    <option value="GCash">GCash</option>
-                    <option value="Maya">Maya</option>
-                    <option value="Insurance">Insurance</option>
-                    <option value="Other">Other</option>
-                    </select>
-                </div>
+                    <div class="mb-3">
+                        <label><strong>Fee</strong></label>
+                        <input type="number" name="fee" class="form-control" required>
+                    </div>
 
-                <div class="mb-3">
-                    <label><strong>Total Amount Paid</strong></label>
-                    <input type="number" step="0.01" name="total_amount_paid" class="form-control" required>
-                </div>
+                    <hr>
 
-                <div class="mb-3">
-                    <label><strong>Receipt Image</strong></label>
-                    <input type="file" name="receipt" class="form-control">
-                </div>
+                    <div class="mb-3">
+                        <label><strong>Payment Method</strong></label>
+                        <select name="payment_method" class="form-select" required>
+                        <option value="Cash">Cash</option>
+                        <option value="Card">Card</option>
+                        <option value="GCash">GCash</option>
+                        <option value="Maya">Maya</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Other">Other</option>
+                        </select>
+                    </div>
 
-                <hr>
-                <div class="mb-3">
-                    <label><strong>Inventory Usage</strong></label>
-                    <div class="table-responsive">
-                        <table class="table table-bordered align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Quantity Used</th>
-                                    <th>Unit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in inventory_items %}
-                                <tr>
-                                    <td>{{ item.item_name }}</td>
-                                    <td>
-                                        <input type="number" 
-                                            name="quantity_used[{{ item.item_id }}]" 
-                                            class="form-control" 
-                                            min="0" 
-                                            step="0.01" 
-                                            value="0">
-                                    </td>
-                                    <td>{{ item.quantity_unit }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                    <div class="mb-3">
+                        <label><strong>Total Amount Paid</strong></label>
+                        <input type="number" step="0.01" name="total_amount_paid" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label><strong>Receipt Image</strong></label>
+                        <input type="file" name="receipt" class="form-control">
+                    </div>
+
+                    <hr>
+                    <div class="mb-3">
+                        <label><strong>Inventory Usage</strong></label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Item Name</th>
+                                        <th>Quantity Used</th>
+                                        <th>Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in inventory_items %}
+                                    <tr>
+                                        <td>{{ item.item_name }}</td>
+                                        <td>
+                                            <input type="number" 
+                                                name="quantity_used[{{ item.item_id }}]" 
+                                                class="form-control" 
+                                                min="0" 
+                                                step="0.01" 
+                                                value="0">
+                                        </td>
+                                        <td>{{ item.quantity_unit }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
             </div>
+            </form>
         </div>
-        </form>
     </div>
+
+    <!-- Edit Appointment Modal -->
+    <div class="modal fade" id="editAppointmentModal" tabindex="-1" aria-labelledby="editAppointmentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form id="editAppointmentForm" method="POST">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editAppointmentLabel">Edit Appointment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- Hidden ID -->
+                        <input type="hidden" name="appointment_id" id="edit-appointment-id">
+                        
+                        <!-- Appointment Details -->
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Branch:</strong></label>
+                            <select name="branch" id="edit-branch" class="form-select">
+                                <option value="">-- Select Branch --</option>
+                            </select>
+                        </div>
+
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Reason:</strong></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="reason" id="edit-reason" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Patient Name:</strong></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="patient_name" id="edit-patient-name" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Patient Type:</strong></label>
+                            <div class="col-sm-8">                                
+                                <div class="col-sm-8">
+                                    <input type="text" name="patient_type" id="edit-patient-type" class="form-control" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Contact:</strong></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="contact" id="edit-contact" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Email:</strong></label>
+                            <div class="col-sm-8">
+                                <input type="email" name="email" id="edit-email" class="form-control">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h6>Initial Appointment</h6>
+
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Date:</strong></label>
+                            <div class="col-sm-8">
+                                <input type="date" name="initial_date" id="edit-initial-date" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <label class="col-sm-4 col-form-label"><strong>Time:</strong></label>
+                            <div class="col-sm-8">
+                                <input type="time" name="initial_time" id="edit-initial-time" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!-- New Schedule -->
+                        <hr>
+                        <div class="mb-3">
+                            <label for="edit-new-appointment-datetime"><strong>New Appointment Date & Time</strong></label>
+                            <p class="small text-muted">Leave empty if same date/time</p>
+                            <input type="datetime-local" name="new_appointment_datetime" id="edit-new-appointment-datetime" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+
 
 <script>
   const dynamicEvents = {{ events | safe }};

@@ -12,8 +12,8 @@
     <div class="appointments-header calendar-header d-flex justify-content-between align-items-center">
         <div>
             <a href="{{ url_for('dashboard.appointments') }}" class="calendar-tab">Appointment Calendar</a>
-            <a href="{{ url_for('dashboard.appointment_req') }}" class="calendar-tab active">Appointment Request</a>
-            <a href="{{ url_for('dashboard.appointment_archives') }}" class="calendar-tab">Appointment Archives</a>
+            <a href="{{ url_for('dashboard.appointment_req') }}" class="calendar-tab">Appointment Request</a>
+            <a href="{{ url_for('dashboard.appointment_archives') }}" class="calendar-tab active">Appointment Archives</a>
         </div>
         <div>
             {% if access_level == 'owner' %}
@@ -67,10 +67,6 @@
                         {{ request.patient.city }},
                         {{ request.patient.province }},
                         {{ request.patient.country }}
-                    </div>                        
-                    <div class="d-flex gap-2 mt-3">
-                        <button class="btn btn-success btn-sm" onclick="confirmAccept({{ request.appointment_id }})">Accept</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmReject({{ request.appointment_id }})">Reject</button>
                     </div>
                 </div>
             </div>
@@ -81,7 +77,6 @@
        <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">Add</button>
     </div>
 </div>
-{% include 'dashboard/components/form_modal.html' %}
 {% endblock %}
 
 {% block extra_js %}
