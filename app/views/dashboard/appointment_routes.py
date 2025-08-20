@@ -15,6 +15,11 @@ from app.utils import appointment_handler as ah
 from app.utils import procedure_handler as ph
 from app.utils import inventory_handler as ih
 
+@dashboard.route("/api/branches")
+def get_branches():
+    branches = Branch.query.all()
+    return jsonify([{"id": b.branch_id, "name": b.branch_name} for b in branches])
+
 @dashboard.route('/appointments')
 def appointments():
     inventory_items = InventoryItem.query.filter(InventoryItem.category != 'Equipment').all()
@@ -111,6 +116,39 @@ def appointment_req():
         selected_branch=selected_branch,
         appointment_data=json.dumps(appointment_data)
     )
+
+@dashboard.route('/appointment_archives')
+def appointment_archives():
+    selected_branch = request.args.get('branch', 'all')
+    appointments = Appointments.query.filter_by(appointment_status='Cancelled').order_by(Appointments.appointment_date.asc()).all()
+
+    if selected_branch != 'all':
+        appointments = appointments.filter_by(branch_id=selected_branch).order_by(Appointments.appointment_date.asc()).all()
+        
+    appointment_data = [
+        {
+            'date': a.appointment_date.strftime('%Y-%m-%d'),
+            'time': a.appointment_date.strftime('%I:%M %p'),        
+            'reason': a.appointment_type,
+            'patient_name': a.patient.patient_full_name,
+            'patient_type': 'Returning Patient' if a.returning_patient else 'New Patient',
+            'dob': a.patient.birthdate.strftime('%Y-%m-%d'),
+            'sex': a.patient.sex,
+            'contact': a.patient.contact_number,
+            'email': a.patient.email,
+            'address': f"{a.patient.address_line1 + a.patient.baranggay + a.patient.city + a.patient.province + a.patient.country}"
+        }
+        for a in appointments
+    ]
+    branches = Branch.query.all()
+    return render_template(
+        'dashboard/appointment_archives.html',
+        branches=branches,
+        appointments=appointments,
+        selected_branch=selected_branch,
+        appointment_data=json.dumps(appointment_data)
+    )
+    
 
 #Adding an Appointment in the calendar
 @dashboard.route('/form', methods=['GET', 'POST'])
@@ -301,7 +339,7 @@ def complete_appointment():
 
     # Update procedure history
     procedure_history = ah.mark_procedure_history_completed(appointment.appointment_id)
-
+    
     # Create Inventory Usage Records
     for item_id_str, qty_str in request.form.items():
         if item_id_str.startswith("quantity_used["):
@@ -319,6 +357,64 @@ def complete_appointment():
     
     db.session.commit()
     flash("Procedure, transaction, and procedure history updated!", "success")
+    return redirect(url_for('dashboard.appointments', success=1))
+
+@dashboard.route('/edit_appointment/<int:id>', methods=['POST'])
+def edit_appointment(id):
+    from datetime import datetime
+
+    # Find the appointment by ID first
+    appt = Appointments.query.get_or_404(id)
+    patient = appt.patient
+
+    # Get form data
+    branch_id = request.form.get('branch')
+    patient_name = request.form.get('patient-name')
+    contact = request.form.get('contact')
+    email = request.form.get('email')
+    reason = request.form.get('reason')
+    date = request.form.get('edit-initial-date')
+    time = request.form.get('edit-initial-time')
+
+    # Update patient info (only if provided)
+    if patient_name:
+        patient.patient_name = patient_name
+    if contact:
+        patient.contact_number = contact
+    if email:
+        patient.email = email
+
+    new_datetime = request.form.get('new_appointment_datetime') 
+    
+    # Update appointment datetime
+    if new_datetime:
+        print("DEBUG new_appointment_datetime =", new_datetime)
+        dt = datetime.strptime(new_datetime, "%Y-%m-%dT%H:%M")
+        appt.appointment_date = dt.date()
+        appt.time = dt.time()
+    else:
+        if date:
+            appt.appointment_date = date
+        if time:
+            appt.time = time
+
+    # Update branch
+    if branch_id:
+        branch = Branch.query.filter_by(branch_id=branch_id).first()
+        if not branch:
+            flash("Branch not found!", "danger")
+            return redirect(url_for('dashboard.appointments', success=1))
+        appt.branch_id = branch.branch_id
+        appt.branch_name = branch.branch_name
+
+    # Update reason (if provided)
+    if reason:
+        appt.appointment_type = reason
+
+    # Save changes
+    db.session.commit()
+
+    flash("Appointment updated successfully!", "success")
     return redirect(url_for('dashboard.appointments', success=1))
 
 @dashboard.route('/cancel_appointment/<int:id>', methods=['POST'])

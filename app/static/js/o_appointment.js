@@ -76,6 +76,60 @@ function handleComplete(appointmentId, branchId) {
     });
 }
 
+let currentApptBranchId = null; // global variable to hold selected branch
+
+$('#editAppointmentModal').on('show.bs.modal', function () {
+    let branchSelect = document.getElementById("edit-branch");
+    branchSelect.innerHTML = "<option value=''>-- Select Branch --</option>";
+
+    fetch("/dashboard/api/branches")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(branch => {
+                let opt = document.createElement("option");
+                opt.value = branch.id; // ✅ matches API
+                opt.textContent = branch.name;
+
+                // ✅ preselect correct branch
+                if (branch.id === currentApptBranchId) {
+                    opt.selected = true;
+                }
+
+                branchSelect.appendChild(opt);
+            });
+        });
+});
+
+function handleEditAppointment(appointmentId) {
+    const appt = appointmentData.find(a => a.appointment_id === appointmentId);
+    if (!appt) return console.error("Appointment not found");
+    console.log(appt);
+
+    // store branch_id for preselection
+    currentApptBranchId = appt.branch_id;
+
+    // Store appointment ID 
+    document.getElementById('edit-appointment-id').value = appointmentId;
+
+    let form = document.getElementById('editAppointmentForm');
+    form.action = `/dashboard/edit_appointment/${appt.appointment_id}`;
+
+    // Map patient type
+    let patientTypeValue = appt.patient_type.includes("Returning") ? "Returning" : "New";
+    document.getElementById('edit-patient-type').value = patientTypeValue;
+
+    document.getElementById('edit-reason').value = appt.reason;
+    document.getElementById('edit-patient-name').value = appt.patient_name;
+    document.getElementById('edit-contact').value = appt.contact;
+    document.getElementById('edit-email').value = appt.email;
+    document.getElementById('edit-initial-date').value = appt.date;
+
+    let rawTime = appt.time; // "16:30:00"
+    document.getElementById('edit-initial-time').value = rawTime.substring(0, 5); // "16:30"
+
+    new bootstrap.Modal(document.getElementById('editAppointmentModal')).show();
+}
+
 function handleCancel(id) {
   fetch(`/dashboard/cancel_appointment/${id}`, {
     method: 'POST',
@@ -95,6 +149,7 @@ function handleCancel(id) {
     console.error(err);
   });
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
   // =====================
@@ -158,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
             buttonsHTML = `
               <div class="d-flex gap-2 mt-3">
                 <button class="btn btn-primary btn-sm" onclick="handleComplete(${a.appointment_id}, ${a.branch_id})">Mark as Completed</button>
-                <button class="btn btn-warning btn-sm" onclick="handleReschedule(${a.appointment_id})">Reschedule</button>
+                <button class="btn btn-primary btn-sm" onclick="handleEditAppointment(${a.appointment_id})">Edit</button>
                 <button class="btn btn-danger btn-sm" onclick="confirmCancel(${a.appointment_id})">Cancel</button>
               </div>
             `;
@@ -308,33 +363,3 @@ document.addEventListener('DOMContentLoaded', function () {
     filterAppointments();
   });
 });
-
-// Handles reschedule appointment confirmation
-function handleReschedule(appointmentId) {
-  // Hide the current appointment details modal
-  const appointmentModalEl = document.getElementById('appointmentsModal');
-  const appointmentModal = bootstrap.Modal.getInstance(appointmentModalEl);
-  if (appointmentModal) {
-    appointmentModal.hide();
-
-    // After modal is hidden, open the Book Appointment modal
-    appointmentModalEl.addEventListener('hidden.bs.modal', function onHidden() {
-      appointmentModalEl.removeEventListener('hidden.bs.modal', onHidden);
-
-      const bookModalEl = document.getElementById('addAppointmentModal');
-      const bookModal = new bootstrap.Modal(bookModalEl);
-      bookModal.show();
-
-      // Optional: Pre-fill appointment ID if needed
-      const hiddenIdField = document.getElementById('reschedule-appointment-id');
-      if (hiddenIdField) {
-        hiddenIdField.value = appointmentId;
-      }
-    });
-  } else {
-    // Fallback: Just open the form directly
-    const bookModalEl = document.getElementById('addAppointmentModal');
-    const bookModal = new bootstrap.Modal(bookModalEl);
-    bookModal.show();
-  }
-}

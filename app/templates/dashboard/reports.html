@@ -54,29 +54,29 @@
   <!-- Top Section: Revenue Graph + Monthly Summary -->
   <div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
   <!-- Top Summary Section -->
-  <div class="row g-3">
+  <div class="row g-2">
     <div class="col-12">
-      <div class="row g-3">     
+      <div class="row g-2">     
         <!-- Revenue Cards -->
-        <div class="col-4">
+        <div class="col-6">
           <div class="card p-3 text-center">
             <h3 class="text-muted d-block">Today's Revenue</h3>
             <h1 style="color:rgb(32, 178, 115)">₱{{ "{:,.0f}".format(today_revenue) }}</h1>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-6">
           <div class="card p-3 text-center">
             <h3 class="text-muted d-block">This Month's Revenue</h3>
             <h1 style="color:rgb(32, 178, 115)">₱{{ "{:,.0f}".format(current_month_revenue) }}</h1>
           </div>
         </div>
 
-        <div class="col-4">
+        <!-- <div class="col-4">
           <div class="card p-3 text-center">
             <h3 class="text-muted d-block">...</h3>
             <h1 style="color:rgb(32, 178, 115)"></h1>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
