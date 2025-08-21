@@ -373,8 +373,8 @@ def edit_appointment(id):
     contact = request.form.get('contact')
     email = request.form.get('email')
     reason = request.form.get('reason')
-    date = request.form.get('edit-initial-date')
-    time = request.form.get('edit-initial-time')
+    date = request.form.get('initial-date')
+    time = request.form.get('initial-time')
 
     # Update patient info (only if provided)
     if patient_name:
@@ -416,6 +416,25 @@ def edit_appointment(id):
 
     flash("Appointment updated successfully!", "success")
     return redirect(url_for('dashboard.appointments', success=1))
+
+@dashboard.route('/restore_appointment/<int:id>', methods=['POST'])
+def restore_appointment(id):
+    from datetime import date
+    appt = Appointments.query.get_or_404(id)
+
+    # Check if appointment date already passed
+    if appt.appointment_date < date.today():
+        flash("Appointment is in the past. Please reschedule.", "warning")
+        # Redirect to edit page instead of restoring directly
+        return redirect(url_for('dashboard.edit_appointment_page', id=id))
+    
+    # If still valid → just set status back to pending
+    appt.appointment_status = "pending"
+    db.session.commit()
+
+    flash("Appointment restored successfully!", "success")
+    return redirect(url_for('dashboard.appointments'))
+
 
 @dashboard.route('/cancel_appointment/<int:id>', methods=['POST'])
 def cancel_appointment(id):
