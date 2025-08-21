@@ -71,6 +71,8 @@ def prepare_chart_datasets(service_month_data):
         })
     return stacked_datasets
 
+
+
 def get_report_data(selected_year, current_month):
     monthly_revenue = get_monthly_revenue(selected_year)
     today_revenue = get_today_revenue()

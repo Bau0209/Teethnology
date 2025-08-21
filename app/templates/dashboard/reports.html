@@ -180,7 +180,7 @@
 <script src="{{ url_for('static', filename='js/owner.js') }}"></script>
 
 <script>
-  window.chartData = {
+  window.chartData = { 
     labels: {{ labels | tojson }},
     values: {{ values | tojson }},
     stacked_datasets: {{ stacked_datasets | tojson }},
