@@ -128,11 +128,10 @@ def get_services():
 def get_new_vs_returning_by_age_bracket():
     """Count new vs returning patients grouped by age brackets."""
     brackets = {
-        '0-12': (0, 12),
-        '13-19': (13, 19),
-        '20-35': (20, 35),
-        '36-50': (36, 50),
-        '51+': (51, 150)
+        '0-17': (0, 17),
+        '18-30': (19, 30),
+        '31-59': (31, 59),
+        '60+': (60, 150)
     }
 
     results = {bracket: {'New Patients': 0, 'Returning Patients': 0} for bracket in brackets}

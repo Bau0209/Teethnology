@@ -1,6 +1,6 @@
 from flask import render_template, request, g
 from datetime import datetime
-import subprocess
+import subprocess, os, json
 
 from app.views.dashboard import dashboard
 from app.models import Transactions, Procedures
@@ -19,6 +19,24 @@ from ...utils.report_marketing_data import (
 from ...utils.report_inventory_data import (
     get_inventory_report_data as get_inventory_data,
 )
+
+@dashboard.route('/run_r_json', methods=['GET', 'POST'])
+def run_r_json():
+    data = request.get_json()  # e.g., {"numbers": [1,2,3,4,5]}
+    script_path = os.path.join(os.path.dirname(__file__), '../../scripts/script.R')
+    script_path = os.path.abspath(script_path)
+
+    # Send JSON to R's stdin
+    process = subprocess.Popen(
+        ['Rscript', script_path],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+    stdout, stderr = process.communicate(input=json.dumps(data))
+
+    return f"<pre>{stdout}</pre><pre>{stderr}</pre>"
 
 @dashboard.route('/reports')    
 def reports():

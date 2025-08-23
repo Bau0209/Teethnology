@@ -47,12 +47,19 @@ def moving_average_forecast(values, window):
 def get_service_month_data(year):
     return db.session.query(
         extract('month', Transactions.transaction_datetime).label('month'),
-        Procedures.treatment_procedure,
+        Appointments.appointment_category,
         func.sum(Transactions.total_amount_paid).label('total')
-    ).join(Procedures, Procedures.procedure_id == Transactions.procedure_id)\
-    .filter(extract('year', Transactions.transaction_datetime) == year)\
-    .group_by('month', Procedures.treatment_procedure)\
-    .order_by('month').all()
+    ).join(
+        Procedures, Procedures.procedure_id == Transactions.procedure_id
+    ).join(
+        Appointments, Appointments.appointment_id == Procedures.appointment_id
+    ).filter(
+        extract('year', Transactions.transaction_datetime) == year
+    ).group_by(
+        'month', Appointments.appointment_category
+    ).order_by(
+        'month'
+    ).all()
     
 def prepare_chart_datasets(service_month_data):
     service_monthly_totals = defaultdict(lambda: [0]*12)
@@ -70,8 +77,6 @@ def prepare_chart_datasets(service_month_data):
             'backgroundColor': colors[i % len(colors)]
         })
     return stacked_datasets
-
-
 
 def get_report_data(selected_year, current_month):
     monthly_revenue = get_monthly_revenue(selected_year)
@@ -111,7 +116,7 @@ def generate_insights(data):
     ]
     if current_services:
         top_service = max(current_services, key=lambda x: x.total)
-        service_msg.append(f"Top earning service: {top_service.treatment_procedure}. Upsell related procedures.")
+        service_msg.append(f"Top earning service: {top_service.appointment_category}. Upsell related procedures.")
     else:
         service_msg.append("No services recorded this month.")
     insights.append("<br>".join(service_msg))
