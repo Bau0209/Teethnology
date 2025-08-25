@@ -222,3 +222,73 @@ def get_report_data(selected_year, current_month):
             get_new_vs_returning_by_age_bracket()
         )
     }
+
+def generate_patient_insights(data):
+    current_month = datetime.now().month
+    insights = []
+
+    # Current insight: Appointments
+    current_appointments = data['monthly_appointments'][current_month - 1]
+    msg_current = ["<strong>Appointments (Current Month):</strong>"]
+
+    if current_appointments < 20:
+        msg_current.append(
+            f"Insight: Only {current_appointments} appointments this month.<br>"
+            f"Recommendation: Increase marketing and outreach to attract more patients."
+        )
+    elif current_appointments < 50:
+        msg_current.append(
+            f"Insight: Moderate activity with {current_appointments} appointments.<br>"
+            f"Recommendation: Focus on retaining new patients and ensuring follow-ups."
+        )
+    else:
+        msg_current.append(
+            f"Insight: Strong patient turnout with {current_appointments} appointments.<br>"
+            f"Recommendation: Ensure clinic operations can handle demand and maintain high-quality service."
+        )
+    insights.append("<br>".join(msg_current))
+
+    # Forecast insight: Appointments trend
+    forecast_next = data['forecast_values'][current_month - 1]
+    msg_forecast = ["<strong>Appointments (Forecast):</strong>"]
+
+    if forecast_next > current_appointments:
+        msg_forecast.append(
+            f"Insight: Appointments are forecasted to rise next month (expected ~{forecast_next:.0f}).<br>"
+            f"Recommendation: Prepare staff and resources to meet higher patient demand."
+        )
+    elif forecast_next < current_appointments:
+        msg_forecast.append(
+            f"Insight: Forecast suggests a possible decline in appointments (expected ~{forecast_next:.0f}).<br>"
+            f"Recommendation: Run patient engagement campaigns to prevent drop-offs."
+        )
+    else:
+        msg_forecast.append(
+            f"Insight: Forecast predicts stable appointments (~{forecast_next:.0f}).<br>"
+            f"Recommendation: Maintain current operations and monitor patient feedback."
+        )
+    insights.append("<br>".join(msg_forecast))
+
+    # Bonus: New vs Returning patients
+    new_patients = data['monthly_new_patients'][current_month - 1]
+    returning_patients = data['monthly_returning_patients'][current_month - 1]
+    msg_patients = ["<strong>New vs Returning:</strong>"]
+
+    if new_patients > returning_patients:
+        msg_patients.append(
+            f"Insight: More new patients ({new_patients}) than returning ({returning_patients}).<br>"
+            f"Recommendation: Focus on converting new patients into loyal, returning ones."
+        )
+    elif returning_patients > new_patients:
+        msg_patients.append(
+            f"Insight: Returning patients ({returning_patients}) outnumber new ones ({new_patients}).<br>"
+            f"Recommendation: Keep loyalty programs strong, but also invest in attracting new patients."
+        )
+    else:
+        msg_patients.append(
+            f"Insight: Equal new ({new_patients}) and returning ({returning_patients}) patients.<br>"
+            f"Recommendation: Balance marketing between patient acquisition and retention."
+        )
+    insights.append("<br>".join(msg_patients))
+
+    return "<br><br>".join(insights)

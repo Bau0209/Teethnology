@@ -172,3 +172,44 @@ def get_report_data(selected_year, current_month):
         'popular_services_by_age_bracket': process_popular_services_by_age(get_popular_services_by_age_bracket()),
         'popular_services_by_gender': process_popular_services_by_age(get_popular_services_by_gender())
     }
+def generate_marketing_insights(data, current_month):
+    insights = []
+
+    # --- Insight 1: Current Month Appointments ---
+    current_appts = get_appointments_count(current_month)
+    appt_msg = ["<strong>Appointments:</strong>"]
+    if current_appts < 20:
+        appt_msg.append(f"Only {current_appts} appointments recorded this month. Marketing push may be needed.")
+    elif current_appts < 50:
+        appt_msg.append(f"{current_appts} appointments so far. Stable performance, but could improve with promotions.")
+    else:
+        appt_msg.append(f"Great! {current_appts} appointments this month, showing strong demand.")
+    insights.append("<br>".join(appt_msg))
+
+    # --- Insight 2: Forecast (Next Month) ---
+    # Use moving average of appointments (past 3 months) as a simple forecast
+    past_months = []
+    for m in range(max(1, current_month - 3), current_month + 1):
+        past_months.append(get_appointments_count(m))
+    forecast_next = round(sum(past_months) / len(past_months), 2) if past_months else 0
+
+    forecast_msg = ["<strong>Forecast:</strong>"]
+    if forecast_next < 20:
+        forecast_msg.append(f"Next month is projected to have only ~{forecast_next} appointments.")
+    elif forecast_next < 50:
+        forecast_msg.append(f"Next month may see around {forecast_next} appointments.")
+    else:
+        forecast_msg.append(f"Next month is projected strong at ~{forecast_next} appointments.")
+    insights.append("<br>".join(forecast_msg))
+
+    # --- Insight 3: Recommendation ---
+    reco_msg = ["<strong>Recommendation:</strong>"]
+    if current_appts < 20 and forecast_next < 20:
+        reco_msg.append("Boost marketing campaigns immediately (ads, promos, partnerships).")
+    elif current_appts < 50 and forecast_next < 50:
+        reco_msg.append("Sustain engagement with targeted promos to push appointments higher.")
+    else:
+        reco_msg.append("Maintain current marketing strategies, but monitor trends closely.")
+    insights.append("<br>".join(reco_msg))
+
+    return "<br><br>".join(insights)

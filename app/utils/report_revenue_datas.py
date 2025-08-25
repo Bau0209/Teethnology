@@ -98,27 +98,41 @@ def generate_insights(data):
     current_month = datetime.now().month
     insights = []
 
-    # Insight 1: Revenue
+    # --- Insight 1: Current Revenue ---
     revenue = data['current_month_revenue']
-    revenue_msg = ["<strong>Revenues:</strong>"]
+    revenue_msg = ["<strong>Current Month Revenue:</strong>"]
     if revenue < 10000:
-        revenue_msg.append("Revenue is below ₱10,000. Consider promoting top services.")
+        revenue_msg.append(f"Revenue is low at ₱{revenue:,.2f}.")
     elif revenue < 20000:
-        revenue_msg.append("Fair revenue. Highlight best-sellers to boost earnings.")
+        revenue_msg.append(f"Revenue is fair at ₱{revenue:,.2f}.")
     else:
-        revenue_msg.append("Strong revenue this month! Keep it up.")
+        revenue_msg.append(f"Revenue is strong at ₱{revenue:,.2f}. Keep it up!")
     insights.append("<br>".join(revenue_msg))
 
-    # Insight 2: Top service
-    service_msg = ["<strong>Services:</strong>"]
-    current_services = [
-        s for s in data['service_month_data'] if int(s.month) == current_month
-    ]
-    if current_services:
-        top_service = max(current_services, key=lambda x: x.total)
-        service_msg.append(f"Top earning service: {top_service.appointment_category}. Upsell related procedures.")
+    # --- Insight 2: Forecast Revenue (Next Month) ---
+    forecast_values = data['forecast_values']
+    if current_month < len(forecast_values):
+        forecast_next = forecast_values[current_month]  # forecast for next month
     else:
-        service_msg.append("No services recorded this month.")
-    insights.append("<br>".join(service_msg))
+        forecast_next = forecast_values[-1]  # fallback
+    
+    forecast_msg = ["<strong>Forecast (Next Month):</strong>"]
+    if forecast_next < 10000:
+        forecast_msg.append(f"Projected revenue may drop to ₱{forecast_next:,.2f}.")
+    elif forecast_next < 20000:
+        forecast_msg.append(f"Projected revenue is expected to be around ₱{forecast_next:,.2f}.")
+    else:
+        forecast_msg.append(f"Projected revenue may remain strong at ₱{forecast_next:,.2f}.")
+    insights.append("<br>".join(forecast_msg))
+
+    # --- Insight 3: Recommendations ---
+    reco_msg = ["<strong>Recommendation:</strong>"]
+    if revenue < 10000 and forecast_next < 10000:
+        reco_msg.append("Double down on promotions and discounts to boost sales.")
+    elif revenue < 20000 and forecast_next < 20000:
+        reco_msg.append("Sustain efforts on best-selling services and explore new offers.")
+    else:
+        reco_msg.append("Maintain current strategies, but watch for seasonal demand shifts.")
+    insights.append("<br>".join(reco_msg))
 
     return "<br><br>".join(insights)

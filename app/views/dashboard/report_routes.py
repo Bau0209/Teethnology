@@ -10,7 +10,8 @@ from ...utils.report_revenue_datas import (
     generate_insights as generate_revenue_insights
 )
 from ...utils.report_patients_datas import (
-    get_report_data as get_patients_data
+    get_report_data as get_patients_data,
+    generate_patient_insights as generate_patient_insights
 )
 
 from ...utils.report_marketing_data import (
@@ -78,7 +79,9 @@ def report_patients():
                            selected_year=selected_year,
                            current_month_new_patient=patients_data['monthly_new_patients'][current_month - 1],
                            current_month_returning_patient=patients_data['monthly_returning_patients'][current_month - 1],
-                           current_month_appointment=patients_data['monthly_appointments'][current_month - 1])
+                           current_month_appointment=patients_data['monthly_appointments'][current_month - 1],                        
+                           insight_text=generate_patient_insights(patients_data))
+                           
 
 
 @dashboard.route('/report_marketing')
