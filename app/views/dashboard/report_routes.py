@@ -16,6 +16,7 @@ from ...utils.report_patients_datas import (
 
 from ...utils.report_marketing_data import (
     get_report_data as get_marketing_data,
+    generate_marketing_insights as generate_marketing_insights
 )
 from ...utils.report_inventory_data import (
     get_inventory_report_data as get_inventory_data,
@@ -93,7 +94,8 @@ def report_marketing():
     return render_template('/dashboard/report_marketing.html',
                             current_year=selected_year,
                             popular_service_by_age=report_data['popular_services_by_age_bracket'],
-                            popular_service_by_gender=report_data['popular_services_by_gender'])
+                            popular_service_by_gender=report_data['popular_services_by_gender'],
+                            insight_text=generate_marketing_insights(report_data, current_month))
 
 
 @dashboard.route('/report_inventory') 
