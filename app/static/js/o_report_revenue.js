@@ -144,4 +144,3 @@ document.addEventListener('DOMContentLoaded', function () {
   canvas.parentNode.replaceChild(img, canvas);
 
 });
-
