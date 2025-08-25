@@ -30,12 +30,17 @@ def generate_business_insight():
         .scalar()
 
     top_services = db.session.query(
-        Procedures.treatment_procedure,
+        Appointments.appointment_type,
         func.sum(Transactions.total_amount_paid).label('revenue')
-    ).join(Transactions, Transactions.procedure_id == Procedures.procedure_id)\
-     .group_by(Procedures.treatment_procedure)\
-     .order_by(func.sum(Transactions.total_amount_paid).desc())\
-     .limit(5).all()
+    ).join(
+        Procedures, Procedures.appointment_id == Appointments.appointment_id
+    ).join(
+        Transactions, Transactions.procedure_id == Procedures.procedure_id
+    ).group_by(
+        Appointments.appointment_type
+    ).order_by(
+        func.sum(Transactions.total_amount_paid).desc()
+    ).limit(5).all()
 
     top_service_labels = [s[0] for s in top_services]
 

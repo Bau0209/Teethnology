@@ -58,7 +58,7 @@
                     <div><b>Patient Name:</b> {{ request.patient.patient_full_name }}</div>
                     <div><b>Patient Type:</b> {{ 'Returning Patient' if request.returning_patient else 'New Patient' }}</div>
                     <div><b>Date of Birth:</b> {{ request.patient.birthdate.strftime('%B %d, %Y') }}</div>
-                    <div><b>Gender:</b> {{ request.patient.gender }}</div>
+                    <div><b>Gender:</b> {{ request.patient.sex }}</div>
                     <div><b>Contact:</b> {{ request.patient.contact_number }}</div>
                     <div><b>Email:</b> {{ request.patient.email }}</div>
                     <div><b>Address:</b>
@@ -67,16 +67,30 @@
                         {{ request.patient.city }},
                         {{ request.patient.province }},
                         {{ request.patient.country }}
-                    </div>
+                    </div>                                          
+                    <button 
+                        class="btn btn-success btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editAppointmentModal"
+                        data-id="{{ request.appointment_id }}"
+                        data-branch="{{ request.branch_id }}"
+                        data-reason="{{ request.appointment_type }}"
+                        data-name="{{ request.patient.patient_full_name }}"
+                        data-type="{{ 'Returning Patient' if request.returning_patient else 'New Patient' }}"
+                        data-contact="{{ request.patient.contact_number }}"
+                        data-email="{{ request.patient.email }}"
+                        data-date="{{ request.appointment_date.strftime('%Y-%m-%d') }}"
+                        data-time="{{ request.appointment_date.strftime('%H:%M') }}"
+                    >
+                        Restore
+                    </button>
                 </div>
             </div>
         {% endfor %}
 
     </div>
-    <div class="request-add-btn">
-       <button type="button" class="btn-add" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">Add</button>
-    </div>
 </div>
+{% include 'dashboard/components/edit_appointment_modal.html' %}
 {% endblock %}
 
 {% block extra_js %}

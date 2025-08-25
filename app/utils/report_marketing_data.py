@@ -70,11 +70,10 @@ def get_monthly_new_and_returning_data(selected_year):
 def get_popular_services_by_age_bracket():
     """Count popular services grouped by age brackets."""
     brackets = {
-        '0-12': (0, 12),
-        '13-19': (13, 19),
-        '20-35': (20, 35),
-        '36-50': (36, 50),
-        '51+': (51, 150)
+        '0-17': (0, 17),
+        '18-30': (19, 30),
+        '31-59': (31, 59),
+        '60+': (60, 150)
     }
 
     results = {bracket: defaultdict(int) for bracket in brackets}
@@ -94,7 +93,7 @@ def get_popular_services_by_age_bracket():
         )
 
         # Ensure appointment type is always a string
-        appt_type = getattr(appointment, 'appointment_type', None)
+        appt_type = getattr(appointment, 'appointment_category', None)
         if not appt_type:  
             appt_type = "Unknown"
 
@@ -147,7 +146,7 @@ def get_popular_services_by_gender():
         gender = (patient.sex.strip().capitalize()
                   if getattr(patient, 'sex', None)
                   else "Unknown")
-        results[gender][appointment.appointment_type] += 1
+        results[gender][appointment.appointment_category] += 1
 
     # Convert results to sorted lists
     return {
@@ -158,8 +157,8 @@ def get_popular_services_by_gender():
 
 def get_services():
     """Fetch distinct appointment types from the appointments table."""
-    appointment_types = db.session.query(Appointments.appointment_type).distinct().all()
-    return [atype[0] for atype in appointment_types if atype[0]]
+    appointment_categories = db.session.query(Appointments.appointment_category).distinct().all()
+    return [atype[0] for atype in appointment_categories if atype[0]]
 
 def get_report_data(selected_year, current_month):
     """Build full report dictionary for frontend use."""
@@ -168,7 +167,7 @@ def get_report_data(selected_year, current_month):
     popular_by_gender= get_popular_services_by_gender()
 
     return {
-        'months': months,  # Make sure 'months' is defined elsewhere
+        'months': months, 
         'services': services,
         'popular_services_by_age_bracket': process_popular_services_by_age(get_popular_services_by_age_bracket()),
         'popular_services_by_gender': process_popular_services_by_age(get_popular_services_by_gender())

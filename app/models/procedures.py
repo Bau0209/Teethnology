@@ -12,10 +12,8 @@ class Procedures(db.Model):
     )
 
     procedure_date = db.Column(db.Date, nullable=False)
-    treatment_procedure = db.Column(db.String(255), nullable=False)
     tooth_area = db.Column(db.String(10), nullable=False)
     provider = db.Column(db.String(255), nullable=False)
-    treatment_plan = db.Column(db.Text)
     fee = db.Column(db.Integer, nullable=False)
     procedure_status = db.Column(db.String(255))
     notes = db.Column(db.Text)

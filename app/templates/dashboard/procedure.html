@@ -64,7 +64,7 @@
                     <tr>
                         <td>{{ procedure.procedure_id }}</td>
                         <td>{{ procedure.procedure_date.strftime('%Y-%m-%d') }}</td>
-                        <td>{{ procedure.treatment_procedure }}</td>
+                        <td>{{ procedure.appointment.appointment_type }}</td>
                         <td>{{ procedure.tooth_area }}</td>
                         <td>{{ procedure.provider }}</td>
                         <td>{{ procedure.treatment_plan or 'N/A' }}</td>

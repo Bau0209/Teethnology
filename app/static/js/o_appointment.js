@@ -19,6 +19,49 @@ window.confirmAccept = function (appointmentId) {
   }
 };
 
+// Confirmation function for restore archive
+window.confirmRestore = function (appointmentId, appointmentDate) {
+  const today = new Date();
+  const apptDate = new Date(appointmentDate); // make sure it's in YYYY-MM-DD format
+
+  if (apptDate < today.setHours(0,0,0,0)) {
+    // Appointment is in the past → open modal instead
+    openEditModal(appointmentId);
+  } else {
+    // Safe to restore normally
+    if (confirm("Are you sure you want to restore this appointment?")) {
+      handleRestore(appointmentId);
+    }
+  }
+};
+
+function openEditModal(appointmentId) {
+  // set hidden input
+  document.getElementById('edit-appointment-id').value = appointmentId;
+
+  // set form action (example: /dashboard/edit_appointment/<id>)
+  let form = document.getElementById('editAppointmentForm');
+  form.action = `/dashboard/edit_appointment/${appointmentId}`;
+
+  // open modal
+  let modal = new bootstrap.Modal(document.getElementById('editAppointmentModal'));
+  modal.show();
+}
+
+function handleRestore(appointmentId) {
+  fetch(`/dashboard/restore_appointment/${appointmentId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => {
+    if (res.ok) {
+      location.reload();
+    } else {
+      alert("Failed to restore appointment.");
+    }
+  });
+}
+
 function handleAccept(id) {
   fetch(`/dashboard/appointments/${id}/status`, {
     method: 'POST',
@@ -149,7 +192,6 @@ function handleCancel(id) {
     console.error(err);
   });
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
   // =====================
