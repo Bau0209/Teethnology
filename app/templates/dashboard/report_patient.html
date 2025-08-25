@@ -39,7 +39,7 @@
     <div class="branch-dropdown">
         {% if access_level == 'owner' %}
             <form method="get" action="{{ url_for('dashboard.report_patients') }}">
-                <select name="branch" class="form-select" onchange="this.form.submit()">
+                <select name="branch" id="selected_branch" class="form-select" onchange="this.form.submit()">
                     <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
                     {% for branch in branches %}
                         <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
@@ -51,12 +51,6 @@
         {% endif %}
     </div>
   </ul>
-
-  <!-- Filters -->
-  <div class="d-flex flex-wrap gap-2 mb-3">
-    <button class="btn btn-outline-primary btn-sm active">This Month</button>
-    <button class="btn btn-outline-primary btn-sm active">Today</button>
-  </div>
 
   <!-- Top Section: Two-column layout -->
   <h5 class="text-muted mb-3">This Month</h5>
@@ -89,6 +83,19 @@
       </div>
     </div>
   </div>
+  <hr>
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-2 mb-4">
+        <div class="btn-group btn-group-sm" role="group">
+          <form method="get" action="{{ url_for('dashboard.report_patients') }}">
+            <select name="report_revenue_selected_year" class="form-select form-select-sm" onchange="this.form.submit()">
+              {% for y in range(current_year, current_year - 10, -1) %}
+                <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
+      </div>
   <div class="row">
     <div class="col-md-6 mb-4"> 
       <div class="card mt-3">
@@ -117,13 +124,6 @@
     <div class="col-lg-9">
       <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
         <h5 style="color: #00898E; margin-left: 10px; font-size: 1.5rem; font-weight: 700;">Forecasts</h5>
-        <form method="get" action="{{ url_for('dashboard.report_patients') }}">
-          <select name="report_revenue_selected_year" class="form-select form-select-sm" onchange="this.form.submit()">
-            {% for y in range(current_year, current_year - 10, -1) %}
-              <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
-            {% endfor %}
-          </select>
-        </form>
       </div>
       <div class="card h-100">
         <!--<div class="card-header bg-white"><h6 class="mb-0">Total # Appointments</h6></div>-->

@@ -71,76 +71,81 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+  let revenueChart; // global
 
-  // Forecast Chart
-  const forecastCtx = document.getElementById('forecastChart');
-  if (forecastCtx) {
-    new Chart(forecastCtx.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: window.chartData.labels,
-        datasets: [
-          {
-            label: 'Actual Revenue',
-            data: window.chartData.values,
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Forecast Revenue (Moving Avg)',
-            data: window.chartData.forecast_values,
-            type: 'line',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderWidth: 2,
-            fill: false,
-            tension: 0.4,
-            borderDash: [5, 5]
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Total Revenue: Actual vs Forecast (Moving Average)'
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false
-          },
-          legend: {
-            position: 'top'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function (value) {
-                return '₱' + value.toLocaleString();
-              }
-            }
-          }
-        }
+const branch = document.getElementById("selected_branch").value;
+fetch("/dashboard/revenue_forecast")
+  .then(res => res.json())
+  .then(data => {
+      console.log("Revenue forecast API response:", data);
+
+      // unwrap the nested "revenue" object
+      const revenue = data.revenue;
+
+      if (!revenue || !revenue.history_dates || !revenue.history) {
+          throw new Error("Missing history data in revenue_forecast response");
       }
-    });
-  }
 
-  //function for the forecast chart to display in the dashboard
-  // Get the canvas element's parent
-  const canvas = document.getElementById("forecastChart");
+      // Labels
+      const lastHistoryDate = revenue.history_dates.slice(-1);
+      const lastHistoryValue = revenue.history.slice(-1);
 
-  // Create an <img> element
-  const img = document.createElement("img");
-  img.src = "/static/forecast.png"; // Path to your PNG
-  img.style.width = "100%";
-  img.style.height = "480px";   
-  img.style.display = "block";
+      const labels = [...lastHistoryDate, ...revenue.dates];
+      const values = [...lastHistoryValue, ...revenue.forecast];
 
-  // Replace the canvas with the image
-  canvas.parentNode.replaceChild(img, canvas);
+      const allLabels = labels.map((dateStr, i) => {
+          const date = new Date(dateStr);
+          const monthName = date.toLocaleString("default", { month: "long" });
+          return i === 0 ? "This Month" : monthName;
+      });
+
+      // Colors
+      const baseColor = "#36A2EB";
+      function lightenColor(hex, factor) {
+          const num = parseInt(hex.slice(1), 16);
+          let r = (num >> 16) + factor;
+          let g = ((num >> 8) & 0x00FF) + factor;
+          let b = (num & 0x0000FF) + factor;
+          return `rgb(${Math.min(255, r)},${Math.min(255, g)},${Math.min(255, b)})`;
+      }
+
+      const bgColors = values.map((_, i) =>
+          i === 0 ? baseColor : lightenColor(baseColor, 70) // 20% lighter
+      );
+
+      const datasets = [{
+          label: "Revenue Forecast",
+          data: values,
+          backgroundColor: bgColors,
+          borderRadius: 6
+      }];
+
+      // Ensure we don’t stack charts on one canvas
+      const ctx = document.getElementById("forecastChart").getContext("2d");
+      if (revenueChart) revenueChart.destroy();
+
+      revenueChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+              labels: allLabels,
+              datasets: datasets
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  title: {
+                      display: true,
+                      text: "Revenue Forecast (This Month + Next 6 Months)"
+                  },
+                  legend: { display: false }
+              },
+              scales: {
+                  x: { stacked: true, title: { display: true, text: "Month" } },
+                  y: { stacked: true, beginAtZero: true, title: { display: true, text: "Revenue" } }
+              }
+          }
+      });
+  })
+  .catch(err => console.error("Revenue forecast fetch failed:", err));
 
 });

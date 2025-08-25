@@ -224,25 +224,25 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Archive button function for patients and dental records
-let archiveRecordId = null;
+// // Archive button function for patients and dental records
+// let archiveRecordId = null;
 
-function showArchiveModal(id) {
-    archiveRecordId = id;
-    const modal = new bootstrap.Modal(document.getElementById('archiveConfirmModal'));
-    modal.show();
-}
+// function showArchiveModal(id) {
+//     archiveRecordId = id;
+//     const modal = new bootstrap.Modal(document.getElementById('archiveConfirmModal'));
+//     modal.show();
+// }
 
-function confirmArchive() {
-    fetch(`/patients/${archiveRecordId}/archive`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: 'admin' }) // pass user if needed
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-        location.reload(); // refresh to update list
-    })
-    .catch(err => console.error(err));
-}
+// function confirmArchive() {
+//     fetch(`/patients/${archiveRecordId}/archive`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ user: 'admin' }) // pass user if needed
+//     })
+//     .then(res => res.json())
+//     .then(data => {
+//         alert(data.message);
+//         location.reload(); // refresh to update list
+//     })
+//     .catch(err => console.error(err));
+// }
