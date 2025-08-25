@@ -64,59 +64,85 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    //forecast chart
-    function renderForecastChart() {
-    const forecastChartEl = document.getElementById('forecastChart');
-        if (!forecastChartEl || !window.chartData || !window.chartData.forecast_chart_data) return;
+    const branch = document.getElementById("selected_branch").value;
 
-        new Chart(forecastChartEl.getContext('2d'), {
-            type: 'line',
-            data: window.chartData.forecast_chart_data,
+    //forecast chart
+    fetch("/dashboard/patient_forecast")
+    .then(res => res.json())
+    .then(data => {
+        console.log("Patient forecast API response:", data);
+
+        const appointments = data.appointments;
+
+        if (!appointments || !appointments.history_dates || !appointments.history) {
+            throw new Error("Missing history data in patient_forecast response");
+        }
+
+        // Get last history point
+        const lastHistoryDate = appointments.history_dates.slice(-1);
+        const lastHistoryValue = appointments.history.slice(-1);
+
+        // Combine history + forecast
+        const labels = [...lastHistoryDate, ...appointments.dates];
+        const values = [...lastHistoryValue, ...appointments.forecast];
+
+        // Format labels: "This Month" for first, then month names
+        const allLabels = labels.map((dateStr, i) => {
+            const date = new Date(dateStr);
+            const monthName = date.toLocaleString("default", { month: "long" });
+            return i === 0 ? "This Month" : monthName;
+        });
+
+        // Base color & lighten function
+        const baseColor = "#FF6384"; // pinkish for appointments
+        function lightenColor(hex, factor) {
+            const num = parseInt(hex.slice(1), 16);
+            let r = (num >> 16) + factor;
+            let g = ((num >> 8) & 0x00FF) + factor;
+            let b = (num & 0x0000FF) + factor;
+            return `rgb(${Math.min(255, r)},${Math.min(255, g)},${Math.min(255, b)})`;
+        }
+
+        const bgColors = values.map((_, i) =>
+            i === 0 ? baseColor : lightenColor(baseColor, 70)
+        );
+
+        // Dataset
+        const datasets = [{
+            label: "Appointments Forecast",
+            data: values,
+            backgroundColor: bgColors,
+            borderRadius: 6
+        }];
+
+        // Destroy previous chart if exists
+        const ctx = document.getElementById("forecastChart").getContext("2d");
+        if (window.patientChart) window.patientChart.destroy();
+
+        // Create new chart
+        window.patientChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: allLabels,
+                datasets: datasets
+            },
             options: {
                 responsive: true,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
                 plugins: {
-                    legend: {
-                        position: 'top'
+                    title: {
+                        display: true,
+                        text: "Patient Appointments Forecast (This Month + Next 6 Months)"
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label}: ${context.raw.toLocaleString()}`;
-                            }
-                        }
-                    }
+                    legend: { display: false }
                 },
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return value.toLocaleString();
-                            }
-                        }
-                    }
+                    x: { stacked: true, title: { display: true, text: "Month" } },
+                    y: { stacked: true, beginAtZero: true, title: { display: true, text: "Appointments" } }
                 }
             }
         });
-    }
-    renderForecastChart();
+    })
+    .catch(err => console.error("Patient forecast fetch failed:", err));
 
-    //function for the forecast chart to display in the dashboard
-    // Get the canvas element's parent
-    const canvas = document.getElementById("forecastChart");
-
-    // Create an <img> element
-    const img = document.createElement("img");
-    img.src = "/static/appointments_forecast.png"; // Path to your PNG
-    img.style.width = "100%";
-    img.style.height = "480px";   
-    img.style.display = "block";
-
-    // Replace the canvas with the image
-    canvas.parentNode.replaceChild(img, canvas);
 
 });

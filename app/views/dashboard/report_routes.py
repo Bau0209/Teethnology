@@ -1,10 +1,9 @@
-from flask import render_template, request, g
+from flask import render_template, request, g, jsonify
 from datetime import datetime
-import subprocess, os, json
+import subprocess, json
 
 from app.views.dashboard import dashboard
-from app.models import Transactions, Procedures
-from app import db
+from app.models import Appointments, Transactions
 from ...utils.report_revenue_datas import (
     get_report_data as get_revenue_data, 
     generate_insights as generate_revenue_insights
@@ -22,24 +21,6 @@ from ...utils.report_inventory_data import (
     get_inventory_report_data as get_inventory_data,
 )
 
-@dashboard.route('/run_r_json', methods=['GET', 'POST'])
-def run_r_json():
-    data = request.get_json()  # e.g., {"numbers": [1,2,3,4,5]}
-    script_path = os.path.join(os.path.dirname(__file__), '../../scripts/script.R')
-    script_path = os.path.abspath(script_path)
-
-    # Send JSON to R's stdin
-    process = subprocess.Popen(
-        ['Rscript', script_path],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True
-    )
-    stdout, stderr = process.communicate(input=json.dumps(data))
-
-    return f"<pre>{stdout}</pre><pre>{stderr}</pre>"
-
 @dashboard.route('/reports')    
 def reports():
     today = datetime.now()
@@ -47,7 +28,6 @@ def reports():
     selected_year = request.args.get('report_revenue_selected_year', type=int) or today.year
     revenue_data = get_revenue_data(selected_year, current_month)
     revenue_insights = generate_revenue_insights(revenue_data)
-    patients_data = get_patients_data(selected_year, current_month)
 
     return render_template('/dashboard/reports.html',
                            labels=revenue_data['months'],
@@ -82,9 +62,7 @@ def report_patients():
                            current_month_returning_patient=patients_data['monthly_returning_patients'][current_month - 1],
                            current_month_appointment=patients_data['monthly_appointments'][current_month - 1],                        
                            insight_text=generate_patient_insights(patients_data))
-                           
-
-
+       
 @dashboard.route('/report_marketing')
 def report_marketing():
     selected_year = datetime.today().year
@@ -96,7 +74,6 @@ def report_marketing():
                             popular_service_by_age=report_data['popular_services_by_age_bracket'],
                             popular_service_by_gender=report_data['popular_services_by_gender'],
                             insight_text=generate_marketing_insights(report_data, current_month))
-
 
 @dashboard.route('/report_inventory') 
 def report_inventory():
@@ -111,3 +88,137 @@ def report_inventory():
         current_year=datetime.now().year,  
         selected_year=datetime.now().year
     )
+
+@dashboard.route('/service_trend_forecast')
+def service_trend_forecast():
+    # 1. Get query params from frontend
+    selected_branch = request.args.get("branch", type=str)
+
+    # 2. Build query with filters
+    query = Appointments.query.with_entities(
+        Appointments.appointment_date,
+        Appointments.appointment_category
+    )
+
+    if selected_branch:
+        query = query.filter(Appointments.branch == selected_branch)
+
+    appointments = query.all()
+
+    # 3. Convert to list of dicts
+    data = [
+        {"appointment_date": str(a.appointment_date), "appointment_category": a.appointment_category}
+        for a in appointments
+    ]
+
+    # 4. Convert Python list → JSON string
+    json_input = json.dumps(data)
+
+    # 5. Call R script
+    result = subprocess.run(
+        ["Rscript", "app/scripts/forecast_marketing.R"],
+        input=json_input,
+        text=True,
+        capture_output=True
+    )
+
+    # 6. Handle errors
+    if result.returncode != 0:
+        return jsonify({"error": result.stderr}), 500
+
+    # 7. Parse R output JSON
+    forecast_results = json.loads(result.stdout)
+
+    return jsonify(forecast_results)
+
+@dashboard.route('/revenue_forecast')
+def revenue_forecast():
+    # 1. Get query params from frontend
+    selected_branch = request.args.get("branch", type=str)
+
+    # 2. Build query with filters
+    query = Transactions.query.with_entities(
+        Transactions.transaction_datetime,
+        Transactions.total_amount_paid
+    )
+
+    if selected_branch:
+        query = query.filter(Transactions.branch == selected_branch)
+
+    transactions = query.all()
+
+    # 3. Convert to list of dicts
+    # 3. Convert to list of dicts (cast Decimal to float)
+    data = [
+        {
+            "transaction_datetime": str(t.transaction_datetime),
+            "total_amount_paid": float(t.total_amount_paid) if t.total_amount_paid is not None else 0.0
+        }
+        for t in transactions
+    ]
+
+    # 4. Convert Python list → JSON string
+    json_input = json.dumps(data)
+
+    # 5. Call R script
+    result = subprocess.run(
+        ["Rscript", "app/scripts/forecast_revenue.R"],
+        input=json_input,
+        text=True,
+        capture_output=True
+    )
+
+    # 6. Handle errors
+    if result.returncode != 0:
+        return jsonify({"error": result.stderr}), 500
+
+    # 7. Parse R output JSON
+    forecast_results = json.loads(result.stdout)
+
+    return jsonify(forecast_results)  
+               
+@dashboard.route('/patient_forecast')
+def patient_forecast():
+    # 1. Get query params from frontend
+    selected_branch = request.args.get("branch", type=str)
+
+    # 2. Build query with filters
+    query = Appointments.query.with_entities(
+        Appointments.appointment_date,
+        Appointments.appointment_id
+    )
+
+    if selected_branch:
+        query = query.filter(Appointments.branch == selected_branch)
+
+    appointments = query.all()
+
+    # 3. Convert to list of dicts
+    # 3. Convert to list of dicts (cast Decimal to float)
+    data = [
+        {
+            "appointment_date": str(a.appointment_date),
+            "appointment_id": float(a.appointment_id) 
+        }
+        for a in appointments
+    ]
+
+    # 4. Convert Python list → JSON string
+    json_input = json.dumps(data)
+
+    # 5. Call R script
+    result = subprocess.run(
+        ["Rscript", "app/scripts/forecast_patient.R"],
+        input=json_input,
+        text=True,
+        capture_output=True
+    )
+
+    # 6. Handle errors
+    if result.returncode != 0:
+        return jsonify({"error": result.stderr}), 500
+
+    # 7. Parse R output JSON
+    forecast_results = json.loads(result.stdout)
+
+    return jsonify(forecast_results)  

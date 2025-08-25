@@ -38,7 +38,7 @@
       <div class="branch-dropdown">
         {% if access_level == 'owner' %}
             <form method="get" action="{{ url_for('dashboard.reports') }}">
-                <select name="branch" class="form-select" onchange="this.form.submit()">
+                <select name="branch" id="selected_branch" class="form-select" onchange="this.form.submit()">
                     <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
                     {% for branch in branches %}
                         <option value="{{ branch.branch_id }}" {% if selected_branch == branch.branch_id|string %}selected{% endif %}>
@@ -183,8 +183,7 @@
   window.chartData = { 
     labels: {{ labels | tojson }},
     values: {{ values | tojson }},
-    stacked_datasets: {{ stacked_datasets | tojson }},
-    forecast_values: {{ forecast_values | tojson }}
+    stacked_datasets: {{ stacked_datasets | tojson }}
   };
 </script>
 
