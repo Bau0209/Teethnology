@@ -13,6 +13,7 @@ class Appointments(db.Model):
     appointment_time = db.Column(db.Time, nullable=False)
 
     appointment_type = db.Column(db.String(100), nullable=False)
+    appointment_category = db.Column(db.String(100))
     appointment_status = db.Column(db.Enum('pending', 'approved', 'cancelled'), nullable=False, default='pending')
 
     request_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

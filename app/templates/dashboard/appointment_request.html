@@ -58,7 +58,7 @@
                     <div><b>Patient Name:</b> {{ request.patient.patient_full_name }}</div>
                     <div><b>Patient Type:</b> {{ 'Returning Patient' if request.returning_patient else 'New Patient' }}</div>
                     <div><b>Date of Birth:</b> {{ request.patient.birthdate.strftime('%B %d, %Y') }}</div>
-                    <div><b>Gender:</b> {{ request.patient.gender }}</div>
+                    <div><b>Gender:</b> {{ request.patient.sex }}</div>
                     <div><b>Contact:</b> {{ request.patient.contact_number }}</div>
                     <div><b>Email:</b> {{ request.patient.email }}</div>
                     <div><b>Address:</b>

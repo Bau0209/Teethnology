@@ -113,4 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // // Replace the canvas with the image
     // canvas.parentNode.replaceChild(img, canvas);
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> fd85c03656ce3761d02fdc997efd3bd41200f873
