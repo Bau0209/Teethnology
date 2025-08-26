@@ -184,11 +184,11 @@ def generate_marketing_insights(data, current_month):
     current_appts = get_appointments_count(current_month)
 
     if current_appts < avg_appts * 0.9:
-        current_msg = f"Appointments this month: {current_appts}, below average ({avg_appts:.0f})."
+        current_msg = f"Current appointment volume is underperforming against historical trends."
     elif current_appts > avg_appts * 1.1:
-        current_msg = f"Appointments this month: {current_appts}, above average ({avg_appts:.0f})."
+        current_msg = f"Current appointment volume is exceeding historical performance benchmarks."
     else:
-        current_msg = f"Appointments this month: {current_appts}, around average ({avg_appts:.0f})."
+        current_msg = f"Current appointment volume is consistent with historical performance."
     insights.append(f"<strong>Appointments:</strong><br>{current_msg}")
 
     # --- Forecast using 3-month moving average ---
@@ -196,11 +196,11 @@ def generate_marketing_insights(data, current_month):
     forecast_next = round(sum(past_months) / max(1, len(past_months)), 2)
 
     if forecast_next < avg_appts * 0.9:
-        forecast_msg = f"Next month forecast: ~{forecast_next}, below average ({avg_appts:.0f})."
+        forecast_msg = f"Marketing forecasts indicate a potential decline in future patient demand."
     elif forecast_next > avg_appts * 1.1:
-        forecast_msg = f"Next month forecast: ~{forecast_next}, above average ({avg_appts:.0f})."
+        forecast_msg = f"Marketing forecasts project strong growth in upcoming patient demand."
     else:
-        forecast_msg = f"Next month forecast: ~{forecast_next}, around average ({avg_appts:.0f})."
+        forecast_msg = f"Marketing forecasts suggest stable patient demand in the coming month."
     insights.append(f"<strong>Forecast:</strong><br>{forecast_msg}")
 
     # --- Recommendation + Feedback (Decision Tree) ---
@@ -208,33 +208,27 @@ def generate_marketing_insights(data, current_month):
 
     if current_appts < avg_appts * 0.9 and forecast_next < avg_appts * 0.9:
         reco_msg.append(
-            "Boost marketing campaigns immediately (ads, promos, partnerships).<br>"
-            "Both current and projected demand are weak. Without intervention, patient volume may decline further."
+            "Boost marketing campaigns immediately (ads, promos, partnerships)."
         )
     elif current_appts < avg_appts * 0.9 and forecast_next > avg_appts * 1.1:
         reco_msg.append(
-            "Prepare to capture upcoming demand surge by scaling campaigns and resources.<br>"
-            "Current appointments are lagging, but forecast signals recovery. Early preparation ensures you don’t miss growth opportunities."
+            "Prepare to capture upcoming demand surge by scaling campaigns and resources."
         )
     elif current_appts > avg_appts * 1.1 and forecast_next < avg_appts * 0.9:
         reco_msg.append(
-            "Focus on retention and loyalty programs to balance the expected slowdown.<br>"
-            "Current demand is strong, but forecast points to a decline. Retaining today’s patients can soften the impact of weaker future demand."
+            "Focus on retention and loyalty programs to balance the expected slowdown."
         )
     elif current_appts > avg_appts * 1.1 and forecast_next > avg_appts * 1.1:
         reco_msg.append(
-            "Maintain momentum and consider scaling staff/resources to support growth.<br>"
-            "Both present and future demand are above trend. This is a good window to expand market reach."
+            "Maintain momentum and consider scaling staff/resources to support growth."
         )
     else:
         reco_msg.append(
-            "Maintain current marketing strategies, but monitor trends closely.<br>"
-            "Performance is stable. No urgent risk detected, but agility is key if demand shifts suddenly."
+            "Maintain current marketing strategies, but monitor trends closely."
         )
 
     insights.append("<br>".join(reco_msg))
 
     return "<br><br>".join(insights)
-
 
 
