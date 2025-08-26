@@ -175,41 +175,55 @@ def get_report_data(selected_year, current_month):
 def generate_marketing_insights(data, current_month):
     insights = []
 
-    # --- Insight 1: Current Month Appointments ---
+    # --- Historical averages ---
+    monthly_counts = [get_appointments_count(m) for m in range(1, 13)]
+    valid_counts = [v for v in monthly_counts if v > 0]
+    avg_appts = sum(valid_counts) / max(1, len(valid_counts))
+
+    # --- Current appointments ---
     current_appts = get_appointments_count(current_month)
-    appt_msg = ["<strong>Appointments:</strong>"]
-    if current_appts < 20:
-        appt_msg.append(f"Only {current_appts} appointments recorded this month. Marketing push may be needed.")
-    elif current_appts < 50:
-        appt_msg.append(f"{current_appts} appointments so far. Stable performance, but could improve with promotions.")
+
+    if current_appts < avg_appts * 0.9:
+        current_msg = f"Appointments this month: {current_appts}, below average ({avg_appts:.0f})."
+    elif current_appts > avg_appts * 1.1:
+        current_msg = f"Appointments this month: {current_appts}, above average ({avg_appts:.0f})."
     else:
-        appt_msg.append(f"Great! {current_appts} appointments this month, showing strong demand.")
-    insights.append("<br>".join(appt_msg))
+        current_msg = f"Appointments this month: {current_appts}, around average ({avg_appts:.0f})."
+    insights.append(f"<strong>Appointments:</strong><br>{current_msg}")
 
-    # --- Insight 2: Forecast (Next Month) ---
-    # Use moving average of appointments (past 3 months) as a simple forecast
-    past_months = []
-    for m in range(max(1, current_month - 3), current_month + 1):
-        past_months.append(get_appointments_count(m))
-    forecast_next = round(sum(past_months) / len(past_months), 2) if past_months else 0
+    # --- Forecast using 3-month moving average ---
+    past_months = [get_appointments_count(m) for m in range(max(1, current_month - 2), current_month + 1)]
+    forecast_next = round(sum(past_months) / max(1, len(past_months)), 2)
 
-    forecast_msg = ["<strong>Forecast:</strong>"]
-    if forecast_next < 20:
-        forecast_msg.append(f"Next month is projected to have only ~{forecast_next} appointments.")
-    elif forecast_next < 50:
-        forecast_msg.append(f"Next month may see around {forecast_next} appointments.")
+    if forecast_next < avg_appts * 0.9:
+        forecast_msg = f"Next month forecast: ~{forecast_next}, below average ({avg_appts:.0f})."
+    elif forecast_next > avg_appts * 1.1:
+        forecast_msg = f"Next month forecast: ~{forecast_next}, above average ({avg_appts:.0f})."
     else:
-        forecast_msg.append(f"Next month is projected strong at ~{forecast_next} appointments.")
-    insights.append("<br>".join(forecast_msg))
+        forecast_msg = f"Next month forecast: ~{forecast_next}, around average ({avg_appts:.0f})."
+    insights.append(f"<strong>Forecast:</strong><br>{forecast_msg}")
 
-    # --- Insight 3: Recommendation ---
+    # --- Decision Tree for Recommendations ---
     reco_msg = ["<strong>Recommendation:</strong>"]
-    if current_appts < 20 and forecast_next < 20:
+
+    if current_appts < avg_appts * 0.9 and forecast_next < avg_appts * 0.9:
         reco_msg.append("Boost marketing campaigns immediately (ads, promos, partnerships).")
-    elif current_appts < 50 and forecast_next < 50:
-        reco_msg.append("Sustain engagement with targeted promos to push appointments higher.")
+        reco_msg.append("Feedback: Both current and projected demand are weak. Without intervention, patient volume may decline further.")
+    elif current_appts < avg_appts * 0.9 and forecast_next > avg_appts * 1.1:
+        reco_msg.append("Prepare to capture upcoming demand surge by scaling campaigns and resources.")
+        reco_msg.append("Feedback: Current appointments are lagging, but forecast signals recovery. Early preparation ensures you don’t miss growth opportunities.")
+    elif current_appts > avg_appts * 1.1 and forecast_next < avg_appts * 0.9:
+        reco_msg.append("Focus on retention and loyalty programs to balance the expected slowdown.")
+        reco_msg.append("Feedback: Current demand is strong, but forecast points to a decline. Retaining today’s patients can soften the impact of weaker future demand.")
+    elif current_appts > avg_appts * 1.1 and forecast_next > avg_appts * 1.1:
+        reco_msg.append("Maintain momentum and consider scaling staff/resources to support growth.")
+        reco_msg.append("Feedback: Both present and future demand are above trend. This is a good window to expand market reach.")
     else:
         reco_msg.append("Maintain current marketing strategies, but monitor trends closely.")
+        reco_msg.append("Feedback: Performance is stable. No urgent risk detected, but agility is key if demand shifts suddenly.")
+
     insights.append("<br>".join(reco_msg))
 
     return "<br><br>".join(insights)
+
+
