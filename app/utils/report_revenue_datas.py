@@ -14,18 +14,35 @@ def get_today_revenue():
         .filter(func.date(Transactions.transaction_datetime) == today)\
         .scalar() or 0
     
-def get_monthly_revenue(year):
-    data = db.session.query(
+def get_monthly_revenue(year, branch):
+    # Start query with joins
+    query = db.session.query(
         extract('month', Transactions.transaction_datetime).label('month'),
         func.sum(Transactions.total_amount_paid).label('total')
+    ).join(
+        Procedures, Transactions.procedure_id == Procedures.procedure_id
+    ).join(
+        Appointments, Procedures.appointment_id == Appointments.appointment_id
     ).filter(
         extract('year', Transactions.transaction_datetime) == year
-    ).group_by('month').order_by('month').all()
-    
+    )
+
+    # Filter by branch_id if not "all"
+    if branch and branch.isdigit():
+        query = query.filter(Appointments.branch_id == int(branch))
+    else:
+        # Either skip filtering or handle default
+        # e.g., show all branches if none selected
+        pass
+
+    # Group and order
+    data = query.group_by('month').order_by('month').all()
+
+    # Prepare 12-month values
     values = [0] * 12
     for month, total in data:
         values[int(month) - 1] = float(total)
-    
+
     return values
 
 def moving_average_forecast(values, window):
@@ -44,7 +61,7 @@ def moving_average_forecast(values, window):
         forecast.append(round(forecast_value, 2))
     return forecast
 
-def get_service_month_data(year):
+def get_service_month_data(year, branch):
     return db.session.query(
         extract('month', Transactions.transaction_datetime).label('month'),
         Appointments.appointment_category,
@@ -78,17 +95,18 @@ def prepare_chart_datasets(service_month_data):
         })
     return stacked_datasets
 
-def get_report_data(selected_year, current_month):
-    monthly_revenue = get_monthly_revenue(selected_year)
+def get_report_data(selected_year, selected_branch):    
+    current_month = datetime.now().month
+    monthly_revenue = get_monthly_revenue(selected_year, selected_branch)
     today_revenue = get_today_revenue()
-    service_month_data = get_service_month_data(selected_year)
+    service_month_data = get_service_month_data(selected_year, selected_branch)
     stacked_datasets = prepare_chart_datasets(service_month_data)
 
     return {
         'months': months,
         'monthly_revenue': monthly_revenue,
         'today_revenue': today_revenue,
-        'current_month_revenue': get_monthly_revenue(date.today().year)[current_month - 1],
+        'current_month_revenue': get_monthly_revenue(date.today().year, selected_branch)[current_month - 1],
         'service_month_data': service_month_data,
         'stacked_datasets': stacked_datasets,
         'forecast_values': moving_average_forecast(monthly_revenue, window=5)
