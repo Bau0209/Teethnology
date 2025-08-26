@@ -236,73 +236,85 @@ def generate_patient_insights(data):
     valid_forecast = [v for v in forecast_vals if v > 0]
     avg_forecast = sum(valid_forecast) / max(1, len(valid_forecast))
 
-    # --- Current appointments ---
+    # --- Current Appointments ---
     current_appointments = monthly_appts[current_month - 1]
     if current_appointments < avg_appts * 0.9:
-        msg_current = (
-            f"Appointments this month: {current_appointments}, below avg {avg_appts:.0f}.<br>"
-            f"Recommendation: Increase visibility through marketing campaigns and reactivation of past patients.<br>"
-            f"Feedback: Current patient volume is under historical norms, suggesting reduced demand or competition impact."
-        )
+        current_msg = f"Appointments this month: {current_appointments}, below the average {avg_appts:.0f}."
     elif current_appointments > avg_appts * 1.1:
-        msg_current = (
-            f"Appointments this month: {current_appointments}, above avg {avg_appts:.0f}.<br>"
-            f"Recommendation: Review staffing and scheduling to handle demand without reducing service quality.<br>"
-            f"Feedback: High turnout reflects effective engagement—sustaining service quality is key to retention."
-        )
+        current_msg = f"Appointments this month: {current_appointments}, above the average {avg_appts:.0f}."
     else:
-        msg_current = (
-            f"Appointments this month: {current_appointments}, around avg {avg_appts:.0f}.<br>"
-            f"Recommendation: Maintain consistent outreach while testing small-scale campaigns.<br>"
-            f"Feedback: Patient flow is stable, but small improvements could raise efficiency."
-        )
-    insights.append(f"<strong>Appointments (Current Month):</strong><br>{msg_current}")
+        current_msg = f"Appointments this month: {current_appointments}, around the average {avg_appts:.0f}."
+    insights.append(f"<strong>Appointments (Current Month):</strong><br>{current_msg}")
 
-    # --- Forecast appointments (next month) ---
+    # --- Forecast Appointments (Next Month) ---
     forecast_next = forecast_vals[current_month - 1]
     if forecast_next < avg_forecast * 0.9:
-        msg_forecast = (
-            f"Forecast next month: ~{forecast_next:.0f}, below avg {avg_forecast:.0f}.<br>"
-            f"Recommendation: Launch engagement efforts (e.g., follow-ups, seasonal promos) to stabilize demand.<br>"
-            f"Feedback: Projections show a decline. Without proactive steps, patient visits may fall further."
-        )
+        forecast_msg = f"Forecast next month: ~{forecast_next:.0f}, below the average {avg_forecast:.0f}."
     elif forecast_next > avg_forecast * 1.1:
-        msg_forecast = (
-            f"Forecast next month: ~{forecast_next:.0f}, above avg {avg_forecast:.0f}.<br>"
-            f"Recommendation: Prepare resources early (staff, inventory, scheduling capacity).<br>"
-            f"Feedback: Growth trend suggests positive momentum—well-prepared clinics can capture this effectively."
-        )
+        forecast_msg = f"Forecast next month: ~{forecast_next:.0f}, above the average {avg_forecast:.0f}."
     else:
-        msg_forecast = (
-            f"Forecast next month: ~{forecast_next:.0f}, around avg {avg_forecast:.0f}.<br>"
-            f"Recommendation: Stay consistent, monitor demand signals, and adjust if patient flow shifts.<br>"
-            f"Feedback: Forecast aligns with typical demand, good for planning stable operations."
-        )
-    insights.append(f"<strong>Appointments (Forecast):</strong><br>{msg_forecast}")
+        forecast_msg = f"Forecast next month: ~{forecast_next:.0f}, around the average {avg_forecast:.0f}."
+    insights.append(f"<strong>Appointments (Forecast):</strong><br>{forecast_msg}")
 
-    # --- New vs Returning patients ---
+    # --- New vs Returning Patients ---
     new_patients = data['monthly_new_patients'][current_month - 1]
     returning_patients = data['monthly_returning_patients'][current_month - 1]
 
     if new_patients > returning_patients:
-        msg_patients = (
-            f"New: {new_patients}, Returning: {returning_patients}.<br>"
-            f"Recommendation: Prioritize follow-ups and retention programs to convert new patients into repeat visits.<br>"
-            f"Feedback: Strong acquisition signals effective outreach, but retention is needed for sustainable growth."
-        )
+        patient_mix_msg = f"New: {new_patients}, Returning: {returning_patients} (more new patients this month)."
     elif returning_patients > new_patients:
-        msg_patients = (
-            f"Returning: {returning_patients}, New: {new_patients}.<br>"
-            f"Recommendation: Invest in referral programs and awareness campaigns to balance inflow of new patients.<br>"
-            f"Feedback: High loyalty shows trust in services, but growth may plateau without fresh patient acquisition."
+        patient_mix_msg = f"Returning: {returning_patients}, New: {new_patients} (more loyal patients this month)."
+    else:
+        patient_mix_msg = f"New: {new_patients}, Returning: {returning_patients} (balanced mix)."
+    insights.append(f"<strong>New vs Returning:</strong><br>{patient_mix_msg}")
+
+    # --- Recommendation & Feedback ---
+    reco_msg = ["<strong>Recommendation:</strong>"]
+
+    # Based on Current + Forecast Appointments
+    if current_appointments < avg_appts and forecast_next < avg_forecast:
+        reco_msg.append(
+            "Increase visibility through marketing campaigns and reactivation of past patients.<br>"
+            "Both current and projected appointments are below average, signaling weaker demand. "
+            "Proactive outreach is needed to stabilize patient flow."
+        )
+    elif current_appointments < avg_appts and forecast_next >= avg_forecast:
+        reco_msg.append(
+            "Boost awareness campaigns to capture the expected upswing next month.<br>"
+            "This month’s patient count is below average, but forecasts suggest recovery. "
+            "This indicates a short-term dip, so preparation now helps capitalize on growth."
+        )
+    elif current_appointments >= avg_appts and forecast_next < avg_forecast:
+        reco_msg.append(
+            "Secure patient loyalty and follow-ups to offset a potential dip.<br>"
+            "Current patient volume is strong, but forecasts show decline ahead. "
+            "Retention efforts (reminders, loyalty programs) are key to maintaining momentum."
         )
     else:
-        msg_patients = (
-            f"New: {new_patients}, Returning: {returning_patients}.<br>"
-            f"Recommendation: Balance acquisition campaigns with loyalty initiatives to strengthen both ends.<br>"
-            f"Feedback: Equal split shows stability—good foundation, but long-term growth depends on scaling new inflows."
+        reco_msg.append(
+            "Maintain consistent outreach and patient engagement programs.<br>"
+            "Both current and forecasted appointments are healthy, signaling steady growth. "
+            "This is a good time to optimize scheduling and invest in scaling outreach."
         )
-    insights.append(f"<strong>New vs Returning:</strong><br>{msg_patients}")
+
+    # Based on New vs Returning Patients
+    if new_patients > returning_patients:
+        reco_msg.append(
+            "<br>Additionally: Focus on converting new patients into repeat visits.<br>"
+            "Acquisition efforts are effective, but retention is crucial for sustainable growth."
+        )
+    elif returning_patients > new_patients:
+        reco_msg.append(
+            "<br>Additionally: Strengthen new patient acquisition campaigns.<br>"
+            "Loyalty is high, but growth may plateau without fresh inflows."
+        )
+    else:
+        reco_msg.append(
+            "<br>Additionally: Balance acquisition and retention efforts.<br>"
+            "Equal split shows stability, but long-term growth depends on scaling new inflows."
+        )
+
+    insights.append("<br>".join(reco_msg))
 
     return "<br><br>".join(insights)
 

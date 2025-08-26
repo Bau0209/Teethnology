@@ -203,27 +203,38 @@ def generate_marketing_insights(data, current_month):
         forecast_msg = f"Next month forecast: ~{forecast_next}, around average ({avg_appts:.0f})."
     insights.append(f"<strong>Forecast:</strong><br>{forecast_msg}")
 
-    # --- Decision Tree for Recommendations ---
+    # --- Recommendation + Feedback (Decision Tree) ---
     reco_msg = ["<strong>Recommendation:</strong>"]
 
     if current_appts < avg_appts * 0.9 and forecast_next < avg_appts * 0.9:
-        reco_msg.append("Boost marketing campaigns immediately (ads, promos, partnerships).")
-        reco_msg.append("Feedback: Both current and projected demand are weak. Without intervention, patient volume may decline further.")
+        reco_msg.append(
+            "Boost marketing campaigns immediately (ads, promos, partnerships).<br>"
+            "Both current and projected demand are weak. Without intervention, patient volume may decline further."
+        )
     elif current_appts < avg_appts * 0.9 and forecast_next > avg_appts * 1.1:
-        reco_msg.append("Prepare to capture upcoming demand surge by scaling campaigns and resources.")
-        reco_msg.append("Feedback: Current appointments are lagging, but forecast signals recovery. Early preparation ensures you don’t miss growth opportunities.")
+        reco_msg.append(
+            "Prepare to capture upcoming demand surge by scaling campaigns and resources.<br>"
+            "Current appointments are lagging, but forecast signals recovery. Early preparation ensures you don’t miss growth opportunities."
+        )
     elif current_appts > avg_appts * 1.1 and forecast_next < avg_appts * 0.9:
-        reco_msg.append("Focus on retention and loyalty programs to balance the expected slowdown.")
-        reco_msg.append("Feedback: Current demand is strong, but forecast points to a decline. Retaining today’s patients can soften the impact of weaker future demand.")
+        reco_msg.append(
+            "Focus on retention and loyalty programs to balance the expected slowdown.<br>"
+            "Current demand is strong, but forecast points to a decline. Retaining today’s patients can soften the impact of weaker future demand."
+        )
     elif current_appts > avg_appts * 1.1 and forecast_next > avg_appts * 1.1:
-        reco_msg.append("Maintain momentum and consider scaling staff/resources to support growth.")
-        reco_msg.append("Feedback: Both present and future demand are above trend. This is a good window to expand market reach.")
+        reco_msg.append(
+            "Maintain momentum and consider scaling staff/resources to support growth.<br>"
+            "Both present and future demand are above trend. This is a good window to expand market reach."
+        )
     else:
-        reco_msg.append("Maintain current marketing strategies, but monitor trends closely.")
-        reco_msg.append("Feedback: Performance is stable. No urgent risk detected, but agility is key if demand shifts suddenly.")
+        reco_msg.append(
+            "Maintain current marketing strategies, but monitor trends closely.<br>"
+            "Performance is stable. No urgent risk detected, but agility is key if demand shifts suddenly."
+        )
 
     insights.append("<br>".join(reco_msg))
 
     return "<br><br>".join(insights)
+
 
 

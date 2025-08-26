@@ -131,25 +131,25 @@ def generate_insights(data):
     if revenue < avg_revenue and forecast_next < avg_forecast:
         reco_msg.append(
             "Increase visibility through targeted promotions and seasonal offers.<br>"
-            "Feedback: Both current and forecasted revenues are trailing historical averages. "
+            "Both current and forecasted revenues are trailing historical averages. "
             "This signals a consistent demand slowdown. Proactive action is needed to prevent revenue gaps."
         )
     elif revenue < avg_revenue and forecast_next >= avg_forecast:
         reco_msg.append(
             "Strengthen campaigns to capture the expected upswing next month.<br>"
-            "Feedback: Despite underperformance this month, forecasts suggest demand recovery. "
+            "Despite underperformance this month, forecasts suggest demand recovery. "
             "This indicates short-term weakness but improving momentum — preparation now ensures you capitalize on it."
         )
     elif revenue >= avg_revenue and forecast_next < avg_forecast:
         reco_msg.append(
             "Secure repeat business and protect against a potential dip.<br>"
-            "Feedback: Current revenue is strong but the forecast signals declining momentum. "
+            "Current revenue is strong but the forecast signals declining momentum. "
             "Retention strategies (loyalty programs, personalized offers) will help sustain stability."
         )
     else:
         reco_msg.append(
             "Maintain current strategy while optimizing operations for efficiency.<br>"
-            "Feedback: Both current and forecasted revenues are solid, showing steady growth. "
+            "Both current and forecasted revenues are solid, showing steady growth. "
             "This is an ideal time to reinvest in high-performing services and scale what works."
         )
     insights.append("<br>".join(reco_msg))
