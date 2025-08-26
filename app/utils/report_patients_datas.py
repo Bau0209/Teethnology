@@ -35,46 +35,65 @@ def get_monthly_new_or_returning_patients(selected_year, is_returning):
 
     return values
 
-def get_monthly_new_and_returning_data(selected_year):
+def get_monthly_new_and_returning_data(selected_year, selected_branch):
     """
     Returns combined monthly appointment counts for both new and returning patients.
     Output format: List of tuples → [(month, returning_flag, count), ...]
     Example: [(1, 0, 12), (1, 1, 18), (2, 0, 10), ...]
     Useful for grouped or stacked charts comparing new vs returning patients side-by-side.
-    Optimized for preparing multi-series datasets.
     """
-    new_data = db.session.query(
+
+    # Base query for new patients
+    new_query = db.session.query(
         extract('month', Appointments.appointment_date).label('month'),
         Appointments.returning_patient,
         func.count(Appointments.appointment_id).label('count')
     ).filter(
         extract('year', Appointments.appointment_date) == selected_year,
         Appointments.returning_patient == 0
-    ).group_by('month', Appointments.returning_patient).all()
+    )
 
-    returning_data = db.session.query(
+    # Base query for returning patients
+    returning_query = db.session.query(
         extract('month', Appointments.appointment_date).label('month'),
         Appointments.returning_patient,
         func.count(Appointments.appointment_id).label('count')
     ).filter(
         extract('year', Appointments.appointment_date) == selected_year,
         Appointments.returning_patient == 1
-    ).group_by('month', Appointments.returning_patient).all()
+    )
 
+    # Apply branch filter if not "all"
+    if selected_branch != 'all':
+        branch_id = int(selected_branch)
+        new_query = new_query.filter(Appointments.branch_id == branch_id)
+        returning_query = returning_query.filter(Appointments.branch_id == branch_id)
+
+    # Execute queries
+    new_data = new_query.group_by('month', Appointments.returning_patient).all()
+    returning_data = returning_query.group_by('month', Appointments.returning_patient).all()
+
+    # Combine results
     combined = []
     for row in new_data + returning_data:
         combined.append((int(row.month), int(row.returning_patient), int(row.count)))
-    
+
     return combined
 
-def get_monthly_appointment_count(selected_year):
-    data = db.session.query(
+def get_monthly_appointment_count(selected_year, selected_branch):
+    query = db.session.query(
         extract('month', Appointments.appointment_date).label('month'),
         func.count(Appointments.patient_id).label('total')
     ).filter(
         extract('year', Appointments.appointment_date) == selected_year
-    ).group_by('month').order_by('month').all()
-    
+    )
+
+    # Filter by branch_id if not "all"
+    if selected_branch != 'all':
+        query = query.filter(Appointments.branch_id == int(selected_branch))
+
+    data = query.group_by('month').order_by('month').all()
+
     values = [0] * 12
     for month, total in data:
         values[int(month) - 1] = int(total)
@@ -124,32 +143,42 @@ def get_services():
     appointment_types = db.session.query(Appointments.appointment_type).distinct().all()
     return [atype[0] for atype in appointment_types if atype[0]]
 
-
-def get_new_vs_returning_by_age_bracket():
-    """Count new vs returning patients grouped by age brackets."""
+def get_new_vs_returning_by_age_bracket(selected_year, selected_branch):
+    """Count new vs returning patients grouped by age brackets for a specific year."""
     brackets = {
         '0-17': (0, 17),
-        '18-30': (19, 30),
+        '18-30': (18, 30),
         '31-59': (31, 59),
         '60+': (60, 150)
     }
 
     results = {bracket: {'New Patients': 0, 'Returning Patients': 0} for bracket in brackets}
 
-    appointments = db.session.query(Appointments, PatientsInfo).join(
+    # Base query: Appointments + PatientsInfo
+    query = db.session.query(Appointments, PatientsInfo).join(
         PatientsInfo, Appointments.patient_id == PatientsInfo.patient_id
-    ).all()
+    ).filter(
+        extract('year', Appointments.appointment_date) == selected_year
+    )
 
+    # Apply branch filter if not "all"
+    if selected_branch != 'all':
+        query = query.filter(Appointments.branch_id == int(selected_branch))
+
+    appointments = query.all()
     today = datetime.today()
 
+    # Process results
     for appointment, patient in appointments:
         if not patient.birthdate:
             continue
 
+        # Calculate age
         age = today.year - patient.birthdate.year - (
             (today.month, today.day) < (patient.birthdate.month, patient.birthdate.day)
         )
 
+        # Assign to age bracket
         for bracket, (min_age, max_age) in brackets.items():
             if min_age <= age <= max_age:
                 label = 'Returning Patients' if appointment.returning_patient else 'New Patients'
@@ -202,10 +231,10 @@ def prepare_forecast_datasets(actual_values, forecast_values):
         ]
     }
 
-def get_report_data(selected_year, current_month):
+def get_report_data(selected_year, selected_branch):
     services = get_services()
-    monthly_appointment = get_monthly_appointment_count(selected_year)
-    patient_month_data = get_monthly_new_and_returning_data(selected_year)
+    monthly_appointment = get_monthly_appointment_count(selected_year, selected_branch)
+    patient_month_data = get_monthly_new_and_returning_data(selected_year, selected_branch)
     new_returning_datasets = prepare_new_vs_returning_datasets(patient_month_data)
     forecast_values = moving_average_forecast(monthly_appointment, window=5)
 
@@ -219,7 +248,7 @@ def get_report_data(selected_year, current_month):
         'forecast_values': forecast_values,
         'forecast_chart_data': prepare_forecast_datasets(monthly_appointment, forecast_values),
         'new_vs_returning_by_age': process_new_vs_returning_by_age(
-            get_new_vs_returning_by_age_bracket()
+            get_new_vs_returning_by_age_bracket(selected_year, selected_branch)
         )
     }
 
