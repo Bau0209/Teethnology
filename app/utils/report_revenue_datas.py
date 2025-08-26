@@ -98,41 +98,62 @@ def generate_insights(data):
     current_month = datetime.now().month
     insights = []
 
-    # --- Insight 1: Current Revenue ---
+    # Calculate averages
+    avg_revenue = sum(data['monthly_revenue']) / max(1, len([v for v in data['monthly_revenue'] if v > 0]))
+    avg_forecast = sum(data['forecast_values']) / max(1, len([v for v in data['forecast_values'] if v > 0]))
+
+    # Current Revenue
     revenue = data['current_month_revenue']
-    revenue_msg = ["<strong>Current Month Revenue:</strong>"]
-    if revenue < 10000:
-        revenue_msg.append(f"Revenue is low at ₱{revenue:,.2f}.")
-    elif revenue < 20000:
-        revenue_msg.append(f"Revenue is fair at ₱{revenue:,.2f}.")
+    if revenue < avg_revenue * 0.9:
+        revenue_msg = f"Current revenue ₱{revenue:,.2f} is below the average ₱{avg_revenue:,.2f}."
+    elif revenue > avg_revenue * 1.1:
+        revenue_msg = f"Current revenue ₱{revenue:,.2f} is above the average ₱{avg_revenue:,.2f}."
     else:
-        revenue_msg.append(f"Revenue is strong at ₱{revenue:,.2f}. Keep it up!")
-    insights.append("<br>".join(revenue_msg))
+        revenue_msg = f"Current revenue ₱{revenue:,.2f} is around the average ₱{avg_revenue:,.2f}."
+    insights.append(f"<strong>Current Month Revenue:</strong><br>{revenue_msg}")
 
-    # --- Insight 2: Forecast Revenue (Next Month) ---
-    forecast_values = data['forecast_values']
-    if current_month < len(forecast_values):
-        forecast_next = forecast_values[current_month]  # forecast for next month
+    # Forecast (Next Month)
+    if current_month < len(data['forecast_values']):
+        forecast_next = data['forecast_values'][current_month]
     else:
-        forecast_next = forecast_values[-1]  # fallback
-    
-    forecast_msg = ["<strong>Forecast (Next Month):</strong>"]
-    if forecast_next < 10000:
-        forecast_msg.append(f"Projected revenue may drop to ₱{forecast_next:,.2f}.")
-    elif forecast_next < 20000:
-        forecast_msg.append(f"Projected revenue is expected to be around ₱{forecast_next:,.2f}.")
-    else:
-        forecast_msg.append(f"Projected revenue may remain strong at ₱{forecast_next:,.2f}.")
-    insights.append("<br>".join(forecast_msg))
+        forecast_next = data['forecast_values'][-1]
 
-    # --- Insight 3: Recommendations ---
+    if forecast_next < avg_forecast * 0.9:
+        forecast_msg = f"Next month forecast ₱{forecast_next:,.2f} is below the average ₱{avg_forecast:,.2f}."
+    elif forecast_next > avg_forecast * 1.1:
+        forecast_msg = f"Next month forecast ₱{forecast_next:,.2f} is above the average ₱{avg_forecast:,.2f}."
+    else:
+        forecast_msg = f"Next month forecast ₱{forecast_next:,.2f} is around the average ₱{avg_forecast:,.2f}."
+    insights.append(f"<strong>Forecast (Next Month):</strong><br>{forecast_msg}")
+
+    # Recommendation with credible feedback
     reco_msg = ["<strong>Recommendation:</strong>"]
-    if revenue < 10000 and forecast_next < 10000:
-        reco_msg.append("Double down on promotions and discounts to boost sales.")
-    elif revenue < 20000 and forecast_next < 20000:
-        reco_msg.append("Sustain efforts on best-selling services and explore new offers.")
+    if revenue < avg_revenue and forecast_next < avg_forecast:
+        reco_msg.append(
+            "Increase visibility through targeted promotions and seasonal offers.<br>"
+            "Feedback: Both current and forecasted revenues are trailing historical averages. "
+            "This signals a consistent demand slowdown. Proactive action is needed to prevent revenue gaps."
+        )
+    elif revenue < avg_revenue and forecast_next >= avg_forecast:
+        reco_msg.append(
+            "Strengthen campaigns to capture the expected upswing next month.<br>"
+            "Feedback: Despite underperformance this month, forecasts suggest demand recovery. "
+            "This indicates short-term weakness but improving momentum — preparation now ensures you capitalize on it."
+        )
+    elif revenue >= avg_revenue and forecast_next < avg_forecast:
+        reco_msg.append(
+            "Secure repeat business and protect against a potential dip.<br>"
+            "Feedback: Current revenue is strong but the forecast signals declining momentum. "
+            "Retention strategies (loyalty programs, personalized offers) will help sustain stability."
+        )
     else:
-        reco_msg.append("Maintain current strategies, but watch for seasonal demand shifts.")
+        reco_msg.append(
+            "Maintain current strategy while optimizing operations for efficiency.<br>"
+            "Feedback: Both current and forecasted revenues are solid, showing steady growth. "
+            "This is an ideal time to reinvest in high-performing services and scale what works."
+        )
     insights.append("<br>".join(reco_msg))
 
     return "<br><br>".join(insights)
+
+
