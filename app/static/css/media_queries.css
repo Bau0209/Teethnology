@@ -7,8 +7,8 @@
     /*main website query*/
     /*welcome query*/
     .ai-character-container {
-        max-width: 750px; /* scale image slightly */
-        top: 12vh; 
+        max-width: 700px; /* scale image slightly */
+        top: 20vh; 
         margin-right: 1.5%;
     }
 
@@ -59,7 +59,7 @@
     }
     .ai-character-container {
         max-width: 600px; /* scale down character image */
-        top: 20vw;
+        top: 25vh;
         margin: 0 auto 20px;
     }
     .chat-container {
@@ -174,7 +174,7 @@
     }
     .ai-character-container {
         max-width: 600px; /* scale down character image */
-        top: 20vw;
+        top: 25vh;
         margin: 0 auto 20px;
     }
 
@@ -232,11 +232,11 @@
     }
 }
 
-/*SM - Tablet: 1240 - 1024px*/
+/*SM - Tablet: 1240 - 1120px*/
 /*breakpoints for small desktops and tablets*/
-@media (max-width: 1024px) {
+@media (max-width: 1120px) {
     .html{
-        font-size: 5px; 
+        font-size: 6px; 
     } 
     /*main website query*/
     /*welcome query*/
@@ -247,8 +247,8 @@
         padding: 40px 3% 0.40px;
     }
     .ai-character-container {
-        max-width: 500px; /* scale down character image */
-        top: 30vw;
+        max-width: 600px; /* scale down character image */
+        top: 30vh;
         margin: 0 auto 20px;
     }
 
@@ -320,9 +320,198 @@
 
 /*XS - Mobile: 1024px - 400px*/
 /*breakpoints for mobile devices*/
-@media (max-width: 400px) {
+@media(max-width: 840px){
+    .html{
+        font-size: 5px; 
+    } 
+    /*main website query*/
+    /*welcome query*/
+    #welcome {
+        flex-direction: column; /* stack elements vertically if needed */
+        justify-content: center;
+        align-items: center;
+        padding: 30px 3% 0.10px;
+    }
+    .ai-character-container {
+        max-width: 600px; /* scale down character image */
+        top: 35vh;
+        margin: 0 auto 20px;
+    }
+
+    .chat-container {
+        width: 350px; /* shrink width to fit layout */
+        max-height: 280px;
+    }
+
+    .chat-input-row {
+        width: 42%;
+        margin-top: 18%;
+        margin-right: 6%;
+    }
+
+    #welcome .input-group input {
+        height: 45px;
+    }
+
+    #welcome .input-group #send-btn,
+    #welcome .mic-button {
+        height: 50px;
+    }
+    /*services query*/
+    #services {
+        min-height: 70vh !important;
+    }
+    .selected-services-cards {
+        grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
+        grid-template-rows: repeat(3, auto);
+        margin: 0;
+        gap: 15px;
+        width: 50%;
+    }
+    /*branch info query*/
+    #branches {
+        min-height: 60vh !important;
+    }
+    #appointment {
+        height: auto;
+    }
+    .appointment-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .appointment-info {
+        width: 70%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .appointment-calendar {
+        width: 80%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .appointment-calendar h4 {
+        font-size: 1.1rem;
+    }
+    .services-header h2 {
+        font-size: 1.8rem;
+    }
+    .services-header {
+        margin-bottom: 10px;
+    } 
+}
+
+@media (max-width: 730px) {
     .html {
         font-size: 4px; 
+    }
+    
+    /*main website query*/
+    /*welcome query*/
+    #welcome {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 3% 0.10px;
+    }
+    #welcome h2 {
+        font-size: 1.2rem;
+    }
+    
+    .ai-character-container {
+        max-width: 600px; /* scale down character image */
+        top: 30vh;
+        margin: 0 auto 20px;
+    }
+
+    .chat-container {
+        width: 90%;
+        max-width: 320px;
+        max-height: 280px;
+        margin: 0 auto; /* Center the chat container */
+        position: relative;
+        left: 10px;
+        transform: none;
+    }
+
+    .chat-input-row {
+        width: 50%;
+        margin-top: 20px;
+        margin-right: 0;
+    }
+
+    #welcome .input-group input {
+        height: 45px;
+        width: 50%;
+    }
+
+    #welcome .input-group #send-btn,
+    #welcome .mic-button {
+        height: 50px;
+        width: 50px;
+    }
+    
+    /*services query*/
+    #services {
+        min-height: 60vh !important;
+        padding: 20px 0;
+    }
+    
+    .selected-services-cards {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, auto);
+        margin: 0 auto;
+        gap: 15px;
+        width: 90%;
+    }
+    
+    .service-card {
+        transform: scale(0.9); /* Reduce service card size */
+        margin: 0 auto;
+    }
+    
+    /* About Us section reduction */
+    #about-us {
+        padding: 20px 0;
+    }
+    
+    #about-us .about-content {
+        padding: 15px;
+    }
+    
+    #about-us h2 {
+        font-size: 1.5rem;
+    }
+    
+    #about-us p {
+        font-size: 0.9rem;
+    }
+    
+    /*branch info query*/
+    #branches {
+        min-height: 50vh !important;
+    }
+    
+    #appointment {
+        height: auto;
+        padding: 20px 0;
+    }
+    
+    .appointment-container {
+        flex-direction: column;
+        gap: 30px; /* Added gap between
+    }
+    
+    .appointment-info {
+        width: 90%;
+        max-width: 280px;
+        margin: 0 auto;
+        transform: scale(0.9); /* Reduce size */
+    }
+}
+
+@media (max-width: 400px) {
+    .html {
+        font-size: 2px; 
     }
     
     /* Mobile Navigation - Hamburger Menu */
