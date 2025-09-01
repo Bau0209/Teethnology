@@ -17,37 +17,38 @@ body {
 }
 
 .patients-table {
-     margin: 0;
+    margin: 0;
     width: 100%;
     min-width: 600px;
-    margin-top: 20px;
+    margin-top: 10px;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 1rem;
     table-layout: fixed;
     border: none;
 }
 
-.patient-table td {
-    padding: 12px 15px;
+.patients-table td {
+    padding: 10px 15px;
     border-bottom: none; 
     vertical-align: middle; 
-    font-size: 0.95rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: #333;
     white-space: nowrap;
     text-overflow: ellipsis;
-    text-align: center;
+    text-align: center; /* center all by default */
 }
 
 /* Column-specific styling */
-.patient-table td:nth-child(1) { width: 5%; }  /* Back button */
-.patient-table td:nth-child(2) { width: 10%; } /* ID */
-.patient-table td:nth-child(3) { width: 20%; } /* Name */
-.patient-table td:nth-child(4) { width: 10%; } /* Age */
-.patient-table td:nth-child(5) { width: 10%; } /* Sex */
-.patient-table td:nth-child(6) { width: 15%; } /* Contact */
-.patient-table td:nth-child(7) { width: 15%; } /* Email */
-.patient-table td:nth-child(8) { width: 10%; }/* Branch */
+.patients-table td:nth-child(1) { width: 5%; text-align: left; }  /* Back button */
+.patients-table td:nth-child(2) { width: 10%; color: #0097a7;} /* ID */
+.patients-table td:nth-child(3) { width: 20%; text-align: left; color: #0097a7;} /* Name */
+.patients-table td:nth-child(4) { width: 5%; } /* Age */
+.patients-table td:nth-child(5) { width: 5%; } /* Sex */
+.patients-table td:nth-child(6) { width: 15%; } /* Contact */
+.patients-table td:nth-child(7) { width: 25%; text-align: left; } /* Email */
+.patients-table td:nth-child(8) { width: 15%; } /* Branch */
+
 
 
 /* Patient Info Container */
