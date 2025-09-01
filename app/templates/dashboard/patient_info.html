@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+{% if access_level == 'owner' %}
  <div class="patients-table-container">
       <table class="patients-table">
         <tbody>
@@ -23,7 +24,25 @@
             </tr>
         </tbody>
     </table>
-</div>
+</div> 
+{% elif access_level == 'staff' %}
+<div class="patients-table-container">
+      <table class="patients-table">
+        <tbody>
+           <tr>
+              <td><a href="{{ url_for('dashboard.patients') }}"><i class="fa fa-chevron-left"></i></a></td>
+                <td>{{ patient.patient_id }}</td>
+                <td>{{ patient.patient_full_name}}</td>
+                <td>{{ patient.age }}</td>
+                <td>{{ patient.sex }}</td>
+                <td>{{ patient.contact_number }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.branch.branch_name}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div> 
+{% endif %}
 <div class="patient-info-container">
         <!-- Tabs -->
         <ul class="nav nav-tabs" id="patientInfoTabs" role="tablist">
