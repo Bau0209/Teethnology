@@ -136,31 +136,35 @@ body {
     transition: max-height 0.3s ease-in-out; 
 }
 
+/* Employee Table */
 .employee-table-container { 
-    border-radius: none;
-    margin-bottom: 0;
-    width: 100%;
-    background: #fff;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    margin-top: 30px !important;
+    margin-bottom: 20px;
+    background: #ffffff;
     overflow-y: auto;     
     overflow-x: auto; 
-    max-height: none; 
-    position: relative;
-    transition: max-height 0.3s ease-in-out;
-    padding: 10px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    width: calc(100% - 5px);
+    padding: 15px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     gap: 16px;
     scrollbar-width: thin;
-    
 }
 
 .employee-table {
+    margin: 0;
     width: 100%;
+    min-width: 600px;
+    margin-top: 20px;
     border-collapse: separate;
     border-spacing: 0;
     font-size: 1rem;
-    min-width: 0;
+    table-layout: fixed;
+    border: none;
     background: #fff;
 }
 
@@ -172,18 +176,21 @@ body {
     text-align: center;
 }
 
-.employee-table th, .employee-table td {
-    padding: 8px 10px;
-    font-size: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-    background: #fff;
+.employee-table th, 
+.employee-table td {
+    padding: 12px 15px;
+    border-bottom: none; 
+    vertical-align: middle; 
+    font-size: 1.1rem;
+    color: #333;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     text-align: center;
 }
 
 .employee-table th {
-    font-size: 0.98rem;
-    color: #888;
+    font-size: 1.1rem;
+    color: #009688; /* matches patient table's blue header accent */
     font-weight: 600;
     letter-spacing: 0.5px;
 }
@@ -196,20 +203,17 @@ body {
     background: #e0f7f4;
 }
 
-.employee-table td:last-child {
-    text-align: right;
-}
-
 .employee-table a {
     color: #009688;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     transition: color 0.2s;
 }
 
 .employee-table a:hover {
     color: #00796b;
 }
+
 
 /* Table arrow at bottom right */
 .table-arrow {
