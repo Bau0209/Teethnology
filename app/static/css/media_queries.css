@@ -566,29 +566,31 @@
     /* Mobile Navigation - Hamburger Menu */
     .nav-menu {
         display: none;
+        width: 85% !important;
+        max-width: 290px;
     }
     
     .hamburger-menu {
-        display: block !important;
+        display: block;
         position: fixed;
-        top: 6px;
-        right: 20px;
+        top: 5px;
         left: auto;
+        right: 10px;
         z-index: 1000;
-        background: #009ca6;
+        background: #009ca6 !important;
         width: 40px;
         height: 40px;
         border-radius: 5px;
         padding: 8px;
         cursor: pointer;
-        
+        overflow-x: hidden !important;
     }
     
     .hamburger-menu span {
         display: block;
-        height: 3px;
-        background: white;
-        margin: 5px 0;
+        height: 3px !important;
+        background: white !important;
+        margin: 5px 0 !important;
         transition: all 0.3s ease;
     }
     
@@ -597,25 +599,30 @@
         flex-direction: column;
         position: fixed;
         top: 0;
-        left: 0;
-        width: 100%;
+        left: auto;
+        right: 0;
+        width: 85% !important;
+        max-width: 280px;
         height: 100vh;
-        background: rgba(0, 155, 166, 0.767);
-        z-index: 999;
-        padding: 60px 20px 20px;
+        background: rgba(0, 155, 166, 0.767) !important;
+        z-index: 999 !important;
+        padding: 60px 0 20px; /* Removed right/left padding */
         overflow-y: auto;
+        overflow-x: hidden !important;
         transform: translateX(0) !important;
+        align-items: flex-start !important; 
     }
     
     .nav-menu.active a {
         display: block;
         margin: 8px 0;
-        width: 80%;
+        width: 100% !important; /* Changed from 80% to 100% */
         font-size: 1.2rem;
-        color: white;
-        text-align: center;
-        padding: 12px;
+        color: white !important;
+        text-align: left !important; 
+        padding: 12px 40px !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        box-sizing: border-box; 
     }
     
     /*main website query*/
@@ -625,6 +632,7 @@
         justify-content: center;
         align-items: center;
         padding: 30px 3% 0.10px;
+        overflow-x: hidden; /* Added to prevent horizontal scroll */
     }
     
     .ai-character-container {
@@ -641,6 +649,7 @@
         position: relative;
         left: 0;
         transform: none;
+        overflow-x: hidden; /* Added to prevent horizontal scroll */
     }
 
     .chat-input-row {
@@ -664,6 +673,7 @@
     #services {
         min-height: 60vh !important;
         padding: 20px 0;
+        overflow-x: hidden; /* Added to prevent horizontal scroll */
     }
     
     .selected-services-cards {
@@ -677,6 +687,7 @@
     .service-card {
         transform: scale(0.9); /* Reduce service card size */
         margin: 0 auto;
+        max-width: 100%; /* Added to prevent overflow */
     }
     .services-header p{
         font-size: 0.5rem;
@@ -685,10 +696,12 @@
     /* About Us section reduction */
     #about-us {
         padding: 20px 0;
+        overflow-x: hidden; /* Added to prevent horizontal scroll */
     }
     
     #about-us .about-content {
         padding: 15px;
+        max-width: 100%; /* Added to prevent overflow */
     }
     
     #about-us h2 {
@@ -702,19 +715,21 @@
     /*branch info query*/
     #branches {
         min-height: 50vh !important;
+        overflow-x: hidden; /* Added to prevent horizontal scroll */
     }
-    #appointment {
-        height: auto;
-    }
+    
     #appointment {
         height: auto;
         padding: 20px 0;
+        overflow-x: hidden; /* Added to prevent horizontal scroll */
     }
     
     .appointment-container {
         flex-direction: column;
-        gap: 10px; /* Added gap between
+        gap: 10px; /* Added gap between */
+        max-width: 100%; /* Added to prevent overflow */
     }
+    
     .appointment-info {
         width: 90%;
         max-width: 380px;
@@ -728,6 +743,7 @@
         margin: 0 auto;
         transform: scale(0.9); /* Reduce size */
     }
+    
     .appointment-calendar h4 {
         font-size: 0.9rem;
     }
@@ -739,20 +755,31 @@
         max-width: 520px !important;
         transform: scale(0.9);
         margin: 0 auto;
+        overflow-x: hidden !important; /* Added to prevent horizontal scroll */
+        box-sizing: border-box; /* Added to include padding in width */
     }
+    
     .appointment-form-container h2 {
         font-size: 1.5rem;
     }
 
-    #branch_id{
+    #branch_id {
         margin-top: 10px;
         max-width: 150px;
-        
     }
     
-      /*footer query*/
+    /* Ensure all form elements don't exceed container width */
+    .appointment-form-container input,
+    .appointment-form-container select,
+    .appointment-form-container textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /*footer query*/
     footer {
-        padding: 4px 1.3% 2px;  
+        padding: 4px 1.3% 2px;
+        overflow-x: hidden; /* Added to prevent horizontal scroll */
     } 
     
     .footer .footer-links a {
@@ -761,6 +788,12 @@
 }
 
 @media (max-width: 400px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+    
     .html {
         font-size: 2px; 
     }
@@ -768,16 +801,18 @@
     /* Mobile Navigation - Hamburger Menu */
     .nav-menu {
         display: none;
+        width: 85% !important;
+        max-width: 290px;
     }
     
     .hamburger-menu {
         display: block;
         position: fixed;
         top: 5px;
-        left: auto; /* Changed from right: 10px to left: 10px */
-        right: 10px; /* Add this to reset any right positioning */
+        left: auto;
+        right: 10px;
         z-index: 1000;
-        background: #009ca6;
+        background: #009ca6 !important;
         width: 40px;
         height: 40px;
         border-radius: 5px;
@@ -788,9 +823,9 @@
     
     .hamburger-menu span {
         display: block;
-        height: 3px;
-        background: white;
-        margin: 5px 0;
+        height: 3px !important;
+        background: white !important;
+        margin: 5px 0 !important;
         transition: all 0.3s ease;
     }
     
@@ -799,27 +834,30 @@
         flex-direction: column;
         position: fixed;
         top: 0;
-        left: 0;
-        width: 100%;
-        max-width: 100vw !important;
+        left: auto;
+        right: 0;
+        width: 85% !important;
+        max-width: 280px;
         height: 100vh;
-        background: rgba(0, 155, 166, 0.767);
+        background: rgba(0, 155, 166, 0.767) !important;
         z-index: 999 !important;
-        padding: 60px 20px 20px;
+        padding: 60px 0 20px; /* Removed right/left padding */
         overflow-y: auto;
         overflow-x: hidden !important;
         transform: translateX(0) !important;
+        align-items: flex-start !important; 
     }
     
     .nav-menu.active a {
         display: block;
         margin: 8px 0;
-        width: 80%;
+        width: 100% !important; /* Changed from 80% to 100% */
         font-size: 1.2rem;
-        color: white;
-        text-align: center;
-        padding: 12px;
+        color: white !important;
+        text-align: left !important; 
+        padding: 12px 40px !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        box-sizing: border-box; 
     }
     
     /*main website query*/
@@ -829,20 +867,22 @@
         justify-content: center;
         align-items: center;
         padding: 30px 3% 0.10px;
+        overflow-x: hidden;
     }
     
     .ai-character-container {
-        display: none; /* Remove AI container as requested */
+        display: none;
     }
 
     .chat-container {
         width: 90%;
         max-width: 320px;
         max-height: 280px;
-        margin: 0 auto; /* Center the chat container */
+        margin: 0 auto;
         position: relative;
         left: 0;
         transform: none;
+        overflow-x: hidden;
     }
 
     .chat-input-row {
@@ -866,6 +906,7 @@
     #services {
         min-height: 60vh !important;
         padding: 20px 0;
+        overflow-x: hidden;
     }
     
     .selected-services-cards {
@@ -877,20 +918,24 @@
     }
     
     .service-card {
-        transform: scale(0.9); /* Reduce service card size */
+        transform: scale(0.9);
         margin: 0 auto;
+        max-width: 100%;
     }
     .services-header p{
         font-size: 0.5rem;
+        text-align: center;
     }
     
     /* About Us section reduction */
     #about-us {
         padding: 20px 0;
+        overflow-x: hidden;
     }
     
     #about-us .about-content {
         padding: 15px;
+        max-width: 100%;
     }
     
     #about-us h2 {
@@ -899,35 +944,39 @@
     
     #about-us p {
         font-size: 0.9rem;
+        padding: 10px;
     }
     
     /*branch info query*/
     #branches {
         min-height: 50vh !important;
+        overflow-x: hidden;
     }
     
     #appointment {
         height: auto;
         padding: 20px 0;
+        overflow-x: hidden;
     }
     
     .appointment-container {
         flex-direction: column;
-        gap: 30px; /* Added gap between info and calendar */
+        gap: 30px;
+        max-width: 100%;
     }
     
     .appointment-info {
         width: 90%;
         max-width: 280px;
         margin: 0 auto;
-        transform: scale(0.9); /* Reduce size */
+        transform: scale(0.9);
     }
     
     .appointment-calendar {
         width: 90%;
         max-width: 280px;
         margin: 0 auto;
-        transform: scale(0.9); /* Reduce size */
+        transform: scale(0.9);
     }
     
     .appointment-calendar h4 {
@@ -949,21 +998,30 @@
         transform: scale(0.95);
         margin: 0 auto;
         overflow-x: hidden !important;
-        
+        box-sizing: border-box;
     }
+    
     .appointment-form-container h2 {
         font-size: 1.5rem;
     }
 
-    #branch_id{
+    #branch_id {
         margin-top: 10px;
         max-width: 150px;
-        
     }
     
-      /*footer query*/
+    /* Ensure all form elements don't exceed container width */
+    .appointment-form-container input,
+    .appointment-form-container select,
+    .appointment-form-container textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /*footer query*/
     footer {
-        padding: 4px 1.3% 2px;  
+        padding: 4px 1.3% 2px;
+        overflow-x: hidden;
     } 
     
     .footer .footer-links a {
