@@ -53,7 +53,7 @@
     /*welcome query*/
     #welcome {
         flex-direction: column; /* stack elements vertically if needed */
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         padding: 60px 3% 40px;
     }
@@ -168,7 +168,7 @@
     /*welcome query*/
     #welcome {
         flex-direction: column; /* stack elements vertically if needed */
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         padding: 50px 3% 0.20px;
     }
@@ -242,7 +242,7 @@
     /*welcome query*/
     #welcome {
         flex-direction: column; /* stack elements vertically if needed */
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         padding: 40px 3% 0.40px;
     }
@@ -312,6 +312,23 @@
     .services-header {
         margin-bottom: 15px;
     } 
+    /* Booking form reduction */
+    .appointment-form-container {
+        padding: 20px;
+        max-width: 620px !important;
+        transform: scale(0.95);
+        margin: 0 auto;
+    }
+    .appointment-form-container h2 {
+        font-size: 1.5rem;
+    }
+
+    #branch_id{
+        margin-top: 10px;
+        max-width: 150px;
+        
+    }
+    /*footer query*/
     footer{
         padding: 20px  15px;
     }
@@ -328,7 +345,7 @@
     /*welcome query*/
     #welcome {
         flex-direction: column; /* stack elements vertically if needed */
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         padding: 30px 3% 0.10px;
     }
@@ -398,6 +415,22 @@
     .services-header {
         margin-bottom: 10px;
     } 
+    /* Booking form reduction */
+    .appointment-form-container {
+        padding: 20px;
+        max-width: 550px !important;
+        transform: scale(0.95);
+        margin: 0 auto;
+    }
+    .appointment-form-container h2 {
+        font-size: 1.5rem;
+    }
+
+    #branch_id{
+        margin-top: 10px;
+        max-width: 150px;
+        
+    }
 }
 
 @media (max-width: 730px) {
@@ -409,7 +442,7 @@
     /*welcome query*/
     #welcome {
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         padding: 30px 3% 0.10px;
     }
@@ -507,9 +540,25 @@
         margin: 0 auto;
         transform: scale(0.9); /* Reduce size */
     }
+    /* Booking form reduction */
+    .appointment-form-container {
+        padding: 20px;
+        max-width: 550px !important;
+        transform: scale(0.95);
+        margin: 0 auto;
+    }
+    .appointment-form-container h2 {
+        font-size: 1.5rem;
+    }
+
+    #branch_id{
+        margin-top: 10px;
+        max-width: 150px;
+        
+    }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 670px) {
     .html {
         font-size: 2px; 
     }
@@ -520,10 +569,11 @@
     }
     
     .hamburger-menu {
-        display: block;
+        display: block !important;
         position: fixed;
-        top: 20px;
+        top: 6px;
         right: 20px;
+        left: auto;
         z-index: 1000;
         background: #009ca6;
         width: 40px;
@@ -531,6 +581,7 @@
         border-radius: 5px;
         padding: 8px;
         cursor: pointer;
+        
     }
     
     .hamburger-menu span {
@@ -549,14 +600,221 @@
         left: 0;
         width: 100%;
         height: 100vh;
-        background: rgba(0, 156, 166, 0.95);
+        background: rgba(0, 155, 166, 0.767);
         z-index: 999;
         padding: 60px 20px 20px;
         overflow-y: auto;
+        transform: translateX(0) !important;
     }
     
     .nav-menu.active a {
-        margin: 10px 0;
+        display: block;
+        margin: 8px 0;
+        width: 80%;
+        font-size: 1.2rem;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /*main website query*/
+    /*welcome query*/
+    #welcome {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 3% 0.10px;
+    }
+    
+    .ai-character-container {
+        max-width: 600px; /* scale down character image */
+        top: 32vh;
+        margin: 0 auto 15px;
+    }
+
+    .chat-container {
+        width: 90%;
+        max-width: 320px;
+        max-height: 280px;
+        margin: 0 auto; /* Center the chat container */
+        position: relative;
+        left: 0;
+        transform: none;
+    }
+
+    .chat-input-row {
+        width: 50%;
+        margin-top: 20px;
+        margin-right: 0;
+    }
+
+    #welcome .input-group input {
+        height: 45px;
+        width: 50%;
+    }
+
+    #welcome .input-group #send-btn,
+    #welcome .mic-button {
+        height: 50px;
+        width: 50px;
+    }
+    
+    /*services query*/
+    #services {
+        min-height: 60vh !important;
+        padding: 20px 0;
+    }
+    
+    .selected-services-cards {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, auto);
+        margin: 0 auto;
+        gap: 15px;
+        width: 90%;
+    }
+    
+    .service-card {
+        transform: scale(0.9); /* Reduce service card size */
+        margin: 0 auto;
+    }
+    .services-header p{
+        font-size: 0.5rem;
+    }
+    
+    /* About Us section reduction */
+    #about-us {
+        padding: 20px 0;
+    }
+    
+    #about-us .about-content {
+        padding: 15px;
+    }
+    
+    #about-us h2 {
+        font-size: 1.5rem;
+    }
+    
+    #about-us p {
+        font-size: 0.9rem;
+    }
+    
+    /*branch info query*/
+    #branches {
+        min-height: 50vh !important;
+    }
+    #appointment {
+        height: auto;
+    }
+    #appointment {
+        height: auto;
+        padding: 20px 0;
+    }
+    
+    .appointment-container {
+        flex-direction: column;
+        gap: 10px; /* Added gap between
+    }
+    .appointment-info {
+        width: 90%;
+        max-width: 380px;
+        margin: 0 auto;
+        transform: scale(0.9); /* Reduce size */
+    }
+    
+    .appointment-calendar {
+        width: 90%;
+        max-width: 380px;
+        margin: 0 auto;
+        transform: scale(0.9); /* Reduce size */
+    }
+    .appointment-calendar h4 {
+        font-size: 0.9rem;
+    }
+
+    
+    /* Booking form reduction */
+    .appointment-form-container {
+        padding: 20px;
+        max-width: 520px !important;
+        transform: scale(0.9);
+        margin: 0 auto;
+    }
+    .appointment-form-container h2 {
+        font-size: 1.5rem;
+    }
+
+    #branch_id{
+        margin-top: 10px;
+        max-width: 150px;
+        
+    }
+    
+      /*footer query*/
+    footer {
+        padding: 4px 1.3% 2px;  
+    } 
+    
+    .footer .footer-links a {
+        font-size: 0.8rem;
+    }     
+}
+
+@media (max-width: 400px) {
+    .html {
+        font-size: 2px; 
+    }
+    
+    /* Mobile Navigation - Hamburger Menu */
+    .nav-menu {
+        display: none;
+    }
+    
+    .hamburger-menu {
+        display: block;
+        position: fixed;
+        top: 5px;
+        left: auto; /* Changed from right: 10px to left: 10px */
+        right: 10px; /* Add this to reset any right positioning */
+        z-index: 1000;
+        background: #009ca6;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        padding: 8px;
+        cursor: pointer;
+        overflow-x: hidden !important;
+    }
+    
+    .hamburger-menu span {
+        display: block;
+        height: 3px;
+        background: white;
+        margin: 5px 0;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 100vw !important;
+        height: 100vh;
+        background: rgba(0, 155, 166, 0.767);
+        z-index: 999 !important;
+        padding: 60px 20px 20px;
+        overflow-y: auto;
+        overflow-x: hidden !important;
+        transform: translateX(0) !important;
+    }
+    
+    .nav-menu.active a {
+        display: block;
+        margin: 8px 0;
+        width: 80%;
         font-size: 1.2rem;
         color: white;
         text-align: center;
@@ -622,6 +880,9 @@
         transform: scale(0.9); /* Reduce service card size */
         margin: 0 auto;
     }
+    .services-header p{
+        font-size: 0.5rem;
+    }
     
     /* About Us section reduction */
     #about-us {
@@ -684,9 +945,11 @@
     /* Booking form reduction */
     .appointment-form-container {
         padding: 20px;
-        max-width: 320px;
+        max-width: 320px !important;
         transform: scale(0.95);
         margin: 0 auto;
+        overflow-x: hidden !important;
+        
     }
     .appointment-form-container h2 {
         font-size: 1.5rem;
