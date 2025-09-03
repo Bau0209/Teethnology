@@ -261,11 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 max-width: 100%;
             }
             
-            /* Ensure booking form doesn't cause overflow */
-            .appointment-form-container {
-                max-width: 100% !important;
-                overflow-x: hidden !important;
-            }
+        
             
             @media (max-width: 670px) {
                 .hamburger-menu {
