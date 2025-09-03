@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     height: auto;
 }
-
+ 
 /* Tabs */
 .nav-tabs {
     border-bottom: none;
