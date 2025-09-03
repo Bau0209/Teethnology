@@ -227,6 +227,8 @@
     .services-header {
         margin-bottom: 20px;
     } 
+    /*footer query*/
+    /*footer query*/
     footer{
         padding: 20px 15px;
     }
@@ -1085,13 +1087,6 @@
         max-width: 150px;
     }
     
-    /* Ensure all form elements don't exceed container width */
-    .appointment-form-container input,
-    .appointment-form-container select,
-    .appointment-form-container textarea {
-        max-width: 100%;
-        box-sizing: border-box;
-    }
     
    /*footer query*/
     footer {
@@ -1331,13 +1326,7 @@
         max-width: 150px;
     }
     
-    /* Ensure all form elements don't exceed container width */
-    .appointment-form-container input,
-    .appointment-form-container select,
-    .appointment-form-container textarea {
-        max-width: 100%;
-        box-sizing: border-box;
-    }
+    
     
     /*footer query*/
     footer {

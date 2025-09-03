@@ -8,6 +8,7 @@
     background-size: cover;
     position: relative;
     height: 100%;
+
 }
 
 .appointment-form::before {
@@ -27,8 +28,8 @@
     padding: 32px 36px;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    max-width: 840px;
-    width: 100%;
+    max-width: 840px !important;
+    width: 100% !important;
     z-index: 1;
 }
 
