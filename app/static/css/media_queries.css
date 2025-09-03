@@ -697,23 +697,36 @@
     
     /* About Us section reduction */
     #about-us {
-        padding: 20px 0;
-        overflow-x: hidden; /* Added to prevent horizontal scroll */
+        padding: 10px 0  !important;
+        overflow-x: hidden; 
     }
     
     #about-us .about-content {
-        padding: 15px;
-        max-width: 100%; /* Added to prevent overflow */
+        padding: 10px !important;
+        max-width: 100%;
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        align-items: flex-start;
+        gap: 5px !important; 
     }
     
     #about-us h2 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
     
     #about-us p {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+        padding: 10px;
     }
-    
+    .contact-info{
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+        padding: 10px 5px;
+    }
     /*branch info query*/
     #branches {
         min-height: 50vh !important;
@@ -778,15 +791,15 @@
         box-sizing: border-box;
     }
     
-    /*footer query*/
+   /*footer query*/
     footer {
         padding: 4px 1.3% 2px;
-        overflow-x: hidden; /* Added to prevent horizontal scroll */
+        overflow-x: hidden;
     } 
     
     .footer .footer-links a {
         font-size: 0.8rem;
-    }     
+    }      
 }
 
 @media (max-width: 400px) {
