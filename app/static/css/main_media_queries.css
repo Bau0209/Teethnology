@@ -513,7 +513,7 @@
         height: auto;
         padding: 20px 0;
     }
-    
+
     .appointment-container {
         flex-direction: column;
         gap: 30px; /* Added gap between
@@ -853,10 +853,7 @@
     }
     
     .ai-character-container {
-        max-width: 600px; 
-        top: 37vh;
-        right: 20px;
-        margin: 0 auto 15px;
+        display: none;
     }
 
     .chat-container {

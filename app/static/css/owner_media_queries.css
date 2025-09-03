@@ -1,0 +1,402 @@
+/*LG - Dekstop: 2000px - 1791*/
+/*breakpoints for large desktops*/
+@media (min-width: 1792px) {   
+    .html{
+        font-size: 10px; 
+    } 
+    /*owner/staff query*/
+    /*report query*/
+    .revenue-summary-section{
+        height: 100% !important;
+        width: 100% !important;
+
+    }
+    .card.h-100{
+        height: 100% !important;
+        width: 100% !important;
+
+    }
+    .donut-card {
+    width: 100%;
+    min-height: 220px !important;
+  }
+
+  .card-right .donut-card canvas {
+    max-width: 180px;
+  }
+
+  .card-right .donut-card ul li {
+    font-size: 1rem;
+  }
+
+  .card-header,
+  .card-right .card h6 {
+    font-size: 1.1rem;
+  }
+
+}
+
+/*MD - Dekstop: 1791 -1391*/
+/*breakpoints for medium desktops*/
+@media(max-width: 1396px){
+    .html{
+        font-size: 8px; 
+    } 
+    /*owner/staff query*/
+    /*welcome query*/
+}
+
+/*SM - Tablet: 1396px - 1240px*/
+/*breakpoints for small desktops and tablets*/
+@media (max-width: 1240px) {
+    .html{
+        font-size: 6px; 
+    } 
+    /*owner/staff query*/
+    /*report query*/
+    .custom-width-left,
+    .card-right {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .donut-card {
+        width: 100%;
+        min-height: 200px !important;
+    }
+
+    .card-right .donut-card .card-body {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .revenue-total {
+        top: 5px;
+        right: 10px;
+    }
+}
+
+/*SM - Tablet: 1240 - 1120px*/
+/*breakpoints for small desktops and tablets*/
+@media (max-width: 1120px) {
+    .html{
+        font-size: 6px; 
+    } 
+    /*owner/staff query*/
+    /*report query*/
+    .card-header,
+  .card-right .card h6 {
+    font-size: 1rem;
+  }
+
+  .forecast-filters .btn {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.7rem;
+  }
+
+  .card-right .donut-card ul {
+    font-size: 0.8rem;
+  }
+
+  .card-right .donut-card ul li {
+    font-size: 0.85rem;
+  }
+}
+
+/*XS - Mobile: 1024px - 400px*/
+/*breakpoints for mobile devices*/
+@media(max-width: 840px){
+    .html{
+        font-size: 5px; 
+    } 
+    /*owner/staff query*/
+    /*welcome query*/
+}
+
+@media (max-width: 730px) {
+    .html {
+        font-size: 4px; 
+    }
+    
+    /*owner/staff query*/
+    /*welcome query*/
+}
+
+@media (max-width: 670px) {
+    .html {
+        font-size: 2px; 
+    }
+    
+    /* Mobile Navigation - Hamburger Menu */
+    .nav-menu {
+        display: none;
+        width: 85% !important;
+        max-width: 290px;
+    }
+    
+    .hamburger-menu {
+        display: block;
+        position: fixed;
+        top: 5px;
+        left: auto;
+        right: 10px;
+        z-index: 1000;
+        background: #009ca6 !important;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        padding: 8px;
+        cursor: pointer;
+        overflow-x: hidden !important;
+    }
+    
+    .hamburger-menu span {
+        display: block;
+        height: 3px !important;
+        background: white !important;
+        margin: 5px 0 !important;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: 0;
+        width: 85% !important;
+        max-width: 280px;
+        height: 100vh;
+        background: rgba(0, 155, 166, 0.767) !important;
+        z-index: 999 !important;
+        padding: 60px 0 20px; /* Removed right/left padding */
+        overflow-y: auto;
+        overflow-x: hidden !important;
+        transform: translateX(0) !important;
+        align-items: flex-start !important; 
+    }
+    
+    .nav-menu.active a {
+        display: block;
+        margin: 8px 0;
+        width: 100% !important; /* Changed from 80% to 100% */
+        font-size: 1.2rem;
+        color: white !important;
+        text-align: left !important; 
+        padding: 12px 40px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        box-sizing: border-box; 
+    }
+    
+    /*owner/staff query*/
+    /*welcome query*/    
+}
+
+@media (max-width: 570px) {
+    .html {
+        font-size: 2px; 
+    }
+    
+    /* Mobile Navigation - Hamburger Menu */
+    .nav-menu {
+        display: none;
+        width: 85% !important;
+        max-width: 290px;
+    }
+    
+    .hamburger-menu {
+        display: block;
+        position: fixed;
+        top: 5px;
+        left: auto;
+        right: 10px;
+        z-index: 1000;
+        background: #009ca6 !important;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        padding: 8px;
+        cursor: pointer;
+        overflow-x: hidden !important;
+    }
+    
+    .hamburger-menu span {
+        display: block;
+        height: 3px !important;
+        background: white !important;
+        margin: 5px 0 !important;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: 0;
+        width: 85% !important;
+        max-width: 280px;
+        height: 100vh;
+        background: rgba(0, 155, 166, 0.767) !important;
+        z-index: 999 !important;
+        padding: 60px 0 20px; /* Removed right/left padding */
+        overflow-y: auto;
+        overflow-x: hidden !important;
+        transform: translateX(0) !important;
+        align-items: flex-start !important; 
+    }
+    
+    .nav-menu.active a {
+        display: block;
+        margin: 8px 0;
+        width: 100% !important; /* Changed from 80% to 100% */
+        font-size: 1.2rem;
+        color: white !important;
+        text-align: left !important; 
+        padding: 12px 40px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        box-sizing: border-box; 
+    }
+    
+    /*owner/staff query*/
+    /*report query*/  
+    .custom-width-left,
+  .card-right {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .donut-card {
+    width: 100%;
+    min-height: 160px !important;
+  }
+
+  .card-header,
+  .card-right .card h6 {
+    font-size: 0.95rem;
+  }
+
+  .metric-card .card-title {
+    font-size: 0.9rem;
+  }
+
+  .forecast-filters .btn {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+  }
+
+  .business-insight-card {
+    margin-top: 30px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 400px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+    
+    .html {
+        font-size: 2px; 
+    }
+    
+    /* Mobile Navigation - Hamburger Menu */
+    .nav-menu {
+        display: none;
+        width: 85% !important;
+        max-width: 290px;
+    }
+    
+    .hamburger-menu {
+        display: block;
+        position: fixed;
+        top: 5px;
+        left: auto;
+        right: 10px;
+        z-index: 1000;
+        background: #009ca6 !important;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        padding: 8px;
+        cursor: pointer;
+        overflow-x: hidden !important;
+    }
+    
+    .hamburger-menu span {
+        display: block;
+        height: 3px !important;
+        background: white !important;
+        margin: 5px 0 !important;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: 0;
+        width: 85% !important;
+        max-width: 280px;
+        height: 100vh;
+        background: rgba(0, 155, 166, 0.767) !important;
+        z-index: 999 !important;
+        padding: 60px 0 20px; /* Removed right/left padding */
+        overflow-y: auto;
+        overflow-x: hidden !important;
+        transform: translateX(0) !important;
+        align-items: flex-start !important; 
+    }
+    
+    .nav-menu.active a {
+        display: block;
+        margin: 8px 0;
+        width: 100% !important; /* Changed from 80% to 100% */
+        font-size: 1.2rem;
+        color: white !important;
+        text-align: left !important; 
+        padding: 12px 40px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        box-sizing: border-box; 
+    }
+    
+    /*owner/staff query*/
+    /*report query*/
+    .donut-card {
+    min-height: 140px !important;
+  }
+
+  .card-right .donut-card ul {
+    padding-left: 0.8rem;
+  }
+
+  .card-right .donut-card ul li {
+    font-size: 0.8rem;
+  }
+
+  .card-header,
+  .card-right .card h6 {
+    font-size: 0.9rem;
+  }
+
+  .forecast-filters .btn {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .metric-card .card-title {
+    font-size: 0.85rem;
+  }
+
+  .business-insight-card {
+    font-size: 0.8rem;
+    margin-top: 25px;
+  }
+      
+}
