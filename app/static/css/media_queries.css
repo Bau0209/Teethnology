@@ -632,12 +632,13 @@
         justify-content: center;
         align-items: center;
         padding: 30px 3% 0.10px;
-        overflow-x: hidden; /* Added to prevent horizontal scroll */
+        overflow-x: hidden; 
     }
     
     .ai-character-container {
-        max-width: 600px; /* scale down character image */
+        max-width: 600px; 
         top: 32vh;
+        right: 20px;
         margin: 0 auto 15px;
     }
 
@@ -645,11 +646,12 @@
         width: 90%;
         max-width: 320px;
         max-height: 280px;
-        margin: 0 auto; /* Center the chat container */
+        margin: 0 auto; 
         position: relative;
+        top: 20px;
         left: 0;
         transform: none;
-        overflow-x: hidden; /* Added to prevent horizontal scroll */
+        overflow-x: hidden; 
     }
 
     .chat-input-row {
