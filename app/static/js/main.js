@@ -162,215 +162,260 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Mobile Navigation Menu
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create and setup mobile navigation
-            function setupMobileNavigation() {
-                const header = document.querySelector('header');
-                const existingNav = document.querySelector('header nav');
-                const headerButtons = document.querySelector('header .button');
-                
-                // Create hamburger menu button
-                const hamburgerMenu = document.createElement('div');
-                hamburgerMenu.className = 'hamburger-menu';
-                hamburgerMenu.innerHTML = '<span></span><span></span><span></span>';
-                header.appendChild(hamburgerMenu);
-                
-                // Create mobile navigation menu
-                const mobileNav = document.createElement('div');
-                mobileNav.className = 'nav-menu';
-                
-                // Clone the existing navigation
-                if (existingNav) {
-                    const navClone = existingNav.cloneNode(true);
-                    mobileNav.appendChild(navClone);
-                }
-                
-                // Clone the buttons from header and reorder them
-                if (headerButtons) {
-                    const buttonsClone = headerButtons.cloneNode(true);
-                    buttonsClone.classList.add('mobile-nav-buttons');
-                    
-                    // Get the buttons and reorder them
-                    const loginBtn = buttonsClone.querySelector('.login');
-                    const bookBtn = buttonsClone.querySelector('.book');
-                    
-                    // Clear existing buttons
-                    buttonsClone.innerHTML = '';
-                    
-                    // Add buttons in new order: Login first, then Book
-                    if (loginBtn) {
-                        loginBtn.style.display = 'block';
-                        loginBtn.style.width = '80%';
-                        loginBtn.style.margin = '10px auto';
-                        loginBtn.style.textAlign = 'center';
-                        loginBtn.style.padding = '12px 0';
-                        buttonsClone.appendChild(loginBtn);
-                    }
-                    
-                    if (bookBtn) {
-                        bookBtn.style.display = 'block';
-                        bookBtn.style.width = '80%';
-                        bookBtn.style.margin = '10px auto';
-                        bookBtn.style.textAlign = 'center';
-                        bookBtn.style.padding = '12px 0';
-                        buttonsClone.appendChild(bookBtn);
-                    }
-                    
-                    mobileNav.appendChild(buttonsClone);
-                }
-                
-                // Add the mobile nav to the body
-                document.body.appendChild(mobileNav);
-                
-                // Apply styles for right-side positioning
-                mobileNav.style.width = '50%';
-                mobileNav.style.right = '0';
-                mobileNav.style.left = 'auto';
-                mobileNav.style.transform = 'translateX(100%)';
-                mobileNav.style.transition = 'transform 0.3s ease-in-out';
-                mobileNav.style.flexDirection = 'column';
-                mobileNav.style.justifyContent = 'flex-start';
-                mobileNav.style.paddingTop = '60px';
-                mobileNav.style.alignItems = 'center';
-                
-                // Update active state styling for right position
-                const style = document.createElement('style');
-                style.textContent = `
-                    .nav-menu.active {
-                        transform: translateX(0) !important;
-                    }
-                    
-                    .nav-menu a {
-                        display: block;
-                        width: 80% !important;
-                        text-align: center;
-                        margin: 8px 0;
-                        padding: 12px 0;
-                    }
-                    
-                    .mobile-nav-buttons {
-                        display: flex;
-                        flex-direction: column;
-                        width: 100%;
-                        margin-top: 20px;
-                    }
-                    
-                    @media (max-width: 670px) {
-                        .hamburger-menu {
-                            display: flex !important;
-                            right: 20px;
-                            left: auto;
-                        }
-                        
-                        header nav,
-                        header .button {
-                            display: none !important;
-                        }
-                        
-                        .nav-menu.active {
-                            transform: translateX(0) !important;
-                        }
-                    }
-                    
-                    @media (max-width: 400px) {
-                        .hamburger-menu {
-                            display: flex !important;
-                            right: 10px !important;
-                            left: auto !important;
-                        }
-                        
-                        header nav,
-                        header .button {
-                            display: none !important;
-                        }
-                        
-                        .nav-menu.active {
-                            transform: translateX(0) !important;
-                        }
-                    }
+document.addEventListener('DOMContentLoaded', function() {
+    // Create and setup mobile navigation
+    function setupMobileNavigation() {
+        const header = document.querySelector('header');
+        const existingNav = document.querySelector('header nav');
+        const headerButtons = document.querySelector('header .button');
+        
+        // Create hamburger menu button
+        const hamburgerMenu = document.createElement('div');
+        hamburgerMenu.className = 'hamburger-menu';
+        hamburgerMenu.innerHTML = '<span></span><span></span><span></span>';
+        header.appendChild(hamburgerMenu);
 
-                    @media (min-width: 671px) {
-                        .hamburger-menu {
-                            display: none !important;
-                        }
-                        
-                        .nav-menu {
-                            display: none !important;
-                        }
-                        
-                        header nav,
-                        header .button {
-                            display: flex !important;
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-                
-                // Toggle mobile navigation
-                hamburgerMenu.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    mobileNav.classList.toggle('active');
-                    hamburgerMenu.classList.toggle('active');
-                });
-                
-                // Close menu when clicking on a link
-                const navLinks = mobileNav.querySelectorAll('a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        mobileNav.classList.remove('active');
-                        hamburgerMenu.classList.remove('active');
-                    });
-                });
-                
-                // Close menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    const isClickInsideNav = mobileNav.contains(event.target);
-                    const isClickOnHamburger = hamburgerMenu.contains(event.target);
-                    
-                    if (!isClickInsideNav && !isClickOnHamburger && mobileNav.classList.contains('active')) {
-                        mobileNav.classList.remove('active');
-                        hamburgerMenu.classList.remove('active');
-                    }
-                });
-                
-                // Check if we're in mobile view and hide header elements
-                function checkViewport() {
-                    const isMobileView = window.matchMedia('(max-width: 670px)').matches;
-                    
-                    if (isMobileView) {
-                        // Hide navigation and buttons in header
-                        if (existingNav) existingNav.style.display = 'none';
-                        if (headerButtons) headerButtons.style.display = 'none';
-                        hamburgerMenu.style.display = 'flex';
-                        // Update status indicator
-                        document.getElementById('menu-status').textContent = 'visible';
-                    } else {
-                        // Show navigation and buttons in header
-                        if (existingNav) existingNav.style.display = '';
-                        if (headerButtons) headerButtons.style.display = '';
-                        hamburgerMenu.style.display = 'none';
-                        mobileNav.classList.remove('active');
-                        hamburgerMenu.classList.remove('active');
-                        // Update status indicator
-                        document.getElementById('menu-status').textContent = 'hidden';
-                    }
-                    
-                    // Update viewport width display
-                    document.getElementById('viewport-width').textContent = window.innerWidth;
-                }
-                
-                // Initial check
-                checkViewport();
-                
-                // Listen for resize events
-                window.addEventListener('resize', checkViewport);
+        // Create mobile navigation menu
+        const mobileNav = document.createElement('div');
+        mobileNav.className = 'nav-menu';
+        
+        // Clone the existing navigation
+        if (existingNav) {
+            const navClone = existingNav.cloneNode(true);
+            mobileNav.appendChild(navClone);
+        }
+        
+        // Clone the buttons from header and reorder them
+        if (headerButtons) {
+            const buttonsClone = headerButtons.cloneNode(true);
+            buttonsClone.classList.add('mobile-nav-buttons');
+            
+            // Get the buttons and reorder them
+            const loginBtn = buttonsClone.querySelector('.login');
+            const bookBtn = buttonsClone.querySelector('.book');
+            
+            // Clear existing buttons
+            buttonsClone.innerHTML = '';
+            
+            // Add buttons in new order: Login first, then Book
+            if (loginBtn) {
+                loginBtn.style.display = 'block';
+                loginBtn.style.width = '50% !important';
+                loginBtn.style.margin = '10px 20px';
+                loginBtn.style.textAlign = 'center';
+                loginBtn.style.padding = '12px 10px';
+                buttonsClone.appendChild(loginBtn);
             }
             
-            // Initialize the mobile navigation
-            setupMobileNavigation();
+            if (bookBtn) {
+                bookBtn.style.display = 'block';
+                bookBtn.style.width = '50% !important';
+                bookBtn.style.margin = '10px 20px';
+                bookBtn.style.textAlign = 'center';
+                bookBtn.style.padding = '12px 10px';
+                buttonsClone.appendChild(bookBtn);
+            }
+            
+            mobileNav.appendChild(buttonsClone);
+        }
+        
+        // Add the mobile nav to the body
+        document.body.appendChild(mobileNav);
+        
+        // Apply styles for right-side positioning
+        mobileNav.style.width = '50%';
+        mobileNav.style.right = '0';
+        mobileNav.style.left = 'auto';
+        mobileNav.style.transform = 'translateX(100%)';
+        mobileNav.style.transition = 'transform 0.3s ease-in-out';
+        mobileNav.style.flexDirection = 'column';
+        mobileNav.style.justifyContent = 'flex-start';
+        mobileNav.style.paddingTop = '60px';
+        mobileNav.style.alignItems = 'flex-start'; 
+        
+        // Update active state styling for right position
+        const style = document.createElement('style');
+        style.textContent = `
+            .nav-menu.active {
+                transform: translateX(0) !important;
+            }
+            
+            .nav-menu a {
+                display: block;
+                width: 80% !important;
+                text-align: left; /* Changed from center to left */
+                margin: 8px 0;
+                padding: 12px 20px; /* Added left padding for better alignment */
+            }
+            
+            .mobile-nav-buttons {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            /* Prevent horizontal scrolling globally */
+            html, body {
+                overflow-x: hidden;
+                max-width: 100%;
+            }
+            
+            /* Ensure booking form doesn't cause overflow */
+            .appointment-form-container {
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+            
+            @media (max-width: 670px) {
+                .hamburger-menu {
+                    display: flex !important;
+                    right: 20px;
+                    left: auto;
+                }
+                
+                header nav,
+                header .button {
+                    display: none !important;
+                }
+                
+                .nav-menu.active {
+                    transform: translateX(0) !important;
+                }
+                
+                /* Fix for mobile nav menu width */
+                .nav-menu {
+                    width: 80% !important;
+                    max-width: 300px;
+                }
+            }
+            
+            @media (max-width: 400px) {
+                .hamburger-menu {
+                    display: flex !important;
+                    right: 10px !important;
+                    left: auto !important;
+                }
+                
+                header nav,
+                header .button {
+                    display: none !important;
+                }
+                
+                .nav-menu.active {
+                    transform: translateX(0) !important;
+                }
+                
+                /* Further adjustments for very small screens */
+                .nav-menu {
+                    width: 85% !important;
+                    max-width: 280px;
+                }
+                
+                /* Left alignment for mobile nav links */
+                .nav-menu a {
+                    text-align: left;
+                    align-items: flex-start;
+                    padding-left: 30px; /* Added more left padding for small screens */
+                }
+            }
+
+            @media (min-width: 671px) {
+                .hamburger-menu {
+                    display: none !important;
+                }
+                
+                .nav-menu {
+                    display: none !important;
+                }
+                
+                header nav,
+                header .button {
+                    display: flex !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Toggle mobile navigation
+        hamburgerMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileNav.classList.toggle('active');
+            hamburgerMenu.classList.toggle('active');
+            
+            // Prevent body from scrolling when menu is open
+            if (mobileNav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
-
-
+        
+        // Close menu when clicking on a link
+        const navLinks = mobileNav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInsideNav = mobileNav.contains(event.target);
+            const isClickOnHamburger = hamburgerMenu.contains(event.target);
+            
+            if (!isClickInsideNav && !isClickOnHamburger && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        });
+        
+        // Check if we're in mobile view and hide header elements
+        function checkViewport() {
+            const isMobileView = window.matchMedia('(max-width: 670px)').matches;
+            
+            if (isMobileView) {
+                // Hide navigation and buttons in header
+                if (existingNav) existingNav.style.display = 'none';
+                if (headerButtons) headerButtons.style.display = 'none';
+                hamburgerMenu.style.display = 'flex';
+                // Update status indicator
+                if (document.getElementById('menu-status')) {
+                    document.getElementById('menu-status').textContent = 'visible';
+                }
+            } else {
+                // Show navigation and buttons in header
+                if (existingNav) existingNav.style.display = '';
+                if (headerButtons) headerButtons.style.display = '';
+                hamburgerMenu.style.display = 'none';
+                mobileNav.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
+                document.body.style.overflow = ''; // Ensure scrolling is restored
+                // Update status indicator
+                if (document.getElementById('menu-status')) {
+                    document.getElementById('menu-status').textContent = 'hidden';
+                }
+            }
+            
+            // Update viewport width display
+            if (document.getElementById('viewport-width')) {
+                document.getElementById('viewport-width').textContent = window.innerWidth;
+            }
+        }
+        
+        // Initial check
+        checkViewport();
+        
+        // Listen for resize events
+        window.addEventListener('resize', checkViewport);
+    }
+    
+    // Initialize the mobile navigation
+    setupMobileNavigation();
+});
 /*
  // Removes a service card
     function removeServiceCard(serviceName) {
