@@ -221,7 +221,7 @@ body {
   padding: 32px;
   min-height: calc(100vh - 48px);
   transition: margin-left 0.3s ease;
-  overflow-y: auto
+  overflow-y: auto;
 }
 .breadcrumb-container {
     padding: 10px 10px;
