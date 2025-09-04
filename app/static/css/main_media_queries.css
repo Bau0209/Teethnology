@@ -227,7 +227,7 @@
     .services-header {
         margin-bottom: 20px;
     } 
-    /*footer query*/
+    
     /*footer query*/
     footer{
         padding: 20px 15px;
@@ -320,15 +320,14 @@
         max-width: 620px !important;
         transform: scale(0.95);
         margin: 0 auto;
+        overflow-x: hidden !important; 
     }
     .appointment-form-container h2 {
         font-size: 1.5rem;
     }
-
     #branch_id{
         margin-top: 10px;
         max-width: 150px;
-        
     }
     /*footer query*/
     footer{
@@ -423,6 +422,7 @@
         max-width: 550px !important;
         transform: scale(0.95);
         margin: 0 auto;
+        overflow-x: hidden !important; 
     }
     .appointment-form-container h2 {
         font-size: 1.5rem;
@@ -432,6 +432,18 @@
         margin-top: 10px;
         max-width: 150px;
         
+    }
+    .appointment-form-container.h3{
+        left: auto;
+
+    }
+    /*footer query*/
+    footer {
+        padding: 2px 1.3% 2px;  
+    } 
+    
+    .footer .footer-links a {
+        font-size: 0.8rem;
     }
 }
 
@@ -518,14 +530,14 @@
 
     .appointment-container {
         flex-direction: column;
-        gap: 30px; /* Added gap between
+        gap: 30px; 
     }
     
     .appointment-info {
         width: 90%;
         max-width: 280px;
         margin: 0 auto;
-        transform: scale(0.9); /* Reduce size */
+        transform: scale(0.9); 
     }
     /* Booking form reduction */
     .appointment-form-container {
