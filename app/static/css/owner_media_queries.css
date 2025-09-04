@@ -1,6 +1,6 @@
 /*LG - Dekstop: 2000px - 1791*/
 /*breakpoints for large desktops*/
-@media (min-width: 1792px) {   
+@media (max-width: 1792px) {   
     .html{
         font-size: 10px; 
     } 
@@ -43,7 +43,98 @@
     .card-right .card h6 {
       font-size: 1.1rem;
     }
+    .branches-info-card {
+      margin-top: 28px !important;
+      margin: 0 auto 22px auto;
+    }
+    
+    .branch-thumbnail {
+      height: 19vh;
+      margin-right: 8px;
+    }
+    
+    .branches-info-header {
+      padding: 15px 30px;
+    }
+    
+    .branches-info-header h2 {
+      font-size: 1.45rem;
+    }
+    
+    .branches-info-content {
+      padding: 19px 30px;
+      gap: 35px;
+    }
+    
+    .branches-services h3, 
+    .branches-about h3 {
+      font-size: 1.18rem;
+      margin-bottom: 14px;
+    }
+    
+    .services-checklist {
+      gap: 11px;
+    }
+    
+    .checklist-item {
+      gap: 7px;
+    }
+    
+    .checklist-item input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+    }
+    
+    .checklist-item label {
+      font-size: 0.98rem;
+    }
+    
+    .branches-about p {
+      margin-bottom: 18px;
+      font-size: 0.98rem;
+    }
+    
+    .branches-contact {
+      margin-bottom: 18px;
+    }
+    
+    .branches-contact p {
+      font-size: 0.98rem;
+      margin: 4px 0;
+    }
 
+    .button-container {
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+}
+
+@media (max-width: 1733px){
+  .html{
+      font-size: 8px; 
+  }
+  /*owner/staff query*/
+    /*home query*/
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .side-bar {
+      width: 250px; 
+    }
+    .voice-assistant {
+      left: 250px; 
+    }
+    .main-content {
+      margin-left: 250px; 
+    }
+    /*home query*/
+    .banner-text h2 {
+      font-size: 1.9rem;
+    }
+    
 }
 
 /*MD - Dekstop: 1791 -1391*/
@@ -53,7 +144,100 @@
         font-size: 8px; 
     } 
     /*owner/staff query*/
-    /*welcome query*/
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .side-bar {
+      width: 220px;
+    }
+    .voice-assistant {
+      left: 220px; 
+    }
+    .main-content {
+      margin-left: 250px; 
+    }
+    /*home query*/
+    .banner-text h2 {
+      font-size: 1.1rem;
+    }
+    .banner-button {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.9rem;
+    }
+    .branches-info-card {
+      margin-top: 28px !important;
+      margin: 0 auto 22px auto;
+      max-width: auto !important;
+    }
+    
+    .branch-thumbnail {
+      height: 19vh;
+      margin-right: 8px;
+    }
+    
+    .branches-info-header {
+      padding: 15px 30px;
+    }
+    
+    .branches-info-header h2 {
+      font-size: 1.45rem;
+    }
+    
+    .branches-info-content {
+      padding: 19px 30px;
+      gap: 35px;
+    }
+    
+    .branches-services h3, 
+    .branches-about h3 {
+      font-size: 1.18rem;
+      margin-bottom: 14px;
+    }
+    
+    .services-checklist {
+      gap: 11px;
+    }
+    
+    .checklist-item {
+      gap: 7px;
+    }
+    
+    .checklist-item input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+    }
+    
+    .checklist-item label {
+      font-size: 0.98rem;
+    }
+    
+    .branches-about p {
+      margin-bottom: 18px;
+      font-size: 0.98rem;
+    }
+    
+    .branches-contact {
+      margin-bottom: 18px;
+    }
+    
+    .branches-contact p {
+      font-size: 0.98rem;
+      margin: 4px 0;
+    }
+    
+    .button-container {
+      gap: 9px;
+      margin-bottom: 18px;
+      max-width: 600px;
+    }
+    .form-control {
+      font-size: 0.9rem;
+      width: 90%;
+
+    }
+
 }
 
 /*SM - Tablet: 1396px - 1240px*/
@@ -95,22 +279,22 @@
     /*owner/staff query*/
     /*report query*/
     .card-header,
-  .card-right .card h6 {
-    font-size: 1rem;
-  }
+    .card-right .card h6 {
+      font-size: 1rem;
+    }
 
-  .forecast-filters .btn {
-    font-size: 0.7rem;
-    padding: 0.25rem 0.7rem;
-  }
+    .forecast-filters .btn {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.7rem;
+    }
 
-  .card-right .donut-card ul {
-    font-size: 0.8rem;
-  }
+    .card-right .donut-card ul {
+      font-size: 0.8rem;
+    }
 
-  .card-right .donut-card ul li {
-    font-size: 0.85rem;
-  }
+    .card-right .donut-card ul li {
+      font-size: 0.85rem;
+    }
 }
 
 /*XS - Mobile: 1024px - 400px*/
