@@ -224,115 +224,112 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 //mobile sidebar toggle
- // Hamburger menu functionality
-        function initHamburgerMenu() {
-            // Check if we're on a mobile screen
-            if (window.innerWidth > 670) return;
-            
-            // Create hamburger button
-            const hamburgerBtn = document.createElement('div');
-            hamburgerBtn.className = 'hamburger-menu';
-            hamburgerBtn.innerHTML = `
-                <span></span>
-                <span></span>
-                <span></span>
-            `;
-            
-            // Create mobile navigation
-            const mobileNav = document.createElement('div');
-            mobileNav.className = 'nav-menu';
-            
-            // Clone sidebar navigation
-            const sidebarNav = document.querySelector('.sidebar nav');
-            if (sidebarNav) {
-                mobileNav.appendChild(sidebarNav.cloneNode(true));
-                
-                // Add close button
-                const closeBtn = document.createElement('button');
-                closeBtn.className = 'nav-close';
-                closeBtn.innerHTML = '<i class="fa fa-times"></i>';
-                mobileNav.appendChild(closeBtn);
-            }
-            
-            // Add elements to the DOM
-            document.body.appendChild(hamburgerBtn);
-            document.body.appendChild(mobileNav);
-            
-            // Toggle menu function
-            function toggleMenu() {
-                mobileNav.classList.toggle('active');
-                hamburgerBtn.classList.toggle('active');
-                
-                // Prevent body scroll when menu is open
-                if (mobileNav.classList.contains('active')) {
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = '';
-                }
-            }
-            
-            // Add event listeners
-            hamburgerBtn.addEventListener('click', toggleMenu);
-            
-            // Close menu when clicking on close button
-            const closeButton = mobileNav.querySelector('.nav-close');
-            if (closeButton) {
-                closeButton.addEventListener('click', toggleMenu);
-            }
-            
-            // Close menu when clicking on a link
-            mobileNav.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    toggleMenu();
-                }
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', function(e) {
-                if (mobileNav.classList.contains('active') && 
-                    !mobileNav.contains(e.target) && 
-                    !hamburgerBtn.contains(e.target)) {
-                    toggleMenu();
-                }
-            });
-        }
-        
-        // Clean up hamburger menu on larger screens
-        function cleanupHamburgerMenu() {
-            const hamburgerBtn = document.querySelector('.hamburger-menu');
-            const mobileNav = document.querySelector('.nav-menu');
-            
-            if (hamburgerBtn) hamburgerBtn.remove();
-            if (mobileNav) mobileNav.remove();
-            
-            // Reset body overflow
+function initHamburgerMenu() {
+    // Only for mobile
+    if (window.innerWidth > 670) return;
+
+    // Prevent duplicate menu
+    if (document.querySelector('.nav-menu')) return;
+
+    // Create mobile navigation
+    const mobileNav = document.createElement('div');
+    mobileNav.className = 'nav-menu';
+
+    // Clone sidebar navigation
+    const sidebarNav = document.querySelector('.sidebar nav');
+    if (sidebarNav) {
+        mobileNav.appendChild(sidebarNav.cloneNode(true));
+    }
+
+    
+
+    // Add to DOM
+    document.body.appendChild(mobileNav);
+
+    // Toggle menu function
+    function toggleMenu(forceClose = false) {
+        if (forceClose) {
+            mobileNav.classList.remove('active');
             document.body.style.overflow = '';
+        } else {
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
         }
-        
-        // Initialize based on screen size
-        function checkScreenSize() {
-            if (window.innerWidth <= 670) {
-                // If hamburger menu doesn't exist, create it
-                if (!document.querySelector('.hamburger-menu')) {
-                    initHamburgerMenu();
-                }
-            } else {
-                // If hamburger menu exists, remove it
-                cleanupHamburgerMenu();
-            }
-        }
-        
-        // Initialize on DOM load
-        document.addEventListener('DOMContentLoaded', function() {
-            checkScreenSize();
-            
-            // Re-check on window resize
-            window.addEventListener('resize', function() {
-                checkScreenSize();
-            });
+    }
+
+    // Open menu when logo is clicked
+    const logo = document.querySelector('.topbar-logo');
+    if (logo) {
+        logo.style.cursor = 'pointer';
+        logo.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
         });
+    }
 
+    // Close menu when clicking on close button
+    closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu(true);
+    });
 
+    // Close menu when clicking on a link
+    mobileNav.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+            toggleMenu(true);
+        }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (mobileNav.classList.contains('active') && 
+            !mobileNav.contains(e.target) && 
+            !logo.contains(e.target)) {
+            toggleMenu(true);
+        }
+    });
+}
+
+// Clean up hamburger menu on larger screens
+function cleanupHamburgerMenu() {
+    const mobileNav = document.querySelector('.nav-menu');
+    if (mobileNav) mobileNav.remove();
+    document.body.style.overflow = '';
+}
+
+// Initialize on DOM load and on resize
+function checkScreenSize() {
+    if (window.innerWidth <= 670) {
+        initHamburgerMenu();
+    } else {
+        cleanupHamburgerMenu();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+});
+function moveVoiceAssistantToNavMenu() {
+    if (window.innerWidth <= 670) {
+        const navMenu = document.querySelector('.nav-menu');
+        const voiceAssistant = document.querySelector('.voice-assistant');
+        if (navMenu && voiceAssistant && !navMenu.contains(voiceAssistant)) {
+            navMenu.appendChild(voiceAssistant);
+        }
+    } else {
+        // Optionally move it back to sidebar on desktop
+        const sidebar = document.querySelector('.sidebar');
+        const voiceAssistant = document.querySelector('.voice-assistant');
+        if (sidebar && voiceAssistant && !sidebar.contains(voiceAssistant)) {
+            sidebar.appendChild(voiceAssistant);
+        }
+    }
+}
+
+// Run on load and resize
+window.addEventListener('DOMContentLoaded', moveVoiceAssistantToNavMenu);
+window.addEventListener('resize', moveVoiceAssistantToNavMenu);
 // // Archive button function for patients and dental records
 // let archiveRecordId = null;
 
