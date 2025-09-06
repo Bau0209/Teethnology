@@ -236,6 +236,7 @@
     }
     /*report query*/
 }
+
 @media(max-width: 1396px){
     .html{
         font-size: 8px; 
@@ -248,9 +249,16 @@
     }
     .side-bar {
       width: 220px;
+      height: auto;
+    }
+    .side-bar .nav a {
+      padding: 12px 20px;
+      font-size: 0.7rem;
     }
     .voice-assistant {
       left: 220px; 
+      margin-top: 5px;
+      height: 35%;
     }
     .main-content {
       margin-left: 250px; 
@@ -334,6 +342,23 @@
       width: 90%;
 
     }
+    /*patient query*/
+    /*patient query*/
+    .patient-table-container {
+      padding: 15px 20px;
+      max-height: calc(100vh - 350px);
+    }
+    .patients-table {
+      min-width: 900px;
+    }
+    .patients-table thead tr th {
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+    .patients-table tbody tr td {
+      padding: 8px 10px;
+      font-size: 0.7rem;
+    }
 
 }
 
@@ -344,26 +369,102 @@
         font-size: 6px; 
     } 
     /*owner/staff query*/
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .side-bar {
+      width: 200px;
+      height: auto;
+    }
+    .side-bar .nav a {
+      padding: 12px 20px;
+      font-size: 0.7rem;
+      margin-top: 5px;
+      gap: 5px;
+    }
+    .voice-assistant {
+      left: 200px; 
+      margin-top: 5px;
+      height: 30%;
+      
+    }
+    .main-content {
+      margin-left: 250px; 
+    }
+    /*home query*/
+    .card{
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .banner-text h2 {
+      font-size: 0.8rem;
+    }
+    .banner-button {
+      font-size: 0.6rem;
+      padding: 0.3rem 0.7rem;
+    }
+    .banner-image img{
+      height: 10.5vh;
+    }
+    /*appointment query*/
+    .calendar-tab {
+      font-size: 1.1rem;
+      margin-right: 20px;
+    }
+      .appointments-card.calendar-view {
+      width: calc(100% - 30px);
+    }
+    
+    .request-table {
+      gap: 30px;
+    }
+    
+    .request-details, 
+    .request-patient {
+      min-width: 220px;
+    }
+    
+    .modal.right .modal-dialog {
+      max-width: 350px;
+    }
+    /*patient query*/
+    .patient-table-container {
+      width: 100%;
+      padding: 15px 20px;
+    }
+    .patients-table {
+      min-width: 800px;
+    }
+
+    .patients-table thead tr th {
+      font-size: 0.8rem;
+    }
+    .patients-table tbody tr td {
+      font-size: 0.7rem;
+    }
+
     /*report query*/
     .custom-width-left,
     .card-right {
-        flex: 0 0 100%;
-        max-width: 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
     }
 
     .donut-card {
-        width: 100%;
-        min-height: 200px !important;
+      width: 100%;
+      min-height: 200px !important;
     }
 
     .card-right .donut-card .card-body {
-        flex-direction: column;
-        align-items: flex-start;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .revenue-total {
-        top: 5px;
-        right: 10px;
+      top: 5px;
+      right: 10px;
     }
 }
 
@@ -374,6 +475,53 @@
         font-size: 6px; 
     } 
     /*owner/staff query*/
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .side-bar {
+      width: 180px;
+    }
+    .voice-assistant {
+      left: 180px; 
+    }
+    .main-content {
+      margin-left: 250px; 
+    }
+    /*home query*/
+    .banner-text h2 {
+      font-size: 0.7rem;
+    }
+    .banner-button {
+      font-size: 0.5rem;
+      padding: 0.25rem 0.6rem;
+    }
+    .banner-image img{
+      height: 9.5vh;
+    }
+    /*appointment query*/
+    .calendar-tab {
+      font-size: 1rem;
+      margin-right: 15px;
+    }
+    .appointments-card.calendar-view {
+      width: calc(100% - 30px);
+    }
+    /*patient query*/
+    .patient-table-container {
+      width: 100%;
+      padding: 15px 20px;
+    }
+    .patients-table {
+      min-width: 700px;
+    }
+    .patients-table thead tr th {
+      font-size: 0.75rem;
+    }
+    .patients-table tbody tr td {
+      font-size: 0.7rem;
+    }
     /*report query*/
     .card-header,
     .card-right .card h6 {
@@ -402,6 +550,63 @@
     } 
     /*owner/staff query*/
     /*welcome query*/
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .side-bar {
+      width: 220px;
+    }
+    .side-bar .nav a {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+    }
+    .voice-assistant {
+      left: 220px; 
+      margin-top: 5px;
+      height: 35%;
+    }
+    .main-content {
+      margin-left: 250px; 
+    }
+    /*welcome query*/
+    .banner-text h2 {
+      font-size: 0.8rem;
+    }
+    .banner-button {
+      font-size: 0.6rem;
+      padding: 0.3rem 0.7rem;
+    }
+    .banner-image img{
+      height: 10.5vh;
+    }
+    /*appointment query*/
+    .fc .fc-toolbar.fc-header-toolbar {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .request-table {
+    flex-direction: column;
+  }
+  
+  .request-details,
+  .request-patient {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 320px;
+  }
 }
 
 @media (max-width: 730px) {
@@ -411,6 +616,71 @@
     
     /*owner/staff query*/
     /*welcome query*/
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .side-bar {
+      width: 200px;
+    }
+    .side-bar .nav a {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+    }
+    .voice-assistant {
+      left: 200px; 
+      margin-top: 5px;
+      height: 30%;
+    }
+    .main-content {
+      margin-left: 250px; 
+    }
+    /*welcome query*/
+    .banner-text h2 {
+      font-size: 0.7rem;
+    }
+    .banner-button {
+      font-size: 0.5rem;
+      padding: 0.25rem 0.6rem;
+    }
+    .banner-image img{
+      height: 9.5vh;
+    }
+    /*appointment query*/
+    .appointments-header.calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px 16px;
+  }
+  
+  .calendar-tab {
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+  
+  #calendar {
+    padding: 15px;
+  }
+  
+  .request-table-container {
+    padding: 15px 10px 0 10px;
+  }
+  
+  .request-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-accept,
+  .btn-reject {
+    width: 100%;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 280px;
+  }
 }
 
 @media (max-width: 670px) {
@@ -418,70 +688,132 @@
         font-size: 2px; 
     }
     
-    /* Mobile Navigation - Hamburger Menu 
-    .nav-menu {
-        display: none;
-        width: 85% !important;
-        max-width: 290px;
+    /* Mobile Navigation - Hamburger Menu */
+    /* Hide sidebar */
+    .sidebar {
+      display: none !important;
     }
-    
+    .main-content{
+      margin-left: 0 !important;  
+    }
+
+    /* Hamburger menu styles */
     .hamburger-menu {
-        display: block;
-        position: fixed;
-        top: 5px;
-        left: auto;
-        right: 10px;
-        z-index: 1000;
-        background: #009ca6 !important;
-        width: 40px;
-        height: 40px;
-        border-radius: 5px;
-        padding: 8px;
-        cursor: pointer;
-        overflow-x: hidden !important;
+      display: block;
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1001;
+      background: #009ca6;
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    
     .hamburger-menu span {
-        display: block;
-        height: 3px !important;
-        background: white !important;
-        margin: 5px 0 !important;
-        transition: all 0.3s ease;
+      display: block;
+      height: 4px;
+      background: #fff;
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
     }
-    
+
+    /* Hamburger nav menu styles */
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 85vw;
+      max-width: 290px;
+      height: 100vh;
+      background: rgba(238, 249, 250, 0.97);
+      z-index: 1000;
+      padding-top: 60px;
+      overflow-y: auto;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+      align-items: flex-start;
+    }
     .nav-menu.active {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        left: auto;
-        right: 0;
-        width: 85% !important;
-        max-width: 280px;
-        height: 100vh;
-        background: rgba(0, 155, 166, 0.767) !important;
-        z-index: 999 !important;
-        padding: 60px 0 20px; 
-        overflow-y: auto;
-        overflow-x: hidden !important;
-        transform: translateX(0) !important;
-        align-items: flex-start !important; 
+      display: flex;
+      animation: slideInLeft 0.3s;
+      top: 0;
+      left: 0;
+    }
+    .topbar{
+      z-index: 1100; /* Ensure logo stays above nav-menu */
+      position: relative;
+    }
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+
+    .nav-menu a {
+      display: block;
+      width: 100%;
+      color: #009ca6 !important;
+      text-align: left;
+      font-size: 1.2rem;
+      padding: 14px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      box-sizing: border-box;
+      margin-bottom: 0;
+    }
+    .nav-menu ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .nav-menu li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-menu a:hover {
+      background: #00bcd4;
+      color: #222 !important;
+    }
+
+    /* Place voice assistant inside nav menu */
+    .nav-menu .voice-assistant {
+      display: block !important;
+      margin: 24px auto 12px auto;
+      text-align: center;
+      padding: 0;
+      position: relative;
+      top: 20vw;
+      left: 0;
+      right: auto;
     }
     
-    .nav-menu.active a {
-        display: block;
-        margin: 8px 0;
-        width: 100% !important; 
-        font-size: 1.2rem;
-        color: white !important;
-        text-align: left !important; 
-        padding: 12px 40px !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        box-sizing: border-box; 
+    .nav-menu.active .voice-assistant {
+      display: block !important;
     }
-    
-    owner/staff query*/
-    /*welcome query*/    
+
+    /*owner/staff query*/
+    /*welcome query*/  
+    .banner-text h2 {
+      font-size: 0.5rem;
+    }
+    .banner-button {
+      font-size: 0.4rem;
+      padding: 0.2rem 0.5rem;
+    }
+    .banner-image img{
+      height: 8.3vh;
+    }
+    /*appointment query*/
+    .calendar-tab {
+      font-size: 0.9rem;
+      margin-right: 10px;
+    }
+
 }
 
 @media (max-width: 570px) {
@@ -552,6 +884,54 @@
     }
     
     /*owner/staff query*/
+    /*welcome query*/
+    .banner-text h2 {
+      font-size: 0.5rem;
+    }
+    .banner-button {
+      font-size: 0.35rem;
+      padding: 0.15rem 0.4rem;
+    }
+    .banner-image img{
+      height: 7.5vh;
+    }
+    /*appointment query*/
+    .appointments-card.calendar-view {
+    padding: 15px 10px;
+    width: calc(100% - 20px);
+    margin-top: 20px !important;
+  }
+  
+  .fc .fc-toolbar-title {
+    font-size: 1.4rem;
+  }
+  
+  .fc-year-select {
+    font-size: 0.9rem;
+  }
+  
+  .fc .fc-button {
+    font-size: 1.2rem;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 260px;
+    right: 8px;
+  }
+  
+  .fc .fc-col-header-cell {
+    font-size: 0.75rem;
+    padding: 0.5rem 0;
+  }
+  
+  .fc-daygrid-day-number {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+  
+  .request-add-btn {
+    margin-right: 10px;
+  }
     /*report query*/  
     .custom-width-left,
     .card-right {
@@ -595,7 +975,10 @@
         font-size: 2px; 
     }
     
-    /* Mobile Navigation - Hamburger Menu 
+    /* Mobile Navigation - Hamburger Menu */
+    .side-bar {
+        display: none !important;
+    }
     .nav-menu {
         display: none;
         width: 85% !important;
@@ -606,8 +989,8 @@
         display: block;
         position: fixed;
         top: 5px;
-        left: auto;
-        right: 10px;
+        left: 10px;
+        right: auto;
         z-index: 1000;
         background: #009ca6 !important;
         width: 40px;
@@ -689,5 +1072,39 @@
       font-size: 0.8rem;
       margin-top: 25px;
     }
-      
+    /*appointment query*/
+    .calendar-tab {
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+  
+  .fc-event {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+  }
+  
+  .modal.right .modal-dialog {
+    max-width: 90%;
+  }
+  
+  .modal.right .modal-title {
+    font-size: 1.1rem;
+  }
+  
+  .modal.right .modal-date {
+    font-size: 1.2rem;
+  }
+  
+  .btn-add {
+    padding: 6px 24px;
+  }
+  
+  .request-section-title {
+    font-size: 1rem;
+  }
+  
+  .request-details div,
+  .request-patient div {
+    font-size: 0.9rem;
+  }
 }
