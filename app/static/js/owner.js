@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //mobile sidebar toggle
 function initHamburgerMenu() {
     // Only for mobile
-    if (window.innerWidth > 670) return;
+    if (window.innerWidth > 840) return;
 
     // Prevent duplicate menu
     if (document.querySelector('.nav-menu')) return;
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', checkScreenSize);
 });
 function moveVoiceAssistantToNavMenu() {
-    if (window.innerWidth <= 670) {
+    if (window.innerWidth <= 840) {
         const navMenu = document.querySelector('.nav-menu');
         const voiceAssistant = document.querySelector('.voice-assistant');
         if (navMenu && voiceAssistant && !navMenu.contains(voiceAssistant)) {

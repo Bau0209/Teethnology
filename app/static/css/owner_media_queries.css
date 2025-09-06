@@ -236,6 +236,72 @@
       margin-left: 0;
       padding: 6px 12px;
     }
+    /*patient info query*/
+    /* Patients Table Responsive Columns */
+    .patients-table td {
+      font-size: 0.95rem;
+      padding: 8px 10px;
+    }
+    .patients-table td:nth-child(1) { width: 7%; }
+    .patients-table td:nth-child(2) { width: 12%; }
+    .patients-table td:nth-child(3) { width: 18%; }
+    .patients-table td:nth-child(4) { width: 6%; }
+    .patients-table td:nth-child(5) { width: 6%; }
+    .patients-table td:nth-child(6) { width: 14%; }
+    .patients-table td:nth-child(7) { width: 22%; }
+    .patients-table td:nth-child(8) { width: 15%; }
+
+    /* Patients Table Container */
+    .patients-table-container {
+      padding: 10px;
+      width: 100%;
+      min-width: 0;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Patient Info Container */
+    .patient-info-container {
+      padding: 18px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-size: 1.2rem;
+      margin-top: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 3px;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      margin-top: 14px;
+    }
+
+    /* Summary Table */
+    .summary-table th,
+    .summary-table td {
+      font-size: 0.85rem;
+      padding: 10px 6px;
+    }
+    .summary-table-container {
+      max-height: 350px;
+    }
+
+    /* Dental Record Container */
+    .dental-record-container {
+      min-height: 400px;
+      padding-right: 180px;
+      gap: 12px;
+    }
+    .dental-record-legend {
+      width: 180px;
+      padding: 12px;
+    }
+    .dental-record-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
     /*employee query*/
     .employee-table-container {
       padding: 15px 20px;
@@ -558,6 +624,67 @@
     .patients-table tbody tr td {
       font-size: 0.7rem;
     }
+    /*patient info query*/
+    /* Patients Table Responsive Columns */
+    .patients-table td {
+      font-size: 0.9rem;
+      padding: 8px 10px;
+      text-align: center;
+      word-break: break-all;
+    }
+    
+
+    /* Patients Table Container */
+    .patients-table-container {
+      padding: 10px;
+      width: 100%;
+      min-width: 0;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Patient Info Container */
+    .patient-info-container {
+      padding: 18px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-size: 1.2rem;
+      margin-top: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 3px;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      margin-top: 14px;
+    }
+
+    /* Summary Table */
+    .summary-table th,
+    .summary-table td {
+      font-size: 0.85rem;
+      padding: 10px 6px;
+    }
+    .summary-table-container {
+      max-height: 350px;
+    }
+
+    /* Dental Record Container */
+    .dental-record-container {
+      min-height: 400px;
+      padding-right: 180px;
+      gap: 12px;
+    }
+    .dental-record-legend {
+      width: 180px;
+      padding: 12px;
+    }
+    .dental-record-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
     /*report query*/
     .card-header,
     .card-right .card h6 {
@@ -584,27 +711,112 @@
     .html{
         font-size: 5px; 
     } 
-    /*owner/staff query*/
-    /*welcome query*/
-    html, body {
-      overflow-x: hidden;
-      width: 100%;
+    /* Mobile Navigation - Hamburger Menu */
+    /* Hide sidebar */
+    .sidebar {
+      display: none !important;
+    }
+    .main-content{
+      margin-left: 0 !important;  
+    }
+
+    /* Hamburger menu styles */
+    .hamburger-menu {
+      display: block;
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1001;
+      background: #009ca6;
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .hamburger-menu span {
+      display: block;
+      height: 4px;
+      background: #fff;
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* Hamburger nav menu styles */
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 85vw;
+      max-width: 290px;
+      height: 100vh;
+      background: rgba(238, 249, 250, 0.97);
+      z-index: 1000;
+      padding-top: 60px;
+      overflow-y: auto;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+      align-items: flex-start;
+    }
+    .nav-menu.active {
+      display: flex;
+      animation: slideInLeft 0.3s;
+      top: 0;
+      left: 0;
+    }
+    .topbar{
+      z-index: 1100; /* Ensure logo stays above nav-menu */
       position: relative;
     }
-    .side-bar {
-      width: 220px;
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
     }
-    .side-bar .nav a {
-      padding: 12px 20px;
-      font-size: 0.9rem;
+
+    .nav-menu a {
+      display: block;
+      width: 100%;
+      color: #009ca6 !important;
+      text-align: left;
+      font-size: 1.2rem;
+      padding: 14px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      box-sizing: border-box;
+      margin-bottom: 0;
     }
-    .voice-assistant {
-      left: 220px; 
-      margin-top: 5px;
-      height: 35%;
+    .nav-menu ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
     }
-    .main-content {
-      margin-left: 250px; 
+    .nav-menu li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-menu a:hover {
+      background: #00bcd4;
+      color: #222 !important;
+    }
+
+    /* Place voice assistant inside nav menu */
+    .nav-menu .voice-assistant {
+      display: block !important;
+      margin: 24px auto 12px auto;
+      text-align: center;
+      padding: 0;
+      position: relative;
+      top: 20vw;
+      left: 0;
+      right: auto;
+    }
+    
+    .nav-menu.active .voice-assistant {
+      display: block !important;
     }
     /*welcome query*/
     .banner-text h2 {
@@ -619,30 +831,125 @@
     }
     /*appointment query*/
     .fc .fc-toolbar.fc-header-toolbar {
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-  
-  .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
-    order: 1;
-    width: 100%;
-    justify-content: center;
-    margin: 10px 0;
-  }
-  
-  .request-table {
-    flex-direction: column;
-  }
-  
-  .request-details,
-  .request-patient {
-    width: 100%;
-    min-width: 100%;
-  }
-  
-  .modal.right .modal-dialog {
-    max-width: 320px;
-  }
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    
+    .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
+      order: 1;
+      width: 100%;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    
+    .request-table {
+      flex-direction: column;
+    }
+    
+    .request-details,
+    .request-patient {
+      width: 100%;
+      min-width: 100%;
+    }
+    
+    .modal.right .modal-dialog {
+      max-width: 320px;
+    }
+    /*patient info query*/
+    /* Patients Table Responsive Columns */
+    .patients-table td {
+      font-size: 0.8rem;
+      padding: 4px 5px;
+      text-align: center;
+      word-break: break-all;
+    }
+    .patients-table td:nth-child(1) { width: 2%; }
+    .patients-table td:nth-child(2) { width: 10%; text-align: center; }
+    .patients-table td:nth-child(3) { width: 22%; }
+    .patients-table td:nth-child(4) { width: 9%; }
+    .patients-table td:nth-child(5) { width: 3%; }
+    .patients-table td:nth-child(6) { width: 19%; }
+    .patients-table td:nth-child(7) { width: 30%; text-align: center; }
+    .patients-table td:nth-child(8) { width: 30%; text-align: center;  word-break: break-word;}
+
+    
+    /* Patients Table Container */
+    .patients-table-container {
+      padding: 10px;
+      width: 100%;
+      min-width: 0;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Patient Info Container */
+    .patient-info-container {
+      padding: 18px;
+      width: 100%;
+      max-width: 100%;
+    }
+    .nav-tabs .nav-link {
+      font-size: 0.9rem;
+      padding: 8px 12px;
+    }
+    /* Section Titles */
+    .section-title {
+      font-size: 1.2rem;
+      margin-top: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 3px;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      margin-top: 14px;
+    }
+
+    /* Summary Table */
+    .summary-container{
+      overflow-x: auto;
+      width: 100%;
+
+    }
+    .summary-table th,
+    .summary-table td {
+      font-size: 0.85rem;
+      padding: 10px 6px;
+    }
+    .summary-table-container {
+      max-height: 350px;
+    }
+
+    /* Dental Record Container */
+    .dental-record-container {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-height: 400px;
+      padding-right: 0;
+      position: relative;
+    }
+    .dental_chart {
+      order: 1;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .chart-select {
+      order: 1;
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      min-width: 0;
+      padding: 4px 10px;
+    }
+    .dental-record-legend {
+      order: 2;
+      position: static;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 0;
+      padding: 14px 10px;
+      border-radius: 5px;
+      box-shadow: none;
+    }
 }
 
 @media (max-width: 730px) {
@@ -650,27 +957,112 @@
         font-size: 4px; 
     }
     
-    /*owner/staff query*/
-    /*welcome query*/
-    html, body {
-      overflow-x: hidden;
-      width: 100%;
+    /* Mobile Navigation - Hamburger Menu */
+    /* Hide sidebar */
+    .sidebar {
+      display: none !important;
+    }
+    .main-content{
+      margin-left: 0 !important;  
+    }
+
+    /* Hamburger menu styles */
+    .hamburger-menu {
+      display: block;
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1001;
+      background: #009ca6;
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .hamburger-menu span {
+      display: block;
+      height: 4px;
+      background: #fff;
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* Hamburger nav menu styles */
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 85vw;
+      max-width: 290px;
+      height: 100vh;
+      background: rgba(238, 249, 250, 0.97);
+      z-index: 1000;
+      padding-top: 60px;
+      overflow-y: auto;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+      align-items: flex-start;
+    }
+    .nav-menu.active {
+      display: flex;
+      animation: slideInLeft 0.3s;
+      top: 0;
+      left: 0;
+    }
+    .topbar{
+      z-index: 1100; /* Ensure logo stays above nav-menu */
       position: relative;
     }
-    .side-bar {
-      width: 200px;
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
     }
-    .side-bar .nav a {
-      padding: 12px 20px;
-      font-size: 0.9rem;
+
+    .nav-menu a {
+      display: block;
+      width: 100%;
+      color: #009ca6 !important;
+      text-align: left;
+      font-size: 1.2rem;
+      padding: 14px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      box-sizing: border-box;
+      margin-bottom: 0;
     }
-    .voice-assistant {
-      left: 200px; 
-      margin-top: 5px;
-      height: 30%;
+    .nav-menu ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
     }
-    .main-content {
-      margin-left: 250px; 
+    .nav-menu li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-menu a:hover {
+      background: #00bcd4;
+      color: #222 !important;
+    }
+
+    /* Place voice assistant inside nav menu */
+    .nav-menu .voice-assistant {
+      display: block !important;
+      margin: 24px auto 12px auto;
+      text-align: center;
+      padding: 0;
+      position: relative;
+      top: 20vw;
+      left: 0;
+      right: auto;
+    }
+    
+    .nav-menu.active .voice-assistant {
+      display: block !important;
     }
     /*welcome query*/
     .banner-text h2 {
@@ -857,66 +1249,112 @@
         font-size: 2px; 
     }
     
-    /* Mobile Navigation - Hamburger Menu 
-    .nav-menu {
-        display: none;
-        width: 85% !important;
-        max-width: 290px;
+    /* Mobile Navigation - Hamburger Menu */
+    /* Hide sidebar */
+    .sidebar {
+      display: none !important;
     }
-    
+    .main-content{
+      margin-left: 0 !important;  
+    }
+
+    /* Hamburger menu styles */
     .hamburger-menu {
-        display: block;
-        position: fixed;
-        top: 5px;
-        left: auto;
-        right: 10px;
-        z-index: 1000;
-        background: #009ca6 !important;
-        width: 40px;
-        height: 40px;
-        border-radius: 5px;
-        padding: 8px;
-        cursor: pointer;
-        overflow-x: hidden !important;
+      display: block;
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1001;
+      background: #009ca6;
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    
     .hamburger-menu span {
-        display: block;
-        height: 3px !important;
-        background: white !important;
-        margin: 5px 0 !important;
-        transition: all 0.3s ease;
+      display: block;
+      height: 4px;
+      background: #fff;
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
     }
-    
+
+    /* Hamburger nav menu styles */
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 85vw;
+      max-width: 290px;
+      height: 100vh;
+      background: rgba(238, 249, 250, 0.97);
+      z-index: 1000;
+      padding-top: 60px;
+      overflow-y: auto;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+      align-items: flex-start;
+    }
     .nav-menu.active {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 0;
-        left: auto;
-        right: 0;
-        width: 85% !important;
-        max-width: 280px;
-        height: 100vh;
-        background: rgba(0, 155, 166, 0.767) !important;
-        z-index: 999 !important;
-        padding: 60px 0 20px; 
-        overflow-y: auto;
-        overflow-x: hidden !important;
-        transform: translateX(0) !important;
-        align-items: flex-start !important; 
+      display: flex;
+      animation: slideInLeft 0.3s;
+      top: 0;
+      left: 0;
+    }
+    .topbar{
+      z-index: 1100; /* Ensure logo stays above nav-menu */
+      position: relative;
+    }
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+
+    .nav-menu a {
+      display: block;
+      width: 100%;
+      color: #009ca6 !important;
+      text-align: left;
+      font-size: 1.2rem;
+      padding: 14px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      box-sizing: border-box;
+      margin-bottom: 0;
+    }
+    .nav-menu ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .nav-menu li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-menu a:hover {
+      background: #00bcd4;
+      color: #222 !important;
+    }
+
+    /* Place voice assistant inside nav menu */
+    .nav-menu .voice-assistant {
+      display: block !important;
+      margin: 24px auto 12px auto;
+      text-align: center;
+      padding: 0;
+      position: relative;
+      top: 20vw;
+      left: 0;
+      right: auto;
     }
     
-    .nav-menu.active a {
-        display: block;
-        margin: 8px 0;
-        width: 100% !important; 
-        font-size: 1.2rem;
-        color: white !important;
-        text-align: left !important; 
-        padding: 12px 40px !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        box-sizing: border-box; 
+    .nav-menu.active .voice-assistant {
+      display: block !important;
     }
     
     /*owner/staff query*/
@@ -933,41 +1371,41 @@
     }
     /*appointment query*/
     .appointments-card.calendar-view {
-    padding: 15px 10px;
-    width: calc(100% - 20px);
-    margin-top: 20px !important;
-  }
-  
-  .fc .fc-toolbar-title {
-    font-size: 1.4rem;
-  }
-  
-  .fc-year-select {
-    font-size: 0.9rem;
-  }
-  
-  .fc .fc-button {
-    font-size: 1.2rem;
-  }
-  
-  .modal.right .modal-dialog {
-    max-width: 260px;
-    right: 8px;
-  }
-  
-  .fc .fc-col-header-cell {
-    font-size: 0.75rem;
-    padding: 0.5rem 0;
-  }
-  
-  .fc-daygrid-day-number {
-    font-size: 0.85rem;
-    padding: 6px;
-  }
-  
-  .request-add-btn {
-    margin-right: 10px;
-  }
+      padding: 15px 10px;
+      width: calc(100% - 20px);
+      margin-top: 20px !important;
+    }
+    
+    .fc .fc-toolbar-title {
+      font-size: 1.4rem;
+    }
+    
+    .fc-year-select {
+      font-size: 0.9rem;
+    }
+    
+    .fc .fc-button {
+      font-size: 1.2rem;
+    }
+    
+    .modal.right .modal-dialog {
+      max-width: 260px;
+      right: 8px;
+    }
+    
+    .fc .fc-col-header-cell {
+      font-size: 0.75rem;
+      padding: 0.5rem 0;
+    }
+    
+    .fc-daygrid-day-number {
+      font-size: 0.85rem;
+      padding: 6px;
+    }
+    
+    .request-add-btn {
+      margin-right: 10px;
+    }
     /*report query*/  
     .custom-width-left,
     .card-right {
