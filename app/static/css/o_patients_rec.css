@@ -178,7 +178,7 @@ body {
     width: 100%;
     background: #fff;
     overflow-y: auto;     
-    overflow-x: hidden; 
+    overflow-x: auto; 
     max-height: calc(100vh - 400px); 
     position: relative;
     transition: max-height 0.3s ease-in-out;
