@@ -87,7 +87,7 @@ body {
     display: flex;
     justify-content: flex-end;
     margin-left: auto;
-    width: auto;
+    width: 150px;
 }
 
 .search-bar-container {
@@ -100,7 +100,7 @@ body {
     background: #fff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     font-size: 1rem;
-    min-width: 420px;
+    max-width: 450px;
     outline: none;
     margin-right: 0;
     margin-bottom: 10px; 
@@ -384,111 +384,4 @@ body {
  }
 .form-group {
   margin-bottom: 15px;
-}
-/* Responsive adjustments */
-@media (min-width: 1920px) {
-  .inventory-container {
-    max-width: 1800px;
-  }
-  
-  .inventory-table th,
-  .inventory-table td {
-    padding: 15px 20px;
-    font-size: 1.05rem;
-  }
-}
-
-/* Standard Desktop (1200px-1919px) */
-@media (max-width: 1200px) {
-  .inventory-container {
-    width: calc(100% - 30px);
-  }
-  
-  .search-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .search-bar {
-    max-width: 100%;
-  }
-}
-
-/* Small Desktop/Tablet (992px-1199px) */
-@media (max-width: 992px) {
-  .inventory-tabs .nav-link {
-    padding: 8px 15px;
-    font-size: 0.9rem;
-  }
-  
-  .inventory-table th,
-  .inventory-table td {
-    padding: 10px 8px;
-    font-size: 0.9rem;
-  }
-}
-
-/* Tablet (768px-991px) */
-@media (max-width: 768px) {
-  .branch-overview-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .inventory-tabs .nav-tabs {
-    flex-wrap: wrap;
-  }
-  
-  .inventory-table {
-    display: block;
-    width: 100%;
-  }
-  
-  .inventory-table th,
-  .inventory-table td {
-    white-space: normal;
-  }
-}
-
-/* Mobile (576px-767px) */
-@media (max-width: 576px) {
-  .inventory-container {
-    padding: 15px 10px;
-    width: calc(100% - 20px);
-  }
-  
-  .section-title {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  
-  .branch-dropdown .form-select {
-    width: 100%;
-  }
-  
-  .add-btn,
-  .filter-btn {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* Small Mobile (<576px) */
-@media (max-width: 400px) {
-  .inventory-tabs .nav-link {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-  }
-  
-  .inventory-table th,
-  .inventory-table td {
-    padding: 8px 5px;
-    font-size: 0.8rem;
-  }
-  
-  .badge.bg-danger {
-    padding: 3px 6px;
-    font-size: 0.7rem;
-  }
 }
