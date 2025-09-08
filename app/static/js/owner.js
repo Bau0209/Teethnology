@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //mobile sidebar toggle
 function initHamburgerMenu() {
     // Only for mobile
-    if (window.innerWidth > 840) return;
+    if (window.innerWidth > 920) return;
 
     // Prevent duplicate menu
     if (document.querySelector('.nav-menu')) return;
@@ -299,7 +299,7 @@ function cleanupHamburgerMenu() {
 
 // Initialize on DOM load and on resize
 function checkScreenSize() {
-    if (window.innerWidth <= 840) {
+    if (window.innerWidth <= 920) {
         initHamburgerMenu();
     } else {
         cleanupHamburgerMenu();
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', checkScreenSize);
 });
 function moveVoiceAssistantToNavMenu() {
-    if (window.innerWidth <= 840) {
+    if (window.innerWidth <= 920) {
         const navMenu = document.querySelector('.nav-menu');
         const voiceAssistant = document.querySelector('.voice-assistant');
         if (navMenu && voiceAssistant && !navMenu.contains(voiceAssistant)) {
