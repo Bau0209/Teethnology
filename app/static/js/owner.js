@@ -299,7 +299,7 @@ function cleanupHamburgerMenu() {
 
 // Initialize on DOM load and on resize
 function checkScreenSize() {
-    if (window.innerWidth <= 670) {
+    if (window.innerWidth <= 840) {
         initHamburgerMenu();
     } else {
         cleanupHamburgerMenu();

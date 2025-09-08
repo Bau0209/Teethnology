@@ -820,28 +820,26 @@
     }
     /*welcome query*/
     .banner-text h2 {
-      font-size: 0.8rem;
+      font-size: 0.6rem !important;
     }
     .banner-button {
-      font-size: 0.6rem;
+      font-size: 0.5rem !important;
       padding: 0.3rem 0.7rem;
     }
     .banner-image img{
-      height: 10.5vh;
+      height: 10.5vh !important;
     }
     /*appointment query*/
-    .fc .fc-toolbar.fc-header-toolbar {
-      flex-wrap: wrap;
-      gap: 5px;
+    .calendar-tab {
+      font-size: 1rem;
+      margin-right: 20px;
     }
-    
-    .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
-      order: 1;
-      width: 100%;
-      justify-content: center;
-      margin: 10px 0;
+    .appointments-header.calendar-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 12px 16px;
     }
-    
     .request-table {
       flex-direction: column;
     }
@@ -950,6 +948,26 @@
       border-radius: 5px;
       box-shadow: none;
     }
+    /*report query*/
+    .custom-width-left,
+    .card-right {
+      flex: 0 0 100%;
+      max-width: 100%;
+      width: 100%;
+      margin: 0 0 20px 0;
+      padding-left: 0;
+    }
+    .card-right {
+      order: 2;
+      padding-left: 0;
+    }
+    .business-insight-card {
+      width: 100%;
+      max-width: 100%;
+      margin-top: 40px;
+      min-height: 200px;
+    }
+
 }
 
 @media (max-width: 730px) {
@@ -1359,16 +1377,7 @@
     
     /*owner/staff query*/
     /*welcome query*/
-    .banner-text h2 {
-      font-size: 0.5rem;
-    }
-    .banner-button {
-      font-size: 0.35rem;
-      padding: 0.15rem 0.4rem;
-    }
-    .banner-image img{
-      height: 7.5vh;
-    }
+    
     /*appointment query*/
     .appointments-card.calendar-view {
       padding: 10px 5px;
@@ -1383,10 +1392,7 @@
       font-size: 0.9rem !important;
     }
      
-    .request-add-btn {
-      margin-right: 10px;
-    }
-    /*report query*/  
+    /*report query*/ 
     .custom-width-left,
     .card-right {
       flex: 0 0 100%;
@@ -1413,7 +1419,7 @@
     }
 
     .business-insight-card {
-      margin-top: 30px;
+      margin-top: 40px !important;
       font-size: 0.85rem;
     }
 }
@@ -1489,6 +1495,15 @@
       z-index: 1100; /* Ensure logo stays above nav-menu */
       position: relative;
     }
+    .topbar-right{
+      gap: 6px;
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+    .topbar-icon{
+      width: 20px;
+      height: 20px;
+    }
     @keyframes slideInLeft {
       from { transform: translateX(-100%); }
       to { transform: translateX(0); }
@@ -1538,70 +1553,81 @@
     }
     
     /*owner/staff query*/
+    /*appointment query*/
+    .calendar-tab {
+      font-size: 1rem;
+      margin-right: 10px;
+    }
+    
+    .fc-event {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+    }
+    
+    .modal.right .modal-dialog {
+      max-width: 90%;
+    }
+    
+    .modal.right .modal-title {
+      font-size: 1.1rem;
+    }
+    
+    .modal.right .modal-date {
+      font-size: 1.2rem;
+    }
+    
+    .btn-add {
+      padding: 6px 24px;
+    }
+    
+    .request-section-title {
+      font-size: 1rem;
+    }
+    
+    .request-details div,
+    .request-patient div {
+      font-size: 0.9rem;
+    }
     /*report query*/
+    .card{
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .revenue-summary-section.row.g3 {
+      flex-direction: column;
+      gap: 20px;
+      padding: 10px;
+      height: auto;
+      font-size: 0.5rem;
+      width: 100%;
+    }
+    .custom-width-left,
+    .card-right {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
     .donut-card {
-      min-height: 140px !important;
-    }
-
-    .card-right .donut-card ul {
-      padding-left: 0.8rem;
-    }
-
-    .card-right .donut-card ul li {
-      font-size: 0.8rem;
+      width: 100%;
+      min-height: 160px !important;
     }
 
     .card-header,
     .card-right .card h6 {
+      font-size: 0.95rem;
+    }
+
+    .metric-card .card-title {
       font-size: 0.9rem;
     }
 
     .forecast-filters .btn {
-      font-size: 0.65rem;
-      padding: 0.2rem 0.5rem;
-    }
-
-    .metric-card .card-title {
-      font-size: 0.85rem;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.7rem;
     }
 
     .business-insight-card {
-      font-size: 0.8rem;
-      margin-top: 25px;
+      margin-top: 40px;
+      font-size: 0.85rem;
     }
-    /*appointment query*/
-    .calendar-tab {
-    font-size: 1rem;
-    margin-right: 10px;
-  }
-  
-  .fc-event {
-    font-size: 0.75rem;
-    padding: 2px 6px;
-  }
-  
-  .modal.right .modal-dialog {
-    max-width: 90%;
-  }
-  
-  .modal.right .modal-title {
-    font-size: 1.1rem;
-  }
-  
-  .modal.right .modal-date {
-    font-size: 1.2rem;
-  }
-  
-  .btn-add {
-    padding: 6px 24px;
-  }
-  
-  .request-section-title {
-    font-size: 1rem;
-  }
-  
-  .request-details div,
-  .request-patient div {
-    font-size: 0.9rem;
-  }
 }
