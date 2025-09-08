@@ -352,7 +352,7 @@
                                         <div class="checkbox-item">
                                             <input type="checkbox" id="allergy6" name="allergy" {% if "Other" in allergies %}checked{% endif %}>
                                             <label for="allergy6">Other:</label>
-                                            <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
+                                            <input type="text" class="form-control form-control-sm d-inline-block w-100 ms-2"
                                                 value="{% for item in allergies if item not in ['Local Anesthetic', 'Penicillin Antibiotics', 'Latex', 'Sulfa Drugs', 'Aspirin'] %}{{ item }}{% endfor %}">
                                         </div>
                                     </div>
@@ -433,7 +433,7 @@
                                             <input type="checkbox" id="conditionOther" name="condition" value="Other"
                                                 {% if other_conditions %}checked{% endif %}>
                                             <label for="conditionOther">Other:</label>
-                                            <input type="text" class="form-control form-control-sm d-inline-block w-auto ms-2"
+                                            <input type="text" class="form-control form-control-sm d-inline-block w-100 ms-2"
                                                 name="other_condition" value="{{ other_conditions | join(', ') }}">
                                         </div>
                                     </div>
