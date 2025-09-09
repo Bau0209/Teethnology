@@ -20,7 +20,6 @@ def get_branches():
     branches = Branch.query.all()
     return jsonify([{"id": b.branch_id, "name": b.branch_name} for b in branches])
 
-<<<<<<< HEAD
 @dashboard.route('/appointments')
 def appointments():
     inventory_items = InventoryItem.query.filter(InventoryItem.category != 'Equipment').all()
@@ -49,69 +48,10 @@ def appointments():
             ),
             'patient': a.patient.patient_full_name,
             'type': a.appointment_type,
-=======
-from flask import request, jsonify, render_template
-from sqlalchemy.orm import joinedload
-import json
-
-from sqlalchemy.orm import joinedload
-
-@dashboard.route('/appointments')
-def appointments():
-    selected_branch = request.args.get('branch', 'all')
-    appointment_id = request.args.get('appointment_id')
-
-    # Base query with eager loading
-    query = (
-        Appointments.query
-        .options(
-            joinedload(Appointments.patient),
-            joinedload(Appointments.branch),
-            joinedload(Appointments.procedures)
-        )
-        .filter(Appointments.appointment_status != 'cancelled')
-    )
-
-    if selected_branch != 'all':
-        try:
-            branch_id = int(selected_branch)
-            query = query.filter(Appointments.branch_id == branch_id)
-        except ValueError:
-            selected_branch = 'all'  # fallback if someone passes bad string
-
-    if appointment_id:
-        query = query.filter(Appointments.appointment_id == appointment_id)
-
-    appointments = query.all()
-
-    branches = Branch.query.all()
-    inventory_items = (
-        InventoryItem.query
-        .filter(InventoryItem.category != 'Equipment')
-        .all()
-    )
-
-    # Prepare events (calendar view)
-    events = [
-        {
-            "title": f"{a.patient.patient_full_name} - {a.appointment_type}",
-            "start": a.appointment_date.strftime("%Y-%m-%d"),
-            "color": (
-                "#228ad9" if (
-                    a.procedures
-                    and a.procedures[0].procedure_status
-                    and a.procedures[0].procedure_status.lower() == "completed"
-                )
-                else ("#e57373" if a.appointment_status == "pending" else "#7bb3ad")
-            ),
-            "patient": a.patient.patient_full_name,
-            "type": a.appointment_type,
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
         }
         for a in appointments
     ]
 
-<<<<<<< HEAD
     appointment_data = [
         {
             'branch_id': a.branch.branch_id,
@@ -129,66 +69,28 @@ def appointments():
                 if a.procedures and a.procedures[0].procedure_status
                 else ''
             )
-=======
-    # Prepare appointment data (table/list view)
-    appointment_data = [
-        {
-            "branch_id": a.branch.branch_id,
-            "branch_name": a.branch.branch_name,
-            "appointment_id": a.appointment_id,
-            "status": a.appointment_status,
-            "time": a.appointment_time.strftime("%I:%M %p"),
-            "reason": a.appointment_type,
-            "patient_name": a.patient.patient_full_name,
-            "patient_type": "Returning Patient" if a.returning_patient else "New Patient",
-            "contact": a.patient.contact_number,
-            "email": a.patient.email,
-            "date": a.appointment_date.strftime("%Y-%m-%d"),
-            "procedure_status": (
-                a.procedures[0].procedure_status.lower()
-                if a.procedures and a.procedures[0].procedure_status
-                else ""
-            ),
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
         }
         for a in appointments
     ]
 
     return render_template(
-<<<<<<< HEAD
         'dashboard/appointment.html',
-=======
-        "dashboard/appointment.html",
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
         inventory_items=inventory_items,
         branches=branches,
         appointments=appointments,
         selected_branch=selected_branch,
         events=json.dumps(events),
-<<<<<<< HEAD
         appointment_data=json.dumps(appointment_data)
-=======
-        appointment_data=json.dumps(appointment_data),
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
     )
 
 @dashboard.route('/appointment_req')
 def appointment_req():
     selected_branch = request.args.get('branch', 'all')
     
-<<<<<<< HEAD
     appointments = Appointments.query.filter_by(appointment_status='Pending').order_by(Appointments.appointment_date.asc()).all()
 
     if selected_branch != 'all':
         appointments = appointments.filter_by(branch_id=selected_branch).order_by(Appointments.appointment_date.asc()).all()
-=======
-    query = Appointments.query.filter_by(appointment_status='Pending').order_by(Appointments.appointment_date.asc())
-
-    if selected_branch != 'all':
-        query = query.filter_by(branch_id=selected_branch)
-
-    appointments = query.all()
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
 
     appointment_data = [
         {
@@ -215,7 +117,6 @@ def appointment_req():
         appointment_data=json.dumps(appointment_data)
     )
 
-<<<<<<< HEAD
 @dashboard.route('/appointment_archives')
 def appointment_archives():
     selected_branch = request.args.get('branch', 'all')
@@ -224,20 +125,6 @@ def appointment_archives():
     if selected_branch != 'all':
         appointments = appointments.filter_by(branch_id=selected_branch).order_by(Appointments.appointment_date.asc()).all()
         
-=======
-
-@dashboard.route('/appointment_archives')
-def appointment_archives():
-    selected_branch = request.args.get('branch', 'all')
-
-    query = Appointments.query.filter_by(appointment_status='Cancelled').order_by(Appointments.appointment_date.asc())
-
-    if selected_branch != 'all':
-        query = query.filter_by(branch_id=selected_branch)
-
-    appointments = query.all()
-
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
     appointment_data = [
         {
             'date': a.appointment_date.strftime('%Y-%m-%d'),
@@ -253,10 +140,6 @@ def appointment_archives():
         }
         for a in appointments
     ]
-<<<<<<< HEAD
-=======
-    
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
     branches = Branch.query.all()
     return render_template(
         'dashboard/appointment_archives.html',
@@ -265,10 +148,7 @@ def appointment_archives():
         selected_branch=selected_branch,
         appointment_data=json.dumps(appointment_data)
     )
-<<<<<<< HEAD
     
-=======
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
 
 #Adding an Appointment in the calendar
 @dashboard.route('/form', methods=['GET', 'POST'])
