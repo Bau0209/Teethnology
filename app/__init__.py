@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+<<<<<<< HEAD
+=======
 from google.cloud import aiplatform
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
 from config import Config
 from dotenv import load_dotenv
 import os
@@ -24,6 +27,10 @@ def create_app():
     app.register_blueprint(main)
     app.register_blueprint(login, url_prefix='/login')
     app.register_blueprint(dashboard, url_prefix='/dashboard')
+<<<<<<< HEAD
+
+    return app
+=======
     print("Loaded GCP project:", os.getenv("GCP_PROJECT_ID"))
     return app
 
@@ -32,3 +39,4 @@ aiplatform.init(
     project=os.getenv("GCP_PROJECT_ID"),
     location="asia-southeast1"
 )
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff

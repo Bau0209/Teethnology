@@ -28,12 +28,21 @@
     <!-- Inventory Category Tabs -->
     <div class="inventory-tabs">
         <ul class="nav nav-tabs">
+<<<<<<< HEAD
+            <li class="nav-item"><a class="nav-link {{ 'active' if request.endpoint == 'dashboard.inventory' }}" href="{{ url_for('dashboard.inventory') }}">All</a></li>
+            <li class="nav-item"><a class="nav-link {{ 'active' if request.endpoint == 'dashboard.inventory' }}" href="{{ url_for('dashboard.inventory_consumable') }}">Consumables</a></li>
+            <li class="nav-item"><a class="nav-link {{ 'active' if request.endpoint == 'dashboard.inventory' }}" href="{{ url_for('dashboard.inventory_equipment') }}">Equipments</a></li>
+            <li class="nav-item"><a class="nav-link {{ 'active' if request.endpoint == 'dashboard.inventory' }}" href="{{ url_for('dashboard.inventory_sterilization') }}">Sterilization</a></li>
+            <li class="nav-item"><a class="nav-link {{ 'active' if request.endpoint == 'dashboard.inventory' }}" href="{{ url_for('dashboard.inventory_lab_material') }}">Lab Materials</a></li>
+            <li class="nav-item"><a class="nav-link {{ 'active' if request.endpoint == 'dashboard.inventory' }}" href="{{ url_for('dashboard.inventory_medication') }}">Medications</a></li>
+=======
             <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard.inventory') }}">All</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_consumable') }}">Consumables</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_equipment') }}">Equipments</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_sterilization') }}">Sterilization</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_lab_material') }}">Lab Materials</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.inventory_medication') }}">Medications</a></li>
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
         </ul>
     </div>
 
@@ -134,6 +143,8 @@
                     </td>
                 </tr>
                 {% endfor %}
+<<<<<<< HEAD
+=======
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         {% if pagination.has_prev %}
@@ -163,6 +174,7 @@
                         {% endif %}
                     </ul>
                 </nav>
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
             </tbody>
         </table>
     </div>
