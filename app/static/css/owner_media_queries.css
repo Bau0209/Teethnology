@@ -2090,13 +2090,13 @@
       width: 100% !important;
       height: 100% !important;
     }
-    .revenue-summary-section.row.g3 {
-      flex-direction: column;
-      gap: 20px;
-      padding: 10px;
-      height: auto;
-      font-size: 0.5rem;
-      width: 100%;
+    .revenue-summary-section {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+      padding: 10px !important;
+      width: 100% !important;
     }
     .custom-width-left,
     .card-right {
