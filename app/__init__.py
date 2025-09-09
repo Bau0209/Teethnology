@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from google.cloud import aiplatform
 from config import Config
 from dotenv import load_dotenv
 import os
@@ -25,3 +26,9 @@ def create_app():
     app.register_blueprint(dashboard, url_prefix='/dashboard')
 
     return app
+
+# Initialize Vertex AI
+aiplatform.init(
+    project=os.getenv("GCP_PROJECT_ID"),
+    location="asia-southeast1"
+)

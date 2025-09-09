@@ -11,3 +11,6 @@ venv/
 
 # Ignore output or generated files
 compiledOutput.txt
+
+#GCP KEY
+services/vertex-ai-key.json

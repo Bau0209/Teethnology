@@ -1,5 +1,4 @@
-from datetime import date, timedelta
-from flask import request, jsonify, session
+from flask import request, jsonify
 from vertexai.preview.generative_models import GenerativeModel, Part, Content
 from fuzzywuzzy import process
 import vertexai
