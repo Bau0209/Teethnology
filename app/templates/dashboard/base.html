@@ -100,6 +100,7 @@
     </div>
 
     {% block extra_js %}{% endblock %}
+<<<<<<< HEAD
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -208,5 +209,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+=======
+    <script>
+        window.userContext = {
+            accessLevel: "{{ session.get('access_level', '') }}",
+            accessBranch: "{{ session.get('access_branch', '') }}"
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/voice_assistant.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
 </body>
 </html>

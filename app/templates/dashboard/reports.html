@@ -14,25 +14,41 @@
   <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
         <a class="nav-link {% if request.endpoint == 'dashboard.reports' %}active{% endif %}"
+<<<<<<< HEAD
            href="{{ url_for('dashboard.reports', branch=selected_branch) }}">
+=======
+           href="{{ url_for('dashboard.reports', branch=selected_branch, selected_year=selected_year) }}">
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
            Revenue
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link {% if request.endpoint == 'dashboard.report_patients' %}active{% endif %}"
+<<<<<<< HEAD
            href="{{ url_for('dashboard.report_patients', branch=selected_branch) }}">
+=======
+           href="{{ url_for('dashboard.report_patients', branch=selected_branch, selected_year=selected_year) }}">
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
            Patients
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link {% if request.endpoint == 'dashboard.report_marketing' %}active{% endif %}"
+<<<<<<< HEAD
            href="{{ url_for('dashboard.report_marketing', branch=selected_branch) }}">
+=======
+           href="{{ url_for('dashboard.report_marketing', branch=selected_branch, selected_year=selected_year) }}">
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
            Marketing
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link {% if request.endpoint == 'dashboard.report_inventory' %}active{% endif %}"
+<<<<<<< HEAD
            href="{{ url_for('dashboard.report_inventory', branch=selected_branch) }}">
+=======
+           href="{{ url_for('dashboard.report_inventory', branch=selected_branch, selected_year=selected_year) }}">
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
            Inventory
         </a>
     </li>
@@ -40,7 +56,11 @@
         {% if access_level == 'owner' %}
           <form method="get" action="{{ url_for('dashboard.reports') }}">
             <!-- Keep year selection -->
+<<<<<<< HEAD
             <input type="hidden" name="report_revenue_selected_year" value="{{ selected_year }}">
+=======
+            <input type="hidden" name="selected_year" value="{{ selected_year }}">
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
             
             <select name="branch" id="selected_branch" class="form-select" onchange="this.form.submit()">
               <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branch</option>
@@ -61,7 +81,11 @@
             <!-- Keep branch selection -->
             <input type="hidden" name="branch" value="{{ selected_branch }}">
 
+<<<<<<< HEAD
             <select name="report_revenue_selected_year" class="form-select form-select-sm" onchange="this.form.submit()">
+=======
+            <select name="selected_year" class="form-select form-select-sm" onchange="this.form.submit()">
+>>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
               {% for y in range(current_year, current_year - 10, -1) %}
                 <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
               {% endfor %}

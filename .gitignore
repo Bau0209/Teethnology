@@ -11,3 +11,6 @@ venv/
 
 # Ignore output or generated files
 compiledOutput.txt
+
+# Ignore service account keys
+app/services/*.json
