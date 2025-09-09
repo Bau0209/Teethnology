@@ -24,7 +24,7 @@ from ...utils.report_inventory_data import (
 @dashboard.route('/reports')    
 def reports():
     today = datetime.now()
-    selected_year = request.args.get('report_revenue_selected_year', type=int) or today.year
+    selected_year = request.args.get('selected_year', type=int) or today.year
     selected_branch = request.args.get('branch', 'all')
     revenue_data = get_revenue_data(selected_year, selected_branch)
     revenue_insights = generate_revenue_insights(revenue_data)
@@ -46,7 +46,7 @@ def reports():
 def report_patients():
     today = datetime.now()
     current_month = today.month
-    selected_year = request.args.get('report_revenue_selected_year', type=int) or today.year
+    selected_year = request.args.get('selected_year', type=int) or today.year
     selected_branch = request.args.get('branch', 'all')
     patients_data = get_patients_data(selected_year, selected_branch)
     
@@ -69,7 +69,7 @@ def report_patients():
 @dashboard.route('/report_marketing')
 def report_marketing():
     today = datetime.now()
-    selected_year = request.args.get('report_revenue_selected_year', type=int) or today.year
+    selected_year = request.args.get('selected_year', type=int) or today.year
     selected_branch = request.args.get('branch', 'all')
     current_month = datetime.today().month
     report_data = get_marketing_data(selected_year, selected_branch)
@@ -85,7 +85,9 @@ def report_marketing():
 
 @dashboard.route('/report_inventory') 
 def report_inventory():
-    selected_branch = g.get('selected_branch', 'all')
+    today = datetime.now()
+    selected_year = request.args.get('selected_year', type=int) or today.year
+    selected_branch = request.args.get('selected_branch', 'all')
     data = get_inventory_data(selected_branch)
     return render_template(
         'dashboard/report_inventory.html',
@@ -93,8 +95,8 @@ def report_inventory():
         out_of_stock=data['out_of_stock'],
         expired=data['expired'],
         inventory_report_data=data,
-        current_year=datetime.now().year,  
-        selected_year=datetime.now().year
+        current_year=today.year, 
+        selected_year=selected_year,
     )
 
 @dashboard.route('/service_trend_forecast')

@@ -153,11 +153,6 @@ def get_appointments_by_date(target_date, branch_id=None):
         query = query.filter(Appointments.branch_id == branch_id)
     return query.all()
 
-def get_pending_appointments(branch_id=None):
-    query = Appointments.query.filter_by(appointment_status='pending')
-    if branch_id:
-        query = query.filter(Appointments.branch_id == branch_id)
-    return query.order_by(Appointments.appointment_date.asc()).all()
 
 def get_pending_appointments(branch_id=None):
     query = (
