@@ -24,7 +24,7 @@ def create_app():
     app.register_blueprint(main)
     app.register_blueprint(login, url_prefix='/login')
     app.register_blueprint(dashboard, url_prefix='/dashboard')
-
+    print("Loaded GCP project:", os.getenv("GCP_PROJECT_ID"))
     return app
 
 # Initialize Vertex AI

@@ -12,5 +12,5 @@ venv/
 # Ignore output or generated files
 compiledOutput.txt
 
-#GCP KEY
-services/vertex-ai-key.json
+# Ignore service account keys
+app/services/*.json
