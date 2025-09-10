@@ -73,26 +73,26 @@
   </ul>
 
   <!-- Top Section: Two-column layout -->
-  <div class="row g-4">
+  <div class="d-flex gap-3 align-items-stretch flex-wrap revenue-summary-section" >
     <!-- Top Summary Section -->
-    <div class="row g-3">
+    <div class="row g-2">
       <div class="col-12">
-        <div class="row g-3">     
+        <div class="row g-2">     
           <!-- Revenue Cards -->
-          <div class="col-4">
+          <div class="col-6">
             <div class="card p-3 text-center">
               <h3 class="text-muted d-block">This Month's Appointments</h3>
               <h1 style="color:rgb(32, 178, 115)">{{ current_month_appointment }}</h1>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-6">
             <div class="card p-3 text-center">
               <h3 class="text-muted d-block">This Month's New Patient</h3>
               <h1 style="color:rgb(32, 178, 115)">{{ current_month_new_patient }}</h1>
             </div>
           </div>
 
-          <div class="col-4">
+          <div class="col-6">
             <div class="card p-3 text-center">
               <h3 class="text-muted d-block">This Month's Returning Patient</h3>
               <h1 style="color:rgb(32, 178, 115)">{{ current_month_returning_patient }}</h1>

@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+    /*
     //function for the forecast chart to display in the dashboard
     // Get the canvas element's parent
     const canvas = document.getElementById("forecastChart");
@@ -83,5 +84,5 @@ document.addEventListener("DOMContentLoaded", function () {
     img.style.display = "block";
 
     // Replace the canvas with the image
-    canvas.parentNode.replaceChild(img, canvas);
+    canvas.parentNode.replaceChild(img, canvas);*/
 });
