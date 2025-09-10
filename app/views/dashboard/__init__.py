@@ -38,10 +38,6 @@ from . import (
     transaction_routes,
     report_routes, 
     accounts_routes,
-<<<<<<< HEAD
-    security_routes
-=======
     security_routes,
     ai_routes
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
 )

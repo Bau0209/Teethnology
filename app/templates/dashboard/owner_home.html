@@ -67,63 +67,6 @@
         </div>
     </div>
 
-<<<<<<< HEAD
-  <!-- Middle Column -->
-  <div class="dashboard-center card">
-    <h3>PATIENTS TOMORROW</h3>
-    <hr>
-    <div class="patient-info">
-      {% if appointments_tomorrow %}
-        {% for a in appointments_tomorrow %}
-          <div class="patient-item">
-            <h5><strong>{{ a.patient.patient_full_name.upper() }}</strong></h5>
-            {{ a.appointment_type }}<br>
-            {{ a.patient.contact_number }}<br>
-            {{ a.patient.email }}
-          </div>
-        {% endfor %}
-      {% else %}
-        <div class="patient-item">
-          No appointments for tomorrow.
-        </div>
-      {% endif %}
-    </div>
-
-    <button class="send-reminders">Send Reminders</button>
-  </div>
-
-  <!-- Right Column -->
-  <div class="dashboard-right card appointment-requests">
-    <h3>APPOINTMENT REQUESTS</h3>
-    <div class="appointment-requests-controls">
-    </div>
-    <hr>
-    <a href="{{ url_for('dashboard.appointment_req') }}" class="view-all">View All</a>
-    <div class="request-list">
-      {% if appointment_requests %}
-        {% for req in appointment_requests %}
-          <div class="request-item">
-            <div class="request-info">
-              <h5><strong>{{ req.appointment_date.strftime('%B %d, %Y at %I:%M %p') }}</strong></h5>
-              Patient Name: {{ req.patient.patient_full_name.upper() }}<br>
-              Appointment Type: {{ req.appointment_type }}
-            </div>
-            <div class="actions">
-              <button class="accept"><a href="{{ url_for('dashboard.appointment_req') }}" class="view-all">View More</a></button>
-            </div>
-          </div>
-        {% endfor %}
-      {% else %}
-        <div class="request-item">
-          No pending appointment requests.
-        </div>
-      {% endif %}
-    </div>
-  </div>
-
-  </div>
-
-=======
     <!-- Middle Column -->
     <div class="dashboard-center card">
       <h3>PATIENTS TOMORROW</h3>
@@ -178,7 +121,6 @@
     </div>
   </div>
 
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
   <form method="POST" action="{{ url_for('dashboard.update_main_website') }}" style="width:100%;">
         <div class="branches-info-card" > 
             <div class="branches-info-header">

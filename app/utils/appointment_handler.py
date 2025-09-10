@@ -139,38 +139,14 @@ def handle_appointment_form(template_path):
 
 #--------------------
 #Dashboard data
-<<<<<<< HEAD
 def get_appointments_by_date(target_date, branch_id=None):
     query = Appointments.query.filter(db.func.date(Appointments.appointment_date) == target_date)
-=======
-from sqlalchemy.orm import joinedload
-
-def get_appointments_by_date(target_date, branch_id=None):
-    query = (
-        Appointments.query
-        .options(joinedload(Appointments.patient))  # eager load patient
-        .filter(db.func.date(Appointments.appointment_date) == target_date)
-    )
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
     if branch_id:
         query = query.filter(Appointments.branch_id == branch_id)
     return query.all()
 
-<<<<<<< HEAD
 def get_pending_appointments(branch_id=None):
     query = Appointments.query.filter_by(appointment_status='pending')
     if branch_id:
         query = query.filter(Appointments.branch_id == branch_id)
     return query.order_by(Appointments.appointment_date.asc()).all()
-=======
-
-def get_pending_appointments(branch_id=None):
-    query = (
-        Appointments.query
-        .options(joinedload(Appointments.patient))  # eager load patient
-        .filter(Appointments.appointment_status == "pending")
-    )
-    if branch_id:
-        query = query.filter(Appointments.branch_id == branch_id)
-    return query.all()
->>>>>>> c20352500ef35845088f010e499f5be4e4fe1cff
